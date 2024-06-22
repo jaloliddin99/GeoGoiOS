@@ -8,7 +8,7 @@
 
 
 "txt_give_permission" = "Ilova ishlashi uchun quida keltirilgan ruxsatnomalarni berishingizni so'raymiz:";
-"txt_using_navigation_service" = "Navigatsiya servisidan foydalanish va buyutrmalar qabul qilish uchun";
+"txt_using_navigation_service" = "GeoGo sizning joylashuvingiz va GPS ma'lumotlaringizga ruxsat so'ramoqda";
 "gps" = "GPS";
 "notifications" = "Xabarnomalar";
 "app_must_work" = "Ilova ishlashi uchun zarur";

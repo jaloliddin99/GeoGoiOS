@@ -11,6 +11,18 @@
 		256877742C258B190041E16A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256877732C258B190041E16A /* ContentView.swift */; };
 		256877762C258B1B0041E16A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 256877752C258B1B0041E16A /* Assets.xcassets */; };
 		256877792C258B1B0041E16A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 256877782C258B1B0041E16A /* Preview Assets.xcassets */; };
+		256877862C25C17C0041E16A /* AccessScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256877852C25C17C0041E16A /* AccessScreen.swift */; };
+		256877882C25C1D90041E16A /* AccessViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256877872C25C1D90041E16A /* AccessViewModel.swift */; };
+		2568778C2C25C25A0041E16A /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2568778B2C25C25A0041E16A /* LocationManager.swift */; };
+		2568778F2C25C2A80041E16A /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2568778E2C25C2A80041E16A /* Alert.swift */; };
+		256877932C25C4E80041E16A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 256877912C25C4E80041E16A /* Localizable.strings */; };
+		256877992C25C63C0041E16A /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256877982C25C63C0041E16A /* LoadingView.swift */; };
+		2568779C2C25C93D0041E16A /* GGButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2568779B2C25C93D0041E16A /* GGButton.swift */; };
+		2568779F2C25CA150041E16A /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2568779E2C25CA150041E16A /* Constants.swift */; };
+		256877A32C25D1470041E16A /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256877A22C25D1460041E16A /* NetworkService.swift */; };
+		256877A52C25D16F0041E16A /* GetServerLinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256877A42C25D16F0041E16A /* GetServerLinks.swift */; };
+		256877A82C25D1FF0041E16A /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256877A72C25D1FF0041E16A /* NetworkError.swift */; };
+		256877AB2C26B0870041E16A /* AddNameScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256877AA2C26B0870041E16A /* AddNameScreen.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +31,21 @@
 		256877732C258B190041E16A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		256877752C258B1B0041E16A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		256877782C258B1B0041E16A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		256877852C25C17C0041E16A /* AccessScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessScreen.swift; sourceTree = "<group>"; };
+		256877872C25C1D90041E16A /* AccessViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessViewModel.swift; sourceTree = "<group>"; };
+		2568778B2C25C25A0041E16A /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		2568778E2C25C2A80041E16A /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
+		256877922C25C4E80041E16A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		256877942C25C55D0041E16A /* kaa */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kaa; path = kaa.lproj/Localizable.strings; sourceTree = "<group>"; };
+		256877952C25C55F0041E16A /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		256877962C25C5600041E16A /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/Localizable.strings; sourceTree = "<group>"; };
+		256877982C25C63C0041E16A /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
+		2568779B2C25C93D0041E16A /* GGButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GGButton.swift; sourceTree = "<group>"; };
+		2568779E2C25CA150041E16A /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		256877A22C25D1460041E16A /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		256877A42C25D16F0041E16A /* GetServerLinks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetServerLinks.swift; sourceTree = "<group>"; };
+		256877A72C25D1FF0041E16A /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
+		256877AA2C26B0870041E16A /* AddNameScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNameScreen.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,6 +78,12 @@
 		256877702C258B190041E16A /* Geo Go */ = {
 			isa = PBXGroup;
 			children = (
+				256877A02C25D1230041E16A /* Model */,
+				256877902C25C3500041E16A /* Resources */,
+				2568778A2C25C2350041E16A /* LocationManager */,
+				256877812C25C1300041E16A /* Utilities */,
+				256877802C25BEBC0041E16A /* Screens */,
+				2568777F2C25BEA40041E16A /* Views */,
 				256877712C258B190041E16A /* Geo_GoApp.swift */,
 				256877732C258B190041E16A /* ContentView.swift */,
 				256877752C258B1B0041E16A /* Assets.xcassets */,
@@ -65,6 +98,140 @@
 				256877782C258B1B0041E16A /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		2568777F2C25BEA40041E16A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		256877802C25BEBC0041E16A /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				256877832C25C14D0041E16A /* Main */,
+				256877822C25C1440041E16A /* Auth */,
+			);
+			path = Screens;
+			sourceTree = "<group>";
+		};
+		256877812C25C1300041E16A /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				256877A62C25D1E90041E16A /* Network */,
+				2568779D2C25C9FE0041E16A /* Constants */,
+				2568779A2C25C91D0041E16A /* Buttons */,
+				256877972C25C6240041E16A /* UIKit Components */,
+				2568778D2C25C28F0041E16A /* Extensions */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		256877822C25C1440041E16A /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				256877A92C26B0640041E16A /* SetName */,
+				256877842C25C1560041E16A /* Access */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		256877832C25C14D0041E16A /* Main */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		256877842C25C1560041E16A /* Access */ = {
+			isa = PBXGroup;
+			children = (
+				256877852C25C17C0041E16A /* AccessScreen.swift */,
+				256877872C25C1D90041E16A /* AccessViewModel.swift */,
+			);
+			path = Access;
+			sourceTree = "<group>";
+		};
+		2568778A2C25C2350041E16A /* LocationManager */ = {
+			isa = PBXGroup;
+			children = (
+				2568778B2C25C25A0041E16A /* LocationManager.swift */,
+			);
+			path = LocationManager;
+			sourceTree = "<group>";
+		};
+		2568778D2C25C28F0041E16A /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				2568778E2C25C2A80041E16A /* Alert.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		256877902C25C3500041E16A /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				256877912C25C4E80041E16A /* Localizable.strings */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		256877972C25C6240041E16A /* UIKit Components */ = {
+			isa = PBXGroup;
+			children = (
+				256877982C25C63C0041E16A /* LoadingView.swift */,
+			);
+			path = "UIKit Components";
+			sourceTree = "<group>";
+		};
+		2568779A2C25C91D0041E16A /* Buttons */ = {
+			isa = PBXGroup;
+			children = (
+				2568779B2C25C93D0041E16A /* GGButton.swift */,
+			);
+			path = Buttons;
+			sourceTree = "<group>";
+		};
+		2568779D2C25C9FE0041E16A /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				2568779E2C25CA150041E16A /* Constants.swift */,
+			);
+			path = Constants;
+			sourceTree = "<group>";
+		};
+		256877A02C25D1230041E16A /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				256877A12C25D1300041E16A /* Network */,
+				256877A42C25D16F0041E16A /* GetServerLinks.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		256877A12C25D1300041E16A /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				256877A22C25D1460041E16A /* NetworkService.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		256877A62C25D1E90041E16A /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				256877A72C25D1FF0041E16A /* NetworkError.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		256877A92C26B0640041E16A /* SetName */ = {
+			isa = PBXGroup;
+			children = (
+				256877AA2C26B0870041E16A /* AddNameScreen.swift */,
+			);
+			path = SetName;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -109,6 +276,9 @@
 			knownRegions = (
 				en,
 				Base,
+				uz,
+				ru,
+				kaa,
 			);
 			mainGroup = 256877652C258B190041E16A;
 			productRefGroup = 2568776F2C258B190041E16A /* Products */;
@@ -126,6 +296,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				256877792C258B1B0041E16A /* Preview Assets.xcassets in Resources */,
+				256877932C25C4E80041E16A /* Localizable.strings in Resources */,
 				256877762C258B1B0041E16A /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -137,12 +308,37 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				256877A32C25D1470041E16A /* NetworkService.swift in Sources */,
+				256877AB2C26B0870041E16A /* AddNameScreen.swift in Sources */,
+				2568778F2C25C2A80041E16A /* Alert.swift in Sources */,
+				256877862C25C17C0041E16A /* AccessScreen.swift in Sources */,
 				256877742C258B190041E16A /* ContentView.swift in Sources */,
+				2568779C2C25C93D0041E16A /* GGButton.swift in Sources */,
+				2568778C2C25C25A0041E16A /* LocationManager.swift in Sources */,
+				256877882C25C1D90041E16A /* AccessViewModel.swift in Sources */,
+				256877992C25C63C0041E16A /* LoadingView.swift in Sources */,
 				256877722C258B190041E16A /* Geo_GoApp.swift in Sources */,
+				256877A82C25D1FF0041E16A /* NetworkError.swift in Sources */,
+				2568779F2C25CA150041E16A /* Constants.swift in Sources */,
+				256877A52C25D16F0041E16A /* GetServerLinks.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		256877912C25C4E80041E16A /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				256877922C25C4E80041E16A /* en */,
+				256877942C25C55D0041E16A /* kaa */,
+				256877952C25C55F0041E16A /* ru */,
+				256877962C25C5600041E16A /* uz */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		2568777A2C258B1B0041E16A /* Debug */ = {
@@ -274,6 +470,8 @@
 				DEVELOPMENT_ASSET_PATHS = "\"Geo Go/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -302,6 +500,8 @@
 				DEVELOPMENT_ASSET_PATHS = "\"Geo Go/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

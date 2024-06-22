@@ -6,3 +6,21 @@
 //
 
 import Foundation
+
+
+
+enum NetworkError: Error {
+    case badUrl
+    case invalidRequest
+    case badResponse
+    case badStatus
+    case failedToDecodeResponse
+}
+
+
+enum APError: Error{
+    case invalidURL
+    case invalidResponse
+    case invalidData
+    case unableToComplete
+}

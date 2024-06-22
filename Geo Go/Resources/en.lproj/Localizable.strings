@@ -7,7 +7,7 @@
 */
 
 "txt_give_permission" = "We kindly ask you to grant these two permission, which are listed below, for the app functioning";
-"txt_using_navigation_service" = "To use the navigation service and receive orders";
+"txt_using_navigation_service" = "GeoGo is requesting access to your location and GPS data";
 "gps" = "GPS";
 "notifications" = "Notification";
 "app_must_work" = "Important for app to function";

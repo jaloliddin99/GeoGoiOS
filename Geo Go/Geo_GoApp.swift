@@ -11,7 +11,7 @@ import SwiftUI
 struct Geo_GoApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            AccessScreen()
         }
     }
 }
