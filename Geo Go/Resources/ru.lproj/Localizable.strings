@@ -1,0 +1,15 @@
+/* 
+  Localizable.strings
+  Geo Go
+
+  Created by Jaloliddin Abdullaev on 21/06/24.
+  
+*/
+
+"txt_give_permission" = "Мы просим вас предоставить эти два разрешения, перечисленные ниже, для работы приложения";
+"txt_using_navigation_service" = "Для использования сервиса навигации и получения заказов";
+"gps" = "GPS";
+"notifications" = "Уведомления";
+"app_must_work" = "Требуется для работы приложения";
+"next" = "Next";
+"allow" = "Allow";

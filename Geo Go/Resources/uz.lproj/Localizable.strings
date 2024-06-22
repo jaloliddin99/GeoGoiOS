@@ -1,0 +1,16 @@
+/* 
+  Localizable.strings
+  Geo Go
+
+  Created by Jaloliddin Abdullaev on 21/06/24.
+  
+*/
+
+
+"txt_give_permission" = "Ilova ishlashi uchun quida keltirilgan ruxsatnomalarni berishingizni so'raymiz:";
+"txt_using_navigation_service" = "Navigatsiya servisidan foydalanish va buyutrmalar qabul qilish uchun";
+"gps" = "GPS";
+"notifications" = "Xabarnomalar";
+"app_must_work" = "Ilova ishlashi uchun zarur";
+"next" = "Keyingi";
+"allow" = "Ruhsat berish";
