@@ -13,3 +13,7 @@
 "app_must_work" = "Требуется для работы приложения";
 "next" = "Next";
 "allow" = "Allow";
+
+"what_is_your_name" = "What is your name?";
+"enter_your_name" = "Enter your name";
+"save" = "Save";

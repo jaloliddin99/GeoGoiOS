@@ -13,3 +13,10 @@
 "app_must_work" = "Important for app to function";
 "next" = "Next";
 "allow" = "Allow";
+
+"what_is_your_name" = "What is your name?";
+"enter_your_name" = "Enter your name";
+"save" = "Save";
+
+"get_code" = "Get Code";
+"enter_your_phone" = "Enter your phone";

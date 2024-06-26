@@ -42,7 +42,7 @@ struct AccessScreen: View {
             }
             .padding()
             .onReceive(locationManager.$location) { location in
-                        guard let location = location else { return }
+                        //guard let location = location else { return }
                         //let coor = location.coordinate
                         viewModel.getAppetizer(lat: 41.33851520919809, lon: 69.33460926588599)
                     }

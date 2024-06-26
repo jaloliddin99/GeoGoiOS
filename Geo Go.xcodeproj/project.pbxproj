@@ -23,6 +23,7 @@
 		256877A52C25D16F0041E16A /* GetServerLinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256877A42C25D16F0041E16A /* GetServerLinks.swift */; };
 		256877A82C25D1FF0041E16A /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256877A72C25D1FF0041E16A /* NetworkError.swift */; };
 		256877AB2C26B0870041E16A /* AddNameScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256877AA2C26B0870041E16A /* AddNameScreen.swift */; };
+		256877AE2C26DD560041E16A /* EnterPhoneScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256877AD2C26DD560041E16A /* EnterPhoneScreen.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +47,7 @@
 		256877A42C25D16F0041E16A /* GetServerLinks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetServerLinks.swift; sourceTree = "<group>"; };
 		256877A72C25D1FF0041E16A /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		256877AA2C26B0870041E16A /* AddNameScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNameScreen.swift; sourceTree = "<group>"; };
+		256877AD2C26DD560041E16A /* EnterPhoneScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterPhoneScreen.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +105,8 @@
 		2568777F2C25BEA40041E16A /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				2568779A2C25C91D0041E16A /* Buttons */,
+				256877972C25C6240041E16A /* UIKit Components */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -121,8 +125,6 @@
 			children = (
 				256877A62C25D1E90041E16A /* Network */,
 				2568779D2C25C9FE0041E16A /* Constants */,
-				2568779A2C25C91D0041E16A /* Buttons */,
-				256877972C25C6240041E16A /* UIKit Components */,
 				2568778D2C25C28F0041E16A /* Extensions */,
 			);
 			path = Utilities;
@@ -131,6 +133,7 @@
 		256877822C25C1440041E16A /* Auth */ = {
 			isa = PBXGroup;
 			children = (
+				256877AC2C26DD2E0041E16A /* EnterPhone */,
 				256877A92C26B0640041E16A /* SetName */,
 				256877842C25C1560041E16A /* Access */,
 			);
@@ -234,6 +237,14 @@
 			path = SetName;
 			sourceTree = "<group>";
 		};
+		256877AC2C26DD2E0041E16A /* EnterPhone */ = {
+			isa = PBXGroup;
+			children = (
+				256877AD2C26DD560041E16A /* EnterPhoneScreen.swift */,
+			);
+			path = EnterPhone;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -319,6 +330,7 @@
 				256877992C25C63C0041E16A /* LoadingView.swift in Sources */,
 				256877722C258B190041E16A /* Geo_GoApp.swift in Sources */,
 				256877A82C25D1FF0041E16A /* NetworkError.swift in Sources */,
+				256877AE2C26DD560041E16A /* EnterPhoneScreen.swift in Sources */,
 				2568779F2C25CA150041E16A /* Constants.swift in Sources */,
 				256877A52C25D16F0041E16A /* GetServerLinks.swift in Sources */,
 			);
