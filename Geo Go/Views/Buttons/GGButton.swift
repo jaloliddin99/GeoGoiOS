@@ -11,8 +11,6 @@ struct GGButton: View {
     var title: LocalizedStringKey
     
     var body: some View {
-        
-
         Text(title)
             .font(.title3)
             .fontWeight(.semibold)
