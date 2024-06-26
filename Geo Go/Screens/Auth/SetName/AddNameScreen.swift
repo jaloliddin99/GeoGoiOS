@@ -30,7 +30,7 @@ struct AddNameScreen: View {
                     TextField(enter_your_name, text: $username)
                         .padding()
                         .background(Color(.secondarySystemBackground))
-                        .cornerRadius(8)
+                        .cornerRadius(9)
                         .autocapitalization(.none)
                         .disableAutocorrection(true)
                 }
