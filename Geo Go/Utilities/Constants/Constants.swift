@@ -29,6 +29,7 @@ class Constants{
     static let identity: String = "key_identity"
     
     static let isa: String = "kkk"
+    static let dostmurod: String = "dostmurod"
     
     
     
