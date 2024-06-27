@@ -17,3 +17,10 @@
 "what_is_your_name" = "What is your name?";
 "enter_your_name" = "Enter your name";
 "save" = "Save";
+
+"terms_prefix" = "Я принимаю условия ";
+"user_agreement" = "Пользовательского соглашения";
+"terms_and" = " и соглашаюсь на обработку моих персональных данных на условиях ";
+"privacy_policy" = "Политики конфиденциальности";
+
+"enter_phone" = "Enter Phone";

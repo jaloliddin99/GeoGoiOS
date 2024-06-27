@@ -18,5 +18,16 @@
 "enter_your_name" = "Enter your name";
 "save" = "Save";
 
+"terms_prefix" = "I accept the terms of the ";
+"user_agreement" = "User Agreement";
+"terms_and" = " and consent to the processing of my personal data on the terms of the ";
+"privacy_policy" = "Privacy Policy";
+
+
 "get_code" = "Get Code";
 "enter_your_phone" = "Enter your phone";
+"we_send_code" = "We will send it a verification code";
+
+"enter_phone" = "Enter Phone";
+
+

@@ -24,6 +24,8 @@
 		256877A82C25D1FF0041E16A /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256877A72C25D1FF0041E16A /* NetworkError.swift */; };
 		256877AB2C26B0870041E16A /* AddNameScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256877AA2C26B0870041E16A /* AddNameScreen.swift */; };
 		256877AE2C26DD560041E16A /* EnterPhoneScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256877AD2C26DD560041E16A /* EnterPhoneScreen.swift */; };
+		256877B12C2C69D90041E16A /* FlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256877B02C2C69D90041E16A /* FlowLayout.swift */; };
+		256877B42C2D5F5D0041E16A /* iPhoneNumberField in Frameworks */ = {isa = PBXBuildFile; productRef = 256877B32C2D5F5D0041E16A /* iPhoneNumberField */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +50,8 @@
 		256877A72C25D1FF0041E16A /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		256877AA2C26B0870041E16A /* AddNameScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNameScreen.swift; sourceTree = "<group>"; };
 		256877AD2C26DD560041E16A /* EnterPhoneScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterPhoneScreen.swift; sourceTree = "<group>"; };
+		256877B02C2C69D90041E16A /* FlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowLayout.swift; sourceTree = "<group>"; };
+		256877B52C2D6DC60041E16A /* Geo-Go-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Geo-Go-Info.plist"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +59,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				256877B42C2D5F5D0041E16A /* iPhoneNumberField in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -80,6 +85,7 @@
 		256877702C258B190041E16A /* Geo Go */ = {
 			isa = PBXGroup;
 			children = (
+				256877B52C2D6DC60041E16A /* Geo-Go-Info.plist */,
 				256877A02C25D1230041E16A /* Model */,
 				256877902C25C3500041E16A /* Resources */,
 				2568778A2C25C2350041E16A /* LocationManager */,
@@ -105,6 +111,7 @@
 		2568777F2C25BEA40041E16A /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				256877AF2C2C69C00041E16A /* FlowLayout */,
 				2568779A2C25C91D0041E16A /* Buttons */,
 				256877972C25C6240041E16A /* UIKit Components */,
 			);
@@ -245,6 +252,14 @@
 			path = EnterPhone;
 			sourceTree = "<group>";
 		};
+		256877AF2C2C69C00041E16A /* FlowLayout */ = {
+			isa = PBXGroup;
+			children = (
+				256877B02C2C69D90041E16A /* FlowLayout.swift */,
+			);
+			path = FlowLayout;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -261,6 +276,9 @@
 			dependencies = (
 			);
 			name = "Geo Go";
+			packageProductDependencies = (
+				256877B32C2D5F5D0041E16A /* iPhoneNumberField */,
+			);
 			productName = "Geo Go";
 			productReference = 2568776E2C258B190041E16A /* Geo Go.app */;
 			productType = "com.apple.product-type.application";
@@ -292,6 +310,9 @@
 				kaa,
 			);
 			mainGroup = 256877652C258B190041E16A;
+			packageReferences = (
+				256877B22C2D5F5D0041E16A /* XCRemoteSwiftPackageReference "iPhoneNumberField" */,
+			);
 			productRefGroup = 2568776F2C258B190041E16A /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -326,6 +347,7 @@
 				256877742C258B190041E16A /* ContentView.swift in Sources */,
 				2568779C2C25C93D0041E16A /* GGButton.swift in Sources */,
 				2568778C2C25C25A0041E16A /* LocationManager.swift in Sources */,
+				256877B12C2C69D90041E16A /* FlowLayout.swift in Sources */,
 				256877882C25C1D90041E16A /* AccessViewModel.swift in Sources */,
 				256877992C25C63C0041E16A /* LoadingView.swift in Sources */,
 				256877722C258B190041E16A /* Geo_GoApp.swift in Sources */,
@@ -482,6 +504,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"Geo Go/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Geo-Go-Info.plist";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -512,6 +535,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"Geo Go/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Geo-Go-Info.plist";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -554,6 +578,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		256877B22C2D5F5D0041E16A /* XCRemoteSwiftPackageReference "iPhoneNumberField" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/MojtabaHs/iPhoneNumberField.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.10.4;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		256877B32C2D5F5D0041E16A /* iPhoneNumberField */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 256877B22C2D5F5D0041E16A /* XCRemoteSwiftPackageReference "iPhoneNumberField" */;
+			productName = iPhoneNumberField;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 256877662C258B190041E16A /* Project object */;
 }

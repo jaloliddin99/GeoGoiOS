@@ -16,6 +16,14 @@
 "allow" = "Ruhsat berish";
 
 
-"what_is_your_name" = "What is your name?";
+"what_is_your_name" = "Ismingiz nima?";
 "enter_your_name" = "Ismingizni kiriting";
 "save" = "Saqlash";
+
+"terms_prefix" = "Men foydalanish shartlarini qabul qilaman ";
+"user_agreement" = "Foydalanuvchi Kelishuvi";
+"terms_and" = " va shaxsiy ma'lumotlarimning qayta ishlanishiga rozilik bildiraman shartlar asosida ";
+"privacy_policy" = "Maxfiylik Siyosati";
+
+
+"enter_phone" = "Raqamingizni Kiriting";

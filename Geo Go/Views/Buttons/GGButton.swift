@@ -12,7 +12,7 @@ struct GGButton: View {
     
     var body: some View {
         Text(title)
-            .font(.title3)
+            .font(.title2)
             .fontWeight(.semibold)
             .frame(maxWidth: .infinity, maxHeight: 50)
             .foregroundColor(.white)
