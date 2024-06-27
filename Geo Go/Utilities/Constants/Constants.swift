@@ -30,6 +30,7 @@ class Constants{
     
     static let isa: String = "kkk"
     static let dostmurod: String = "dostmurod"
+    static let asaaS: String = "sS"
     
     
     
