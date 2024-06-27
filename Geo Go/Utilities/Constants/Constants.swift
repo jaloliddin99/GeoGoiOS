@@ -28,7 +28,7 @@ class Constants{
     static let secret: String = "key_secret"
     static let identity: String = "key_identity"
     
-    
+    static let isa: String = "kkk"
     
     
     
