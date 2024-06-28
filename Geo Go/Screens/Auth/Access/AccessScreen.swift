@@ -35,7 +35,7 @@ struct AccessScreen: View {
                     }
                 }
                 
-                
+
                 if viewModel.isLoading {
                     LoadingView()
                 }
