@@ -28,6 +28,7 @@
 		256EAEB82C2D8B4F00FA7A5C /* HomeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256EAEB72C2D8B4F00FA7A5C /* HomeScreen.swift */; };
 		256EAEBB2C2D9A8100FA7A5C /* MapboxMaps in Frameworks */ = {isa = PBXBuildFile; productRef = 256EAEBA2C2D9A8100FA7A5C /* MapboxMaps */; };
 		256EAEBD2C2E83A000FA7A5C /* LocationPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256EAEBC2C2E83A000FA7A5C /* LocationPickerView.swift */; };
+		256EAEC52C2ED04700FA7A5C /* SomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256EAEC42C2ED04700FA7A5C /* SomeView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -55,6 +56,7 @@
 		256877B52C2D6DC60041E16A /* Geo-Go-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Geo-Go-Info.plist"; sourceTree = SOURCE_ROOT; };
 		256EAEB72C2D8B4F00FA7A5C /* HomeScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreen.swift; sourceTree = "<group>"; };
 		256EAEBC2C2E83A000FA7A5C /* LocationPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationPickerView.swift; sourceTree = "<group>"; };
+		256EAEC42C2ED04700FA7A5C /* SomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SomeView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -261,6 +263,7 @@
 			children = (
 				256EAEB72C2D8B4F00FA7A5C /* HomeScreen.swift */,
 				256EAEBC2C2E83A000FA7A5C /* LocationPickerView.swift */,
+				256EAEC42C2ED04700FA7A5C /* SomeView.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -360,6 +363,7 @@
 				256877992C25C63C0041E16A /* LoadingView.swift in Sources */,
 				256877722C258B190041E16A /* Geo_GoApp.swift in Sources */,
 				256877A82C25D1FF0041E16A /* NetworkError.swift in Sources */,
+				256EAEC52C2ED04700FA7A5C /* SomeView.swift in Sources */,
 				256877AE2C26DD560041E16A /* EnterPhoneScreen.swift in Sources */,
 				2568779F2C25CA150041E16A /* Constants.swift in Sources */,
 				256877A52C25D16F0041E16A /* GetServerLinks.swift in Sources */,
