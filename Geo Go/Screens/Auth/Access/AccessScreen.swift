@@ -51,7 +51,6 @@ struct AccessScreen: View {
                       message: alertItem.message,
                       dismissButton: alertItem.dismissButton
                 )
-                
             }
             .navigationDestination(isPresented: Binding<Bool>(
                 get: { viewModel.postData != nil },
@@ -91,12 +90,9 @@ struct PermissionView: View {
                 .font(.system(size: 20))
                 .fontWeight(.regular)
                 .padding(.horizontal, 16)
-            
-            
         }
         .padding(.vertical, 56)
     }
-    
 }
 
 

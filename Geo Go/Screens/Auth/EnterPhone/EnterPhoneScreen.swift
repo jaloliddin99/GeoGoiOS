@@ -7,60 +7,104 @@
 
 import SwiftUI
 import iPhoneNumberField
+import PhoneNumberKit
 
 struct EnterPhoneScreen: View {
     var username: String
     
+    @StateObject var viewModel = EnterPhoneViewModel()
+    
     @State private var phoneNumber: String = ""
-    @Environment(\.dismiss) var dismiss
     @State private var isChecked: Bool = false
     
-    var isButtonDisabled: Bool {
-        return username.isEmpty
-    }
+    @State private var isButtonDisabled: Bool = true
+    @State var pn: PhoneNumber?
+    @State private var actualNumber: String = ""
+    
     
     
     var body: some View {
+        
         NavigationStack {
-            VStack {
-                Spacer()
+            ZStack{
                 VStack {
-                    Text("enter_your_phone")
-                        .font(.system(size: 24))
-                        .fontWeight(.bold)
+                    Spacer()
+                    VStack {
+                        Text("enter_your_phone")
+                            .font(.system(size: 24))
+                            .padding(.bottom, 8)
+                            .fontWeight(.bold)
+                        
+                        Text("we_send_code")
+                            .font(.system(size: 20))
+                            .fontWeight(.regular)
+                            .padding(.bottom, 10)
+                        
+                        
+                        iPhoneNumberField(text: $phoneNumber)
+                            .flagHidden(false)
+                            .flagSelectable(true)
+                            .defaultRegion("UZ")
+                            .font(UIFont(size: 24, weight: .bold, design: .rounded))
+                            .onNumberChange(perform: { code in
+                                if code != nil {
+                                    isButtonDisabled = false
+                                    pn = code
+                                }else{
+                                    isButtonDisabled = true
+                                }
+                                
+                            })
+                            .padding()
+                            .background(Color(.secondarySystemBackground))
+                            .cornerRadius(8)
+                            .autocapitalization(.none)
+                            .disableAutocorrection(true)
+                        
+                        
+                        agreementSection
+                    }
                     
-                    Text("we_send_code")
-                        .font(.system(size: 20))
-                        .fontWeight(.regular)
-                        .padding(.top, 6)
-                        .padding(.bottom, 10)
+                    Spacer()
                     
-                    iPhoneNumberField(text: $phoneNumber)
-                        .flagHidden(false)
-                        .flagSelectable(true)
-                        .font(UIFont(size: 24, weight: .bold, design: .rounded))
-                        .padding()
-                        .background(Color(.secondarySystemBackground))
-                        .cornerRadius(8)
-                    
-                        .autocapitalization(.none)
-                        .disableAutocorrection(true)
-                    
-                    agreementSection
+                    Button(action: {
+                        guard let pn = pn else { return }
+                        actualNumber = "+\(pn.countryCode)\(pn.nationalNumber)"
+                        let registrationReq = RegistrationRequest(
+                            confirmationType: Constants.CONFIRMATION_TYPE,
+                            phone: actualNumber,
+                            info: ClientInfo(firstName: username)
+                        )
+                        viewModel.getAppetizer(regRequest: registrationReq)
+                    }) {
+                        GGButton(title: "get_code")
+                    }
+                    .disabled(isButtonDisabled)
+                    .opacity(isButtonDisabled ? 0.5 : 1.0)
                 }
                 
-                Spacer()
-                
-                Button(action: {
-                    
-                }) {
-                    GGButton(title: "get_code")
+                if viewModel.isLoading {
+                    LoadingView()
                 }
-                .disabled(isButtonDisabled)
-                .opacity(isButtonDisabled ? 0.5 : 1.0)
+                
             }
             .navigationBarTitleDisplayMode(.inline)
             .padding()
+            .alert(item: $viewModel.alertItem){ alertItem in
+                Alert(title: alertItem.title,
+                      message: alertItem.message,
+                      dismissButton: alertItem.dismissButton
+                )
+            }
+            .navigationDestination(isPresented: Binding<Bool>(
+                get: { viewModel.postData != nil },
+                set: { _ in }
+            )) {
+                if let postData = viewModel.postData {
+                                        
+                    EnterCodeScreen(userId: postData.id ?? 0, phoneNumber: actualNumber)
+                }
+            }
         }
     }
     

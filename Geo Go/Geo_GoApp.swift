@@ -11,7 +11,11 @@ import SwiftUI
 struct Geo_GoApp: App {
     var body: some Scene {
         WindowGroup {
-            AccessScreen()
+            if UserDefaults.standard.bool(forKey: Constants.isUserLoggedIn){
+                HomeScreen()
+            }else{
+                AccessScreen()
+            }
         }
     }
 }

@@ -51,3 +51,4 @@ struct AlertContext {
                                             message: Text("There was an error saving or retrieving your profile."),
                                             dismissButton: .default(Text("OK")))
 }
+

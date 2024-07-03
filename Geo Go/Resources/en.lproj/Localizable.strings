@@ -30,4 +30,7 @@
 
 "enter_phone" = "Enter Phone";
 
+"enter_sms_code" = "Enter SMS code";
+"enter_sms_code_desc" = "Enter SMS code that we send to your %@ phone number";
+"send" = "Send";
 
