@@ -81,8 +81,6 @@ class NetworkService{
                 let decodedResponse = try JSONDecoder().decode(T.self, from: data)
                 completed(.success(decodedResponse))
             } catch {
-                print("JSON Decoding Error: \(error)")
-                print("Error occurred here...................")
                 completed(.failure(.invalidData))
             }
         }

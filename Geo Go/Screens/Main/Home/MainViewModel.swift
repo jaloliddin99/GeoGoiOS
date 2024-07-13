@@ -6,9 +6,7 @@
 //
 
 import Foundation
-
-import Foundation
-
+import Combine
 import SwiftUI
 @_spi(Experimental) import MapboxMaps
 
@@ -31,7 +29,6 @@ final class MainViewModel: ObservableObject{
         let userToken = UserDefaults.standard.string(forKey: Constants.userLoginKey)!
         
         generateResponse = GenerateResponse(userId: userId, userToken: userToken, mainUrl: url)
-        
         addressHistory()
     }
 
@@ -63,7 +60,6 @@ final class MainViewModel: ObservableObject{
             switch result {
             case .success(let response):
                 if let appetizers = response as? UpdateReverseModel {
-                    print("this is an appetizers \(appetizers)")
                     self.currentAddress = appetizers
                 }
                 
@@ -130,6 +126,124 @@ final class MainViewModel: ObservableObject{
                 }
             }
         }
+    }
+    
+    
+    @Published var tariff: ServiceResponse?
+    
+    func serviceTariffRequest() {
+        guard let responseDetails = generateResponse?.generateHmacData(id: "getAvailableService") else { return }
+        let body = PaymentMethodParent(prevServiceId: "", paymentMethod: Constants.paymentMethod)
+        guard let requestBodyData = try? JSONEncoder().encode(body) else {
+            print("Failed to encode request body")
+            return
+        }
+        NetworkService.shared.sendRequest(
+            url: responseDetails.url,
+            body: requestBodyData,
+            method: "POST",
+            headers: [
+                "Accept-Language": "uz",
+                "Hive-Profile": Constants.HIVE_PROFILE,
+                "X-Hive-GPS-Position": "\(Constants.latitude) \(Constants.longitude)",
+                "Date": responseDetails.data,
+                "Authentication": responseDetails.hmac,
+            ],
+            completed: handleServiceTariffRequestResponse as (Result<ServiceResponse, APError>) -> Void)
+    }
+    
+    private func handleServiceTariffRequestResponse<T: Decodable>(_ result: Result<T, APError>) {
+        DispatchQueue.main.async { [self] in
+            self.isLoading = false
+            
+            switch result {
+            case .success(let response):
+                if let response = response as? ServiceResponse {
+                    self.tariff = response
+                    DataHolder.serviceTariffConstant = response.tariffs
+
+                    response.tariffs?.forEach({ ServiceTariff in
+                        DataHolder.listOptions.removeAll()
+                        DataHolder.listOptions.append(contentsOf: dataSelect(data: response.tariffs!))
+                    
+                        //serviceEstimateRide(body: <#T##EstimateRideRequest#>)
+                    })
+                }
+                
+            case .failure(let error):
+                switch error {
+                case .invalidURL:
+                    alertItem = AlertContext.invalidURL
+                case .invalidResponse:
+                    alertItem = AlertContext.invalidResponse
+                case .invalidData:
+                    alertItem = AlertContext.invalidData
+                case .unableToComplete:
+                    alertItem = AlertContext.unableToComplete
+                }
+            }
+        }
+    }
+
+    
+    @Published var estimateResponse: EstimateResponse?
+    
+    func serviceEstimateRide(body: EstimateRideRequest) {
+        guard let responseDetails = generateResponse?.generateHmacData(id: Constants.ESTIMATE) else { return }
+        
+        guard let requestBodyData = try? JSONEncoder().encode(body) else {
+            print("Failed to encode request body")
+            return
+        }
+        NetworkService.shared.sendRequest(
+            url: responseDetails.url,
+            body: requestBodyData,
+            method: "POST",
+            headers: [
+                "Accept-Language": "uz",
+                "Hive-Profile": Constants.HIVE_PROFILE,
+                "Date": responseDetails.data,
+                "Authentication": responseDetails.hmac,
+            ],
+            completed: handleserviceEstimateRideRequestResponse as (Result<EstimateResponse, APError>) -> Void)
+    }
+    
+    private func handleserviceEstimateRideRequestResponse<T: Decodable>(_ result: Result<T, APError>) {
+        DispatchQueue.main.async { [self] in
+            self.isLoading = false
+            
+            switch result {
+            case .success(let response):
+                if let response = response as? EstimateResponse {
+                    self.estimateResponse = response
+                }
+                
+            case .failure(let error):
+                switch error {
+                case .invalidURL:
+                    alertItem = AlertContext.invalidURL
+                case .invalidResponse:
+                    alertItem = AlertContext.invalidResponse
+                case .invalidData:
+                    alertItem = AlertContext.invalidData
+                case .unableToComplete:
+                    alertItem = AlertContext.unableToComplete
+                }
+            }
+        }
+    }
+
+    
+    
+    
+
+
+    
+    
+    @Published var locationHolder: [UserSelectedAddress] = []
+    
+    func locationUpdated(_ address: UserSelectedAddress) {
+        locationHolder.append(address)
     }
 
     

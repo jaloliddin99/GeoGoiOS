@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		252E5C212C3C075900C132AF /* Estimate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252E5C202C3C075900C132AF /* Estimate.swift */; };
+		252E5C242C3C29CF00C132AF /* EstimateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252E5C232C3C29CF00C132AF /* EstimateHelper.swift */; };
+		252E5C272C3C7F8700C132AF /* CustomBottomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252E5C262C3C7F8700C132AF /* CustomBottomSheet.swift */; };
+		2565CF8D2C42690300FCC08A /* DialogWish.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2565CF8C2C42690300FCC08A /* DialogWish.swift */; };
+		2565CF8F2C42A36F00FCC08A /* Options.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2565CF8E2C42A36F00FCC08A /* Options.swift */; };
+		2565CF912C42B7B700FCC08A /* DialogComment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2565CF902C42B7B700FCC08A /* DialogComment.swift */; };
+		2565CF932C42C25E00FCC08A /* DialogAnotherPerson.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2565CF922C42C25D00FCC08A /* DialogAnotherPerson.swift */; };
 		256877722C258B190041E16A /* Geo_GoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256877712C258B190041E16A /* Geo_GoApp.swift */; };
 		256877762C258B1B0041E16A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 256877752C258B1B0041E16A /* Assets.xcassets */; };
 		256877792C258B1B0041E16A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 256877782C258B1B0041E16A /* Preview Assets.xcassets */; };
@@ -51,9 +58,23 @@
 		25BFDB712C34823B00D73993 /* GenerateResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25BFDB702C34823B00D73993 /* GenerateResponse.swift */; };
 		25BFDB732C34891800D73993 /* AddressHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25BFDB722C34891800D73993 /* AddressHistory.swift */; };
 		25BFDB752C354E7F00D73993 /* SearchScreenDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25BFDB742C354E7F00D73993 /* SearchScreenDialog.swift */; };
+		25BFDB782C357B8500D73993 /* ElasticSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25BFDB772C357B8500D73993 /* ElasticSearch.swift */; };
+		25BFDB7A2C357BC800D73993 /* ElasticSearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25BFDB792C357BC800D73993 /* ElasticSearchViewModel.swift */; };
+		25BFDB7D2C35CFA400D73993 /* OrderGoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25BFDB7C2C35CFA400D73993 /* OrderGoView.swift */; };
+		25BFDB7F2C35DD4700D73993 /* CarSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25BFDB7E2C35DD4700D73993 /* CarSelectionView.swift */; };
+		25BFDB812C35DE8B00D73993 /* swipe_right.json in Resources */ = {isa = PBXBuildFile; fileRef = 25BFDB802C35DE8B00D73993 /* swipe_right.json */; };
+		25BFDB832C35E62500D73993 /* ServiceTariffs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25BFDB822C35E62500D73993 /* ServiceTariffs.swift */; };
+		25BFDB872C36BFF900D73993 /* DataHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25BFDB862C36BFF900D73993 /* DataHolder.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		252E5C202C3C075900C132AF /* Estimate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Estimate.swift; sourceTree = "<group>"; };
+		252E5C232C3C29CF00C132AF /* EstimateHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EstimateHelper.swift; sourceTree = "<group>"; };
+		252E5C262C3C7F8700C132AF /* CustomBottomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBottomSheet.swift; sourceTree = "<group>"; };
+		2565CF8C2C42690300FCC08A /* DialogWish.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogWish.swift; sourceTree = "<group>"; };
+		2565CF8E2C42A36F00FCC08A /* Options.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Options.swift; sourceTree = "<group>"; };
+		2565CF902C42B7B700FCC08A /* DialogComment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogComment.swift; sourceTree = "<group>"; };
+		2565CF922C42C25D00FCC08A /* DialogAnotherPerson.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogAnotherPerson.swift; sourceTree = "<group>"; };
 		2568776E2C258B190041E16A /* Geo Go.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Geo Go.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		256877712C258B190041E16A /* Geo_GoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Geo_GoApp.swift; sourceTree = "<group>"; };
 		256877752C258B1B0041E16A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -100,6 +121,13 @@
 		25BFDB702C34823B00D73993 /* GenerateResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenerateResponse.swift; sourceTree = "<group>"; };
 		25BFDB722C34891800D73993 /* AddressHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressHistory.swift; sourceTree = "<group>"; };
 		25BFDB742C354E7F00D73993 /* SearchScreenDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchScreenDialog.swift; sourceTree = "<group>"; };
+		25BFDB772C357B8500D73993 /* ElasticSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElasticSearch.swift; sourceTree = "<group>"; };
+		25BFDB792C357BC800D73993 /* ElasticSearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElasticSearchViewModel.swift; sourceTree = "<group>"; };
+		25BFDB7C2C35CFA400D73993 /* OrderGoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderGoView.swift; sourceTree = "<group>"; };
+		25BFDB7E2C35DD4700D73993 /* CarSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarSelectionView.swift; sourceTree = "<group>"; };
+		25BFDB802C35DE8B00D73993 /* swipe_right.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = swipe_right.json; sourceTree = "<group>"; };
+		25BFDB822C35E62500D73993 /* ServiceTariffs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceTariffs.swift; sourceTree = "<group>"; };
+		25BFDB862C36BFF900D73993 /* DataHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataHolder.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +145,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		252E5C222C3C29BA00C132AF /* EstimationHelper */ = {
+			isa = PBXGroup;
+			children = (
+				252E5C232C3C29CF00C132AF /* EstimateHelper.swift */,
+			);
+			path = EstimationHelper;
+			sourceTree = "<group>";
+		};
+		252E5C252C3C7F6B00C132AF /* BottomSheet */ = {
+			isa = PBXGroup;
+			children = (
+				252E5C262C3C7F8700C132AF /* CustomBottomSheet.swift */,
+			);
+			path = BottomSheet;
+			sourceTree = "<group>";
+		};
 		256877652C258B190041E16A = {
 			isa = PBXGroup;
 			children = (
@@ -162,6 +206,7 @@
 		2568777F2C25BEA40041E16A /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				252E5C252C3C7F6B00C132AF /* BottomSheet */,
 				2568779A2C25C91D0041E16A /* Buttons */,
 				256877972C25C6240041E16A /* UIKit Components */,
 				256EAED42C309D8900FA7A5C /* MapStyle.swift */,
@@ -181,12 +226,14 @@
 		256877812C25C1300041E16A /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				252E5C222C3C29BA00C132AF /* EstimationHelper */,
 				25BFDB6F2C34821300D73993 /* Hmac */,
 				25BFDB592C33E60700D73993 /* RoundedCorner */,
 				256EAED62C309DD800FA7A5C /* MapBox */,
 				256877A62C25D1E90041E16A /* Network */,
 				2568779D2C25C9FE0041E16A /* Constants */,
 				2568778D2C25C28F0041E16A /* Extensions */,
+				2565CF8E2C42A36F00FCC08A /* Options.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -239,6 +286,7 @@
 		256877902C25C3500041E16A /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				25BFDB802C35DE8B00D73993 /* swipe_right.json */,
 				25BFDB612C33ED0C00D73993 /* marker_location.json */,
 				256877912C25C4E80041E16A /* Localizable.strings */,
 			);
@@ -266,6 +314,7 @@
 			isa = PBXGroup;
 			children = (
 				2568779E2C25CA150041E16A /* Constants.swift */,
+				25BFDB862C36BFF900D73993 /* DataHolder.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -278,6 +327,9 @@
 				256EAECC2C2F21DE00FA7A5C /* RegistrationRequest.swift */,
 				25BFDB652C343A8700D73993 /* ReverseModel.swift */,
 				25BFDB722C34891800D73993 /* AddressHistory.swift */,
+				25BFDB772C357B8500D73993 /* ElasticSearch.swift */,
+				25BFDB822C35E62500D73993 /* ServiceTariffs.swift */,
+				252E5C202C3C075900C132AF /* Estimate.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -329,6 +381,7 @@
 		256EAEBE2C2EADD100FA7A5C /* HomeItems */ = {
 			isa = PBXGroup;
 			children = (
+				25BFDB7B2C35CF9400D73993 /* OrderGo */,
 				25BFDB762C35598400D73993 /* SearchDialog */,
 				25BFDB692C346FB600D73993 /* WhatsNew */,
 				25BFDB5C2C33EAA000D73993 /* MarkerView.swift */,
@@ -394,8 +447,21 @@
 			isa = PBXGroup;
 			children = (
 				25BFDB742C354E7F00D73993 /* SearchScreenDialog.swift */,
+				25BFDB792C357BC800D73993 /* ElasticSearchViewModel.swift */,
 			);
 			path = SearchDialog;
+			sourceTree = "<group>";
+		};
+		25BFDB7B2C35CF9400D73993 /* OrderGo */ = {
+			isa = PBXGroup;
+			children = (
+				25BFDB7C2C35CFA400D73993 /* OrderGoView.swift */,
+				25BFDB7E2C35DD4700D73993 /* CarSelectionView.swift */,
+				2565CF8C2C42690300FCC08A /* DialogWish.swift */,
+				2565CF902C42B7B700FCC08A /* DialogComment.swift */,
+				2565CF922C42C25D00FCC08A /* DialogAnotherPerson.swift */,
+			);
+			path = OrderGo;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -472,6 +538,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				256877792C258B1B0041E16A /* Preview Assets.xcassets in Resources */,
+				25BFDB812C35DE8B00D73993 /* swipe_right.json in Resources */,
 				256877932C25C4E80041E16A /* Localizable.strings in Resources */,
 				25BFDB622C33ED0C00D73993 /* marker_location.json in Resources */,
 				256877762C258B1B0041E16A /* Assets.xcassets in Resources */,
@@ -486,6 +553,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				256EAEE12C30BA0D00FA7A5C /* SideMenuRowType.swift in Sources */,
+				252E5C272C3C7F8700C132AF /* CustomBottomSheet.swift in Sources */,
 				25BFDB752C354E7F00D73993 /* SearchScreenDialog.swift in Sources */,
 				256877A32C25D1470041E16A /* NetworkService.swift in Sources */,
 				256EAED32C309CB500FA7A5C /* MainViewModel.swift in Sources */,
@@ -494,14 +562,21 @@
 				256877AB2C26B0870041E16A /* AddNameScreen.swift in Sources */,
 				2568778F2C25C2A80041E16A /* Alert.swift in Sources */,
 				256877862C25C17C0041E16A /* AccessScreen.swift in Sources */,
+				252E5C212C3C075900C132AF /* Estimate.swift in Sources */,
 				256EAEB82C2D8B4F00FA7A5C /* HomeScreen.swift in Sources */,
 				256EAED82C309DE900FA7A5C /* MapConfig.swift in Sources */,
 				256EAEDA2C309F9900FA7A5C /* HomeScreenDrawer.swift in Sources */,
+				25BFDB782C357B8500D73993 /* ElasticSearch.swift in Sources */,
 				256EAED12C2FC8D300FA7A5C /* EnterCodeViewModel.swift in Sources */,
 				256EAEC82C2F193700FA7A5C /* EnterCodeScreen.swift in Sources */,
+				2565CF912C42B7B700FCC08A /* DialogComment.swift in Sources */,
 				2568779C2C25C93D0041E16A /* GGButton.swift in Sources */,
+				25BFDB7D2C35CFA400D73993 /* OrderGoView.swift in Sources */,
 				25BFDB682C345DF700D73993 /* WhatsNewView.swift in Sources */,
 				25BFDB732C34891800D73993 /* AddressHistory.swift in Sources */,
+				2565CF8F2C42A36F00FCC08A /* Options.swift in Sources */,
+				2565CF932C42C25E00FCC08A /* DialogAnotherPerson.swift in Sources */,
+				25BFDB7A2C357BC800D73993 /* ElasticSearchViewModel.swift in Sources */,
 				2568778C2C25C25A0041E16A /* LocationManager.swift in Sources */,
 				256EAEDC2C30A2C500FA7A5C /* DrawerBtn.swift in Sources */,
 				256EAECF2C2F22F100FA7A5C /* EnterPhoneViewModel.swift in Sources */,
@@ -512,10 +587,15 @@
 				25BFDB642C3404BC00D73993 /* MarkerMoveListener.swift in Sources */,
 				25BFDB5B2C33E61700D73993 /* RoundedCorners.swift in Sources */,
 				256877722C258B190041E16A /* Geo_GoApp.swift in Sources */,
+				252E5C242C3C29CF00C132AF /* EstimateHelper.swift in Sources */,
 				256877A82C25D1FF0041E16A /* NetworkError.swift in Sources */,
 				25BFDB662C343A8700D73993 /* ReverseModel.swift in Sources */,
+				25BFDB7F2C35DD4700D73993 /* CarSelectionView.swift in Sources */,
+				25BFDB872C36BFF900D73993 /* DataHolder.swift in Sources */,
 				256EAED52C309D8900FA7A5C /* MapStyle.swift in Sources */,
+				2565CF8D2C42690300FCC08A /* DialogWish.swift in Sources */,
 				256877AE2C26DD560041E16A /* EnterPhoneScreen.swift in Sources */,
+				25BFDB832C35E62500D73993 /* ServiceTariffs.swift in Sources */,
 				25BFDB6E2C347E7500D73993 /* Hmac.swift in Sources */,
 				2568779F2C25CA150041E16A /* Constants.swift in Sources */,
 				25BFDB6B2C346FD400D73993 /* SearchTextView.swift in Sources */,

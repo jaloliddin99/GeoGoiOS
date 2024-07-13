@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct SearchTextView: View {
+    @Binding var status: Int
     @ObservedObject var viewModel: MainViewModel
     @State private var showSearchView = false
     
@@ -27,13 +28,24 @@ struct SearchTextView: View {
                 }
                 .sheet(isPresented: $showSearchView) {
                     VStack{
-                        SearchScreenDialog(showSearchView: $showSearchView, viewModel: viewModel)
+                        SearchScreenDialog(status: $status,
+                                           showSearchView: $showSearchView, 
+                                           viewModel: viewModel)
                         Spacer()
                     }
                 }
                 
                 
                 Button(action: {
+                    let address = viewModel.currentAddress
+                    let addressName = address?.display_name ?? "Picked Location"
+                    let lat = address?.lat ?? "0.0"
+                    let lon = address?.lon ?? "0.0"
+                    let location = LatLng(latitude: Double(lat) ?? 0.0, longitude: Double(lon) ?? 0.0)
+                    
+                    let uAddress = UserSelectedAddress(addressName: addressName, addressLocation: location)
+                    viewModel.locationUpdated(uAddress)
+                    status = 1
                     
                 }, label: {
                     Text("Order ->")
@@ -65,6 +77,8 @@ struct SearchTextView: View {
 
 
 struct ShortOrderInfoView: View {
+    @ObservedObject var viewModel: MainViewModel
+    @Binding var status: Int
     var orderInfo: ShortOrderInfo
     
     var body: some View {
@@ -86,9 +100,19 @@ struct ShortOrderInfoView: View {
         }
         .padding(.horizontal, 12)
         .padding(.vertical, 8)
-        .background(Color.gray.opacity(0.2))
+        .background(Color(.secondarySystemBackground))
         .cornerRadius(12)
         .padding(.horizontal, 4)
+        .onTapGesture(perform: {
+            let address = orderInfo.route[orderInfo.route.count-1]
+            let name = address.name
+            let lat = address.position?.lat ?? 0.0
+            let lon = address.position?.lon ?? 0.0
+            let location = LatLng(latitude: lat, longitude: lon)
+            let uAddress = UserSelectedAddress(addressName: name, addressLocation: location)
+            viewModel.locationUpdated(uAddress)
+            status = 1
+        })
     }
 }
 

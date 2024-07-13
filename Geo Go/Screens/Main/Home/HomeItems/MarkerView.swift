@@ -41,18 +41,18 @@ struct MainMarkerBox: View {
 
     var body: some View {
         HStack(alignment: .center) {
-                            
-            if markerOffset.isEqual(to: 0){
+            ZStack{
+                let isShowingMarker: Double = markerOffset.isEqual(to: 0) ? 1 : 0
+                let isShowingLottie: Double = markerOffset.isEqual(to: 0) ? 0 : 1
                 MinuteTextView()
-            }else{
+                    .opacity(isShowingMarker)
                 LottieEmptyStateView(fileName: "marker_location")
                     .frame(width: 48, height: 48)
                     .background(Color.white)
                     .cornerRadius(12)
                     .padding(4)
+                    .opacity(isShowingLottie)
             }
-            
-
             
             AddressView(viewModel: viewModel)
                 .padding(.leading, 12)
@@ -65,7 +65,7 @@ struct MainMarkerBox: View {
 struct MinuteTextView: View {
     var body: some View {
         VStack(alignment: .center, spacing: 0){
-            Text("1")
+            Text("5")
                 .font(.system(size: 24, weight: .bold))
                 .foregroundColor(Color.blue)
             Text("min")
@@ -98,9 +98,7 @@ struct LottieEmptyStateView: UIViewRepresentable {
     func makeUIView(context: UIViewRepresentableContext<LottieEmptyStateView>) -> some UIView {
         
         let view = UIView(frame: .zero)
-        
         let lottieAnimationView = LottieAnimationView(name: fileName, bundle: Bundle.main)
-        
         lottieAnimationView.contentMode = .scaleAspectFit
         lottieAnimationView.loopMode = loopMode
         lottieAnimationView.play()

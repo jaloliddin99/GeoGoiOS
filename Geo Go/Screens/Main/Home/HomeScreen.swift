@@ -16,8 +16,7 @@ struct HomeScreen: View {
     @State private var isDrawerOpen = false
     @State private var markerOffset: CGFloat = 0
     @State private var bottomSheetShown = false
-    
-    
+    @State private var status = 0
     
     
     var body: some View {
@@ -27,7 +26,6 @@ struct HomeScreen: View {
         
         NavigationStack{
             ZStack{
-                
                 CustomMapView(markerOffset: $markerOffset,
                               currentCenterCoordinate: $location,
                               vp: cameraOptions,
@@ -35,9 +33,8 @@ struct HomeScreen: View {
                 )
                 .ignoresSafeArea()
                 .onChange(of: markerOffset) {
-                    checkMarkerOffset()
+                    checkMarkerOffset(status: status)
                 }
-                
                 
                 Button(action: {
                     withAnimation {
@@ -51,18 +48,26 @@ struct HomeScreen: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
                 
                 
-                MarkerView(markerOffset: $markerOffset, viewModel: viewModel)
-                    .offset(y: markerOffset)
-                    .animation(.easeInOut, value: markerOffset)
                 
-                
-                BottomSheetView(isOpen: $bottomSheetShown, 
-                                minHeight: 250,
-                                maxHeight: UIScreen.main.bounds.height) {
-                    BottomSheetContent(viewModel: viewModel)
+                if(status == 0){
+                    MarkerView(markerOffset: $markerOffset, viewModel: viewModel)
+                        .offset(y: markerOffset)
+                        .animation(.easeInOut, value: markerOffset)
+                    
+                    BottomSheetView(isOpen: $bottomSheetShown,
+                                    minHeight: 250,
+                                    maxHeight: UIScreen.main.bounds.height) {
+                        BottomSheetContent(status: $status, viewModel: viewModel)
+                    }
+                                    .edgesIgnoringSafeArea(.bottom)
+                    
+                }else if(status == 1){
+                    OrderGoView(status: $status, mainViewModel: viewModel)
+                        .onAppear {
+                            viewModel.serviceTariffRequest()
+                        }
+                    
                 }
-                .edgesIgnoringSafeArea(.bottom)
-                
                 
                 if isDrawerOpen {
                     Color.black.opacity(0.5)
@@ -89,14 +94,11 @@ struct HomeScreen: View {
         
     }
     
-    private func checkMarkerOffset() {
-        if markerOffset == 0 {
+    private func checkMarkerOffset(status: Int) {
+        
+        if markerOffset == 0 && status == 0 {
             viewModel.reverseLocation(lat: location.latitude, lon: location.longitude)
         }
     }
     
 }
-
-//#Preview {
-//    HomeScreen()
-//}
