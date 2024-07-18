@@ -55,3 +55,27 @@ func returnTitle(title: String) -> String {
         return ""
     }
 }
+
+
+func convertTariff(lang: String, data: ServiceTariff) -> String {
+    var name = ""
+    do {
+        switch lang {
+        case "uz":
+            name = data.name.split(separator: "tariffNameUz:")[1].split(separator: "@")[0].replacingOccurrences(of: "[", with: "")
+        case "ru":
+            name = data.name.split(separator: "tariffNameRu:")[1].split(separator: "@")[0].trimmingCharacters(in: .whitespacesAndNewlines)
+        case "ka":
+            name = data.name.split(separator: "tariffNameGr:")[1].split(separator: "@")[0].trimmingCharacters(in: .whitespacesAndNewlines)
+        case "kaa":
+            name = data.name.split(separator: "tariffNameKr:")[1].split(separator: "@")[0].trimmingCharacters(in: .whitespacesAndNewlines)
+        case "en":
+            name = data.name.split(separator: "tariffNameEn:")[1].split(separator: "@")[0].trimmingCharacters(in: .whitespacesAndNewlines)
+        default:
+            break
+        }
+    } catch {
+        print(error.localizedDescription)
+    }
+    return name
+}

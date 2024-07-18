@@ -8,8 +8,6 @@
 import SwiftUI
 
 struct SearchScreenDialog: View {
-    @Binding var status: Int
-    @Binding var showSearchView: Bool
     @ObservedObject var viewModel: MainViewModel
     @ObservedObject var eSearchViewModel =  ElasticSearchViewModel()
     
@@ -25,7 +23,7 @@ struct SearchScreenDialog: View {
             
             HStack(spacing: 0) {
                 Button(action: {
-                    showSearchView.toggle()
+                    viewModel.isSearchDialogShowing = false
                 }) {
                     Image(systemName: "xmark")
                         .padding()
@@ -34,14 +32,13 @@ struct SearchScreenDialog: View {
                 }
                 
                 Spacer()
-                
                 Text("Where are we going?")
                     .font(.system(size: 24, weight: .bold))
                 
                 Spacer()
                 
                 Button("Done") {
-                    showSearchView.toggle()
+                    viewModel.isSearchDialogShowing = false
                 }
                 .font(.system(size: 16))
                 .hidden()
@@ -93,11 +90,11 @@ struct SearchScreenDialog: View {
                 
                 if isSearchingLocation {
                     ForEach(eSearchViewModel.reverseLocations?.features ?? [], id: \.properties.id) { reverseInfo in
-                        ElasticSearchResult(status: $status, searchInfo: reverseInfo, viewModel: viewModel)
+                        ElasticSearchResult(searchInfo: reverseInfo, viewModel: viewModel)
                     }
                 }else{
                     ForEach(viewModel.addressHistoryResponse ?? [], id: \.id) { orderInfo in
-                        SearchHistory(status: $status, orderInfo: orderInfo, viewModel: viewModel)
+                        SearchHistory(orderInfo: orderInfo, viewModel: viewModel)
                     }
                 }
             }
@@ -108,7 +105,6 @@ struct SearchScreenDialog: View {
 }
 
 struct ElasticSearchResult: View {
-    @Binding var status: Int
     var searchInfo: GeocodeFeature
     @ObservedObject var viewModel: MainViewModel
     
@@ -134,18 +130,18 @@ struct ElasticSearchResult: View {
         .padding(.vertical, 8)
         .frame(maxWidth: .infinity, maxHeight: 50)
         .background(Color(.secondarySystemBackground))
-        .cornerRadius(12)
+        .cornerRadius(10)
         .padding(.leading, 4)
         .onTapGesture(perform: {
-            
             let address = searchInfo.properties.name
             let lat = searchInfo.geometry.coordinates[0]
             let lon = searchInfo.geometry.coordinates[1]
             let location = LatLng(latitude: lat, longitude: lon)
             let uAddress = UserSelectedAddress(addressName: address, addressLocation: location)
             viewModel.locationUpdated(uAddress)
-            status = 1
-            
+            viewModel.setStatus(value: 1)
+            viewModel.isSearchDialogShowing = false
+          
         })
         
     }
@@ -153,7 +149,6 @@ struct ElasticSearchResult: View {
 
 
 struct SearchHistory: View {
-    @Binding var status: Int
     var orderInfo: ShortOrderInfo
     @ObservedObject var viewModel: MainViewModel
     
@@ -180,7 +175,7 @@ struct SearchHistory: View {
         .padding(.vertical, 8)
         .frame(maxWidth: .infinity, maxHeight: 50)
         .background(Color(.secondarySystemBackground))
-        .cornerRadius(12)
+        .cornerRadius(10)
         .padding(.leading, 4)
         .onTapGesture(perform: {
             let address = orderInfo.route[orderInfo.route.count-1]
@@ -190,18 +185,9 @@ struct SearchHistory: View {
             let location = LatLng(latitude: lat, longitude: lon)
             let uAddress = UserSelectedAddress(addressName: name, addressLocation: location)
             viewModel.locationUpdated(uAddress)
-            status = 1
+            viewModel.isSearchDialogShowing = false
+            viewModel.setStatus(value: 1)
         })
         
     }
 }
-
-
-//struct SearchScreenDialog_Previews: PreviewProvider {
-//    @State static var showSearchView = true
-//
-//
-//    static var previews: some View {
-//        SearchScreenDialog(showSearchView: $showSearchView)
-//    }
-//}

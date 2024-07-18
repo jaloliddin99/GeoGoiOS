@@ -8,16 +8,14 @@
 import SwiftUI
 
 struct SearchTextView: View {
-    @Binding var status: Int
     @ObservedObject var viewModel: MainViewModel
-    @State private var showSearchView = false
     
     
     var body: some View {
         ZStack{
             HStack{
                 Button {
-                    showSearchView.toggle()
+                    viewModel.isSearchDialogShowing = true
                 } label: {
                     Text("Where are we going?")
                         .padding()
@@ -26,34 +24,14 @@ struct SearchTextView: View {
                         .background(Color(.secondarySystemBackground))
                         .cornerRadius(10)
                 }
-                .sheet(isPresented: $showSearchView) {
-                    VStack{
-                        SearchScreenDialog(status: $status,
-                                           showSearchView: $showSearchView, 
-                                           viewModel: viewModel)
-                        Spacer()
-                    }
-                }
-                
-                
                 Button(action: {
-                    let address = viewModel.currentAddress
-                    let addressName = address?.display_name ?? "Picked Location"
-                    let lat = address?.lat ?? "0.0"
-                    let lon = address?.lon ?? "0.0"
-                    let location = LatLng(latitude: Double(lat) ?? 0.0, longitude: Double(lon) ?? 0.0)
-                    
-                    let uAddress = UserSelectedAddress(addressName: addressName, addressLocation: location)
-                    viewModel.locationUpdated(uAddress)
-                    status = 1
-                    
+                    viewModel.setStatus(value: 1)
                 }, label: {
                     Text("Order ->")
                         .font(.system(size: 14))
                         .fontWeight(.medium)
-                        .padding(.leading, 12)
-                        .padding(.trailing, 12)
-                        .frame( maxHeight: 36)
+                        .padding(.horizontal, 12)
+                        .frame(maxHeight: 36)
                         .foregroundColor(.white)
                         .background(Color.main)
                         .cornerRadius(10)
@@ -78,7 +56,6 @@ struct SearchTextView: View {
 
 struct ShortOrderInfoView: View {
     @ObservedObject var viewModel: MainViewModel
-    @Binding var status: Int
     var orderInfo: ShortOrderInfo
     
     var body: some View {
@@ -111,7 +88,7 @@ struct ShortOrderInfoView: View {
             let location = LatLng(latitude: lat, longitude: lon)
             let uAddress = UserSelectedAddress(addressName: name, addressLocation: location)
             viewModel.locationUpdated(uAddress)
-            status = 1
+            viewModel.setStatus(value: 1)
         })
     }
 }

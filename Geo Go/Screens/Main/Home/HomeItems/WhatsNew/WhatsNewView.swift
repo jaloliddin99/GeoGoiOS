@@ -77,17 +77,15 @@ struct BottomSheetView<Content: View>: View {
 
 
 struct BottomSheetContent: View{
-    @Binding var status: Int
-
     @ObservedObject var viewModel: MainViewModel
     
     var body: some View {
         VStack(spacing: 12) {
-            SearchTextView(status: $status, viewModel: viewModel)
+            SearchTextView(viewModel: viewModel)
             ScrollView(.horizontal, showsIndicators: false) {
                 LazyHStack(spacing: 6) {
                     ForEach(viewModel.addressHistoryResponse ?? [], id: \.id) { orderInfo in
-                        ShortOrderInfoView(viewModel: viewModel, status: $status, orderInfo: orderInfo)
+                        ShortOrderInfoView(viewModel: viewModel, orderInfo: orderInfo)
                     }
                 }
                 .frame(height: 60)

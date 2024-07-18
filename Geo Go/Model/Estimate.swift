@@ -10,7 +10,7 @@ import Foundation
 // estimate response
 
 struct EstimateResponse: Codable {
-    let cost: EstimateCost
+    var cost: EstimateCost
     let distance: Double
 }
 
@@ -41,3 +41,61 @@ struct RouteCoordinates: Codable {
     let lon : Double
     let type : String?
 }
+
+
+func mapToRouteCoordinates(addresses: [UserSelectedAddress]) -> [RouteCoordinates] {
+    return addresses.map { address in
+        RouteCoordinates(
+            lat: address.addressLocation.latitude,
+            lon: address.addressLocation.longitude,
+            type: address.addressName
+        )
+    }
+}
+
+
+func mapToRouteCoordinatesLatLng(coordinates: [UserSelectedAddress]) -> [String] {
+    return coordinates.map { coordinates in
+        "\(coordinates.addressLocation.latitude),\(coordinates.addressLocation.longitude)"
+    }
+}
+
+func changeCost(res: EstimateResponse, list: inout [ServiceTariff]) {
+    for i in list.indices {
+        if res.cost.type == String(list[i].id) {
+            list[i].minCost = res.cost.amount
+            
+            if let modifier = res.cost.modifier {
+                switch modifier.type {
+                case "add":
+                    if let price = modifier.value {
+                        list[i].Type = "add"
+                        list[i].costChangeStep2 = price
+                        list[i].costChangeAllowed = true
+                    }
+                case "multiply":
+                    if let price = modifier.value {
+                        list[i].Type = "multiply"
+                        let priceCost = res.cost.amount * (price != 0 ? price : 1)
+                        list[i].minCost = priceCost
+                        list[i].costChangeStep2 = priceCost - res.cost.amount
+                        list[i].costChangeAllowed = true
+                    }
+                default:
+                    list[i].Type = "constant"
+                    list[i].costChangeAllowed = false
+                    list[i].costChangeStep2 = 0.0
+                }
+            } else {
+                list[i].Type = "constant"
+                list[i].costChangeAllowed = false
+                list[i].costChangeStep2 = 0.0
+            }
+            
+            list[i].showEstimation = false
+            
+
+        }
+    }
+}
+

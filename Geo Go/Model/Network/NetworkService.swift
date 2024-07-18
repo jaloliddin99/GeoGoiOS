@@ -22,7 +22,7 @@ class NetworkService{
         body: Data? = nil,
         method: String = "GET",
         headers: [String: String]? = nil,
-        
+        isPrintable: Bool = false,
         completed: @escaping (Result<T, APError>) -> Void
     ) {
         var urlComponents = URLComponents(string: url != nil ? url! : baseUrl)
@@ -43,8 +43,9 @@ class NetworkService{
             completed(.failure(.invalidURL))
             return
         }
-        
-        print(url)
+        if isPrintable{
+            print("Url Data \(url)")
+        }
         
         var request = URLRequest(url: url)
         request.httpMethod = method
@@ -63,6 +64,10 @@ class NetworkService{
                 completed(.failure(.unableToComplete))
                 return
             }
+            if isPrintable{
+                print("HTTP response : \(response)")
+            }
+            
             
             guard let httpResponse = response as? HTTPURLResponse, (200..<300).contains(httpResponse.statusCode) else {
                 completed(.failure(.invalidResponse))
@@ -73,10 +78,13 @@ class NetworkService{
                 completed(.failure(.invalidData))
                 return
             }
-            if let jsonString = String(data: data, encoding: .utf8) {
-                print("Raw JSON response: \(jsonString)")
-            }
             
+            if isPrintable{
+                if let jsonString = String(data: data, encoding: .utf8) {
+                    print("Raw JSON response: \(jsonString)")
+                }
+            }
+           
             do {
                 let decodedResponse = try JSONDecoder().decode(T.self, from: data)
                 completed(.success(decodedResponse))

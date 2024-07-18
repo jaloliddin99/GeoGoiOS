@@ -33,11 +33,6 @@ class NaiveHmacSigner {
     }
 
     static func authSignature(id: Int, key: String, method: String, path: String) -> String {
-        
-        print("userId -> \(id) ")
-        print("key -> \(key)  ")
-        print("method -> \(method) " )
-        print("path -> \(path)  ")
         let identity = String(id)
         guard let secret = Data(base64Encoded: key) else { return "Invalid key" }
         

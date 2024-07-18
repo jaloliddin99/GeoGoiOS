@@ -14,6 +14,13 @@
 		2565CF8F2C42A36F00FCC08A /* Options.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2565CF8E2C42A36F00FCC08A /* Options.swift */; };
 		2565CF912C42B7B700FCC08A /* DialogComment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2565CF902C42B7B700FCC08A /* DialogComment.swift */; };
 		2565CF932C42C25E00FCC08A /* DialogAnotherPerson.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2565CF922C42C25D00FCC08A /* DialogAnotherPerson.swift */; };
+		2565CF952C43D62600FCC08A /* DialogAddressLists.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2565CF942C43D62600FCC08A /* DialogAddressLists.swift */; };
+		2565CF972C44CC9F00FCC08A /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2565CF962C44CC9F00FCC08A /* Utils.swift */; };
+		2565CF9A2C45055D00FCC08A /* Routing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2565CF992C45055D00FCC08A /* Routing.swift */; };
+		2565CF9C2C453CED00FCC08A /* PolyLineUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2565CF9B2C453CED00FCC08A /* PolyLineUtils.swift */; };
+		2565CF9E2C4547FF00FCC08A /* Algorithms.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2565CF9D2C4547FF00FCC08A /* Algorithms.swift */; };
+		2565CFA02C4678CD00FCC08A /* MapBoxExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2565CF9F2C4678CD00FCC08A /* MapBoxExt.swift */; };
+		2565CFA22C467FFC00FCC08A /* ViewAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2565CFA12C467FFC00FCC08A /* ViewAnnotation.swift */; };
 		256877722C258B190041E16A /* Geo_GoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256877712C258B190041E16A /* Geo_GoApp.swift */; };
 		256877762C258B1B0041E16A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 256877752C258B1B0041E16A /* Assets.xcassets */; };
 		256877792C258B1B0041E16A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 256877782C258B1B0041E16A /* Preview Assets.xcassets */; };
@@ -75,6 +82,13 @@
 		2565CF8E2C42A36F00FCC08A /* Options.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Options.swift; sourceTree = "<group>"; };
 		2565CF902C42B7B700FCC08A /* DialogComment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogComment.swift; sourceTree = "<group>"; };
 		2565CF922C42C25D00FCC08A /* DialogAnotherPerson.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogAnotherPerson.swift; sourceTree = "<group>"; };
+		2565CF942C43D62600FCC08A /* DialogAddressLists.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogAddressLists.swift; sourceTree = "<group>"; };
+		2565CF962C44CC9F00FCC08A /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		2565CF992C45055D00FCC08A /* Routing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Routing.swift; sourceTree = "<group>"; };
+		2565CF9B2C453CED00FCC08A /* PolyLineUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolyLineUtils.swift; sourceTree = "<group>"; };
+		2565CF9D2C4547FF00FCC08A /* Algorithms.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Algorithms.swift; sourceTree = "<group>"; };
+		2565CF9F2C4678CD00FCC08A /* MapBoxExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapBoxExt.swift; sourceTree = "<group>"; };
+		2565CFA12C467FFC00FCC08A /* ViewAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewAnnotation.swift; sourceTree = "<group>"; };
 		2568776E2C258B190041E16A /* Geo Go.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Geo Go.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		256877712C258B190041E16A /* Geo_GoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Geo_GoApp.swift; sourceTree = "<group>"; };
 		256877752C258B1B0041E16A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -234,6 +248,9 @@
 				2568779D2C25C9FE0041E16A /* Constants */,
 				2568778D2C25C28F0041E16A /* Extensions */,
 				2565CF8E2C42A36F00FCC08A /* Options.swift */,
+				2565CF962C44CC9F00FCC08A /* Utils.swift */,
+				2565CF9B2C453CED00FCC08A /* PolyLineUtils.swift */,
+				2565CF9D2C4547FF00FCC08A /* Algorithms.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -279,6 +296,7 @@
 			isa = PBXGroup;
 			children = (
 				2568778E2C25C2A80041E16A /* Alert.swift */,
+				2565CF9F2C4678CD00FCC08A /* MapBoxExt.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -297,6 +315,7 @@
 			isa = PBXGroup;
 			children = (
 				256877982C25C63C0041E16A /* LoadingView.swift */,
+				2565CFA12C467FFC00FCC08A /* ViewAnnotation.swift */,
 			);
 			path = "UIKit Components";
 			sourceTree = "<group>";
@@ -330,6 +349,7 @@
 				25BFDB772C357B8500D73993 /* ElasticSearch.swift */,
 				25BFDB822C35E62500D73993 /* ServiceTariffs.swift */,
 				252E5C202C3C075900C132AF /* Estimate.swift */,
+				2565CF992C45055D00FCC08A /* Routing.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -460,6 +480,7 @@
 				2565CF8C2C42690300FCC08A /* DialogWish.swift */,
 				2565CF902C42B7B700FCC08A /* DialogComment.swift */,
 				2565CF922C42C25D00FCC08A /* DialogAnotherPerson.swift */,
+				2565CF942C43D62600FCC08A /* DialogAddressLists.swift */,
 			);
 			path = OrderGo;
 			sourceTree = "<group>";
@@ -553,6 +574,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				256EAEE12C30BA0D00FA7A5C /* SideMenuRowType.swift in Sources */,
+				2565CFA02C4678CD00FCC08A /* MapBoxExt.swift in Sources */,
 				252E5C272C3C7F8700C132AF /* CustomBottomSheet.swift in Sources */,
 				25BFDB752C354E7F00D73993 /* SearchScreenDialog.swift in Sources */,
 				256877A32C25D1470041E16A /* NetworkService.swift in Sources */,
@@ -564,6 +586,7 @@
 				256877862C25C17C0041E16A /* AccessScreen.swift in Sources */,
 				252E5C212C3C075900C132AF /* Estimate.swift in Sources */,
 				256EAEB82C2D8B4F00FA7A5C /* HomeScreen.swift in Sources */,
+				2565CFA22C467FFC00FCC08A /* ViewAnnotation.swift in Sources */,
 				256EAED82C309DE900FA7A5C /* MapConfig.swift in Sources */,
 				256EAEDA2C309F9900FA7A5C /* HomeScreenDrawer.swift in Sources */,
 				25BFDB782C357B8500D73993 /* ElasticSearch.swift in Sources */,
@@ -574,10 +597,14 @@
 				25BFDB7D2C35CFA400D73993 /* OrderGoView.swift in Sources */,
 				25BFDB682C345DF700D73993 /* WhatsNewView.swift in Sources */,
 				25BFDB732C34891800D73993 /* AddressHistory.swift in Sources */,
+				2565CF9C2C453CED00FCC08A /* PolyLineUtils.swift in Sources */,
 				2565CF8F2C42A36F00FCC08A /* Options.swift in Sources */,
 				2565CF932C42C25E00FCC08A /* DialogAnotherPerson.swift in Sources */,
+				2565CF952C43D62600FCC08A /* DialogAddressLists.swift in Sources */,
 				25BFDB7A2C357BC800D73993 /* ElasticSearchViewModel.swift in Sources */,
+				2565CF972C44CC9F00FCC08A /* Utils.swift in Sources */,
 				2568778C2C25C25A0041E16A /* LocationManager.swift in Sources */,
+				2565CF9A2C45055D00FCC08A /* Routing.swift in Sources */,
 				256EAEDC2C30A2C500FA7A5C /* DrawerBtn.swift in Sources */,
 				256EAECF2C2F22F100FA7A5C /* EnterPhoneViewModel.swift in Sources */,
 				256877882C25C1D90041E16A /* AccessViewModel.swift in Sources */,
@@ -589,6 +616,7 @@
 				256877722C258B190041E16A /* Geo_GoApp.swift in Sources */,
 				252E5C242C3C29CF00C132AF /* EstimateHelper.swift in Sources */,
 				256877A82C25D1FF0041E16A /* NetworkError.swift in Sources */,
+				2565CF9E2C4547FF00FCC08A /* Algorithms.swift in Sources */,
 				25BFDB662C343A8700D73993 /* ReverseModel.swift in Sources */,
 				25BFDB7F2C35DD4700D73993 /* CarSelectionView.swift in Sources */,
 				25BFDB872C36BFF900D73993 /* DataHolder.swift in Sources */,

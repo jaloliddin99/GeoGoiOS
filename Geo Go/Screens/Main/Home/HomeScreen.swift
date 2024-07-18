@@ -16,25 +16,25 @@ struct HomeScreen: View {
     @State private var isDrawerOpen = false
     @State private var markerOffset: CGFloat = 0
     @State private var bottomSheetShown = false
-    @State private var status = 0
-    
+
     
     var body: some View {
         let uri = StyleURI(rawValue: "mapbox://styles/uzdriver/cl0j7klhe001415o8wpkop805")!
-        let cameraOptions = CameraOptions(center: viewModel.tashkent, zoom: 14, bearing: 0, pitch: 60)
-        
+        let cameraOptions = CameraOptions(center: viewModel.tashkent, zoom: 12)
         
         NavigationStack{
             ZStack{
                 CustomMapView(markerOffset: $markerOffset,
                               currentCenterCoordinate: $location,
+                              viewModel: viewModel,
                               vp: cameraOptions,
                               mapStyle: uri
                 )
                 .ignoresSafeArea()
                 .onChange(of: markerOffset) {
-                    checkMarkerOffset(status: status)
+                    checkMarkerOffset(status: viewModel.status)
                 }
+               
                 
                 Button(action: {
                     withAnimation {
@@ -48,8 +48,7 @@ struct HomeScreen: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
                 
                 
-                
-                if(status == 0){
+                if(viewModel.status == 0){
                     MarkerView(markerOffset: $markerOffset, viewModel: viewModel)
                         .offset(y: markerOffset)
                         .animation(.easeInOut, value: markerOffset)
@@ -57,14 +56,18 @@ struct HomeScreen: View {
                     BottomSheetView(isOpen: $bottomSheetShown,
                                     minHeight: 250,
                                     maxHeight: UIScreen.main.bounds.height) {
-                        BottomSheetContent(status: $status, viewModel: viewModel)
-                    }
-                                    .edgesIgnoringSafeArea(.bottom)
+                        BottomSheetContent( viewModel: viewModel)
+                    }.edgesIgnoringSafeArea(.bottom)
                     
-                }else if(status == 1){
-                    OrderGoView(status: $status, mainViewModel: viewModel)
+                }else if(viewModel.status == 1){
+                    OrderGoView( mainViewModel: viewModel)
                         .onAppear {
-                            viewModel.serviceTariffRequest()
+                            if !viewModel.hasOrderGoViewAppeared {
+                                print("Hello TherE =====================")
+                                viewModel.serviceTariffRequest()
+                                viewModel.requestToDrawRoute()
+                                viewModel.hasOrderGoViewAppeared = true
+                            }
                         }
                     
                 }
@@ -82,6 +85,7 @@ struct HomeScreen: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
                     .ignoresSafeArea()
                 
+                
             }
             .alert(item: $viewModel.alertItem){ alertItem in
                 Alert(title: alertItem.title,
@@ -89,13 +93,16 @@ struct HomeScreen: View {
                       dismissButton: alertItem.dismissButton
                 )
             }
-            
+            .sheet(isPresented: $viewModel.isSearchDialogShowing) {
+                VStack {
+                    SearchScreenDialog(viewModel: viewModel)
+                    Spacer()
+                }
+            }
         }
-        
     }
     
     private func checkMarkerOffset(status: Int) {
-        
         if markerOffset == 0 && status == 0 {
             viewModel.reverseLocation(lat: location.latitude, lon: location.longitude)
         }

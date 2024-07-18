@@ -84,10 +84,12 @@ struct AddressView: View {
     @ObservedObject var viewModel: MainViewModel
 
     var body: some View {
-        Text(viewModel.currentAddress?.display_name ?? "Searching Address...")
+        let name = viewModel.currentAddress?.display_name ?? "Point on the map"
+        Text(name)
             .font(.system(size: 16))
             .foregroundColor(.white)
             .lineLimit(1)
+            
     }
 }
 

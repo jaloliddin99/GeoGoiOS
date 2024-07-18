@@ -18,6 +18,7 @@ class DataHolder {
     static var listOptions: [OptionsClass] = []
 
     static var status = 0
-    
+    static var condensedLinkedList = LinkedList<MyPoint>()
+
     
 }

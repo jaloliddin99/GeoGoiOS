@@ -77,9 +77,22 @@ class Constants{
     static var CAR_PEREGON = "carType_7"
     
     
+    static let NAVI_BASE_URL = "https://route2.uz.taxi/route?key=9db0a28e-4851-433f-86c7-94b8a695fb18"
+    
     static let paymentMethod = PaymentMethod(
         kind: "cash", id: "191000000026125", name: "Beznal", enoughMoney: true
         )
     
+    
+    
+    static let BLUE_ICON_ID = "blue"
+    static let SOURCE_ID = "source_id"
+    static let LAYER_ID = "layer_id"
+    static let TERRAIN_URL_TILE_RESOURCE = "mapbox://mapbox.mapbox-terrain-dem-v1"
+    static let MARKER_ID_PREFIX = "view_annotation_"
+    static let SELECTED_ADD_COEF_PX: CGFloat = 50
+    
+    static let geoJSONDataSourceIdentifier = "geoJSON-data-source"
+
     
 }

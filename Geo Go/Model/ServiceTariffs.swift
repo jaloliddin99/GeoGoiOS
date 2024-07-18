@@ -27,7 +27,8 @@ struct DispatcherCall: Codable {
 }
 
 
-struct ServiceTariff: Codable, Identifiable {
+struct ServiceTariff: Codable, Identifiable, Equatable {
+    
     var id: Int64
     var name: String
     var icon: String
@@ -43,7 +44,7 @@ struct ServiceTariff: Codable, Identifiable {
     var `Type`: String?
 }
 
-struct TariffOption: Codable, Identifiable {
+struct TariffOption: Codable, Identifiable, Equatable {
     var id: Int64
     var name: String
     var value: Double
