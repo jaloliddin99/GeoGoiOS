@@ -73,9 +73,16 @@ struct CustomMapView: UIViewRepresentable {
             
             statusCancellable = viewModel.$status
                 .sink { [weak self] status in
-                    if status == 0 {
+                    if (status == 0 || status == 2) {
                         self?.removeRoute(mapView: mapView)
                         mapView.viewAnnotations.removeAll()
+                        
+                        if status == 2 {
+                            let loc = viewModel.locationHolder[0].addressLocation
+                            let location  = CLLocationCoordinate2D(latitude: loc.latitude, longitude: loc.longitude)
+                            let options = CameraOptions(center: location, zoom: 12)
+                            mapView.camera.fly(to: options, duration: 1.0)
+                        }
                     }
                 }
         }

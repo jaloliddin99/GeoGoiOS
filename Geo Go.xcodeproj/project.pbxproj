@@ -21,6 +21,11 @@
 		2565CF9E2C4547FF00FCC08A /* Algorithms.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2565CF9D2C4547FF00FCC08A /* Algorithms.swift */; };
 		2565CFA02C4678CD00FCC08A /* MapBoxExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2565CF9F2C4678CD00FCC08A /* MapBoxExt.swift */; };
 		2565CFA22C467FFC00FCC08A /* ViewAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2565CFA12C467FFC00FCC08A /* ViewAnnotation.swift */; };
+		2565CFA52C4E31CF00FCC08A /* DialogSelectBonus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2565CFA42C4E31CF00FCC08A /* DialogSelectBonus.swift */; };
+		2565CFA72C54FC3400FCC08A /* Bonus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2565CFA62C54FC3400FCC08A /* Bonus.swift */; };
+		2565CFA92C5B5CE900FCC08A /* CreateOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2565CFA82C5B5CE900FCC08A /* CreateOrder.swift */; };
+		2565CFAE2C5BA85F00FCC08A /* SearchDriver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2565CFAD2C5BA85F00FCC08A /* SearchDriver.swift */; };
+		2565CFB02C5D145000FCC08A /* loading.json in Resources */ = {isa = PBXBuildFile; fileRef = 2565CFAF2C5D145000FCC08A /* loading.json */; };
 		256877722C258B190041E16A /* Geo_GoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256877712C258B190041E16A /* Geo_GoApp.swift */; };
 		256877762C258B1B0041E16A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 256877752C258B1B0041E16A /* Assets.xcassets */; };
 		256877792C258B1B0041E16A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 256877782C258B1B0041E16A /* Preview Assets.xcassets */; };
@@ -89,6 +94,11 @@
 		2565CF9D2C4547FF00FCC08A /* Algorithms.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Algorithms.swift; sourceTree = "<group>"; };
 		2565CF9F2C4678CD00FCC08A /* MapBoxExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapBoxExt.swift; sourceTree = "<group>"; };
 		2565CFA12C467FFC00FCC08A /* ViewAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewAnnotation.swift; sourceTree = "<group>"; };
+		2565CFA42C4E31CF00FCC08A /* DialogSelectBonus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogSelectBonus.swift; sourceTree = "<group>"; };
+		2565CFA62C54FC3400FCC08A /* Bonus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bonus.swift; sourceTree = "<group>"; };
+		2565CFA82C5B5CE900FCC08A /* CreateOrder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateOrder.swift; sourceTree = "<group>"; };
+		2565CFAD2C5BA85F00FCC08A /* SearchDriver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDriver.swift; sourceTree = "<group>"; };
+		2565CFAF2C5D145000FCC08A /* loading.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = loading.json; sourceTree = "<group>"; };
 		2568776E2C258B190041E16A /* Geo Go.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Geo Go.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		256877712C258B190041E16A /* Geo_GoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Geo_GoApp.swift; sourceTree = "<group>"; };
 		256877752C258B1B0041E16A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -173,6 +183,22 @@
 				252E5C262C3C7F8700C132AF /* CustomBottomSheet.swift */,
 			);
 			path = BottomSheet;
+			sourceTree = "<group>";
+		};
+		2565CFA32C4E31A000FCC08A /* ChooseBonus */ = {
+			isa = PBXGroup;
+			children = (
+				2565CFA42C4E31CF00FCC08A /* DialogSelectBonus.swift */,
+			);
+			path = ChooseBonus;
+			sourceTree = "<group>";
+		};
+		2565CFAC2C5BA84D00FCC08A /* CreateOrder */ = {
+			isa = PBXGroup;
+			children = (
+				2565CFAD2C5BA85F00FCC08A /* SearchDriver.swift */,
+			);
+			path = CreateOrder;
 			sourceTree = "<group>";
 		};
 		256877652C258B190041E16A = {
@@ -304,6 +330,7 @@
 		256877902C25C3500041E16A /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				2565CFAF2C5D145000FCC08A /* loading.json */,
 				25BFDB802C35DE8B00D73993 /* swipe_right.json */,
 				25BFDB612C33ED0C00D73993 /* marker_location.json */,
 				256877912C25C4E80041E16A /* Localizable.strings */,
@@ -350,6 +377,8 @@
 				25BFDB822C35E62500D73993 /* ServiceTariffs.swift */,
 				252E5C202C3C075900C132AF /* Estimate.swift */,
 				2565CF992C45055D00FCC08A /* Routing.swift */,
+				2565CFA62C54FC3400FCC08A /* Bonus.swift */,
+				2565CFA82C5B5CE900FCC08A /* CreateOrder.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -401,6 +430,8 @@
 		256EAEBE2C2EADD100FA7A5C /* HomeItems */ = {
 			isa = PBXGroup;
 			children = (
+				2565CFAC2C5BA84D00FCC08A /* CreateOrder */,
+				2565CFA32C4E31A000FCC08A /* ChooseBonus */,
 				25BFDB7B2C35CF9400D73993 /* OrderGo */,
 				25BFDB762C35598400D73993 /* SearchDialog */,
 				25BFDB692C346FB600D73993 /* WhatsNew */,
@@ -560,6 +591,7 @@
 			files = (
 				256877792C258B1B0041E16A /* Preview Assets.xcassets in Resources */,
 				25BFDB812C35DE8B00D73993 /* swipe_right.json in Resources */,
+				2565CFB02C5D145000FCC08A /* loading.json in Resources */,
 				256877932C25C4E80041E16A /* Localizable.strings in Resources */,
 				25BFDB622C33ED0C00D73993 /* marker_location.json in Resources */,
 				256877762C258B1B0041E16A /* Assets.xcassets in Resources */,
@@ -589,6 +621,7 @@
 				2565CFA22C467FFC00FCC08A /* ViewAnnotation.swift in Sources */,
 				256EAED82C309DE900FA7A5C /* MapConfig.swift in Sources */,
 				256EAEDA2C309F9900FA7A5C /* HomeScreenDrawer.swift in Sources */,
+				2565CFA52C4E31CF00FCC08A /* DialogSelectBonus.swift in Sources */,
 				25BFDB782C357B8500D73993 /* ElasticSearch.swift in Sources */,
 				256EAED12C2FC8D300FA7A5C /* EnterCodeViewModel.swift in Sources */,
 				256EAEC82C2F193700FA7A5C /* EnterCodeScreen.swift in Sources */,
@@ -597,11 +630,13 @@
 				25BFDB7D2C35CFA400D73993 /* OrderGoView.swift in Sources */,
 				25BFDB682C345DF700D73993 /* WhatsNewView.swift in Sources */,
 				25BFDB732C34891800D73993 /* AddressHistory.swift in Sources */,
+				2565CFA72C54FC3400FCC08A /* Bonus.swift in Sources */,
 				2565CF9C2C453CED00FCC08A /* PolyLineUtils.swift in Sources */,
 				2565CF8F2C42A36F00FCC08A /* Options.swift in Sources */,
 				2565CF932C42C25E00FCC08A /* DialogAnotherPerson.swift in Sources */,
 				2565CF952C43D62600FCC08A /* DialogAddressLists.swift in Sources */,
 				25BFDB7A2C357BC800D73993 /* ElasticSearchViewModel.swift in Sources */,
+				2565CFAE2C5BA85F00FCC08A /* SearchDriver.swift in Sources */,
 				2565CF972C44CC9F00FCC08A /* Utils.swift in Sources */,
 				2568778C2C25C25A0041E16A /* LocationManager.swift in Sources */,
 				2565CF9A2C45055D00FCC08A /* Routing.swift in Sources */,
@@ -625,6 +660,7 @@
 				256877AE2C26DD560041E16A /* EnterPhoneScreen.swift in Sources */,
 				25BFDB832C35E62500D73993 /* ServiceTariffs.swift in Sources */,
 				25BFDB6E2C347E7500D73993 /* Hmac.swift in Sources */,
+				2565CFA92C5B5CE900FCC08A /* CreateOrder.swift in Sources */,
 				2568779F2C25CA150041E16A /* Constants.swift in Sources */,
 				25BFDB6B2C346FD400D73993 /* SearchTextView.swift in Sources */,
 				25BFDB5D2C33EAA000D73993 /* MarkerView.swift in Sources */,

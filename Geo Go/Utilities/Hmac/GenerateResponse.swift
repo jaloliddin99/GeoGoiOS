@@ -62,7 +62,7 @@ class GenerateResponse {
     }
     
     
-    func generateHmacDataForOrderId(id: String, orderId: Int) -> GenerateReturn {
+    func generateHmacDataForOrderId(id: String, orderId: Int64) -> GenerateReturn {
           var generateReturn = GenerateReturn(data: "", hmac: "", url: "")
 
           let data = NaiveHmacSigner.dateSignature()
@@ -98,10 +98,10 @@ class GenerateResponse {
               method = "POST"
               pathSuffix = "orders/\(orderId)/options"
           default:
-              return generateReturn // Return empty if none match
+              return generateReturn
           }
 
-          let hmac = NaiveHmacSigner.authSignature(id: userId, key: userToken, method: method, path: "api/client/mobile/1.0/\(pathSuffix)")
+          let hmac = NaiveHmacSigner.authSignature(id: userId, key: userToken, method: method, path: "/api/client/mobile/1.0/\(pathSuffix)")
           let responseUrl = "\(mainUrl)/client/mobile/1.0/\(pathSuffix)"
           
           generateReturn = GenerateReturn(data: data, hmac: hmac, url: responseUrl)

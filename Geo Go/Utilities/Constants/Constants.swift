@@ -84,7 +84,6 @@ class Constants{
         )
     
     
-    
     static let BLUE_ICON_ID = "blue"
     static let SOURCE_ID = "source_id"
     static let LAYER_ID = "layer_id"

@@ -9,14 +9,16 @@ import SwiftUI
 
 struct GGButton: View {
     var title: LocalizedStringKey
+    var textColor: Color = .white
+    var bgColor: Color = .main
     
     var body: some View {
         Text(title)
-            .font(.title2)
+            .font(.system(size: 16))
             .fontWeight(.semibold)
             .frame(maxWidth: .infinity, maxHeight: 50)
-            .foregroundColor(.white)
-            .background(Color.main)
+            .foregroundColor(textColor)
+            .background(bgColor)
             .cornerRadius(10)
     }
 }

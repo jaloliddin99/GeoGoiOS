@@ -20,5 +20,11 @@ class DataHolder {
     static var status = 0
     static var condensedLinkedList = LinkedList<MyPoint>()
 
+    static var bonusPrice = 0
+    
+    static var tariffId: Int64 = 0
+    static var orderId: Int64 = 0
+    static var globalComment = ""
+
     
 }

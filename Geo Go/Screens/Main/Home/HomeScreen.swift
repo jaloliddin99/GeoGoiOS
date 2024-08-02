@@ -17,6 +17,7 @@ struct HomeScreen: View {
     @State private var markerOffset: CGFloat = 0
     @State private var bottomSheetShown = false
 
+
     
     var body: some View {
         let uri = StyleURI(rawValue: "mapbox://styles/uzdriver/cl0j7klhe001415o8wpkop805")!
@@ -34,7 +35,6 @@ struct HomeScreen: View {
                 .onChange(of: markerOffset) {
                     checkMarkerOffset(status: viewModel.status)
                 }
-               
                 
                 Button(action: {
                     withAnimation {
@@ -63,13 +63,13 @@ struct HomeScreen: View {
                     OrderGoView( mainViewModel: viewModel)
                         .onAppear {
                             if !viewModel.hasOrderGoViewAppeared {
-                                print("Hello TherE =====================")
                                 viewModel.serviceTariffRequest()
                                 viewModel.requestToDrawRoute()
                                 viewModel.hasOrderGoViewAppeared = true
                             }
                         }
-                    
+                }else if(viewModel.status == 2){
+                    SearchDriver(viewModel: viewModel)
                 }
                 
                 if isDrawerOpen {
@@ -93,9 +93,27 @@ struct HomeScreen: View {
                       dismissButton: alertItem.dismissButton
                 )
             }
+            .alert(isPresented: $viewModel.showCancelOrderAlert) {
+                Alert(
+                    title: Text("Cancel Order"),
+                    message: Text("Are you sure you want to cancel the order?"),
+                    primaryButton: .destructive(Text("Cancel Order")) {
+                        viewModel.cancelMyOrder()
+                    },
+                    secondaryButton: .cancel(Text("Continue")) {
+                        viewModel.showCancelOrderAlert.toggle()
+                    }
+                )
+            }
             .sheet(isPresented: $viewModel.isSearchDialogShowing) {
                 VStack {
                     SearchScreenDialog(viewModel: viewModel)
+                    Spacer()
+                }
+            }
+            .sheet(isPresented: $viewModel.isShowBonusDialog) {
+                VStack {
+                    DialogSelectBonus(viewModel: viewModel)
                     Spacer()
                 }
             }

@@ -13,9 +13,12 @@ import SwiftUI
 final class MainViewModel: ObservableObject{
     
     @Published var isSearchDialogShowing = false
+    @Published var isShowBonusDialog = false
     
     @Published var isShowingMain = false
     @Published var status = DataHolder.status
+    @Published var showCancelOrderAlert = false
+
     var hasOrderGoViewAppeared = false
 
     func setStatus(value: Int) {
@@ -42,6 +45,7 @@ final class MainViewModel: ObservableObject{
         
         generateResponse = GenerateResponse(userId: userId, userToken: userToken, mainUrl: url)
         addressHistory()
+        getBonusResponse(lat: Constants.latitude, lon: Constants.longitude)
     }
     
     
@@ -62,7 +66,6 @@ final class MainViewModel: ObservableObject{
                     ],
             method: "GET",
             headers: ["Accept-Language": "uz"],
-            isPrintable: true,
             completed: handleAppetizersResponse as (Result<UpdateReverseModel, APError>) -> Void)
     }
     
@@ -79,7 +82,6 @@ final class MainViewModel: ObservableObject{
                         let lon = Double(currentAddress?.lon ?? "0") ?? 0.0
                         locationHolder.removeAll()
                         locationUpdated(UserSelectedAddress(addressName: name, addressLocation: LatLng(latitude: lat, longitude: lon)))
-                        
                     }
                     
                     
@@ -180,6 +182,7 @@ final class MainViewModel: ObservableObject{
                     if let response = response as? ServiceResponse {
                         self.tariff = response
                         DataHolder.serviceTariffConstant = response.tariffs
+                        DataHolder.tariffId = response.tariffs![0].id
                         DataHolder.listOptions.removeAll()
                         DataHolder.listOptions.append(contentsOf: dataSelect(data: response.tariffs!))
                         response.tariffs?.forEach({ tariff in
@@ -286,7 +289,6 @@ final class MainViewModel: ObservableObject{
         NetworkService.shared.sendRequest(
             url: urlWithParams,
             method: "GET",
-            isPrintable: true,
             completed: handleDrawRouteRequestResponse as (Result<GraphopperNavResponse, APError>) -> Void)
     }
     
@@ -306,11 +308,140 @@ final class MainViewModel: ObservableObject{
         }
     }
     
+    
+    
+    
+    @Published var bonusResponse: BonusResponse = BonusResponse(balance: 0, capabilities: Capabilities(type: "min-max", min: 0, max: 0))
+    
+    func getBonusResponse(lat: Double, lon: Double) {
+        guard let responseDetails = generateResponse?.generateHmacData(id: "bonuses") else { return }
+        
+        NetworkService.shared.sendRequest(
+            url: responseDetails.url,
+            method: "GET",
+            headers: [
+                "X-Hive-GPS-Position": "\(lat) \(lon)",
+                "Hive-Profile": Constants.HIVE_PROFILE,
+                "Date": responseDetails.data,
+                "Authentication": responseDetails.hmac,
+            ],
+            completed: handleBonusResponse as (Result<BonusResponse, APError>) -> Void)
+    }
+    
+    private func handleBonusResponse<T: Decodable>(_ result: Result<T, APError>) {
+        DispatchQueue.main.async { [self] in
+            self.isLoading = false
+            
+            switch result {
+                case .success(let response):
+                    if let appetizers = response as? BonusResponse {
+                        self.bonusResponse = appetizers
+                    }
+                    
+                case .failure(_): break
+            }
+        }
+    }
+    
+    
+    
+    
+    @Published var createOrder: CreateOrderResponse?
+    
+    func createOrder(lat: Double, lon: Double, createOrderRequest: CreateOrderRequest) {
+        guard let responseDetails = generateResponse?.generateHmacData(id: "orders") else { return }
+        
+        guard let requestBodyData = try? JSONEncoder().encode(createOrderRequest) else {
+            return
+        }
+        self.isLoading = true
+        isShowBonusDialog.toggle()
+        NetworkService.shared.sendRequest(
+            url: responseDetails.url,
+            body: requestBodyData,
+            method: "POST",
+            headers: [
+                "Accept-Language": "uz",
+                "X-Hive-GPS-Position": "\(lat) \(lon)",
+                "Hive-Profile": Constants.HIVE_PROFILE,
+                "Date": responseDetails.data,
+                "Authentication": responseDetails.hmac,
+            ],
+            completed: handlecreateOrderResponse as (Result<CreateOrderResponse, APError>) -> Void)
+    }
+    
+    private func handlecreateOrderResponse<T: Decodable>(_ result: Result<T, APError>) {
+        DispatchQueue.main.async { [self] in
+            self.isLoading = false
+            
+            switch result {
+                case .success(let response):
+                    if let appetizers = response as? CreateOrderResponse {
+                        self.createOrder = appetizers
+                        status = 2
+                        DataHolder.status = status
+                        DataHolder.orderId = appetizers.id
+                    }
+                    
+                case .failure(_): break
+            }
+        }
+    }
+    
+    
+    @Published var cancelOrder: EmptyModel?
+    
+    func cancelMyOrder() {
+        guard let responseDetails = generateResponse?.generateHmacDataForOrderId(id: "cancelOrder", orderId: DataHolder.orderId) else { return }
+        self.isLoading = true
+
+        print("ResponseDetails \(responseDetails)")
+        NetworkService.shared.sendRequest(
+            url: responseDetails.url,
+            method: "DELETE",
+            headers: [
+                "Accept-Language": "uz",
+                "Hive-Profile": Constants.HIVE_PROFILE,
+                "Date": responseDetails.data,
+                "Authentication": responseDetails.hmac,
+            ],
+            isPrintable: true,
+            completed: handleCancelOrderResponse as (Result<EmptyModel, APError>) -> Void)
+    }
+    
+    private func handleCancelOrderResponse<T: Decodable>(_ result: Result<T, APError>) {
+        DispatchQueue.main.async { [self] in
+            self.isLoading = false
+            
+            switch result {
+                case .success(let response):
+                    if let appetizers = response as? EmptyModel {
+                        self.cancelOrder = appetizers
+                        status = 1
+                        DataHolder.status = status
+                    }
+                    
+                case .failure(let error):
+                    switch error {
+                        case .invalidURL:
+                            alertItem = AlertContext.invalidURL
+                        case .invalidResponse:
+                            alertItem = AlertContext.invalidResponse
+                        case .invalidData:
+                            alertItem = AlertContext.invalidData
+                        case .unableToComplete:
+                            alertItem = AlertContext.unableToComplete
+                    }
+            }
+        }
+    }
+    
+    
     @Published var locationHolder: [UserSelectedAddress] = []
     
     func locationUpdated(_ address: UserSelectedAddress) {
         locationHolder.append(address)
-        if status == 1 && locationHolder.count > 2{
+        if status == 1 && locationHolder.count > 2 {
             requestToDrawRoute()
         }
     }
@@ -320,8 +451,4 @@ final class MainViewModel: ObservableObject{
             locationHolder.removeSubrange(1..<locationHolder.count)
         }
     }
-    
-    
-    
-    
 }

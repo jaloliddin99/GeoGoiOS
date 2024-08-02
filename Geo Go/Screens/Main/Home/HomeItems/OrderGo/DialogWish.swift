@@ -26,6 +26,7 @@ struct DialogWish: View {
                 Section(header: Text("Wish")){
                     WishListItem(title: "Comment", subTitle: comment, action: {
                         showCommentDialog.toggle()
+                        DataHolder.globalComment = comment
                     })
                     .sheet(isPresented: $showCommentDialog){
                         DialogComment(showCommentDialog: $showCommentDialog, commentSend: $comment)

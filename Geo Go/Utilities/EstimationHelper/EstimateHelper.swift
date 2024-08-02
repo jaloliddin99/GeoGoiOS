@@ -66,3 +66,52 @@ private func getOptionsId2(tariffId: Int64) -> Int64? {
     
     return optionId
 }
+
+
+func getOptionsId() -> Int64? {
+    var optionId: Int64? = nil
+    if let serviceTariffConstant = DataHolder.serviceTariffConstant {
+        for serviceTariff in serviceTariffConstant {
+            if DataHolder.tariffId == serviceTariff.id {
+                switch DataHolder.complainOptions {
+                    case 0:
+                        optionId = nil
+                    case 1:
+                        for option in serviceTariff.options {
+                            if option.name == "1" {
+                                optionId = option.id
+                            }
+                        }
+                    case 2:
+                        for option in serviceTariff.options {
+                            if option.name == "2" {
+                                optionId = option.id
+                            }
+                        }
+                    case 3:
+                        for option in serviceTariff.options {
+                            if option.name == "3" {
+                                optionId = option.id
+                            }
+                        }
+                    case 4:
+                        for option in serviceTariff.options {
+                            if option.name == "4" {
+                                optionId = option.id
+                            }
+                        }
+                    case 5:
+                        for option in serviceTariff.options {
+                            if option.name == "5" {
+                                optionId = option.id
+                            }
+                        }
+                    default:
+                        break
+                }
+                break
+            }
+        }
+    }
+    return optionId
+}

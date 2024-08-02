@@ -34,12 +34,15 @@ struct OrderGoView: View {
             }
             .padding(.horizontal, 12)
             
+            let tariffs = mainViewModel.tariff?.tariffs
+            let array = Array(tariffs?.enumerated() ?? [].enumerated())
             VStack(spacing: 4){
                 ScrollView(.horizontal, showsIndicators: false) {
                     LazyHStack(spacing: 12) {
-                        ForEach(mainViewModel.tariff?.tariffs ?? [], id: \.id) { orderInfo in
+                        ForEach(array, id: \.element.id) { index, orderInfo in
                             CarSelectionView(item: orderInfo, isSelected: orderInfo == selectedItem)
                                 .onTapGesture {
+                                    DataHolder.tariffId = tariffs![index].id
                                     selectedItem = orderInfo
                                 }
                         }
@@ -52,7 +55,7 @@ struct OrderGoView: View {
                 PaymentAndWishSection(showWishDialog: $showWishDialog)
                 
                 Button(action: {
-                    print("order btn is printed")
+                    mainViewModel.isShowBonusDialog.toggle()
                 }, label: {
                     GGButton(title: "Order")
                 })

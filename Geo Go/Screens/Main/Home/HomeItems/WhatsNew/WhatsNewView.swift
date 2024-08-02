@@ -52,7 +52,6 @@ struct BottomSheetView<Content: View>: View {
                         }
                         .onEnded { value in
                             
-                            print("value.translation.height")
                             let snapDistance = self.minHeight * 0.25
                             if value.translation.height < -snapDistance {
                                 withAnimation {
