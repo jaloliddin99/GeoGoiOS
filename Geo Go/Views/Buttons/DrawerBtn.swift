@@ -21,6 +21,25 @@ struct DrawerBtn: View {
     }
 }
 
+struct RadioButton: View {
+    let isSelected: Bool
+    let action: () -> Void
+    
+    var body: some View {
+        Image(systemName: isSelected ? "circle.fill" : "circle")
+            .resizable()
+            .foregroundColor(.main)
+            .frame(width: 24, height: 24)
+            .onTapGesture {
+                action()
+            }
+    }
+}
+
+#Preview {
+    RadioButton(isSelected: false, action: {})
+}
+
 #Preview {
     DrawerBtn()
 }

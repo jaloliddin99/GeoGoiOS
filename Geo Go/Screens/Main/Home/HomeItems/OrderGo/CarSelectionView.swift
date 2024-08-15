@@ -54,7 +54,7 @@ struct CarSelectionView: View {
                 }
                 
                 if !item.showEstimation {
-                    Text(formatNumberWithSpaces(item.minCost) ?? "----")
+                    Text(formatNumberWithSpaces(item.minCost))
                         .font(.system(size: 14))
                         .padding(.leading, 4)
                 }else{
@@ -75,19 +75,6 @@ struct CarSelectionView: View {
         )
 
         
-    }
-    
-    private func imageNameForType(_ type: String) -> String {
-        switch type {
-        case Constants.CAR_PEREGON:
-            return "car_peregon"
-        case Constants.CAR_TYPE_3, Constants.CAR_KOMFORT:
-            return "car_comfort"
-        case Constants.CAR_DELIVERY:
-            return "car_delivery"
-        default:
-            return "car_econom"
-        }
     }
 
 }

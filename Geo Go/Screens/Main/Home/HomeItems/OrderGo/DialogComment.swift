@@ -23,17 +23,9 @@ struct DialogComment: View {
             Text("Enter comment for driver!")
                 .font(.title)
                 .fontWeight(.bold)
-                .padding(EdgeInsets(top: 24, leading: 12, bottom: 12, trailing: 12))
-               
-            
-            TextField("Be Quick...", text: $comment)
-                .padding()
-                .frame(maxWidth: .infinity, maxHeight: 200, alignment: .topLeading)
-                .background(Color(.secondarySystemBackground))
-                .cornerRadius(10)
-                .padding(.horizontal, 12)
-
-            
+                .padding(.top, 24)
+                .padding(.bottom, 12)
+            CommentField(comment: $comment, hint: "Be Quick...")
             Spacer()
             Button(action: {
                 commentSend = comment
@@ -43,8 +35,9 @@ struct DialogComment: View {
             })
             .disabled(isButtonDisabled)
             .opacity(isButtonDisabled ? 0.5 : 1.0)
-            .padding()
+            
         }
+        .padding(.horizontal, 16)
         .presentationDetents([.medium])
     }
 }

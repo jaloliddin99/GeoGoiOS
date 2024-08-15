@@ -81,7 +81,7 @@ class GenerateResponse {
               pathSuffix = "orders/\(orderId)"
           case "feedback":
               method = "POST"
-              pathSuffix = "orders/\(id)/feedback" // Here, id is reused which looks like a potential issue in the original code.
+              pathSuffix = "orders/\(id)/feedback" 
           case "getOrderDetails":
               method = "GET"
               pathSuffix = "orders/\(orderId)"

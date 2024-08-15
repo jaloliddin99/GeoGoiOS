@@ -66,17 +66,12 @@ class NetworkService{
             }
             if isPrintable{
                 print("HTTP response : \(response)")
-                
             }
             
         
             guard let httpResponse = response as? HTTPURLResponse, (200..<300).contains(httpResponse.statusCode) else {
                 completed(.failure(.invalidResponse))
                 return
-            }
-            
-            if isPrintable{
-                print("Invalid response  :")
             }
             
             guard let data = data else {

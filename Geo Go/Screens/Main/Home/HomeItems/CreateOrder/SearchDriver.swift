@@ -65,9 +65,22 @@ struct SearchDriver: View {
             Button(action: {
                 viewModel.showCancelOrderAlert.toggle()
             }, label: {
-                GGButton(title: "Cancel")
+                Text("Cancel")
+                    .font(.system(size: 16))
+                    .fontWeight(.semibold)
+                    .frame(maxWidth: .infinity, maxHeight: 50)
+                    
             })
+            .foregroundColor(.red)
+            .background(.white)
+            .cornerRadius(10)
+            .overlay(
+                RoundedRectangle(cornerRadius: 10)
+                    .stroke(Color.red, lineWidth: 1)
+            )
             .padding(.bottom, 16)
+
+            
             
         }
         .padding()

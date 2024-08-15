@@ -35,7 +35,7 @@ struct MyPoint {
 }
 
 func decode(encodedPath: String, precision: Int) -> [MyPoint] {
-    let len = encodedPath.count
+    _ = encodedPath.count
     let factor = pow(10.0, Double(precision))
     
     var path: [MyPoint] = []

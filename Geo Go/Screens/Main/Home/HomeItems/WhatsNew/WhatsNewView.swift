@@ -48,7 +48,6 @@ struct BottomSheetView<Content: View>: View {
                             } else {
                                 state = value.translation.height
                             }
-
                         }
                         .onEnded { value in
                             
@@ -70,7 +69,6 @@ struct BottomSheetView<Content: View>: View {
     private func calculateOffset(with geometry: GeometryProxy) -> CGFloat {
         let offset = isOpen ? self.maxHeight - geometry.size.height : maxHeight - minHeight
         return offset + translation
-
     }
 }
 
@@ -79,19 +77,25 @@ struct BottomSheetContent: View{
     @ObservedObject var viewModel: MainViewModel
     
     var body: some View {
-        VStack(spacing: 12) {
-            SearchTextView(viewModel: viewModel)
-            ScrollView(.horizontal, showsIndicators: false) {
-                LazyHStack(spacing: 6) {
-                    ForEach(viewModel.addressHistoryResponse ?? [], id: \.id) { orderInfo in
-                        ShortOrderInfoView(viewModel: viewModel, orderInfo: orderInfo)
+        
+        ScrollView(.vertical, showsIndicators: false) {
+            VStack(spacing: 12) {
+                SearchTextView(viewModel: viewModel)
+                ScrollView(.horizontal, showsIndicators: false) {
+                    LazyHStack(spacing: 6) {
+                        ForEach(viewModel.addressHistoryResponse ?? [], id: \.id) { orderInfo in
+                            ShortOrderInfoView(viewModel: viewModel, orderInfo: orderInfo)
+                        }
                     }
+                    .frame(height: 60)
+                    .padding(.horizontal, 10)
                 }
-                .frame(height: 60)
-                .padding(.horizontal, 6)
-                
+                WhatsUpView()
+                Spacer()
             }
-            Spacer()
+            .padding(.bottom, 64)
         }
+        
+        
     }
 }

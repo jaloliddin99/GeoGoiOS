@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreLocation
 
 struct SearchTextView: View {
     @ObservedObject var viewModel: MainViewModel
@@ -42,7 +43,7 @@ struct SearchTextView: View {
         }
         .background(Color(.secondarySystemBackground))
         .cornerRadius(10)
-        .padding(.horizontal, 12)
+        .padding(.horizontal, 16)
         
         
     }
@@ -85,7 +86,7 @@ struct ShortOrderInfoView: View {
             let name = address.name
             let lat = address.position?.lat ?? 0.0
             let lon = address.position?.lon ?? 0.0
-            let location = LatLng(latitude: lat, longitude: lon)
+            let location = CLLocationCoordinate2D(latitude: lat, longitude: lon)
             let uAddress = UserSelectedAddress(addressName: name, addressLocation: location)
             viewModel.locationUpdated(uAddress)
             viewModel.setStatus(value: 1)

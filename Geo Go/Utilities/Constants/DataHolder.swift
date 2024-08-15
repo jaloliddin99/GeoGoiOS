@@ -6,12 +6,14 @@
 //
 
 import Foundation
+import CoreLocation
 
 class DataHolder {
     
     static var locationHolder = Array<UserSelectedAddress>()
     
     static var serviceTariffConstant: [ServiceTariff]? = nil
+    static var selectedTariff: ServiceTariff?
     static var complainOptions: Int64 = 0
     static var option: [Int64] = []
 
@@ -25,6 +27,9 @@ class DataHolder {
     static var tariffId: Int64 = 0
     static var orderId: Int64 = 0
     static var globalComment = ""
-
+    
+    static var location: CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+    static var latitude: Double = 41.33851520919809
+    static var longitude: Double = 69.33460926588599
     
 }

@@ -68,7 +68,15 @@ struct CustomMapView: UIViewRepresentable {
             cancellable = viewModel.$routeCoordinates
                 .compactMap { $0 }
                 .sink { [weak self] routeCoordinates in
-                    self?.drawRoute(mapView: mapView, coordinates: routeCoordinates, userLocations: viewModel.locationHolder)
+                    if DataHolder.status == 1 {
+                        self?.drawRoute(mapView: mapView, coordinates: routeCoordinates, userLocations: viewModel.locationHolder)
+                    }else if DataHolder.status == 3 {
+                        self?.drawRoute(mapView: mapView, coordinates: routeCoordinates,
+                                        userLocations: getCoorWithDriverLocation(
+                                        orderInfo: viewModel.getOrderDetail!,
+                                        clientLocation: DataHolder.location)
+                        )
+                    }
                 }
             
             statusCancellable = viewModel.$status
@@ -150,20 +158,17 @@ struct CustomMapView: UIViewRepresentable {
                 }
                 
                 mapView.viewAnnotations.removeAll()
-                
-                userLocations.enumerated().forEach { index, ua in
-                    let coor = CLLocationCoordinate2DMake(
-                        ua.addressLocation.latitude,
-                        ua.addressLocation.longitude
-                    )
-                    if index == 0 || index == (userLocations.count - 1) {
-                        addViewAnnotation(coordinate: coor, mapView: mapView, address: ua.addressName)
+                if DataHolder.status == 1 {
+                    userLocations.enumerated().forEach { index, ua in
+                        if index == 0 || index == (userLocations.count - 1) {
+                            addViewAnnotation(coordinate: ua.addressLocation, mapView: mapView, address: ua.addressName)
+                        }
                     }
                 }
-
+                
                 
                 addCircleLayers(mapView: mapView, userLocations: userLocations)
-
+                
                 let referenceCamera = CameraOptions(zoom: 5, bearing: 45)
                 guard let camera = try? mapView.mapboxMap.camera(
                     for: coor,
@@ -178,8 +183,8 @@ struct CustomMapView: UIViewRepresentable {
             let annotationView = AnnotationView(text: address)
             annotationView.frame.size = CGSize(width: 150, height: 50)
             
-//            let anchor = coordinate.longitude - mapView.mapboxMap.cameraState.center.longitude > 0 ?
-//            ViewAnnotationAnchor.bottomRight : ViewAnnotationAnchor.bottomLeft
+            //            let anchor = coordinate.longitude - mapView.mapboxMap.cameraState.center.longitude > 0 ?
+            //            ViewAnnotationAnchor.bottomRight : ViewAnnotationAnchor.bottomLeft
             
             let annotation = ViewAnnotation(
                 coordinate: coordinate,
@@ -195,11 +200,9 @@ struct CustomMapView: UIViewRepresentable {
             let pointSourceId = "point-source"
             let pointLayerId = "point-layer"
             let pointFeatures = userLocations.map { coordinate -> Feature in
-                let lat = coordinate.addressLocation.latitude
-                let lon = coordinate.addressLocation.longitude
-                return Feature(geometry: .point(Point(CLLocationCoordinate2D(latitude: lat, longitude: lon))))
+                return Feature(geometry: .point(Point(coordinate.addressLocation)))
             }
-
+            
             var pointSource = GeoJSONSource(id: pointSourceId)
             pointSource.data = .featureCollection(FeatureCollection(features: pointFeatures))
             
@@ -224,7 +227,7 @@ struct CustomMapView: UIViewRepresentable {
                 let layers = mapView.mapboxMap.allLayerIdentifiers
                 for layer in layers {
                     if let source = mapView.mapboxMap.layerProperty(for: layer.id, property: "source").value as? String,
-                        source == "line-source" {
+                       source == "line-source" {
                         try mapView.mapboxMap.removeLayer(withId: layer.id)
                     }
                 }

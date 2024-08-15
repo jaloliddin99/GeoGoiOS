@@ -18,6 +18,16 @@ struct ShortOrderInfo: Codable{
     let cost: Cost?
 }
 
+struct OrderHistory: Codable, Identifiable{
+    let id: Int64
+    let state: Int
+    let route: [SearchedAddress]
+    let assignee: Assignee?
+    let time: String?
+    let needsProlongation: Bool?
+    var total: Int = 0
+}
+
 struct Assignee: Codable {
     let car: TaxiCar
 }
@@ -50,6 +60,8 @@ struct CostModifier: Codable {
 }
 
 struct SearchedAddress: Codable {
+    
+    
     let name: String
     var components: [SearchComponent]?
     var types: AddressTypes?

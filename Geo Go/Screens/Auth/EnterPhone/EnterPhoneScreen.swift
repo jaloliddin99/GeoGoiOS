@@ -53,7 +53,6 @@ struct EnterPhoneScreen: View {
                                 }else{
                                     isButtonDisabled = true
                                 }
-                                
                             })
                             .padding()
                             .background(Color(.secondarySystemBackground))

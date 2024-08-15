@@ -14,13 +14,17 @@ final class MainViewModel: ObservableObject{
     
     @Published var isSearchDialogShowing = false
     @Published var isShowBonusDialog = false
-    
     @Published var isShowingMain = false
     @Published var status = DataHolder.status
     @Published var showCancelOrderAlert = false
+    @Published var showCancelBottomDialog = false
+    @Published var bottomSheetShown = false
+    @Published var showRateDriver = false
+    @Published var showTariffDetailsDialog = false
 
+    
     var hasOrderGoViewAppeared = false
-
+    
     func setStatus(value: Int) {
         self.status = value
         DataHolder.status = value
@@ -45,7 +49,8 @@ final class MainViewModel: ObservableObject{
         
         generateResponse = GenerateResponse(userId: userId, userToken: userToken, mainUrl: url)
         addressHistory()
-        getBonusResponse(lat: Constants.latitude, lon: Constants.longitude)
+        getBonusResponse(lat: DataHolder.location.latitude, lon: DataHolder.location.longitude)
+        getClientOrders()
     }
     
     
@@ -81,7 +86,7 @@ final class MainViewModel: ObservableObject{
                         let lat = Double(currentAddress?.lat ?? "0") ?? 0.0
                         let lon = Double(currentAddress?.lon ?? "0") ?? 0.0
                         locationHolder.removeAll()
-                        locationUpdated(UserSelectedAddress(addressName: name, addressLocation: LatLng(latitude: lat, longitude: lon)))
+                        locationUpdated(UserSelectedAddress(addressName: name, addressLocation: CLLocationCoordinate2D(latitude: lat, longitude: lon)))
                     }
                     
                     
@@ -120,6 +125,7 @@ final class MainViewModel: ObservableObject{
                 "Date": responseDetails.data,
                 "Authentication": responseDetails.hmac,
             ],
+            isPrintable: true,
             completed: handleAddressHistoryResponse as (Result<[ShortOrderInfo], APError>) -> Void)
     }
     
@@ -132,8 +138,6 @@ final class MainViewModel: ObservableObject{
                     if let appetizers = response as? [ShortOrderInfo] {
                         self.addressHistoryResponse = appetizers
                     }
-                    
-                    
                 case .failure(let error):
                     switch error {
                         case .invalidURL:
@@ -150,65 +154,40 @@ final class MainViewModel: ObservableObject{
     }
     
     
-    @Published var tariff: ServiceResponse?
+    @Published var dateOrderHistory: DateOrderHistory?
     
-    func serviceTariffRequest() {
-        guard let responseDetails = generateResponse?.generateHmacData(id: "getAvailableService") else { return }
-        let body = PaymentMethodParent(prevServiceId: "", paymentMethod: Constants.paymentMethod)
-        guard let requestBodyData = try? JSONEncoder().encode(body) else {
-            print("Failed to encode request body")
-            return
-        }
+    func dateOrderHistory(id: Int64, location: CLLocationCoordinate2D) {
+        guard let responseDetails = generateResponse?.generateHmacDataForOrderId(id: Constants.FINISHED, orderId: id) else { return }
         NetworkService.shared.sendRequest(
             url: responseDetails.url,
-            body: requestBodyData,
-            method: "POST",
+            method: "GET",
             headers: [
                 "Accept-Language": "uz",
                 "Hive-Profile": Constants.HIVE_PROFILE,
-                "X-Hive-GPS-Position": "\(Constants.latitude) \(Constants.longitude)",
                 "Date": responseDetails.data,
                 "Authentication": responseDetails.hmac,
+                "X-Hive-GPS-Position": "\(location.latitude) \(location.longitude)",
             ],
-            completed: handleServiceTariffRequestResponse as (Result<ServiceResponse, APError>) -> Void)
+            completed: { [weak self] (result: Result<DateOrderHistory, APError>) in
+                self?.handleDateOrderHistoryResponse(result, with: id)
+            }
+        )
     }
     
-    private func handleServiceTariffRequestResponse<T: Decodable>(_ result: Result<T, APError>) {
+    private func handleDateOrderHistoryResponse<T: Decodable>(_ result: Result<T, APError>, with body: Int64) {
         DispatchQueue.main.async { [self] in
-            self.isLoading = false
-            
             switch result {
                 case .success(let response):
-                    if let response = response as? ServiceResponse {
-                        self.tariff = response
-                        DataHolder.serviceTariffConstant = response.tariffs
-                        DataHolder.tariffId = response.tariffs![0].id
-                        DataHolder.listOptions.removeAll()
-                        DataHolder.listOptions.append(contentsOf: dataSelect(data: response.tariffs!))
-                        response.tariffs?.forEach({ tariff in
-                            let estimate = getEstimateRideRequest(
-                                serviceTariff: tariff,
-                                route: mapToRouteCoordinates(addresses: locationHolder))
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                                self.serviceEstimateRide(body: estimate)
-                            }
-                        })
+                    if let response = response as? DateOrderHistory {
+                        self.dateOrderHistory = response
                     }
-                    
-                case .failure(let error):
-                    switch error {
-                        case .invalidURL:
-                            alertItem = AlertContext.invalidURL
-                        case .invalidResponse:
-                            alertItem = AlertContext.invalidResponse
-                        case .invalidData:
-                            alertItem = AlertContext.invalidData
-                        case .unableToComplete:
-                            alertItem = AlertContext.unableToComplete
-                    }
+                case .failure(_): break
             }
         }
     }
+    
+    
+    
     
     
     @Published var estimateResponse: EstimateResponse?
@@ -268,10 +247,72 @@ final class MainViewModel: ObservableObject{
     }
     
     
+    @Published var tariff: ServiceResponse?
+    
+    func serviceTariffRequest() {
+        guard let responseDetails = generateResponse?.generateHmacData(id: "getAvailableService") else { return }
+        let body = PaymentMethodParent(prevServiceId: "", paymentMethod: Constants.paymentMethod)
+        guard let requestBodyData = try? JSONEncoder().encode(body) else {
+            print("Failed to encode request body")
+            return
+        }
+        NetworkService.shared.sendRequest(
+            url: responseDetails.url,
+            body: requestBodyData,
+            method: "POST",
+            headers: [
+                "Accept-Language": "uz",
+                "Hive-Profile": Constants.HIVE_PROFILE,
+                "X-Hive-GPS-Position": "\(DataHolder.latitude) \(DataHolder.longitude)",
+                "Date": responseDetails.data,
+                "Authentication": responseDetails.hmac,
+            ],
+            completed: handleServiceTariffRequestResponse as (Result<ServiceResponse, APError>) -> Void)
+    }
+    
+    private func handleServiceTariffRequestResponse<T: Decodable>(_ result: Result<T, APError>) {
+        DispatchQueue.main.async { [self] in
+            self.isLoading = false
+            
+            switch result {
+                case .success(let response):
+                    if let response = response as? ServiceResponse {
+                        self.tariff = response
+                        DataHolder.serviceTariffConstant = response.tariffs
+                        DataHolder.tariffId = response.tariffs![0].id
+                        DataHolder.selectedTariff = response.tariffs![0]
+                        DataHolder.listOptions.removeAll()
+                        DataHolder.listOptions.append(contentsOf: dataSelect(data: response.tariffs!))
+                        response.tariffs?.forEach({ tariff in
+                            let estimate = getEstimateRideRequest(
+                                serviceTariff: tariff,
+                                route: mapToRouteCoordinates(addresses: locationHolder))
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                                self.serviceEstimateRide(body: estimate)
+                            }
+                        })
+                    }
+                    
+                case .failure(let error):
+                    switch error {
+                        case .invalidURL:
+                            alertItem = AlertContext.invalidURL
+                        case .invalidResponse:
+                            alertItem = AlertContext.invalidResponse
+                        case .invalidData:
+                            alertItem = AlertContext.invalidData
+                        case .unableToComplete:
+                            alertItem = AlertContext.unableToComplete
+                    }
+            }
+        }
+    }
+
+    
+    
     @Published var routeCoordinates: [MyPoint]?
     
-    func requestToDrawRoute() {
-        let list: [String] = mapToRouteCoordinatesLatLng(coordinates: locationHolder)
+    func requestToDrawRoute(list: [String]) {
         let params: [String: String] = [
             "locale": "uz",
             "calc_points": "true",
@@ -279,13 +320,13 @@ final class MainViewModel: ObservableObject{
         ]
         
         var queryString = params.map { "\($0.key)=\($0.value)" }.joined(separator: "&")
-                
+        
         for point in list {
             queryString += "&point=\(point)"
         }
         
         let urlWithParams = Constants.NAVI_BASE_URL + "?" + queryString
-
+        
         NetworkService.shared.sendRequest(
             url: urlWithParams,
             method: "GET",
@@ -354,6 +395,10 @@ final class MainViewModel: ObservableObject{
         guard let requestBodyData = try? JSONEncoder().encode(createOrderRequest) else {
             return
         }
+        if let jsonString = String(data: requestBodyData, encoding: .utf8) {
+            print("Create body: \(jsonString)")
+        }
+        
         self.isLoading = true
         isShowBonusDialog.toggle()
         NetworkService.shared.sendRequest(
@@ -381,6 +426,7 @@ final class MainViewModel: ObservableObject{
                         status = 2
                         DataHolder.status = status
                         DataHolder.orderId = appetizers.id
+                        startTimer()
                     }
                     
                 case .failure(_): break
@@ -393,9 +439,11 @@ final class MainViewModel: ObservableObject{
     
     func cancelMyOrder() {
         guard let responseDetails = generateResponse?.generateHmacDataForOrderId(id: "cancelOrder", orderId: DataHolder.orderId) else { return }
+        
+        if status >= 2 {
+            showCancelBottomDialog.toggle()
+        }
         self.isLoading = true
-
-        print("ResponseDetails \(responseDetails)")
         NetworkService.shared.sendRequest(
             url: responseDetails.url,
             method: "DELETE",
@@ -405,7 +453,6 @@ final class MainViewModel: ObservableObject{
                 "Date": responseDetails.data,
                 "Authentication": responseDetails.hmac,
             ],
-            isPrintable: true,
             completed: handleCancelOrderResponse as (Result<EmptyModel, APError>) -> Void)
     }
     
@@ -436,13 +483,119 @@ final class MainViewModel: ObservableObject{
         }
     }
     
+    @Published var getMyOrders: [ShortOrderInfo]?
+    
+    func getClientOrders() {
+        guard let responseDetails = generateResponse?.generateHmacData(id: Constants.ORDERS_GET) else { return }
+        NetworkService.shared.sendRequest(
+            url: responseDetails.url,
+            method: "GET",
+            headers: [
+                "Accept-Language": "uz",
+                "Hive-Profile": Constants.HIVE_PROFILE,
+                "Date": responseDetails.data,
+                "Authentication": responseDetails.hmac,
+            ],
+            completed: handleClientOrdersResponse as (Result<[ShortOrderInfo], APError>) -> Void)
+    }
+    
+    private func handleClientOrdersResponse<T: Decodable>(_ result: Result<T, APError>) {
+        DispatchQueue.main.async { [self] in
+            switch result {
+                case .success(let response):
+                    if let res = response as? [ShortOrderInfo] {
+                        self.getMyOrders = res
+                    }
+                case .failure(_): break
+            }
+        }
+    }
+    
+    
+    @Published var getOrderDetail: OrderInfo?
+    
+    private func getOrderDetails() {
+        guard let responseDetails = generateResponse?.generateHmacDataForOrderId(id: Constants.GET_ORDER_DETAILS, orderId: DataHolder.orderId) else { return }
+        
+        NetworkService.shared.sendRequest(
+            url: responseDetails.url,
+            method: "GET",
+            headers: [
+                "Accept-Language": "uz",
+                "Hive-Profile": Constants.HIVE_PROFILE,
+                "Date": responseDetails.data,
+                "Authentication": responseDetails.hmac,
+            ],
+            completed: handleOrderInfoResponse as (Result<OrderInfo, APError>) -> Void)
+    }
+    
+    private func handleOrderInfoResponse<T: Decodable>(_ result: Result<T, APError>) {
+        DispatchQueue.main.async { [self] in
+            switch result {
+                case .success(let response):
+                    if let res = response as? OrderInfo {
+                        handleUIByOrderStatus(orderInfo: res)
+                    }
+                case .failure(_): break
+            }
+        }
+    }
+    
+    private func handleUIByOrderStatus(orderInfo: OrderInfo){
+        if orderInfo.state == 2 {
+            self.getOrderDetail = orderInfo
+            status = 3
+            requestToDrawRoute(list: getCoorWithDriverLoc(orderInfo: orderInfo, clientLocation: DataHolder.location))
+        }else if orderInfo.state == 6 || orderInfo.state == 5 {
+            status = 0
+            stopTimer()
+            showRateDriver.toggle()
+        }else if orderInfo.state == 3 {
+            status = 4
+        }
+        else if orderInfo.state == 4 {
+            status = 5
+        }
+        DataHolder.status = status
+    }
+    
+    @Published var image: Image? = nil
+    
+    func loadImage(fromURLString urlString: String) {
+    
+        
+        print("Url Image \(urlString)")
+        NetworkService.shared.downloadImage(fromURLString: urlString) { uiImage in
+            guard let uiImage else { return }
+            DispatchQueue.main.async {
+                self.image = Image(uiImage: uiImage)
+            }
+        }
+    }
+    
+    
+    
+    private var timer: Timer?
+    private var cancellables = Set<AnyCancellable>()
+    
+    func startTimer() {
+        stopTimer()
+        timer = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: true) { [weak self] _ in
+            self?.getOrderDetails()
+        }
+    }
+    
+    func stopTimer() {
+        timer?.invalidate()
+        timer = nil
+    }
     
     @Published var locationHolder: [UserSelectedAddress] = []
     
     func locationUpdated(_ address: UserSelectedAddress) {
         locationHolder.append(address)
         if status == 1 && locationHolder.count > 2 {
-            requestToDrawRoute()
+            requestToDrawRoute(list: mapToRouteCoordinatesLatLng(coordinates: locationHolder))
         }
     }
     
@@ -450,5 +603,10 @@ final class MainViewModel: ObservableObject{
         if locationHolder.count > 1 {
             locationHolder.removeSubrange(1..<locationHolder.count)
         }
+    }
+
+    
+    deinit {
+        stopTimer()
     }
 }

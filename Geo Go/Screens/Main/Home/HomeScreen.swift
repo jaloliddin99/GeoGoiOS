@@ -15,16 +15,14 @@ struct HomeScreen: View {
     
     @State private var isDrawerOpen = false
     @State private var markerOffset: CGFloat = 0
-    @State private var bottomSheetShown = false
-
-
+    @State private var selectedScreen: DestinationScreen? = nil
     
     var body: some View {
         let uri = StyleURI(rawValue: "mapbox://styles/uzdriver/cl0j7klhe001415o8wpkop805")!
         let cameraOptions = CameraOptions(center: viewModel.tashkent, zoom: 12)
         
-        NavigationStack{
-            ZStack{
+        NavigationStack {
+            ZStack {
                 CustomMapView(markerOffset: $markerOffset,
                               currentCenterCoordinate: $location,
                               viewModel: viewModel,
@@ -48,28 +46,30 @@ struct HomeScreen: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
                 
                 
-                if(viewModel.status == 0){
+                if viewModel.status == 0 {
                     MarkerView(markerOffset: $markerOffset, viewModel: viewModel)
                         .offset(y: markerOffset)
                         .animation(.easeInOut, value: markerOffset)
                     
-                    BottomSheetView(isOpen: $bottomSheetShown,
+                    BottomSheetView(isOpen: $viewModel.bottomSheetShown,
                                     minHeight: 250,
                                     maxHeight: UIScreen.main.bounds.height) {
-                        BottomSheetContent( viewModel: viewModel)
+                        BottomSheetContent(viewModel: viewModel)
                     }.edgesIgnoringSafeArea(.bottom)
                     
-                }else if(viewModel.status == 1){
-                    OrderGoView( mainViewModel: viewModel)
+                } else if viewModel.status == 1 {
+                    OrderGoView(mainViewModel: viewModel)
                         .onAppear {
                             if !viewModel.hasOrderGoViewAppeared {
                                 viewModel.serviceTariffRequest()
-                                viewModel.requestToDrawRoute()
+                                viewModel.requestToDrawRoute(list: mapToRouteCoordinatesLatLng(coordinates: viewModel.locationHolder))
                                 viewModel.hasOrderGoViewAppeared = true
                             }
                         }
-                }else if(viewModel.status == 2){
+                } else if viewModel.status == 2 {
                     SearchDriver(viewModel: viewModel)
+                } else if viewModel.status == 3 || viewModel.status == 4 || viewModel.status == 5 {
+                    DriverFoundView(viewModel: viewModel)
                 }
                 
                 if isDrawerOpen {
@@ -81,13 +81,24 @@ struct HomeScreen: View {
                             }
                         }
                 }
-                HomeScreenDrawer(isOpen: $isDrawerOpen)
+                
+                HomeScreenDrawer(isOpen: $isDrawerOpen, selectedScreen: $selectedScreen)
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
                     .ignoresSafeArea()
                 
-                
+                    .navigationDestination(isPresented: Binding(
+                        get: { selectedScreen != nil },
+                        set: { isActive in
+                            if !isActive {
+                                selectedScreen = nil
+                            }
+                        }
+                    )){
+                        getDestinationView(for: selectedScreen ?? .myTrips, viewModel: viewModel)
+                    }
+                 
             }
-            .alert(item: $viewModel.alertItem){ alertItem in
+            .alert(item: $viewModel.alertItem) { alertItem in
                 Alert(title: alertItem.title,
                       message: alertItem.message,
                       dismissButton: alertItem.dismissButton
@@ -106,15 +117,28 @@ struct HomeScreen: View {
                 )
             }
             .sheet(isPresented: $viewModel.isSearchDialogShowing) {
-                VStack {
+                BottomSheet {
                     SearchScreenDialog(viewModel: viewModel)
-                    Spacer()
                 }
             }
             .sheet(isPresented: $viewModel.isShowBonusDialog) {
-                VStack {
+                BottomSheet {
                     DialogSelectBonus(viewModel: viewModel)
-                    Spacer()
+                }
+            }
+            .sheet(isPresented: $viewModel.showCancelBottomDialog) {
+                BottomSheet {
+                    DialogBottomCancelOrder(mainVm: viewModel)
+                }
+            }
+            .sheet(isPresented: $viewModel.showRateDriver) {
+                BottomSheet {
+                    DialogRateDriver(invokeDialog: $viewModel.showRateDriver) { action in }
+                }
+            }
+            .sheet(isPresented: $viewModel.showTariffDetailsDialog) {
+                VStack {
+                    TariffDetailsView(item: DataHolder.selectedTariff!)
                 }
             }
         }
@@ -126,4 +150,27 @@ struct HomeScreen: View {
         }
     }
     
+    private func getDestinationView(for destination: DestinationScreen, viewModel: MainViewModel) -> some View {
+        switch destination {
+            case .myTrips:
+                return AnyView(MyTripsScreen(viewModel: viewModel))
+            case .paymentMethod:
+                return AnyView(PaymentScreen())
+            case .favouriteAddresses:
+                return AnyView(FavScreen())
+            case .loyaltyProgram:
+                return AnyView(LoyaltyScreen())
+            case .discount:
+                return AnyView(DiscountScreen())
+            case .settings:
+                return AnyView(SettingsScreen())
+            case .news:
+                return AnyView(NewsScreen())
+            case .support:
+                return AnyView(SupportScreen())
+            case .aboutApp:
+                return AnyView(AboutAppScreen())
+        }
+    }
+
 }

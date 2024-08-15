@@ -11,7 +11,7 @@ struct OrderGoView: View {
     @ObservedObject var mainViewModel: MainViewModel
     @State private var showWishDialog = false
     @State private var selectedItem: ServiceTariff?
-    
+     
     var body: some View {
         VStack{
             Spacer()
@@ -44,15 +44,24 @@ struct OrderGoView: View {
                                 .onTapGesture {
                                     DataHolder.tariffId = tariffs![index].id
                                     selectedItem = orderInfo
+                                    if tariffs![index] == DataHolder.selectedTariff {
+                                        mainViewModel.showTariffDetailsDialog.toggle()
+                                    }
+                                    DataHolder.selectedTariff = tariffs![index]
+                                   
                                 }
                         }
                     }
-                    .padding(EdgeInsets(top: 24, leading: 12, bottom: 4, trailing: 12))
+                    .padding(EdgeInsets(top: 24, leading: 16, bottom: 4, trailing: 16))
                     .frame(maxHeight: 120)
                 }
                 
                 AddressField(mainViewModel: mainViewModel)
+                    .padding(.horizontal, 16)
                 PaymentAndWishSection(showWishDialog: $showWishDialog)
+                    .padding(.horizontal, 16)
+                
+                let isButtonDisabled = selectedItem == nil
                 
                 Button(action: {
                     mainViewModel.isShowBonusDialog.toggle()
@@ -61,16 +70,16 @@ struct OrderGoView: View {
                 })
                 .padding(.horizontal, 12)
                 .padding(.bottom, 32)
+                .disabled(isButtonDisabled)
+                .opacity(isButtonDisabled ? 0.5 : 1.0)
                 
             }
             .background(Color.white)
             .cornerRadius(12, corners: [.topLeft, .topRight])
             .padding(.top, 12)
             .shadow(radius: 2)
-            
-            
         }
-        .edgesIgnoringSafeArea(.all)
+        .edgesIgnoringSafeArea(.bottom)
         
     }
 }
@@ -140,7 +149,7 @@ struct AddressField: View {
                 }
                 
             }
-            .padding(12)
+            .padding(.vertical, 12)
         })
     }
 }
@@ -150,8 +159,7 @@ struct PaymentAndWishSection: View {
     
     var body: some View {
         VStack {
-            Divider().padding(.horizontal, 12)
-            
+            Divider()
             HStack(alignment: .center) {
                 Image(systemName: "dollarsign.circle")
                     .opacity(0.5)
@@ -173,7 +181,7 @@ struct PaymentAndWishSection: View {
                     DialogWish(dialogWish: $showWishDialog)
                 }
             }
-            .padding(.horizontal, 12)
+            
             .padding(.vertical, 8)
         }
     }

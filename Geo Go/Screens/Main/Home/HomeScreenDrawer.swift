@@ -11,6 +11,7 @@ import SwiftUI
 
 struct HomeScreenDrawer: View {
     @Binding var isOpen: Bool
+    @Binding var selectedScreen: DestinationScreen?
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -18,35 +19,57 @@ struct HomeScreenDrawer: View {
                 .padding(.bottom, 12)
                 .padding(.top, 56)
             Divider()
-            DrawerItem(title: "My Trips", action: { print("My Trips clicked") })
+            DrawerItem(title: "My Trips", action: {
+                navigate(to: .myTrips)
+            })
             Divider()
-            DrawerItem(title: "Payment Method", action: { print("Payment Method clicked") })
+            DrawerItem(title: "Payment Method", action: {
+                navigate(to: .paymentMethod)
+            })
             Divider()
-            DrawerItem(title: "Favourite Addresses", action: { print("Favourite Addresses clicked") })
+            DrawerItem(title: "Favourite Addresses", action: {
+                navigate(to: .favouriteAddresses)
+            })
             Divider()
-            DrawerItem(title: "Loyalty Program", action: { print("Loyalty Program clicked") })
+            DrawerItem(title: "Loyalty Program", action: {
+                navigate(to: .loyaltyProgram)
+            })
             Divider()
-            DrawerItem(title: "Discount", action: { print("Discount clicked") })
+            DrawerItem(title: "Discount", action: {
+                navigate(to: .discount)
+            })
             Divider()
-            DrawerItem(title: "Settings", action: { print("Settings clicked") })
+            DrawerItem(title: "Settings", action: {
+                navigate(to: .settings)
+            })
             Divider()
-            DrawerItem(title: "News", action: { print("News clicked") })
+            DrawerItem(title: "News", action: {
+                navigate(to: .news)
+            })
             Divider()
-            DrawerItem(title: "Support", action: { print("Support clicked") })
+            DrawerItem(title: "Support", action: {
+                navigate(to: .support)
+            })
             Divider()
-            DrawerItem(title: "About App", action: { print("About App clicked") })
+            DrawerItem(title: "About App", action: {
+                navigate(to: .aboutApp)
+            })
             Spacer()
-            
-            
         }
-        
         .background(Color.white)
         .clipShape(RoundedCorners(topRight: 20, bottomRight: 20))
-        .offset(x: isOpen ? 0 : -UIScreen.main.bounds.size.width*0.75)
+        .offset(x: isOpen ? 0 : -UIScreen.main.bounds.size.width * 0.75)
         .animation(.easeInOut, value: isOpen)
-        .frame(width: UIScreen.main.bounds.size.width*0.75)
+        .frame(width: UIScreen.main.bounds.size.width * 0.75)
+    }
+    
+    private func navigate(to destination: DestinationScreen) {
+        selectedScreen = destination
+        withAnimation {
+            isOpen = false
+        }
         
-        
+
     }
 }
 
@@ -90,4 +113,9 @@ struct DrawerItem: View {
         .contentShape(Rectangle())
         .padding(0)
     }
+}
+
+
+enum DestinationScreen: Hashable {
+    case myTrips, paymentMethod, favouriteAddresses, loyaltyProgram, discount, settings, news, support, aboutApp
 }

@@ -54,15 +54,7 @@ struct SideMenuView: View {
         VStack(alignment: .center){
             HStack{
                 Spacer()
-                Image("profile-image")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .frame(width: 100, height: 100)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 50)
-                            .stroke(.purple.opacity(0.5), lineWidth: 10)
-                    )
-                    .cornerRadius(50)
+                RoundedProfileImage(radius: 50, name: "profile-image")
                 Spacer()
             }
             

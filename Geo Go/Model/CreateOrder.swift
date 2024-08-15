@@ -34,7 +34,7 @@ struct CreateOrderResponse: Codable {
 
 
 struct ClientAddress :Codable {
-    let address: SearchedAddress
+    let address: SearchedAddress?
     let entrance: String?
     let flat: String?
     let comment: String?

@@ -29,29 +29,7 @@ struct DialogSelectBonus: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0){
-            HStack(spacing: 0) {
-                Button(action: {
-                    viewModel.isShowBonusDialog = false
-                }) {
-                    Image(systemName: "xmark")
-                        .padding()
-                        .background(Color(.secondarySystemBackground))
-                        .clipShape(Circle())
-                }
-                
-                Spacer()
-                Text("Bonus")
-                    .font(.system(size: 24, weight: .bold))
-                    .foregroundColor(.main)
-                
-                Spacer()
-                
-                Button("Done") {
-                    viewModel.isShowBonusDialog = false
-                }
-                .font(.system(size: 16))
-                .hidden()
-            }
+            
             
             Text("Your bonuses")
                 .font(.system(size: 20, weight: .bold))
@@ -59,7 +37,7 @@ struct DialogSelectBonus: View {
                 .padding(.top, 16)
             
             let bonus = viewModel.bonusResponse
-            Text(formatNumberWithSpaces(bonus.balance)!)
+            Text(formatNumberWithSpaces(bonus.balance))
                 .font(.system(size: 24, weight: .bold))
                 .foregroundColor(.main)
                 .padding(.top, 2)
@@ -114,6 +92,8 @@ struct DialogSelectBonus: View {
             
             
         }
-        .padding()
+        .padding(.horizontal, 16)
+        .padding(.bottom, 32)
+        .edgesIgnoringSafeArea(.bottom)
     }
 }

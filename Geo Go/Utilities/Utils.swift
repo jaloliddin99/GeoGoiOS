@@ -8,7 +8,7 @@
 import Foundation
 
 
-func formatNumberWithSpaces(_ number: Double) -> String? {
+func formatNumberWithSpaces(_ number: Double) -> String {
     let formatter = NumberFormatter()
     formatter.numberStyle = .decimal
     formatter.groupingSeparator = " "
@@ -22,11 +22,11 @@ func getCreateOrderRoute(addressList: [UserSelectedAddress], bonusInt: Double) -
         DataHolder.option.append(optionId)
     }
     
-//    if SharedPref.cashType == Constants.PAYMENT_TYPE_CASH {
-//        DataHolder.option.removeAll { $0 == Constants.cardOptionID }
-//    } else {
-//        DataHolder.option.append(Constants.cardOptionID)
-//    }
+    //    if SharedPref.cashType == Constants.PAYMENT_TYPE_CASH {
+    //        DataHolder.option.removeAll { $0 == Constants.cardOptionID }
+    //    } else {
+    //        DataHolder.option.append(Constants.cardOptionID)
+    //    }
     
     addressList.forEach { address in
         routeORDER.append(
@@ -89,4 +89,27 @@ func getCurrentTime(block: @escaping (String) -> Void) {
     let date = Date()
     let formattedDate = dateFormatter.string(from: date)
     block(formattedDate)
+}
+
+
+func imageNameForType(_ type: String) -> String {
+    switch type {
+        case Constants.CAR_PEREGON:
+            return "car_peregon"
+        case Constants.CAR_TYPE_3, Constants.CAR_KOMFORT:
+            return "car_comfort"
+        case Constants.CAR_DELIVERY:
+            return "car_delivery"
+        default:
+            return "car_econom"
+    }
+}
+
+
+func getImageUrl(orderDetails: OrderInfo) -> String{
+    let phone = orderDetails.assignee?.call.numbers![0]
+        .replacingOccurrences(of: "+", with: "")
+    let url = "https://central.uz.taxi/bosh/get_photo.php?type=worker&phone="
+    return "\(url)\(phone!)"
+
 }

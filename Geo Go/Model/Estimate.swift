@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CoreLocation
 
 // estimate response
 
@@ -52,6 +53,27 @@ func mapToRouteCoordinates(addresses: [UserSelectedAddress]) -> [RouteCoordinate
         )
     }
 }
+
+func getCoorWithDriverLoc(orderInfo: OrderInfo, clientLocation: CLLocationCoordinate2D) -> [String] {
+    guard let driverLocation = orderInfo.assignee?.location else { return []}
+    
+    return [
+        "\(driverLocation.lat),\(driverLocation.lon)",
+        "\(clientLocation.latitude),\(clientLocation.longitude)"
+    ]
+}
+
+
+func getCoorWithDriverLocation(orderInfo: OrderInfo, clientLocation: CLLocationCoordinate2D) -> [UserSelectedAddress] {
+    guard let driverLocation = orderInfo.assignee?.location else { return []}
+    let location = CLLocationCoordinate2D(latitude: driverLocation.lat, longitude: driverLocation.lon)
+    return [
+        UserSelectedAddress(addressName: "", addressLocation: clientLocation),
+        UserSelectedAddress(addressName: "", addressLocation: location),
+    ]
+}
+
+
 
 
 func mapToRouteCoordinatesLatLng(coordinates: [UserSelectedAddress]) -> [String] {

@@ -11,6 +11,7 @@ import Foundation
 class Constants{
     
     
+    static let USER_PHONE: String = "USER_PHONE"
     static let driverCallCenter: String = "driverCallCenter"
     static let servername: String = "servername"
     static let driverApi: String = "driverApi"
@@ -67,9 +68,7 @@ class Constants{
     
     
     static let GEOCODE_TOKEN = "ge-8f137223ed5b405d"
-    
-    static var latitude: Double = 41.33851520919809
-    static var longitude: Double = 69.33460926588599
+
     
     static var CAR_TYPE_3 = "carType_3"
     static var CAR_KOMFORT = "carType_4"

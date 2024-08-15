@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreLocation
 
 struct SearchScreenDialog: View {
     @ObservedObject var viewModel: MainViewModel
@@ -20,29 +21,7 @@ struct SearchScreenDialog: View {
     
     var body: some View {
         VStack {
-            
-            HStack(spacing: 0) {
-                Button(action: {
-                    viewModel.isSearchDialogShowing = false
-                }) {
-                    Image(systemName: "xmark")
-                        .padding()
-                        .background(Color(.secondarySystemBackground))
-                        .clipShape(Circle())
-                }
-                
-                Spacer()
-                Text("Where are we going?")
-                    .font(.system(size: 24, weight: .bold))
-                
-                Spacer()
-                
-                Button("Done") {
-                    viewModel.isSearchDialogShowing = false
-                }
-                .font(.system(size: 16))
-                .hidden()
-            }
+            DialogToolBar(showDialog: $viewModel.isSearchDialogShowing, title: "Where are we going?")
             
             HStack {
                 Image(systemName: "location.fill")
@@ -136,7 +115,7 @@ struct ElasticSearchResult: View {
             let address = searchInfo.properties.name
             let lat = searchInfo.geometry.coordinates[0]
             let lon = searchInfo.geometry.coordinates[1]
-            let location = LatLng(latitude: lat, longitude: lon)
+            let location = CLLocationCoordinate2D(latitude: lat, longitude: lon)
             let uAddress = UserSelectedAddress(addressName: address, addressLocation: location)
             viewModel.locationUpdated(uAddress)
             viewModel.setStatus(value: 1)
@@ -182,7 +161,7 @@ struct SearchHistory: View {
             let name = address.name
             let lat = address.position?.lat ?? 0.0
             let lon = address.position?.lon ?? 0.0
-            let location = LatLng(latitude: lat, longitude: lon)
+            let location = CLLocationCoordinate2D(latitude: lat, longitude: lon)
             let uAddress = UserSelectedAddress(addressName: name, addressLocation: location)
             viewModel.locationUpdated(uAddress)
             viewModel.isSearchDialogShowing = false
