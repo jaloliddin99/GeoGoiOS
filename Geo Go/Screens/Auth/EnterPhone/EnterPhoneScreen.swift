@@ -20,11 +20,7 @@ struct EnterPhoneScreen: View {
     @State private var isButtonDisabled: Bool = true
     @State var pn: PhoneNumber?
     @State private var actualNumber: String = ""
-    
-    
-    
     var body: some View {
-        
         NavigationStack {
             ZStack{
                 VStack {
@@ -74,7 +70,7 @@ struct EnterPhoneScreen: View {
                             phone: actualNumber,
                             info: ClientInfo(firstName: username)
                         )
-                        viewModel.getAppetizer(regRequest: registrationReq)
+                        viewModel.submitRegistration(regRequest: registrationReq)
                     }) {
                         GGButton(title: "get_code")
                     }
@@ -100,8 +96,7 @@ struct EnterPhoneScreen: View {
                 set: { _ in }
             )) {
                 if let postData = viewModel.postData {
-                                        
-                    EnterCodeScreen(userId: postData.id ?? 0, phoneNumber: actualNumber)
+                    EnterCodeScreen(userId: postData.id, phoneNumber: actualNumber)
                 }
             }
         }

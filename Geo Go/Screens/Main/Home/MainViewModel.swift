@@ -20,9 +20,12 @@ final class MainViewModel: ObservableObject{
     @Published var showCancelBottomDialog = false
     @Published var bottomSheetShown = false
     @Published var showRateDriver = false
+    @Published var showBonusDialog = false
     @Published var showTariffDetailsDialog = false
-
+    @Published var location: CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: 41.3385, longitude: 69.3346)
+    @Published var refocusButtonListener = false
     
+    @Published var discountModel: DiscountModel?
     var hasOrderGoViewAppeared = false
     
     func setStatus(value: Int) {
@@ -33,7 +36,6 @@ final class MainViewModel: ObservableObject{
         }
     }
     
-    let tashkent = CLLocationCoordinate2D(latitude: 41.33851520919809, longitude: 69.33460926588599)
     init() {
         MapboxOptions.accessToken = "pk.eyJ1Ijoic2FkdWwiLCJhIjoiY2txNnQwY2VwMDN3MDJucGM0NDZ6YzNybSJ9.K1Pz4WVYeYY0eaqy1tbgWw"
         initMain()
@@ -106,14 +108,9 @@ final class MainViewModel: ObservableObject{
     }
     
     
-    
-    
-    
-    
     @Published var addressHistoryResponse: [ShortOrderInfo]?
     
     func addressHistory() {
-        
         guard let responseDetails = generateResponse?.generateHmacData(id: Constants.HISTORY) else { return }
         
         NetworkService.shared.sendRequest(
@@ -125,7 +122,6 @@ final class MainViewModel: ObservableObject{
                 "Date": responseDetails.data,
                 "Authentication": responseDetails.hmac,
             ],
-            isPrintable: true,
             completed: handleAddressHistoryResponse as (Result<[ShortOrderInfo], APError>) -> Void)
     }
     
@@ -168,18 +164,28 @@ final class MainViewModel: ObservableObject{
                 "Authentication": responseDetails.hmac,
                 "X-Hive-GPS-Position": "\(location.latitude) \(location.longitude)",
             ],
+            isPrintable: true,
             completed: { [weak self] (result: Result<DateOrderHistory, APError>) in
                 self?.handleDateOrderHistoryResponse(result, with: id)
             }
         )
     }
     
+    private var counter = 0
+    
     private func handleDateOrderHistoryResponse<T: Decodable>(_ result: Result<T, APError>, with body: Int64) {
         DispatchQueue.main.async { [self] in
             switch result {
                 case .success(let response):
                     if let response = response as? DateOrderHistory {
+                        counter = counter + 1
+                        print("Counter number \(counter)")
                         self.dateOrderHistory = response
+                        var shortOrderInfo = self.addressHistoryResponse
+                        if shortOrderInfo != nil {
+                            setShortOrderInfoProperties(res: dateOrderHistory!, list: &shortOrderInfo!, orderId: body)
+                            self.addressHistoryResponse = shortOrderInfo
+                        }
                     }
                 case .failure(_): break
             }
@@ -278,6 +284,8 @@ final class MainViewModel: ObservableObject{
                 case .success(let response):
                     if let response = response as? ServiceResponse {
                         self.tariff = response
+                        
+                        self.discountModel = optionBonus(serviceResponse: tariff!, lang: DataHolder.lang)
                         DataHolder.serviceTariffConstant = response.tariffs
                         DataHolder.tariffId = response.tariffs![0].id
                         DataHolder.selectedTariff = response.tariffs![0]
@@ -562,9 +570,6 @@ final class MainViewModel: ObservableObject{
     @Published var image: Image? = nil
     
     func loadImage(fromURLString urlString: String) {
-    
-        
-        print("Url Image \(urlString)")
         NetworkService.shared.downloadImage(fromURLString: urlString) { uiImage in
             guard let uiImage else { return }
             DispatchQueue.main.async {

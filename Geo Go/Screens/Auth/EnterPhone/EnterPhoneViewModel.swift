@@ -8,21 +8,15 @@
 import Foundation
 
 final class EnterPhoneViewModel : ObservableObject{
-    
-    
     @Published var postData: RegisterUserResponse?
     @Published var isLoading = false
     @Published var alertItem: AlertItem?
     
-    func getAppetizer(regRequest: RegistrationRequest) {
-        
-        guard let requestBodyData = try? JSONEncoder().encode(regRequest) else {
-            print("Failed to encode request body")
-            return
-        }
-        
-        
+    func submitRegistration(regRequest: RegistrationRequest) {
+        guard let requestBodyData = try? JSONEncoder().encode(regRequest) else {return}
         isLoading = true
+        UserDefaults.standard.setValue(regRequest.info.firstName, forKey: Constants.USER_NAME)
+
         NetworkService.shared.sendRequest(
             url: UserDefaults().string(forKey: Constants.clientApi)!+"/client/mobile/1.0/registration/submit",
             body: requestBodyData,
@@ -32,18 +26,14 @@ final class EnterPhoneViewModel : ObservableObject{
                      ],
             completed: handleAppetizersResponse as (Result<RegisterUserResponse, APError>) -> Void)
     }
-    
     private func handleAppetizersResponse<T: Decodable>(_ result: Result<T, APError>) {
         DispatchQueue.main.async { [self] in
             self.isLoading = false
-            
             switch result {
             case .success(let response):
                 if let appetizers = response as? RegisterUserResponse {
                     self.postData = appetizers
                 }
-                
-                
             case .failure(let error):
                 switch error {
                 case .invalidURL:
@@ -58,7 +48,4 @@ final class EnterPhoneViewModel : ObservableObject{
             }
         }
     }
-    
-    
-    
 }

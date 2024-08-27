@@ -16,17 +16,12 @@ struct ShortOrderInfo: Codable{
     var time: String?
     let needsProlongation: Bool?
     let cost: Cost?
+    var toPay: Double?
+    var total: Double?
+    var usedBonuses: Double?
+    
 }
 
-struct OrderHistory: Codable, Identifiable{
-    let id: Int64
-    let state: Int
-    let route: [SearchedAddress]
-    let assignee: Assignee?
-    let time: String?
-    let needsProlongation: Bool?
-    var total: Int = 0
-}
 
 struct Assignee: Codable {
     let car: TaxiCar

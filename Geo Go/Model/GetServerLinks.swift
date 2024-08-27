@@ -21,6 +21,7 @@ struct LinkData: Codable {
     let client_api_socket: String
     let client_body: String
     let client_info: String
+    let client_news: String
     let client_lan: String
     let client_url: String
     let country: String

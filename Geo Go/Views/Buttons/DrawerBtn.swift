@@ -8,15 +8,29 @@
 import SwiftUI
 
 struct DrawerBtn: View {
+    let name: String
+    var fromAssets: Bool
     var body: some View {
-        Image("menu_navigation")
-            .resizable()
-            .aspectRatio(contentMode: .fit)
-            .padding(12)
-            .frame(width: 56, height: 56)
-            .background(Circle()
-                .fill(Color.white)
-                .shadow(radius: 2))
+        if fromAssets {
+            Image(name)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .padding(8)
+                .frame(width: 48, height: 48)
+                .background(Circle()
+                    .fill(Color.white)
+                    .shadow(radius: 2))
+        } else {
+            Image(systemName: name)
+                .resizable()
+                .foregroundColor(.main)
+                .aspectRatio(contentMode: .fit)
+                .padding(12)
+                .frame(width: 48, height: 48)
+                .background(Circle()
+                    .fill(Color.white)
+                    .shadow(radius: 2))
+        }
            
     }
 }
@@ -41,5 +55,5 @@ struct RadioButton: View {
 }
 
 #Preview {
-    DrawerBtn()
+    DrawerBtn(name: "location", fromAssets: true)
 }

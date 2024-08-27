@@ -121,3 +121,16 @@ func changeCost(res: EstimateResponse, list: inout [ServiceTariff]) {
     }
 }
 
+func setShortOrderInfoProperties(res: DateOrderHistory, list: inout [ShortOrderInfo], orderId: Int64){
+    for i in list.indices {
+        if orderId == list[i].id {
+            list[i].time = res.completionDate
+            list[i].toPay = res.toPay
+            list[i].total = res.total
+            list[i].usedBonuses = res.usedBonuses
+            return
+        }
+    }
+    
+}
+

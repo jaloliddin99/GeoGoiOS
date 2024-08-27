@@ -22,27 +22,25 @@ struct SearchTextView: View {
                         .padding()
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .foregroundColor(.black.opacity(0.7))
-                        .background(Color(.secondarySystemBackground))
                         .cornerRadius(10)
                 }
                 Button(action: {
                     viewModel.setStatus(value: 1)
                 }, label: {
                     Text("Order ->")
-                        .font(.system(size: 14))
-                        .fontWeight(.medium)
-                        .padding(.horizontal, 12)
-                        .frame(maxHeight: 36)
+                        .font(.system(size: 14, weight: .medium))
+                        .padding(.horizontal, 8)
+                        .frame(maxHeight: .infinity)
                         .foregroundColor(.white)
-                        .background(Color.main)
-                        .cornerRadius(10)
-                        .padding(.trailing, 12)
-                    
+                        .background(.main)
+                        .cornerRadius(12)
+                        .padding(.trailing, 8)
+                        .padding(.vertical, 8)
                 })
             }
         }
         .background(Color(.secondarySystemBackground))
-        .cornerRadius(10)
+        .cornerRadius(12)
         .padding(.horizontal, 16)
         
         

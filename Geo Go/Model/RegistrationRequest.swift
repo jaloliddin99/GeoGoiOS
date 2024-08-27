@@ -10,9 +10,7 @@ import Foundation
 
 
 struct RegisterUserResponse: Codable{
-    let id: Int?
-    let code: Int?
-    let message: String?
+    let id: Int
 }
 struct RegistrationRequest: Codable{
     let confirmationType: String

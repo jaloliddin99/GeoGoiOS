@@ -59,6 +59,7 @@ struct CustomMapView: UIViewRepresentable {
         
         private var cameraChangedObserver: Cancelable?
         private var cameraIdleObserver: Cancelable?
+        private var locationChangeObserver: Cancellable?
         
         init(_ parent: CustomMapView) {
             self.parent = parent
@@ -78,6 +79,11 @@ struct CustomMapView: UIViewRepresentable {
                         )
                     }
                 }
+            locationChangeObserver = viewModel.$refocusButtonListener
+                .sink { [weak self] isButtonClicked in
+                    mapView.mapboxMap.setCamera(to: CameraOptions(center: viewModel.location, zoom: 12))
+                }
+            
             
             statusCancellable = viewModel.$status
                 .sink { [weak self] status in
@@ -96,6 +102,7 @@ struct CustomMapView: UIViewRepresentable {
         }
         
         func setupObserver(mapView: MapView) {
+            
             cameraChangedObserver = mapView.mapboxMap.onCameraChanged.observe { [weak self] _ in
                 guard let self = self else { return }
                 DispatchQueue.main.async {

@@ -58,6 +58,7 @@ struct MainMarkerBox: View {
                 .padding(.leading, 12)
                 .padding(.trailing, 12)
         }
+        .background(.main)
       
     }
 }
@@ -67,10 +68,10 @@ struct MinuteTextView: View {
         VStack(alignment: .center, spacing: 0){
             Text("5")
                 .font(.system(size: 24, weight: .bold))
-                .foregroundColor(Color.blue)
+                .foregroundColor(.main)
             Text("min")
                 .font(.system(size: 9, weight: .medium))
-                .foregroundColor(Color.blue)
+                .foregroundColor(.main)
         }
         .frame(maxWidth: 48, maxHeight: 48)
         .background(Color.white)

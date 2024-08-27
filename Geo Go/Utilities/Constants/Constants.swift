@@ -10,6 +10,7 @@ import Foundation
 
 class Constants{
     
+    static let USER_NAME: String = "USER_NAME"
     
     static let USER_PHONE: String = "USER_PHONE"
     static let driverCallCenter: String = "driverCallCenter"
@@ -26,6 +27,7 @@ class Constants{
     static let driverSocket: String = "driverSocket"
     static let clientLan: String = "clientLan"
     static let clientInfo: String = "clientInfo"
+    static let clientNews: String = "clientNews"
     static let reverse: String = "reverse"
     static let userUrl: String = "userUrl"
     static let chatUrl: String = "chatUrl"

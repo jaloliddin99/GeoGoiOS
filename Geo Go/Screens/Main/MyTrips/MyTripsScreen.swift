@@ -33,9 +33,8 @@ struct MyTripsScreen: View {
             .cornerRadius(12)
             .padding()
             
-            
             List {
-                ForEach(mockTrips(for: selectedTab)) { trip in
+                ForEach(mockTrips(for: selectedTab), id: \.id) { trip in
                     TripCardView(trip: trip)
                 }
             }
@@ -44,13 +43,20 @@ struct MyTripsScreen: View {
         .background(.white)
         .navigationTitle("My Trips")
         .navigationBarTitleDisplayMode(.inline)
+        .onAppear(perform: {
+            let delayInterval = 0.3
+            for (index, info) in viewModel.addressHistoryResponse!.enumerated() {
+                DispatchQueue.main.asyncAfter(deadline: .now() + delayInterval * Double(index)) {
+                    viewModel.dateOrderHistory(id: info.id, location: DataHolder.location)
+                }
+            }
+        })
     }
     
-    func mockTrips(for tab: TripTab) -> [OrderHistory] {
+    func mockTrips(for tab: TripTab) -> [ShortOrderInfo] {
+
+        let transformedList = viewModel.addressHistoryResponse!
         
-        let transformedList = viewModel.addressHistoryResponse!.map { it in
-            OrderHistory(id: it.id, state: it.state, route: it.route, assignee: it.assignee, time: it.time, needsProlongation: it.needsProlongation, total: 5000)
-        }
         switch tab {
             case .completed:
                 return transformedList.filter { history in
@@ -71,7 +77,7 @@ enum TripTab: String, CaseIterable {
 
 
 struct TripCardView: View {
-    var trip: OrderHistory
+    var trip: ShortOrderInfo
     
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -86,16 +92,17 @@ struct TripCardView: View {
                         .lineLimit(2)
                 }
             }
-           
             
-            Text(trip.time ?? "12:32 AM")
+            let time = formatTime(time: trip.time ?? "")
+            Text(time)
                 .font(.footnote)
                 .foregroundColor(.gray)
+            
             HStack {
                 Text("Order price")
                     .fontWeight(.medium)
                 Spacer()
-                Text(formatNumberWithSpaces(Double(trip.total)))
+                Text(formatNumberWithSpaces(trip.total ?? 0.0))
                     .fontWeight(.bold)
             }
             Button(action: {

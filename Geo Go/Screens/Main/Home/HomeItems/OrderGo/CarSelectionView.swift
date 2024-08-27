@@ -41,7 +41,7 @@ struct CarSelectionView: View {
                 
             }
             
-            Text(convertTariff(lang: "en", data: item))
+            Text(convertTariff(lang: DataHolder.lang, data: item))
                 .font(.system(size: 14))
                 .frame(alignment: .leading)
             
@@ -71,7 +71,7 @@ struct CarSelectionView: View {
         )
         .overlay(
             RoundedRectangle(cornerRadius: 12)
-                .stroke(isSelected ? Color.blue : Color.clear, lineWidth: 2)
+                .stroke(isSelected ? .main : Color.clear, lineWidth: 2)
         )
 
         

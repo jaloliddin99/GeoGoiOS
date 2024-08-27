@@ -14,7 +14,6 @@ struct EnterCodeScreen: View {
     let phoneNumber: String
 
     @StateObject var viewModel = EnterCodeViewModel()
-
     @State private var code:String=""
     
     var isButtonDisabled: Bool {
@@ -67,7 +66,7 @@ struct EnterCodeScreen: View {
                     HomeScreen()
                 }
             }
-            onAppear{
+            .onAppear{
                 UserDefaults.standard.setValue(phoneNumber, forKey: Constants.USER_PHONE)
             }
             

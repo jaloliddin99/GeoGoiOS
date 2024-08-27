@@ -13,7 +13,7 @@ struct OrderGoView: View {
     @State private var selectedItem: ServiceTariff?
      
     var body: some View {
-        VStack{
+        VStack(spacing: 12){
             Spacer()
             HStack{
                 Button(action: {
@@ -23,8 +23,9 @@ struct OrderGoView: View {
                     Image(systemName: "arrow.left")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
+                        .foregroundColor(.main)
                         .padding(12)
-                        .frame(width: 50, height: 50)
+                        .frame(width: 48, height: 48)
                         .background(Circle()
                             .fill(Color.white)
                             .shadow(radius: 2))
@@ -89,20 +90,24 @@ struct AddressField: View {
     @State private var showAddressesDialog = false
     
     var body: some View {
-        VStack(spacing: 4, content: {
+        VStack(spacing: 12, content: {
             HStack{
-                Image(systemName: "circle").opacity(0.5)
+                Image(systemName: "circle.fill")
+                    .foregroundColor(.main)
+                
                 if !mainViewModel.locationHolder.isEmpty {
                     Text(mainViewModel.locationHolder[0].addressName)
                         .fontWeight(.medium)
                         .lineLimit(1)
+                    Spacer()
                 }
-                
-                Spacer()
             }
-            .padding(12)
+            
+            Divider()
+
             HStack{
-                Image(systemName: "circle").opacity(0.5)
+                Image(systemName: "circle")
+                    .foregroundColor(.main)
                 
                 let count = mainViewModel.locationHolder.count
                 
@@ -112,19 +117,20 @@ struct AddressField: View {
                     } label: {
                         Text("Where are we going?")
                             .fontWeight(.medium)
-                            .foregroundColor(Color.black.opacity(0.5))
+                            .foregroundColor(.black.opacity(0.5))
                     }
                     Spacer()
                 }else if count == 2 {
                     Text(mainViewModel.locationHolder[1].addressName)
                         .fontWeight(.medium)
                         .lineLimit(1)
-                        .foregroundColor(Color.black)
+                        .foregroundColor(.txt)
                     Spacer()
                     Button(action: {
                         mainViewModel.isSearchDialogShowing = true
                     }, label: {
                         Image(systemName: "plus")
+                            .foregroundColor(.main)
                     })
                 }else if count > 2 {
                     Button(action: {
@@ -132,7 +138,7 @@ struct AddressField: View {
                     }, label: {
                         Text("\(count-1) picked location")
                             .fontWeight(.medium)
-                            .foregroundColor(Color.black)
+                            .foregroundColor(.txt)
                             .lineLimit(1)
                     }).sheet(isPresented: $showAddressesDialog){
                         DialogAddressLists(dialogAddressList: $showAddressesDialog, viewModel: mainViewModel)
@@ -145,12 +151,16 @@ struct AddressField: View {
                         }
                     }, label: {
                         Image(systemName: "plus")
+                            .foregroundColor(.main)
                     })
                 }
                 
             }
-            .padding(.vertical, 12)
         })
+        .padding(12)
+        .background(RoundedRectangle(cornerRadius: 12)
+            .fill(Color(.secondarySystemBackground).opacity(0.7))
+        )
     }
 }
 

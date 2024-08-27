@@ -32,4 +32,6 @@ class DataHolder {
     static var latitude: Double = 41.33851520919809
     static var longitude: Double = 69.33460926588599
     
+    static var lang = "en"
+    
 }

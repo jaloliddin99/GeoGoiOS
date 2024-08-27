@@ -13,6 +13,7 @@ struct SideMenuView: View {
     
     @Binding var selectedSideMenuTab: Int
     @Binding var presentSideMenu: Bool
+    @ObservedObject var viewModel: MainViewModel
     
     var body: some View {
         HStack {
@@ -24,7 +25,7 @@ struct SideMenuView: View {
                     .shadow(color: .purple.opacity(0.1), radius: 5, x: 0, y: 3)
                 
                 VStack(alignment: .leading, spacing: 0) {
-                    ProfileImageView()
+                    ProfileImageView(viewModel: viewModel)
                         .frame(height: 140)
                         .padding(.bottom, 30)
                     
@@ -50,11 +51,11 @@ struct SideMenuView: View {
         .background(.clear)
     }
     
-    func ProfileImageView() -> some View{
+    func ProfileImageView(viewModel: MainViewModel) -> some View{
         VStack(alignment: .center){
             HStack{
                 Spacer()
-                RoundedProfileImage(radius: 50, name: "profile-image")
+                RoundedProfileImage(viewModel: viewModel)
                 Spacer()
             }
             

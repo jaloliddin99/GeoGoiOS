@@ -66,7 +66,6 @@ struct SearchScreenDialog: View {
         
         ScrollView(.vertical, showsIndicators: false) {
             LazyVStack(spacing: 6) {
-                
                 if isSearchingLocation {
                     ForEach(eSearchViewModel.reverseLocations?.features ?? [], id: \.properties.id) { reverseInfo in
                         ElasticSearchResult(searchInfo: reverseInfo, viewModel: viewModel)
@@ -78,7 +77,6 @@ struct SearchScreenDialog: View {
                 }
             }
             .padding(.horizontal, 12)
-            
         }
     }
 }

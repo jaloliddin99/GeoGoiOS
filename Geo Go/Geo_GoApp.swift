@@ -13,7 +13,7 @@ struct Geo_GoApp: App {
         WindowGroup {
             if UserDefaults.standard.bool(forKey: Constants.isUserLoggedIn){
                 HomeScreen()
-            }else{
+            } else {
                 AccessScreen()
             }
         }

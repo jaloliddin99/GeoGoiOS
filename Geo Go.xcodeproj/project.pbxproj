@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2508EACA2C73DEB3008CCC12 /* CheckBoxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2508EAC92C73DEB3008CCC12 /* CheckBoxView.swift */; };
 		252E5C212C3C075900C132AF /* Estimate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252E5C202C3C075900C132AF /* Estimate.swift */; };
 		252E5C242C3C29CF00C132AF /* EstimateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252E5C232C3C29CF00C132AF /* EstimateHelper.swift */; };
 		252E5C272C3C7F8700C132AF /* CustomBottomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252E5C262C3C7F8700C132AF /* CustomBottomSheet.swift */; };
@@ -57,9 +58,6 @@
 		256EAED82C309DE900FA7A5C /* MapConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256EAED72C309DE900FA7A5C /* MapConfig.swift */; };
 		256EAEDA2C309F9900FA7A5C /* HomeScreenDrawer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256EAED92C309F9900FA7A5C /* HomeScreenDrawer.swift */; };
 		256EAEDC2C30A2C500FA7A5C /* DrawerBtn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256EAEDB2C30A2C500FA7A5C /* DrawerBtn.swift */; };
-		256EAEDF2C30B99300FA7A5C /* SideMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256EAEDE2C30B99300FA7A5C /* SideMenuView.swift */; };
-		256EAEE12C30BA0D00FA7A5C /* SideMenuRowType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256EAEE02C30BA0D00FA7A5C /* SideMenuRowType.swift */; };
-		256EAEE32C30BFB900FA7A5C /* SideMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256EAEE22C30BFB900FA7A5C /* SideMenu.swift */; };
 		25A51DCA2C6CDF6D00C2FBB0 /* MyTripsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A51DC92C6CDF6D00C2FBB0 /* MyTripsScreen.swift */; };
 		25A51DCC2C6CDF8400C2FBB0 /* MyTripsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A51DCB2C6CDF8400C2FBB0 /* MyTripsViewModel.swift */; };
 		25A51DCF2C6CE52200C2FBB0 /* PaymentScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A51DCE2C6CE52200C2FBB0 /* PaymentScreen.swift */; };
@@ -81,6 +79,10 @@
 		25B20C2E2C634B0300F50017 /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B20C2D2C634B0300F50017 /* Line.swift */; };
 		25B20C302C6355DF00F50017 /* RateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B20C2F2C6355DF00F50017 /* RateView.swift */; };
 		25B20C322C63978F00F50017 /* DialogToolBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B20C312C63978F00F50017 /* DialogToolBar.swift */; };
+		25BC2C562C76093B00484F69 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25BC2C552C76093B00484F69 /* WebView.swift */; };
+		25BC2C582C76099600484F69 /* TermsOfUseAndPPScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25BC2C572C76099600484F69 /* TermsOfUseAndPPScreen.swift */; };
+		25BC2C5A2C761E8A00484F69 /* NewsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25BC2C592C761E8A00484F69 /* NewsModel.swift */; };
+		25BC2C5C2C761ECD00484F69 /* NewsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25BC2C5B2C761ECD00484F69 /* NewsViewModel.swift */; };
 		25BFDB5B2C33E61700D73993 /* RoundedCorners.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25BFDB5A2C33E61700D73993 /* RoundedCorners.swift */; };
 		25BFDB5D2C33EAA000D73993 /* MarkerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25BFDB5C2C33EAA000D73993 /* MarkerView.swift */; };
 		25BFDB602C33EB9700D73993 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 25BFDB5F2C33EB9700D73993 /* Lottie */; };
@@ -101,9 +103,13 @@
 		25BFDB832C35E62500D73993 /* ServiceTariffs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25BFDB822C35E62500D73993 /* ServiceTariffs.swift */; };
 		25BFDB872C36BFF900D73993 /* DataHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25BFDB862C36BFF900D73993 /* DataHolder.swift */; };
 		25DA46862C649A7400C2A1AB /* TariffDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25DA46852C649A7400C2A1AB /* TariffDetailsView.swift */; };
+		25F91C762C7CCDAD001CAAB7 /* BonusHomeItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F91C752C7CCDAD001CAAB7 /* BonusHomeItem.swift */; };
+		25F91C792C7CD5FC001CAAB7 /* DialogBonus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F91C782C7CD5FC001CAAB7 /* DialogBonus.swift */; };
+		25F91C7B2C7CDB55001CAAB7 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F91C7A2C7CDB55001CAAB7 /* Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2508EAC92C73DEB3008CCC12 /* CheckBoxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckBoxView.swift; sourceTree = "<group>"; };
 		252E5C202C3C075900C132AF /* Estimate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Estimate.swift; sourceTree = "<group>"; };
 		252E5C232C3C29CF00C132AF /* EstimateHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EstimateHelper.swift; sourceTree = "<group>"; };
 		252E5C262C3C7F8700C132AF /* CustomBottomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBottomSheet.swift; sourceTree = "<group>"; };
@@ -156,9 +162,6 @@
 		256EAED72C309DE900FA7A5C /* MapConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapConfig.swift; sourceTree = "<group>"; };
 		256EAED92C309F9900FA7A5C /* HomeScreenDrawer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreenDrawer.swift; sourceTree = "<group>"; };
 		256EAEDB2C30A2C500FA7A5C /* DrawerBtn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawerBtn.swift; sourceTree = "<group>"; };
-		256EAEDE2C30B99300FA7A5C /* SideMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuView.swift; sourceTree = "<group>"; };
-		256EAEE02C30BA0D00FA7A5C /* SideMenuRowType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuRowType.swift; sourceTree = "<group>"; };
-		256EAEE22C30BFB900FA7A5C /* SideMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenu.swift; sourceTree = "<group>"; };
 		25A51DC92C6CDF6D00C2FBB0 /* MyTripsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTripsScreen.swift; sourceTree = "<group>"; };
 		25A51DCB2C6CDF8400C2FBB0 /* MyTripsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTripsViewModel.swift; sourceTree = "<group>"; };
 		25A51DCE2C6CE52200C2FBB0 /* PaymentScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentScreen.swift; sourceTree = "<group>"; };
@@ -180,6 +183,10 @@
 		25B20C2D2C634B0300F50017 /* Line.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
 		25B20C2F2C6355DF00F50017 /* RateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateView.swift; sourceTree = "<group>"; };
 		25B20C312C63978F00F50017 /* DialogToolBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogToolBar.swift; sourceTree = "<group>"; };
+		25BC2C552C76093B00484F69 /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
+		25BC2C572C76099600484F69 /* TermsOfUseAndPPScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsOfUseAndPPScreen.swift; sourceTree = "<group>"; };
+		25BC2C592C761E8A00484F69 /* NewsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsModel.swift; sourceTree = "<group>"; };
+		25BC2C5B2C761ECD00484F69 /* NewsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsViewModel.swift; sourceTree = "<group>"; };
 		25BFDB5A2C33E61700D73993 /* RoundedCorners.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedCorners.swift; sourceTree = "<group>"; };
 		25BFDB5C2C33EAA000D73993 /* MarkerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerView.swift; sourceTree = "<group>"; };
 		25BFDB612C33ED0C00D73993 /* marker_location.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = marker_location.json; sourceTree = "<group>"; };
@@ -200,6 +207,9 @@
 		25BFDB822C35E62500D73993 /* ServiceTariffs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceTariffs.swift; sourceTree = "<group>"; };
 		25BFDB862C36BFF900D73993 /* DataHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataHolder.swift; sourceTree = "<group>"; };
 		25DA46852C649A7400C2A1AB /* TariffDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TariffDetailsView.swift; sourceTree = "<group>"; };
+		25F91C752C7CCDAD001CAAB7 /* BonusHomeItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BonusHomeItem.swift; sourceTree = "<group>"; };
+		25F91C782C7CD5FC001CAAB7 /* DialogBonus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogBonus.swift; sourceTree = "<group>"; };
+		25F91C7A2C7CDB55001CAAB7 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -217,6 +227,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2508EAC82C73DE9E008CCC12 /* CheckBoxView */ = {
+			isa = PBXGroup;
+			children = (
+				2508EAC92C73DEB3008CCC12 /* CheckBoxView.swift */,
+			);
+			path = CheckBoxView;
+			sourceTree = "<group>";
+		};
 		252E5C222C3C29BA00C132AF /* EstimationHelper */ = {
 			isa = PBXGroup;
 			children = (
@@ -304,6 +322,7 @@
 		2568777F2C25BEA40041E16A /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				2508EAC82C73DE9E008CCC12 /* CheckBoxView */,
 				25B20C2A2C63479E00F50017 /* Text */,
 				25B20C242C6328B400F50017 /* Images */,
 				252E5C252C3C7F6B00C132AF /* BottomSheet */,
@@ -368,7 +387,6 @@
 				25A51DD02C6CE53600C2FBB0 /* favourites */,
 				25A51DCD2C6CE51100C2FBB0 /* Payment */,
 				25A51DC82C6CDF5800C2FBB0 /* MyTrips */,
-				256EAEDD2C30B98200FA7A5C /* SideBar */,
 				256EAEB62C2D8B3700FA7A5C /* Home */,
 			);
 			path = Main;
@@ -396,6 +414,7 @@
 			children = (
 				2568778E2C25C2A80041E16A /* Alert.swift */,
 				2565CF9F2C4678CD00FCC08A /* MapBoxExt.swift */,
+				25F91C7A2C7CDB55001CAAB7 /* Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -416,6 +435,7 @@
 			children = (
 				256877982C25C63C0041E16A /* LoadingView.swift */,
 				2565CFA12C467FFC00FCC08A /* ViewAnnotation.swift */,
+				25BC2C552C76093B00484F69 /* WebView.swift */,
 			);
 			path = "UIKit Components";
 			sourceTree = "<group>";
@@ -455,6 +475,7 @@
 				2565CFB12C5DDFC300FCC08A /* OrderInfo.swift */,
 				25B20C1E2C5F6AC900F50017 /* CancelOrder.swift */,
 				25A51DE52C6E2CC100C2FBB0 /* DateOrderHistory.swift */,
+				25BC2C592C761E8A00484F69 /* NewsModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -506,6 +527,7 @@
 		256EAEBE2C2EADD100FA7A5C /* HomeItems */ = {
 			isa = PBXGroup;
 			children = (
+				25F91C772C7CD5E8001CAAB7 /* Bonus */,
 				25DA46842C649A2100C2A1AB /* TariffDialog */,
 				25B20C272C63462C00F50017 /* FinishOrder */,
 				2565CFB32C5E74C600FCC08A /* DriverFound */,
@@ -535,16 +557,6 @@
 				256EAED72C309DE900FA7A5C /* MapConfig.swift */,
 			);
 			path = MapBox;
-			sourceTree = "<group>";
-		};
-		256EAEDD2C30B98200FA7A5C /* SideBar */ = {
-			isa = PBXGroup;
-			children = (
-				256EAEDE2C30B99300FA7A5C /* SideMenuView.swift */,
-				256EAEE02C30BA0D00FA7A5C /* SideMenuRowType.swift */,
-				256EAEE22C30BFB900FA7A5C /* SideMenu.swift */,
-			);
-			path = SideBar;
 			sourceTree = "<group>";
 		};
 		25A51DC82C6CDF5800C2FBB0 /* MyTrips */ = {
@@ -600,6 +612,7 @@
 			isa = PBXGroup;
 			children = (
 				25A51DDD2C6CE5EB00C2FBB0 /* NewsScreen.swift */,
+				25BC2C5B2C761ECD00484F69 /* NewsViewModel.swift */,
 			);
 			path = News;
 			sourceTree = "<group>";
@@ -616,6 +629,7 @@
 			isa = PBXGroup;
 			children = (
 				25A51DE32C6CE62600C2FBB0 /* AboutAppScreen.swift */,
+				25BC2C572C76099600484F69 /* TermsOfUseAndPPScreen.swift */,
 			);
 			path = AboutApp;
 			sourceTree = "<group>";
@@ -698,6 +712,15 @@
 				25DA46852C649A7400C2A1AB /* TariffDetailsView.swift */,
 			);
 			path = TariffDialog;
+			sourceTree = "<group>";
+		};
+		25F91C772C7CD5E8001CAAB7 /* Bonus */ = {
+			isa = PBXGroup;
+			children = (
+				25F91C752C7CCDAD001CAAB7 /* BonusHomeItem.swift */,
+				25F91C782C7CD5FC001CAAB7 /* DialogBonus.swift */,
+			);
+			path = Bonus;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -790,16 +813,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				25A51DD22C6CE54900C2FBB0 /* FavScreen.swift in Sources */,
-				256EAEE12C30BA0D00FA7A5C /* SideMenuRowType.swift in Sources */,
 				2565CFA02C4678CD00FCC08A /* MapBoxExt.swift in Sources */,
 				252E5C272C3C7F8700C132AF /* CustomBottomSheet.swift in Sources */,
 				25B20C212C5F6B3600F50017 /* FeedbackViewModel.swift in Sources */,
 				25BFDB752C354E7F00D73993 /* SearchScreenDialog.swift in Sources */,
 				256877A32C25D1470041E16A /* NetworkService.swift in Sources */,
 				256EAED32C309CB500FA7A5C /* MainViewModel.swift in Sources */,
+				25BC2C5C2C761ECD00484F69 /* NewsViewModel.swift in Sources */,
 				25BFDB712C34823B00D73993 /* GenerateResponse.swift in Sources */,
+				25F91C762C7CCDAD001CAAB7 /* BonusHomeItem.swift in Sources */,
 				25A51DCF2C6CE52200C2FBB0 /* PaymentScreen.swift in Sources */,
-				256EAEE32C30BFB900FA7A5C /* SideMenu.swift in Sources */,
 				256877AB2C26B0870041E16A /* AddNameScreen.swift in Sources */,
 				2565CFB52C5E74DC00FCC08A /* DriverFoundView.swift in Sources */,
 				2568778F2C25C2A80041E16A /* Alert.swift in Sources */,
@@ -825,6 +848,7 @@
 				25A51DE12C6CE60E00C2FBB0 /* SupportScreen.swift in Sources */,
 				25BFDB7D2C35CFA400D73993 /* OrderGoView.swift in Sources */,
 				25BFDB682C345DF700D73993 /* WhatsNewView.swift in Sources */,
+				25BC2C562C76093B00484F69 /* WebView.swift in Sources */,
 				25BFDB732C34891800D73993 /* AddressHistory.swift in Sources */,
 				2565CFA72C54FC3400FCC08A /* Bonus.swift in Sources */,
 				2565CF9C2C453CED00FCC08A /* PolyLineUtils.swift in Sources */,
@@ -839,26 +863,30 @@
 				2565CF972C44CC9F00FCC08A /* Utils.swift in Sources */,
 				2568778C2C25C25A0041E16A /* LocationManager.swift in Sources */,
 				2565CF9A2C45055D00FCC08A /* Routing.swift in Sources */,
+				25F91C792C7CD5FC001CAAB7 /* DialogBonus.swift in Sources */,
 				256EAEDC2C30A2C500FA7A5C /* DrawerBtn.swift in Sources */,
 				256EAECF2C2F22F100FA7A5C /* EnterPhoneViewModel.swift in Sources */,
 				25A51DDB2C6CE5D300C2FBB0 /* SettingsScreen.swift in Sources */,
 				256877882C25C1D90041E16A /* AccessViewModel.swift in Sources */,
-				256EAEDF2C30B99300FA7A5C /* SideMenuView.swift in Sources */,
 				256EAECD2C2F21DE00FA7A5C /* RegistrationRequest.swift in Sources */,
+				25BC2C582C76099600484F69 /* TermsOfUseAndPPScreen.swift in Sources */,
 				256877992C25C63C0041E16A /* LoadingView.swift in Sources */,
 				25BFDB642C3404BC00D73993 /* MarkerMoveListener.swift in Sources */,
+				2508EACA2C73DEB3008CCC12 /* CheckBoxView.swift in Sources */,
 				25DA46862C649A7400C2A1AB /* TariffDetailsView.swift in Sources */,
 				25BFDB5B2C33E61700D73993 /* RoundedCorners.swift in Sources */,
 				256877722C258B190041E16A /* Geo_GoApp.swift in Sources */,
 				252E5C242C3C29CF00C132AF /* EstimateHelper.swift in Sources */,
 				25B20C1F2C5F6AC900F50017 /* CancelOrder.swift in Sources */,
 				256877A82C25D1FF0041E16A /* NetworkError.swift in Sources */,
+				25BC2C5A2C761E8A00484F69 /* NewsModel.swift in Sources */,
 				25B20C262C6328C400F50017 /* GGImage.swift in Sources */,
 				2565CF9E2C4547FF00FCC08A /* Algorithms.swift in Sources */,
 				25BFDB662C343A8700D73993 /* ReverseModel.swift in Sources */,
 				25BFDB7F2C35DD4700D73993 /* CarSelectionView.swift in Sources */,
 				25BFDB872C36BFF900D73993 /* DataHolder.swift in Sources */,
 				256EAED52C309D8900FA7A5C /* MapStyle.swift in Sources */,
+				25F91C7B2C7CDB55001CAAB7 /* Extensions.swift in Sources */,
 				2565CF8D2C42690300FCC08A /* DialogWish.swift in Sources */,
 				25B20C1D2C5F67A100F50017 /* DialogBottomCancelOrder.swift in Sources */,
 				25A51DCC2C6CDF8400C2FBB0 /* MyTripsViewModel.swift in Sources */,
@@ -1020,6 +1048,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Geo Go/Preview Content\"";
+				DEVELOPMENT_TEAM = CXF4H79P75;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Geo-Go-Info.plist";
@@ -1052,6 +1081,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Geo Go/Preview Content\"";
+				DEVELOPMENT_TEAM = CXF4H79P75;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Geo-Go-Info.plist";

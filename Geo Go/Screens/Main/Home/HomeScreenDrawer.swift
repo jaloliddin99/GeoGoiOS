@@ -12,10 +12,11 @@ import SwiftUI
 struct HomeScreenDrawer: View {
     @Binding var isOpen: Bool
     @Binding var selectedScreen: DestinationScreen?
+    @ObservedObject var viewModel: MainViewModel
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            ProfileImageView()
+            ProfileImageView(viewModel: viewModel)
                 .padding(.bottom, 12)
                 .padding(.top, 56)
             Divider()
@@ -73,27 +74,34 @@ struct HomeScreenDrawer: View {
     }
 }
 
-func ProfileImageView() -> some View{
+func ProfileImageView(viewModel: MainViewModel) -> some View{
+    
     VStack(alignment: .center){
+        let baseUrl = UserDefaults.standard.value(forKey: Constants.baseUrl)!
+        let userName = UserDefaults.standard.value(forKey: Constants.USER_NAME)!
+        let url = "\(baseUrl)/bosh/get_photo.php?type=client&phone="
+        let userPhone: String = UserDefaults.standard.value(forKey: Constants.USER_PHONE)! as! String
+        
+        let finalUrl = "\(url)\(userPhone)".replacing("+", with: "")
+        
         HStack{
             Spacer()
-            Image("profile-image")
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-                .frame(width: 100, height: 100)
+            RemoteRoundedImage(image: viewModel.image, radius: 48, imageName: "profile-image")
+                .padding(2)
                 .overlay(
-                    RoundedRectangle(cornerRadius: 50)
-                        .stroke(.purple.opacity(0.5), lineWidth: 10)
+                    RoundedRectangle(cornerRadius: 54)
+                        .stroke(.main, lineWidth: 2)
                 )
-                .cornerRadius(50)
+                .onAppear { viewModel.loadImage(fromURLString: finalUrl) }
+            
             Spacer()
         }
         
-        Text("Sadulla Soatov")
+        Text(userName as! String)
             .font(.system(size: 18, weight: .bold))
             .foregroundColor(.black)
         
-        Text("IOS Developer")
+        Text(userPhone)
             .font(.system(size: 14, weight: .semibold))
             .foregroundColor(.black.opacity(0.5))
     }

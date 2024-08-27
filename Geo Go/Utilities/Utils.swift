@@ -113,3 +113,62 @@ func getImageUrl(orderDetails: OrderInfo) -> String{
     return "\(url)\(phone!)"
 
 }
+
+
+func formatTime(time: String) -> String {
+    
+    let inputFormatter = DateFormatter()
+    inputFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS"
+    
+    if let date = inputFormatter.date(from: time) {
+        let outputFormatter = DateFormatter()
+        outputFormatter.dateFormat = "yyyy-MM-dd HH:mm"
+        let formattedDateString = outputFormatter.string(from: date)
+        return formattedDateString
+    } else {
+        return "Time Format Failed"
+    }
+}
+
+func formatDate(from originalDateString: String) -> String {
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+    dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+    
+    if let date = dateFormatter.date(from: originalDateString) {
+        let outputFormatter = DateFormatter()
+        outputFormatter.dateFormat = "yyyy-MM-dd HH:mm"
+        
+        return outputFormatter.string(from: date)
+    } else {
+        return "Time Format Failed"
+    }
+}
+
+
+func privacyPolicyUrl(lang: String, url: String) -> String {
+    switch lang {
+        case "ru":
+            return "\(url)/privacy-policy-ru/"
+        case "kl":
+            return "\(url)/jasirinliq-siyasati/"
+        case "uz":
+            return "\(url)/maxfiylik-siyosati/"
+        default:
+            return "\(url)/privacy-policy/"
+    }
+}
+
+func termsOfUse(lang: String, url: String) -> String {
+    switch lang {
+        case "ru":
+            return "\(url)/user-agreement-ru/"
+        case "kl":
+            return "\(url)/paydalaniwshi-kelisimi/"
+        case "uz":
+            return "\(url)/foydalanuvchi-kelishuvi/"
+        default:
+            return "\(url)/user-agreement/"
+    }
+}
+

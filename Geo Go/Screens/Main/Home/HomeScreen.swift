@@ -11,7 +11,6 @@ import SwiftUI
 struct HomeScreen: View {
     
     @StateObject var viewModel = MainViewModel()
-    @State private var location: CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: 41.3385, longitude: 69.3346)
     
     @State private var isDrawerOpen = false
     @State private var markerOffset: CGFloat = 0
@@ -19,12 +18,12 @@ struct HomeScreen: View {
     
     var body: some View {
         let uri = StyleURI(rawValue: "mapbox://styles/uzdriver/cl0j7klhe001415o8wpkop805")!
-        let cameraOptions = CameraOptions(center: viewModel.tashkent, zoom: 12)
+        let cameraOptions = CameraOptions(center: viewModel.location, zoom: 12)
         
         NavigationStack {
             ZStack {
                 CustomMapView(markerOffset: $markerOffset,
-                              currentCenterCoordinate: $location,
+                              currentCenterCoordinate: $viewModel.location,
                               viewModel: viewModel,
                               vp: cameraOptions,
                               mapStyle: uri
@@ -34,12 +33,38 @@ struct HomeScreen: View {
                     checkMarkerOffset(status: viewModel.status)
                 }
                 
+               
+                
+                Button(action: {
+                    viewModel.serviceTariffRequest()
+                    viewModel.showBonusDialog.toggle()
+                }, label: {
+                    BonusHomeItem(viewModel: viewModel)
+                        .padding(.top, 12)
+                        .padding(.trailing, 16)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
+
+                })
+                Button(action: {
+                    withAnimation {
+                        viewModel.location = DataHolder.location
+                        viewModel.refocusButtonListener.toggle()
+                        checkMarkerOffset(status: viewModel.status)
+                    }
+                }) {
+                    DrawerBtn(name: "location", fromAssets: false)
+                }
+                .padding(.trailing, 16)
+                .padding(.bottom, 262)
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
+                .ignoresSafeArea()
+                
                 Button(action: {
                     withAnimation {
                         isDrawerOpen.toggle()
                     }
                 }) {
-                    DrawerBtn()
+                    DrawerBtn(name: "menu_navigation", fromAssets: true)
                 }
                 .padding(.top, 12)
                 .padding(.leading, 16)
@@ -82,7 +107,8 @@ struct HomeScreen: View {
                         }
                 }
                 
-                HomeScreenDrawer(isOpen: $isDrawerOpen, selectedScreen: $selectedScreen)
+                HomeScreenDrawer(isOpen: $isDrawerOpen, selectedScreen: $selectedScreen,
+                viewModel: viewModel)
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
                     .ignoresSafeArea()
                 
@@ -136,6 +162,11 @@ struct HomeScreen: View {
                     DialogRateDriver(invokeDialog: $viewModel.showRateDriver) { action in }
                 }
             }
+            .sheet(isPresented: $viewModel.showBonusDialog, content: {
+                BottomSheet {
+                    DialogBonus(viewModel: viewModel)
+                }
+            })
             .sheet(isPresented: $viewModel.showTariffDetailsDialog) {
                 VStack {
                     TariffDetailsView(item: DataHolder.selectedTariff!)
@@ -146,14 +177,20 @@ struct HomeScreen: View {
     
     private func checkMarkerOffset(status: Int) {
         if markerOffset == 0 && status == 0 {
-            viewModel.reverseLocation(lat: location.latitude, lon: location.longitude)
+            viewModel.reverseLocation(lat: viewModel.location.latitude,
+                                      lon: viewModel.location.longitude)
         }
     }
     
     private func getDestinationView(for destination: DestinationScreen, viewModel: MainViewModel) -> some View {
         switch destination {
             case .myTrips:
-                return AnyView(MyTripsScreen(viewModel: viewModel))
+                if viewModel.addressHistoryResponse != nil {
+                    return AnyView(MyTripsScreen(viewModel: viewModel))
+                }else {
+                    return AnyView(PaymentScreen())
+                }
+                
             case .paymentMethod:
                 return AnyView(PaymentScreen())
             case .favouriteAddresses:

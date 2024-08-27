@@ -16,9 +16,6 @@ final class EnterCodeViewModel: ObservableObject{
     @Published var alertItem: AlertItem?
     
     func getAppetizer(id: String, code: String) {
-        
-        
-        
         isLoading = true
         NetworkService.shared.sendRequest(
             url: UserDefaults().string(forKey: Constants.baseUrl)!+"/api/client/mobile/1.0/registration/confirm",

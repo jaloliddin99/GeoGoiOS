@@ -72,7 +72,7 @@ struct DriverDetailsView: View {
         HStack {
             
             if viewModel.status == 5 {
-                RemoteImage(image: viewModel.image, radius: 24, imageName: "profile-image")
+                RemoteRoundedImage(image: viewModel.image, radius: 24, imageName: "profile-image")
                     .onAppear { viewModel.loadImage(fromURLString: getImageUrl(orderDetails: viewModel.getOrderDetail!)) }
             }
             

@@ -22,6 +22,7 @@ final class AccessViewModel: ObservableObject {
            isLoading = true
            NetworkService.shared.sendRequest(
             path: "\(lat)/\(lon)",
+            isPrintable: true,
             completed: handleAppetizersResponse as (Result<GetServerLinks, APError>) -> Void)
        }
        
@@ -66,6 +67,7 @@ final class AccessViewModel: ObservableObject {
         UserDefaults.standard.set(data.socket, forKey: Constants.driverSocket)
         UserDefaults.standard.set(data.client_lan, forKey: Constants.clientLan)
         UserDefaults.standard.set(data.client_info, forKey: Constants.clientInfo)
+        UserDefaults.standard.set(data.client_news, forKey: Constants.clientNews)
         UserDefaults.standard.set(data.reverse, forKey: Constants.reverse)
         UserDefaults.standard.set(data.user_url, forKey: Constants.userUrl)
         UserDefaults.standard.set(data.chat_url, forKey: Constants.chatUrl)
