@@ -15,39 +15,27 @@ struct SearchDriver: View {
     
 
     var body: some View {
-        
-        ZStack{
-            GeometryReader { geometry in
-                let width = geometry.size.width
-                
-                LottieEmptyStateView(fileName: "loading")
-                    .frame(width: width * 0.9, height: width * 0.9)
-                    .position(x: width / 2, y: geometry.size.height / 2)
-                Image("active_location")
-                    .frame(width: 30, height: 30)
-                    .position(x: width / 2, y: geometry.size.height / 2)
-            }
-        }
-        VStack(spacing: 0) {
+        VStack(spacing: 12) {
             Rectangle()
                 .frame(width: 40, height: 5)
                 .foregroundColor(.gray.opacity(0.4))
                 .cornerRadius(10)
             
-            Text("Search Car")
+            Text("Searching Car...")
                 .font(.title2)
-                .fontWeight(.bold)
-                .padding(.top, 16)
+                .fontWeight(.semibold)
+                .padding(.top, 4)
             
             HStack {
                 ProgressView(value: elapsedTime, total: maxTime)
-                    .progressViewStyle(LinearProgressViewStyle(tint: .blue))
+                    .progressViewStyle(LinearProgressViewStyle(tint: .main))
                     .frame(height: 20)
+                
                 Text(formattedTime(elapsedTime))
                     .font(.system(size: 20, weight: .medium, design: .monospaced))
                     .frame(width: 80, alignment: .trailing)
+                    .foregroundColor(.main)
             }
-            .padding(.vertical, 12)
             .onReceive(timer) { _ in
                 if elapsedTime < maxTime {
                     elapsedTime += 1
@@ -55,13 +43,9 @@ struct SearchDriver: View {
             }
             
             let lh = viewModel.locationHolder
-            SearchDriverAddress(flagName: "location_pin", locationName: lh[0].addressName)
             
-            if lh.count > 1 {
-                let name = lh[lh.count-1].addressName
-                SearchDriverAddress(flagName: "destination_flag", locationName: name)
-            }
-            
+            AddressFieldStatic(mainViewModel: viewModel)
+
             Button(action: {
                 viewModel.showCancelOrderAlert.toggle()
             }, label: {
@@ -79,12 +63,10 @@ struct SearchDriver: View {
                     .stroke(Color.red, lineWidth: 1)
             )
             .padding(.bottom, 16)
-
-            
             
         }
         .padding()
-        .background(Color(.white))
+        .background(.white)
         .cornerRadius(12, corners: [.topLeft, .topRight])
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
         .shadow(radius: 2)
@@ -120,3 +102,56 @@ struct SearchDriverAddress: View {
         .padding(.bottom, 16)
     }
 }
+
+
+struct AddressFieldStatic: View {
+    @ObservedObject var mainViewModel: MainViewModel
+    
+    var body: some View {
+        HStack(alignment: .center,spacing: 8) {
+            Image("route_image")
+                .resizable()
+                .scaledToFit()
+                .frame(maxHeight: 64)
+            
+            VStack(spacing: 12) {
+                if !mainViewModel.locationHolder.isEmpty {
+                    Text(mainViewModel.locationHolder[0].addressName)
+                        .fontWeight(.medium)
+                        .lineLimit(1)
+                }
+                
+                Divider()
+                
+                HStack{
+                    let count = mainViewModel.locationHolder.count
+                    if count == 1{
+                        Text("Destination is not entered!")
+                            .fontWeight(.medium)
+                            .foregroundColor(.black.opacity(0.5))
+                        
+                    }else if count >= 2 {
+                        Text(mainViewModel.locationHolder[count-1].addressName)
+                            .fontWeight(.medium)
+                            .lineLimit(1)
+                            .foregroundColor(.txt)
+                        
+                    }else  {
+                        Text("Error Occured")
+                            .fontWeight(.medium)
+                            .foregroundColor(.txt)
+                            .lineLimit(1)
+                    }
+                    Spacer()
+                }
+            }
+            
+        }
+        .padding(12)
+        .background(RoundedRectangle(cornerRadius: 12)
+            .fill(Color(.secondarySystemBackground).opacity(0.7))
+        )
+    }
+}
+
+

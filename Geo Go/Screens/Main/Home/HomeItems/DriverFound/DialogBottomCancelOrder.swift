@@ -13,10 +13,11 @@ struct DialogBottomCancelOrder: View {
     @State private var contentSize: CGSize = .zero
 
     var body: some View {
-        ZStack{
+        ZStack {
+            
             VStack(alignment: .leading, spacing: 12){
                 DialogToolBar(showDialog: $mainVm.showCancelBottomDialog, title: "Cancel Order")
-                Text("Tell us why you canceled the order")
+                Text("Tell us why you wanted to cancel the order")
                     .font(.system(size: 16, weight: .bold))
                     .foregroundColor(.black)
                 
@@ -25,9 +26,7 @@ struct DialogBottomCancelOrder: View {
                         if let feedback = viewModel.feedback {
                             ForEach(feedback) { option in
                                 HStack(alignment: .center) {
-                                    RadioButton(isSelected: viewModel.selectedOptionID == option.id) {
-                                        viewModel.selectedOptionID = option.id
-                                    }
+                                    RadioButton(isSelected: viewModel.selectedOptionID == option.id)
                                     Text(option.title)
                                         .foregroundColor(.black)
                                         .lineLimit(2)
@@ -35,22 +34,27 @@ struct DialogBottomCancelOrder: View {
                                     Spacer()
                                 }
                                 .frame(height: 40)
+                                .onTapGesture {
+                                    viewModel.selectedOptionID = option.id
+                                }
                             }
                         }
                     }
                 }
                 .safeAreaPadding(.bottom, 70)
                 
+                Spacer()
                 
                 Button(action: {
-                    let phone: String = UserDefaults.standard.string(forKey: Constants.USER_PHONE) ?? "+998994522399"
                     let feedBackPostModel = FeedBackPostModel(
-                        complainent: phone,
+                        complainent: getUserPhone(),
                         message: viewModel.selectedOptionID!,
-                        orderId: DataHolder.orderId,
+                        orderId: "\(DataHolder.orderId)",
                         type: "toOrder"
                     )
                     viewModel.postFeedBacks(feedBackBody: feedBackPostModel)
+                    
+                    mainVm.showCancelBottomDialog.toggle()
                 }) {
                     GGButton(title: "Confirm")
                 }
@@ -58,28 +62,18 @@ struct DialogBottomCancelOrder: View {
                 .opacity(viewModel.selectedOptionID == nil ? 0.5 : 1.0)
                 
             }
-            .alert(item: $viewModel.alertItem){ alertItem in
-                Alert(title: alertItem.title,
-                      message: alertItem.message,
-                      dismissButton: alertItem.dismissButton
-                )
-            }
             .onAppear {
                 viewModel.getFeedbacks()
             }
-            .onReceive(viewModel.$feedbackResponse) { newValue in
-                if newValue != nil {
-                    mainVm.showCancelBottomDialog.toggle()
-                }
-            }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
             .padding(.horizontal, 16)
             .padding(.bottom, 32)
             
+            if viewModel.isLoading {
+                LoadingView()
+            }
+            
         }
         
-        if viewModel.isLoading {
-            LoadingView()
-        }
+        
     }
 }

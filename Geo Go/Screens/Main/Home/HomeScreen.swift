@@ -33,18 +33,31 @@ struct HomeScreen: View {
                     checkMarkerOffset(status: viewModel.status)
                 }
                 
+                
+                HStack{
+                    Button(action: {
+                        withAnimation {
+                            isDrawerOpen.toggle()
+                        }
+                    }) {
+                        DrawerBtn(name: "menu_navigation", fromAssets: true)
+                    }
+                    Spacer()
+                    Button(action: {
+                        viewModel.serviceTariffRequest()
+                        viewModel.showBonusDialog.toggle()
+                    }, label: {
+                        BonusHomeItem(viewModel: viewModel)
+                    })
+                }
+                .padding(.top, 12)
+                .padding(.horizontal, 16)
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+
+
                
                 
-                Button(action: {
-                    viewModel.serviceTariffRequest()
-                    viewModel.showBonusDialog.toggle()
-                }, label: {
-                    BonusHomeItem(viewModel: viewModel)
-                        .padding(.top, 12)
-                        .padding(.trailing, 16)
-                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
-
-                })
+               
                 Button(action: {
                     withAnimation {
                         viewModel.location = DataHolder.location
@@ -59,16 +72,7 @@ struct HomeScreen: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
                 .ignoresSafeArea()
                 
-                Button(action: {
-                    withAnimation {
-                        isDrawerOpen.toggle()
-                    }
-                }) {
-                    DrawerBtn(name: "menu_navigation", fromAssets: true)
-                }
-                .padding(.top, 12)
-                .padding(.leading, 16)
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+                
                 
                 
                 if viewModel.status == 0 {
@@ -183,28 +187,26 @@ struct HomeScreen: View {
     }
     
     private func getDestinationView(for destination: DestinationScreen, viewModel: MainViewModel) -> some View {
+        @State var paymentMethod: String = getPaymentMethod()
+
         switch destination {
             case .myTrips:
                 if viewModel.addressHistoryResponse != nil {
                     return AnyView(MyTripsScreen(viewModel: viewModel))
                 }else {
-                    return AnyView(PaymentScreen())
+                    return AnyView(PaymentScreen(paymentMethod: $paymentMethod))
                 }
                 
             case .paymentMethod:
-                return AnyView(PaymentScreen())
+                return AnyView(PaymentScreen(paymentMethod: $paymentMethod))
             case .favouriteAddresses:
                 return AnyView(FavScreen())
-            case .loyaltyProgram:
-                return AnyView(LoyaltyScreen())
             case .discount:
                 return AnyView(DiscountScreen())
             case .settings:
                 return AnyView(SettingsScreen())
             case .news:
                 return AnyView(NewsScreen())
-            case .support:
-                return AnyView(SupportScreen())
             case .aboutApp:
                 return AnyView(AboutAppScreen())
         }

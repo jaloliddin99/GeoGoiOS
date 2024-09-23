@@ -59,16 +59,13 @@ final class FeedbackViewModel: ObservableObject {
             return
         }
         
-        if let jsonString = String(data: requestBodyData, encoding: .utf8) {
-            print("Body: \(jsonString)")
-        }
-        
         NetworkService.shared.sendRequest(
             url: UserDefaults().string(forKey: Constants.chatUrl)!+"/api/v1/complains",
             body: requestBodyData,
             method: "POST",
             isPrintable: true,
             completed: handleCancelOptionsResponse as (Result<ResponseFeedback, APError>) -> Void)
+        
     }
     
     private func handleCancelOptionsResponse<T: Decodable>(_ result: Result<T, APError>) {
@@ -95,8 +92,6 @@ final class FeedbackViewModel: ObservableObject {
             }
         }
     }
-    
-    
 }
 
 

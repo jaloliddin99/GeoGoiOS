@@ -15,7 +15,7 @@ struct DrawerBtn: View {
             Image(name)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
-                .padding(8)
+                .padding(10)
                 .frame(width: 48, height: 48)
                 .background(Circle()
                     .fill(Color.white)
@@ -37,22 +37,15 @@ struct DrawerBtn: View {
 
 struct RadioButton: View {
     let isSelected: Bool
-    let action: () -> Void
-    
+    var color: Color = .main
     var body: some View {
-        Image(systemName: isSelected ? "circle.fill" : "circle")
+        Image(systemName: isSelected ? "checkmark.circle.fill" : "circle")
             .resizable()
-            .foregroundColor(.main)
-            .frame(width: 24, height: 24)
-            .onTapGesture {
-                action()
-            }
+            .foregroundColor(color)
+            .frame(width: 28, height: 28)
     }
 }
 
-#Preview {
-    RadioButton(isSelected: false, action: {})
-}
 
 #Preview {
     DrawerBtn(name: "location", fromAssets: true)

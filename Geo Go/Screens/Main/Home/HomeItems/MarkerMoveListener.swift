@@ -36,6 +36,7 @@ struct CustomMapView: UIViewRepresentable {
     func updateUIView(_ uiView: MapView, context: Context) {
         
     }
+    
     func dismantleUIView(_ uiView: MapView, coordinator: Coordinator) {
         coordinator.cancellable?.cancel()
     }

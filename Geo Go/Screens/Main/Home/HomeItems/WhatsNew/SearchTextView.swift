@@ -77,8 +77,8 @@ struct ShortOrderInfoView: View {
         .padding(.horizontal, 12)
         .padding(.vertical, 8)
         .background(Color(.secondarySystemBackground))
+        .frame(maxWidth: 250)
         .cornerRadius(12)
-        .padding(.horizontal, 4)
         .onTapGesture(perform: {
             let address = orderInfo.route[orderInfo.route.count-1]
             let name = address.name

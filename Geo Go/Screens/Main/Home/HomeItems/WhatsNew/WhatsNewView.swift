@@ -30,7 +30,8 @@ struct BottomSheetView<Content: View>: View {
                         .frame(width: 40, height: 5)
                         .foregroundColor(.gray)
                         .cornerRadius(10)
-                        .padding()
+                        .padding(.top, 12)
+                        .padding(.bottom, 4)
                     self.content
                 }
                 .frame(width: geometry.size.width, height: self.maxHeight, alignment: .top)
@@ -79,23 +80,57 @@ struct BottomSheetContent: View{
     var body: some View {
         
         ScrollView(.vertical, showsIndicators: false) {
-            VStack(spacing: 12) {
+            VStack(spacing: 8) {
                 SearchTextView(viewModel: viewModel)
+                
+                BussAndDeliveryView()
+                
                 ScrollView(.horizontal, showsIndicators: false) {
-                    LazyHStack(spacing: 6) {
+                    LazyHStack(spacing: 12) {
                         ForEach(viewModel.addressHistoryResponse ?? [], id: \.id) { orderInfo in
                             ShortOrderInfoView(viewModel: viewModel, orderInfo: orderInfo)
                         }
                     }
-                    .frame(height: 60)
-                    .padding(.horizontal, 10)
+                    .padding(.horizontal, 16)
+
                 }
                 WhatsUpView()
                 Spacer()
             }
             .padding(.bottom, 64)
         }
-        
-        
     }
 }
+
+struct BussAndDeliveryView: View {
+    var body: some View {
+        HStack(spacing: 12) {
+            ZStack {
+                Image("bus")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(maxWidth: 80)
+                
+                Spacer()
+            }
+            .padding(.vertical, 4)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(.appGray)
+            .cornerRadius(12)
+            
+            ZStack {
+                Image("delivery_cargo")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(maxWidth: 80)
+                Spacer()
+            }
+            .padding(.vertical, 4)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(.appGray)
+            .cornerRadius(12)
+        }
+        .padding(.horizontal, 16)
+    }
+}
+

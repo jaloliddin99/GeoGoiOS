@@ -24,7 +24,6 @@ final class NewsViewModel : ObservableObject {
             url: url,
             params: ["lan": DataHolder.lang],
             method: "GET",
-            isPrintable: true,
             completed: handleNewsResponse as (Result<ResponseNews, APError>) -> Void)
     }
     

@@ -48,6 +48,7 @@ struct NewsScreen: View {
 
 struct NewsItem: View {
     let newsDate: NewsData
+    var isDiscount: Bool = false
     @StateObject var viewModel = MainViewModel()
     var body: some View {
         VStack(alignment: .leading) {
@@ -79,10 +80,19 @@ struct NewsItem: View {
                     .frame(width: 8, height: 8)
                     .foregroundColor(.gray)
                 
-                if let date = newsDate.date {
-                    Text(formatDate(from: date))
-                        .font(.system(size: 12))
+                
+                if isDiscount {
+                    if let date = newsDate.createdAt {
+                        Text(convertISOToCustomFormat(isoDate: date))
+                            .font(.system(size: 12))
+                    }
+                }else{
+                    if let date = newsDate.date {
+                        Text(formatDate(from: date))
+                            .font(.system(size: 12))
+                    }
                 }
+               
                 
             }
             .padding(6)

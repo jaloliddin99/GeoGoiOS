@@ -18,8 +18,7 @@ struct DialogBonus: View {
                     Text(formatNumberWithSpaces(viewModel.bonusResponse.balance))
                         .font(.system(size: 30, weight: .semibold))
                         .foregroundColor(.white)
-                        
-                    
+                      
                     Image("menu_icon")
                         .resizable()
                         .scaledToFit()
@@ -35,7 +34,7 @@ struct DialogBonus: View {
             .padding(.horizontal, 12)
             .padding(.vertical, 20)
             .frame(maxWidth: .infinity)
-            .background(Color(hex: "#363640"))
+            .background(.bgBlack)
             .cornerRadius(20)
             
             if let discounts = viewModel.discountModel {

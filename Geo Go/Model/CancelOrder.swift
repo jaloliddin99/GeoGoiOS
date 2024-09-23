@@ -30,17 +30,15 @@ struct CancelOptionData: Codable, Identifiable {
 }
 
 struct FeedBackPostModel: Codable{
-    let complainent: String
-    let message: String
-    let orderId: Int64
-    let type:String
+    var complainent: String
+    var message: String
+    var orderId: String
+    var type:String
 }
 
 struct ResponseFeedback: Codable {
     let message: String
     let status: String
-    let error: String?
-    let data: String?
 }
 
 

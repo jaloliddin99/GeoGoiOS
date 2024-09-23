@@ -43,9 +43,7 @@ class NetworkService{
             completed(.failure(.invalidURL))
             return
         }
-        if isPrintable{
-            print("Url Data \(url)")
-        }
+        
         
         var request = URLRequest(url: url)
         request.httpMethod = method
@@ -56,16 +54,23 @@ class NetworkService{
             }
         }
         
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+
         if let body = body {
             request.httpBody = body
         }
+        
+        if isPrintable{
+            print("Url Data \(url)")
+        }
+        
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             if let _ = error {
                 completed(.failure(.unableToComplete))
                 return
             }
-            if isPrintable{
-                print("HTTP response : \(response)")
+            if isPrintable {
+                print("HTTP response : \(String(describing: response))")
             }
             
         

@@ -69,7 +69,7 @@ final class MainViewModel: ObservableObject{
                      "lat": String(lat),
                      "lon": String(lon),
                      "addressdetails": "1",
-                     "accept-language": "uz"
+                     "accept-language": DataHolder.lang
                     ],
             method: "GET",
             headers: ["Accept-Language": "uz"],
@@ -117,7 +117,7 @@ final class MainViewModel: ObservableObject{
             url: responseDetails.url,
             method: "GET",
             headers: [
-                "Accept-Language": "uz",
+                "Accept-Language": DataHolder.lang,
                 "Hive-Profile": Constants.HIVE_PROFILE,
                 "Date": responseDetails.data,
                 "Authentication": responseDetails.hmac,
@@ -158,7 +158,7 @@ final class MainViewModel: ObservableObject{
             url: responseDetails.url,
             method: "GET",
             headers: [
-                "Accept-Language": "uz",
+                "Accept-Language": DataHolder.lang,
                 "Hive-Profile": Constants.HIVE_PROFILE,
                 "Date": responseDetails.data,
                 "Authentication": responseDetails.hmac,
@@ -210,7 +210,7 @@ final class MainViewModel: ObservableObject{
             body: requestBodyData,
             method: "POST",
             headers: [
-                "Accept-Language": "uz",
+                "Accept-Language": DataHolder.lang,
                 "Hive-Profile": Constants.HIVE_PROFILE,
                 "Date": responseDetails.data,
                 "Authentication": responseDetails.hmac,
@@ -267,7 +267,7 @@ final class MainViewModel: ObservableObject{
             body: requestBodyData,
             method: "POST",
             headers: [
-                "Accept-Language": "uz",
+                "Accept-Language": DataHolder.lang,
                 "Hive-Profile": Constants.HIVE_PROFILE,
                 "X-Hive-GPS-Position": "\(DataHolder.latitude) \(DataHolder.longitude)",
                 "Date": responseDetails.data,
@@ -414,7 +414,7 @@ final class MainViewModel: ObservableObject{
             body: requestBodyData,
             method: "POST",
             headers: [
-                "Accept-Language": "uz",
+                "Accept-Language": DataHolder.lang,
                 "X-Hive-GPS-Position": "\(lat) \(lon)",
                 "Hive-Profile": Constants.HIVE_PROFILE,
                 "Date": responseDetails.data,
@@ -456,7 +456,7 @@ final class MainViewModel: ObservableObject{
             url: responseDetails.url,
             method: "DELETE",
             headers: [
-                "Accept-Language": "uz",
+                "Accept-Language": DataHolder.lang,
                 "Hive-Profile": Constants.HIVE_PROFILE,
                 "Date": responseDetails.data,
                 "Authentication": responseDetails.hmac,
@@ -499,7 +499,7 @@ final class MainViewModel: ObservableObject{
             url: responseDetails.url,
             method: "GET",
             headers: [
-                "Accept-Language": "uz",
+                "Accept-Language": DataHolder.lang,
                 "Hive-Profile": Constants.HIVE_PROFILE,
                 "Date": responseDetails.data,
                 "Authentication": responseDetails.hmac,
@@ -529,7 +529,7 @@ final class MainViewModel: ObservableObject{
             url: responseDetails.url,
             method: "GET",
             headers: [
-                "Accept-Language": "uz",
+                "Accept-Language": DataHolder.lang,
                 "Hive-Profile": Constants.HIVE_PROFILE,
                 "Date": responseDetails.data,
                 "Authentication": responseDetails.hmac,
@@ -557,7 +557,9 @@ final class MainViewModel: ObservableObject{
         }else if orderInfo.state == 6 || orderInfo.state == 5 {
             status = 0
             stopTimer()
-            showRateDriver.toggle()
+            if orderInfo.state == 5 {
+                showRateDriver.toggle()
+            }
         }else if orderInfo.state == 3 {
             status = 4
         }

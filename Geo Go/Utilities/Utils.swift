@@ -22,11 +22,11 @@ func getCreateOrderRoute(addressList: [UserSelectedAddress], bonusInt: Double) -
         DataHolder.option.append(optionId)
     }
     
-    //    if SharedPref.cashType == Constants.PAYMENT_TYPE_CASH {
-    //        DataHolder.option.removeAll { $0 == Constants.cardOptionID }
-    //    } else {
-    //        DataHolder.option.append(Constants.cardOptionID)
-    //    }
+        if getPaymentMethod() == Constants.PAYMENT_TYPE_CASH {
+            DataHolder.option.removeAll { $0 == Constants.cardOptionID }
+        } else {
+            DataHolder.option.append(Int64(Constants.cardOptionID))
+        }
     
     addressList.forEach { address in
         routeORDER.append(
@@ -145,6 +145,39 @@ func formatDate(from originalDateString: String) -> String {
     }
 }
 
+func convertISOToCustomFormat(isoDate: String) -> String {
+    let isoDateFormatter = ISO8601DateFormatter()
+    isoDateFormatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+    
+    guard let date = isoDateFormatter.date(from: isoDate) else {
+        return  "unable to convert"
+    }
+    
+    let customDateFormatter = DateFormatter()
+    customDateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
+    return customDateFormatter.string(from: date)
+}
+
+
+func getUserPhone() -> String {
+    let userPhone = UserDefaults.standard.string(forKey: Constants.USER_PHONE)!
+    if ((userPhone.starts(with: "+"))) {
+        return userPhone.replacing("+", with: "")
+    }else{
+        return userPhone;
+    }
+}
+
+func getPaymentMethod() -> String {
+    let paymentMethod:String = UserDefaults.standard.string(forKey: Constants.PAYMENT_METHOD) ?? "cash"
+    return paymentMethod;
+}
+
+
+
+func setPaymentMethod(method: String) {
+    UserDefaults.standard.setValue(method, forKey: Constants.PAYMENT_METHOD)
+}
 
 func privacyPolicyUrl(lang: String, url: String) -> String {
     switch lang {

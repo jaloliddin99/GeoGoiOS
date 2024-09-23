@@ -31,10 +31,7 @@ struct HomeScreenDrawer: View {
             DrawerItem(title: "Favourite Addresses", action: {
                 navigate(to: .favouriteAddresses)
             })
-            Divider()
-            DrawerItem(title: "Loyalty Program", action: {
-                navigate(to: .loyaltyProgram)
-            })
+           
             Divider()
             DrawerItem(title: "Discount", action: {
                 navigate(to: .discount)
@@ -47,10 +44,7 @@ struct HomeScreenDrawer: View {
             DrawerItem(title: "News", action: {
                 navigate(to: .news)
             })
-            Divider()
-            DrawerItem(title: "Support", action: {
-                navigate(to: .support)
-            })
+        
             Divider()
             DrawerItem(title: "About App", action: {
                 navigate(to: .aboutApp)
@@ -66,9 +60,9 @@ struct HomeScreenDrawer: View {
     
     private func navigate(to destination: DestinationScreen) {
         selectedScreen = destination
-        withAnimation {
-            isOpen = false
-        }
+//        withAnimation {
+//            isOpen = false
+//        }
         
 
     }
@@ -125,5 +119,5 @@ struct DrawerItem: View {
 
 
 enum DestinationScreen: Hashable {
-    case myTrips, paymentMethod, favouriteAddresses, loyaltyProgram, discount, settings, news, support, aboutApp
+    case myTrips, paymentMethod, favouriteAddresses, discount, settings, news, aboutApp
 }

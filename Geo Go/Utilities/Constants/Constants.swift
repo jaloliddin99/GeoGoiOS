@@ -7,12 +7,15 @@
 
 import Foundation
 
-
 class Constants{
+    
+
+    
     
     static let USER_NAME: String = "USER_NAME"
     
     static let USER_PHONE: String = "USER_PHONE"
+    static let PAYMENT_METHOD: String = "PAYMENT_METHOD"
     static let driverCallCenter: String = "driverCallCenter"
     static let servername: String = "servername"
     static let driverApi: String = "driverApi"
@@ -62,7 +65,6 @@ class Constants{
     static let FINISHED = "finished"
     static let PAYMENT = "payment"
     static let ESTIMATE = "estimate"
-    
     static let paymentType = "cash"
 
     static let SEND_RATING_URL = "http://157.230.124.56:8000/api/v1/ratings"
@@ -70,20 +72,22 @@ class Constants{
     
     
     static let GEOCODE_TOKEN = "ge-8f137223ed5b405d"
+    static let ATMOS_BASE_URL = "https://payment.uz.taxi/api/v1/atmos/"
 
     
     static var CAR_TYPE_3 = "carType_3"
     static var CAR_KOMFORT = "carType_4"
     static var CAR_DELIVERY = "carType_10"
     static var CAR_PEREGON = "carType_7"
-    
+    static let NAVI2_URL = "https://navi2.uz.taxi/api/v1"
+
     
     static let NAVI_BASE_URL = "https://route2.uz.taxi/route?key=9db0a28e-4851-433f-86c7-94b8a695fb18"
     
-    static let paymentMethod = PaymentMethod(
-        kind: "cash", id: "191000000026125", name: "Beznal", enoughMoney: true
-        )
-    
+    static var paymentMethod = PaymentMethod(
+        kind: getPaymentMethod(), id: "191000000026125", name: "Beznal", enoughMoney: true)
+    static let PAYMENT_TYPE_CASH = "cash"
+    static let PAYMENT_TYPE_CARD = "credit_card"
     
     static let BLUE_ICON_ID = "blue"
     static let SOURCE_ID = "source_id"
@@ -93,6 +97,7 @@ class Constants{
     static let SELECTED_ADD_COEF_PX: CGFloat = 50
     
     static let geoJSONDataSourceIdentifier = "geoJSON-data-source"
+    static let cardOptionID = 191000154796099
 
     
 }

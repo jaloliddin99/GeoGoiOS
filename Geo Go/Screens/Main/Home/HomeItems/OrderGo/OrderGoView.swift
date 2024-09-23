@@ -90,73 +90,70 @@ struct AddressField: View {
     @State private var showAddressesDialog = false
     
     var body: some View {
-        VStack(spacing: 12, content: {
-            HStack{
-                Image(systemName: "circle.fill")
-                    .foregroundColor(.main)
-                
+        HStack(alignment: .center,spacing: 8) {
+            Image("route_image")
+                .resizable()
+                .scaledToFit()
+                .frame(maxHeight: 64)
+            
+            VStack(spacing: 12) {
                 if !mainViewModel.locationHolder.isEmpty {
                     Text(mainViewModel.locationHolder[0].addressName)
                         .fontWeight(.medium)
                         .lineLimit(1)
-                    Spacer()
                 }
-            }
-            
-            Divider()
-
-            HStack{
-                Image(systemName: "circle")
-                    .foregroundColor(.main)
                 
-                let count = mainViewModel.locationHolder.count
+                Divider()
                 
-                if count == 1{
-                    Button {
-                        mainViewModel.isSearchDialogShowing = true
-                    } label: {
-                        Text("Where are we going?")
-                            .fontWeight(.medium)
-                            .foregroundColor(.black.opacity(0.5))
-                    }
-                    Spacer()
-                }else if count == 2 {
-                    Text(mainViewModel.locationHolder[1].addressName)
-                        .fontWeight(.medium)
-                        .lineLimit(1)
-                        .foregroundColor(.txt)
-                    Spacer()
-                    Button(action: {
-                        mainViewModel.isSearchDialogShowing = true
-                    }, label: {
-                        Image(systemName: "plus")
-                            .foregroundColor(.main)
-                    })
-                }else if count > 2 {
-                    Button(action: {
-                        showAddressesDialog.toggle()
-                    }, label: {
-                        Text("\(count-1) picked location")
-                            .fontWeight(.medium)
-                            .foregroundColor(.txt)
-                            .lineLimit(1)
-                    }).sheet(isPresented: $showAddressesDialog){
-                        DialogAddressLists(dialogAddressList: $showAddressesDialog, viewModel: mainViewModel)
-                    }
-                    
-                    Spacer()
-                    Button(action: {
-                        if count < 6 {
+                HStack{
+                    let count = mainViewModel.locationHolder.count
+                    if count == 1{
+                        Button {
                             mainViewModel.isSearchDialogShowing = true
+                        } label: {
+                            Text("Where are we going?")
+                                .fontWeight(.medium)
+                                .foregroundColor(.black.opacity(0.5))
                         }
-                    }, label: {
-                        Image(systemName: "plus")
-                            .foregroundColor(.main)
-                    })
+                        Spacer()
+                    }else if count == 2 {
+                        Text(mainViewModel.locationHolder[1].addressName)
+                            .fontWeight(.medium)
+                            .lineLimit(1)
+                            .foregroundColor(.txt)
+                        Spacer()
+                        Button(action: {
+                            mainViewModel.isSearchDialogShowing = true
+                        }, label: {
+                            Image(systemName: "plus")
+                                .foregroundColor(.main)
+                        })
+                    }else if count > 2 {
+                        Button(action: {
+                            showAddressesDialog.toggle()
+                        }, label: {
+                            Text("\(count-1) picked location")
+                                .fontWeight(.medium)
+                                .foregroundColor(.txt)
+                                .lineLimit(1)
+                        }).sheet(isPresented: $showAddressesDialog){
+                            DialogAddressLists(dialogAddressList: $showAddressesDialog, viewModel: mainViewModel)
+                        }
+                        
+                        Spacer()
+                        Button(action: {
+                            if count < 6 {
+                                mainViewModel.isSearchDialogShowing = true
+                            }
+                        }, label: {
+                            Image(systemName: "plus")
+                                .foregroundColor(.main)
+                        })
+                    }
                 }
-                
             }
-        })
+    
+        }
         .padding(12)
         .background(RoundedRectangle(cornerRadius: 12)
             .fill(Color(.secondarySystemBackground).opacity(0.7))
@@ -164,16 +161,26 @@ struct AddressField: View {
     }
 }
 
+
+
+
 struct PaymentAndWishSection: View {
     @Binding var showWishDialog: Bool
+    @State var paymentMethod: String = getPaymentMethod()
     
     var body: some View {
         VStack {
-            Divider()
             HStack(alignment: .center) {
-                Image(systemName: "dollarsign.circle")
-                    .opacity(0.5)
-                Text("Cash")
+                
+                NavigationLink(destination: PaymentScreen(paymentMethod: $paymentMethod)) {
+                    Image(systemName: "dollarsign.circle")
+                        .foregroundColor(.main)
+                    
+                    Text(paymentMethod == "cash" ? "Cash" : "Card" )
+                        .foregroundColor(.txt)
+                }
+                
+                
                 Spacer()
                 Divider().frame(height: 24)
                 Spacer()
@@ -181,11 +188,10 @@ struct PaymentAndWishSection: View {
                     showWishDialog.toggle()
                 }) {
                     Image(systemName: "text.aligncenter")
-                        .opacity(0.5)
-                        .foregroundColor(.black)
+                        .foregroundColor(.main)
                     
                     Text("Wishes")
-                        .foregroundColor(.black)
+                        .foregroundColor(.txt)
                 }
                 .sheet(isPresented: $showWishDialog) {
                     DialogWish(dialogWish: $showWishDialog)

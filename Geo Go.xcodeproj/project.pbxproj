@@ -46,6 +46,10 @@
 		256877AB2C26B0870041E16A /* AddNameScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256877AA2C26B0870041E16A /* AddNameScreen.swift */; };
 		256877AE2C26DD560041E16A /* EnterPhoneScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256877AD2C26DD560041E16A /* EnterPhoneScreen.swift */; };
 		256877B42C2D5F5D0041E16A /* iPhoneNumberField in Frameworks */ = {isa = PBXBuildFile; productRef = 256877B32C2D5F5D0041E16A /* iPhoneNumberField */; };
+		256C13892C99A6D3007FAAC9 /* AddCardScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256C13882C99A6D3007FAAC9 /* AddCardScreen.swift */; };
+		256C138B2C99B670007FAAC9 /* OTPField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256C138A2C99B66F007FAAC9 /* OTPField.swift */; };
+		256C138F2CA007A8007FAAC9 /* ViewModelAddCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256C138E2CA007A8007FAAC9 /* ViewModelAddCard.swift */; };
+		256C13912CA0087B007FAAC9 /* AddConfirmCardModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256C13902CA0087B007FAAC9 /* AddConfirmCardModels.swift */; };
 		256EAEB82C2D8B4F00FA7A5C /* HomeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256EAEB72C2D8B4F00FA7A5C /* HomeScreen.swift */; };
 		256EAEBB2C2D9A8100FA7A5C /* MapboxMaps in Frameworks */ = {isa = PBXBuildFile; productRef = 256EAEBA2C2D9A8100FA7A5C /* MapboxMaps */; };
 		256EAEC82C2F193700FA7A5C /* EnterCodeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256EAEC72C2F193700FA7A5C /* EnterCodeScreen.swift */; };
@@ -62,11 +66,9 @@
 		25A51DCC2C6CDF8400C2FBB0 /* MyTripsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A51DCB2C6CDF8400C2FBB0 /* MyTripsViewModel.swift */; };
 		25A51DCF2C6CE52200C2FBB0 /* PaymentScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A51DCE2C6CE52200C2FBB0 /* PaymentScreen.swift */; };
 		25A51DD22C6CE54900C2FBB0 /* FavScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A51DD12C6CE54900C2FBB0 /* FavScreen.swift */; };
-		25A51DD52C6CE56000C2FBB0 /* LoyaltyScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A51DD42C6CE56000C2FBB0 /* LoyaltyScreen.swift */; };
 		25A51DD82C6CE57700C2FBB0 /* DiscountScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A51DD72C6CE57700C2FBB0 /* DiscountScreen.swift */; };
 		25A51DDB2C6CE5D300C2FBB0 /* SettingsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A51DDA2C6CE5D300C2FBB0 /* SettingsScreen.swift */; };
 		25A51DDE2C6CE5EB00C2FBB0 /* NewsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A51DDD2C6CE5EB00C2FBB0 /* NewsScreen.swift */; };
-		25A51DE12C6CE60E00C2FBB0 /* SupportScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A51DE02C6CE60E00C2FBB0 /* SupportScreen.swift */; };
 		25A51DE42C6CE62600C2FBB0 /* AboutAppScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A51DE32C6CE62600C2FBB0 /* AboutAppScreen.swift */; };
 		25A51DE62C6E2CC100C2FBB0 /* DateOrderHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A51DE52C6E2CC100C2FBB0 /* DateOrderHistory.swift */; };
 		25B20C1D2C5F67A100F50017 /* DialogBottomCancelOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B20C1C2C5F67A100F50017 /* DialogBottomCancelOrder.swift */; };
@@ -106,6 +108,9 @@
 		25F91C762C7CCDAD001CAAB7 /* BonusHomeItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F91C752C7CCDAD001CAAB7 /* BonusHomeItem.swift */; };
 		25F91C792C7CD5FC001CAAB7 /* DialogBonus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F91C782C7CD5FC001CAAB7 /* DialogBonus.swift */; };
 		25F91C7B2C7CDB55001CAAB7 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F91C7A2C7CDB55001CAAB7 /* Extensions.swift */; };
+		25F91C7F2C807B34001CAAB7 /* Discount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F91C7E2C807B34001CAAB7 /* Discount.swift */; };
+		25F91C812C807EA3001CAAB7 /* empty_list.json in Resources */ = {isa = PBXBuildFile; fileRef = 25F91C802C807EA3001CAAB7 /* empty_list.json */; };
+		25F91C832C8086E1001CAAB7 /* DiscountVm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F91C822C8086E1001CAAB7 /* DiscountVm.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -152,6 +157,10 @@
 		256877AA2C26B0870041E16A /* AddNameScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNameScreen.swift; sourceTree = "<group>"; };
 		256877AD2C26DD560041E16A /* EnterPhoneScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterPhoneScreen.swift; sourceTree = "<group>"; };
 		256877B52C2D6DC60041E16A /* Geo-Go-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Geo-Go-Info.plist"; sourceTree = SOURCE_ROOT; };
+		256C13882C99A6D3007FAAC9 /* AddCardScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCardScreen.swift; sourceTree = "<group>"; };
+		256C138A2C99B66F007FAAC9 /* OTPField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTPField.swift; sourceTree = "<group>"; };
+		256C138E2CA007A8007FAAC9 /* ViewModelAddCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelAddCard.swift; sourceTree = "<group>"; };
+		256C13902CA0087B007FAAC9 /* AddConfirmCardModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddConfirmCardModels.swift; sourceTree = "<group>"; };
 		256EAEB72C2D8B4F00FA7A5C /* HomeScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreen.swift; sourceTree = "<group>"; };
 		256EAEC72C2F193700FA7A5C /* EnterCodeScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterCodeScreen.swift; sourceTree = "<group>"; };
 		256EAECC2C2F21DE00FA7A5C /* RegistrationRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationRequest.swift; sourceTree = "<group>"; };
@@ -166,11 +175,9 @@
 		25A51DCB2C6CDF8400C2FBB0 /* MyTripsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTripsViewModel.swift; sourceTree = "<group>"; };
 		25A51DCE2C6CE52200C2FBB0 /* PaymentScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentScreen.swift; sourceTree = "<group>"; };
 		25A51DD12C6CE54900C2FBB0 /* FavScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavScreen.swift; sourceTree = "<group>"; };
-		25A51DD42C6CE56000C2FBB0 /* LoyaltyScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoyaltyScreen.swift; sourceTree = "<group>"; };
 		25A51DD72C6CE57700C2FBB0 /* DiscountScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscountScreen.swift; sourceTree = "<group>"; };
 		25A51DDA2C6CE5D300C2FBB0 /* SettingsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsScreen.swift; sourceTree = "<group>"; };
 		25A51DDD2C6CE5EB00C2FBB0 /* NewsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsScreen.swift; sourceTree = "<group>"; };
-		25A51DE02C6CE60E00C2FBB0 /* SupportScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportScreen.swift; sourceTree = "<group>"; };
 		25A51DE32C6CE62600C2FBB0 /* AboutAppScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutAppScreen.swift; sourceTree = "<group>"; };
 		25A51DE52C6E2CC100C2FBB0 /* DateOrderHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateOrderHistory.swift; sourceTree = "<group>"; };
 		25B20C1C2C5F67A100F50017 /* DialogBottomCancelOrder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogBottomCancelOrder.swift; sourceTree = "<group>"; };
@@ -210,6 +217,9 @@
 		25F91C752C7CCDAD001CAAB7 /* BonusHomeItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BonusHomeItem.swift; sourceTree = "<group>"; };
 		25F91C782C7CD5FC001CAAB7 /* DialogBonus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogBonus.swift; sourceTree = "<group>"; };
 		25F91C7A2C7CDB55001CAAB7 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		25F91C7E2C807B34001CAAB7 /* Discount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Discount.swift; sourceTree = "<group>"; };
+		25F91C802C807EA3001CAAB7 /* empty_list.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = empty_list.json; sourceTree = "<group>"; };
+		25F91C822C8086E1001CAAB7 /* DiscountVm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscountVm.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -333,6 +343,7 @@
 				25B20C2D2C634B0300F50017 /* Line.swift */,
 				25B20C2F2C6355DF00F50017 /* RateView.swift */,
 				25B20C312C63978F00F50017 /* DialogToolBar.swift */,
+				256C138A2C99B66F007FAAC9 /* OTPField.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -379,11 +390,9 @@
 			isa = PBXGroup;
 			children = (
 				25A51DE22C6CE61800C2FBB0 /* AboutApp */,
-				25A51DDF2C6CE5F900C2FBB0 /* Support */,
 				25A51DDC2C6CE5E000C2FBB0 /* News */,
 				25A51DD92C6CE5BB00C2FBB0 /* Settings */,
 				25A51DD62C6CE56B00C2FBB0 /* Discount */,
-				25A51DD32C6CE55400C2FBB0 /* Loyalty */,
 				25A51DD02C6CE53600C2FBB0 /* favourites */,
 				25A51DCD2C6CE51100C2FBB0 /* Payment */,
 				25A51DC82C6CDF5800C2FBB0 /* MyTrips */,
@@ -422,6 +431,7 @@
 		256877902C25C3500041E16A /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				25F91C802C807EA3001CAAB7 /* empty_list.json */,
 				2565CFAF2C5D145000FCC08A /* loading.json */,
 				25BFDB802C35DE8B00D73993 /* swipe_right.json */,
 				25BFDB612C33ED0C00D73993 /* marker_location.json */,
@@ -476,6 +486,8 @@
 				25B20C1E2C5F6AC900F50017 /* CancelOrder.swift */,
 				25A51DE52C6E2CC100C2FBB0 /* DateOrderHistory.swift */,
 				25BC2C592C761E8A00484F69 /* NewsModel.swift */,
+				25F91C7E2C807B34001CAAB7 /* Discount.swift */,
+				256C13902CA0087B007FAAC9 /* AddConfirmCardModels.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -572,6 +584,8 @@
 			isa = PBXGroup;
 			children = (
 				25A51DCE2C6CE52200C2FBB0 /* PaymentScreen.swift */,
+				256C13882C99A6D3007FAAC9 /* AddCardScreen.swift */,
+				256C138E2CA007A8007FAAC9 /* ViewModelAddCard.swift */,
 			);
 			path = Payment;
 			sourceTree = "<group>";
@@ -584,18 +598,11 @@
 			path = favourites;
 			sourceTree = "<group>";
 		};
-		25A51DD32C6CE55400C2FBB0 /* Loyalty */ = {
-			isa = PBXGroup;
-			children = (
-				25A51DD42C6CE56000C2FBB0 /* LoyaltyScreen.swift */,
-			);
-			path = Loyalty;
-			sourceTree = "<group>";
-		};
 		25A51DD62C6CE56B00C2FBB0 /* Discount */ = {
 			isa = PBXGroup;
 			children = (
 				25A51DD72C6CE57700C2FBB0 /* DiscountScreen.swift */,
+				25F91C822C8086E1001CAAB7 /* DiscountVm.swift */,
 			);
 			path = Discount;
 			sourceTree = "<group>";
@@ -615,14 +622,6 @@
 				25BC2C5B2C761ECD00484F69 /* NewsViewModel.swift */,
 			);
 			path = News;
-			sourceTree = "<group>";
-		};
-		25A51DDF2C6CE5F900C2FBB0 /* Support */ = {
-			isa = PBXGroup;
-			children = (
-				25A51DE02C6CE60E00C2FBB0 /* SupportScreen.swift */,
-			);
-			path = Support;
 			sourceTree = "<group>";
 		};
 		25A51DE22C6CE61800C2FBB0 /* AboutApp */ = {
@@ -799,6 +798,7 @@
 				256877792C258B1B0041E16A /* Preview Assets.xcassets in Resources */,
 				25BFDB812C35DE8B00D73993 /* swipe_right.json in Resources */,
 				2565CFB02C5D145000FCC08A /* loading.json in Resources */,
+				25F91C812C807EA3001CAAB7 /* empty_list.json in Resources */,
 				256877932C25C4E80041E16A /* Localizable.strings in Resources */,
 				25BFDB622C33ED0C00D73993 /* marker_location.json in Resources */,
 				256877762C258B1B0041E16A /* Assets.xcassets in Resources */,
@@ -819,11 +819,13 @@
 				25BFDB752C354E7F00D73993 /* SearchScreenDialog.swift in Sources */,
 				256877A32C25D1470041E16A /* NetworkService.swift in Sources */,
 				256EAED32C309CB500FA7A5C /* MainViewModel.swift in Sources */,
+				25F91C832C8086E1001CAAB7 /* DiscountVm.swift in Sources */,
 				25BC2C5C2C761ECD00484F69 /* NewsViewModel.swift in Sources */,
 				25BFDB712C34823B00D73993 /* GenerateResponse.swift in Sources */,
 				25F91C762C7CCDAD001CAAB7 /* BonusHomeItem.swift in Sources */,
 				25A51DCF2C6CE52200C2FBB0 /* PaymentScreen.swift in Sources */,
 				256877AB2C26B0870041E16A /* AddNameScreen.swift in Sources */,
+				256C13892C99A6D3007FAAC9 /* AddCardScreen.swift in Sources */,
 				2565CFB52C5E74DC00FCC08A /* DriverFoundView.swift in Sources */,
 				2568778F2C25C2A80041E16A /* Alert.swift in Sources */,
 				256877862C25C17C0041E16A /* AccessScreen.swift in Sources */,
@@ -845,7 +847,7 @@
 				2568779C2C25C93D0041E16A /* GGButton.swift in Sources */,
 				25B20C232C63164F00F50017 /* TestView.swift in Sources */,
 				25B20C2C2C6347B000F50017 /* GGText.swift in Sources */,
-				25A51DE12C6CE60E00C2FBB0 /* SupportScreen.swift in Sources */,
+				256C138B2C99B670007FAAC9 /* OTPField.swift in Sources */,
 				25BFDB7D2C35CFA400D73993 /* OrderGoView.swift in Sources */,
 				25BFDB682C345DF700D73993 /* WhatsNewView.swift in Sources */,
 				25BC2C562C76093B00484F69 /* WebView.swift in Sources */,
@@ -863,6 +865,7 @@
 				2565CF972C44CC9F00FCC08A /* Utils.swift in Sources */,
 				2568778C2C25C25A0041E16A /* LocationManager.swift in Sources */,
 				2565CF9A2C45055D00FCC08A /* Routing.swift in Sources */,
+				256C138F2CA007A8007FAAC9 /* ViewModelAddCard.swift in Sources */,
 				25F91C792C7CD5FC001CAAB7 /* DialogBonus.swift in Sources */,
 				256EAEDC2C30A2C500FA7A5C /* DrawerBtn.swift in Sources */,
 				256EAECF2C2F22F100FA7A5C /* EnterPhoneViewModel.swift in Sources */,
@@ -882,11 +885,13 @@
 				25BC2C5A2C761E8A00484F69 /* NewsModel.swift in Sources */,
 				25B20C262C6328C400F50017 /* GGImage.swift in Sources */,
 				2565CF9E2C4547FF00FCC08A /* Algorithms.swift in Sources */,
+				25F91C7F2C807B34001CAAB7 /* Discount.swift in Sources */,
 				25BFDB662C343A8700D73993 /* ReverseModel.swift in Sources */,
 				25BFDB7F2C35DD4700D73993 /* CarSelectionView.swift in Sources */,
 				25BFDB872C36BFF900D73993 /* DataHolder.swift in Sources */,
 				256EAED52C309D8900FA7A5C /* MapStyle.swift in Sources */,
 				25F91C7B2C7CDB55001CAAB7 /* Extensions.swift in Sources */,
+				256C13912CA0087B007FAAC9 /* AddConfirmCardModels.swift in Sources */,
 				2565CF8D2C42690300FCC08A /* DialogWish.swift in Sources */,
 				25B20C1D2C5F67A100F50017 /* DialogBottomCancelOrder.swift in Sources */,
 				25A51DCC2C6CDF8400C2FBB0 /* MyTripsViewModel.swift in Sources */,
@@ -895,7 +900,6 @@
 				2565CFB22C5DDFC400FCC08A /* OrderInfo.swift in Sources */,
 				25B20C322C63978F00F50017 /* DialogToolBar.swift in Sources */,
 				25BFDB6E2C347E7500D73993 /* Hmac.swift in Sources */,
-				25A51DD52C6CE56000C2FBB0 /* LoyaltyScreen.swift in Sources */,
 				2565CFA92C5B5CE900FCC08A /* CreateOrder.swift in Sources */,
 				2568779F2C25CA150041E16A /* Constants.swift in Sources */,
 				25BFDB6B2C346FD400D73993 /* SearchTextView.swift in Sources */,

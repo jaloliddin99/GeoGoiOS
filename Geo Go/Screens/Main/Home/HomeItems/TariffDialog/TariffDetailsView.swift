@@ -10,10 +10,12 @@ import SwiftUI
 struct TariffDetailsView: View {
     let item: ServiceTariff
     @State private var showWishDialog = false
+    
+    
 
     var body: some View {
         
-        let desc = description(lang: "uz", data: item)
+        let desc = description(lang: DataHolder.lang, data: item)
         ScrollView(showsIndicators: false){
             VStack(spacing: 12){
                 HStack{
@@ -99,7 +101,7 @@ struct TariffDetailsView: View {
                         .font(.system(size: 24, weight: .bold))
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.top, 8)
-                    let tariffDetails = titleConvertor(stringItem: description, lang: "en")
+                    let tariffDetails = titleConvertor(stringItem: description, lang: DataHolder.lang)
                     ScrollView(.horizontal, showsIndicators: false) {
                         LazyHStack(spacing: 12) {
                             ForEach(tariffDetails) { tariff in
@@ -112,6 +114,7 @@ struct TariffDetailsView: View {
                 
                 DiscountView()
                 
+                Divider()
              
                 PaymentAndWishSection(showWishDialog: $showWishDialog)
                 
