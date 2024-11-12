@@ -19,6 +19,10 @@ struct HomeScreenDrawer: View {
             ProfileImageView(viewModel: viewModel)
                 .padding(.bottom, 12)
                 .padding(.top, 56)
+                .onTapGesture {
+                    navigate(to: .profile)
+                }
+            
             Divider()
             DrawerItem(title: "My Trips", action: {
                 navigate(to: .myTrips)
@@ -36,10 +40,7 @@ struct HomeScreenDrawer: View {
             DrawerItem(title: "Discount", action: {
                 navigate(to: .discount)
             })
-            Divider()
-            DrawerItem(title: "Settings", action: {
-                navigate(to: .settings)
-            })
+           
             Divider()
             DrawerItem(title: "News", action: {
                 navigate(to: .news)
@@ -69,18 +70,15 @@ struct HomeScreenDrawer: View {
 }
 
 func ProfileImageView(viewModel: MainViewModel) -> some View{
-    
     VStack(alignment: .center){
         let baseUrl = UserDefaults.standard.value(forKey: Constants.baseUrl)!
-        let userName = UserDefaults.standard.value(forKey: Constants.USER_NAME)!
+        let userName = UserDefaults.standard.string(forKey: Constants.USER_NAME)!
         let url = "\(baseUrl)/bosh/get_photo.php?type=client&phone="
-        let userPhone: String = UserDefaults.standard.value(forKey: Constants.USER_PHONE)! as! String
-        
-        let finalUrl = "\(url)\(userPhone)".replacing("+", with: "")
+        let finalUrl = "\(url)\(getUserPhone())"
         
         HStack{
             Spacer()
-            RemoteRoundedImage(image: viewModel.image, radius: 48, imageName: "profile-image")
+            RemoteRoundedImage(image: viewModel.image, radius: 40, imageName: "profile-image")
                 .padding(2)
                 .overlay(
                     RoundedRectangle(cornerRadius: 54)
@@ -91,11 +89,11 @@ func ProfileImageView(viewModel: MainViewModel) -> some View{
             Spacer()
         }
         
-        Text(userName as! String)
+        Text(userName)
             .font(.system(size: 18, weight: .bold))
             .foregroundColor(.black)
         
-        Text(userPhone)
+        Text("+\(getUserPhone())")
             .font(.system(size: 14, weight: .semibold))
             .foregroundColor(.black.opacity(0.5))
     }
@@ -119,5 +117,5 @@ struct DrawerItem: View {
 
 
 enum DestinationScreen: Hashable {
-    case myTrips, paymentMethod, favouriteAddresses, discount, settings, news, aboutApp
+    case myTrips, paymentMethod, favouriteAddresses, discount, profile, news, aboutApp
 }

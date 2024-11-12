@@ -121,7 +121,3 @@ struct LottieEmptyStateView: UIViewRepresentable {
         
     }
 }
-
-
-
-

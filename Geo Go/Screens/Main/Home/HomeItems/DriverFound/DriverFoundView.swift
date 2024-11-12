@@ -129,10 +129,13 @@ struct TariffView: View {
                 Text("Tariff")
                     .font(.system(size: 12))
                 
-                let tariff =  convertTariff(lang: "en", data: tariff)
+                
+                let tariff =  convertTariff(lang: DataHolder.lang, data: tariff)
                 Text(tariff)
                     .font(.system(size: 16, weight: .medium))
                     .foregroundColor(.black)
+                
+                
             }
             .padding(.leading, 8)
             

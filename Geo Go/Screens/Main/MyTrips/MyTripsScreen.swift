@@ -8,8 +8,9 @@
 import SwiftUI
 
 struct MyTripsScreen: View {
-    @ObservedObject var viewModel: MainViewModel
+    @StateObject var viewModel = MainViewModel()
     @State private var selectedTab: TripTab = .completed
+    @State private var hasResponse: Bool = false
     
     var body: some View {
         VStack {
@@ -33,29 +34,38 @@ struct MyTripsScreen: View {
             .cornerRadius(12)
             .padding()
             
-            List {
-                ForEach(mockTrips(for: selectedTab), id: \.id) { trip in
-                    TripCardView(trip: trip)
+            if let list = viewModel.addressHistoryResponse {
+                List {
+                    ForEach(mockTrips(for: selectedTab, transformedList: list), id: \.id) { trip in
+                        TripCardView(trip: trip)
+                    }
                 }
+                .listStyle(PlainListStyle())
             }
-            .listStyle(PlainListStyle())
+            
         }
         .background(.white)
         .navigationTitle("My Trips")
         .navigationBarTitleDisplayMode(.inline)
-        .onAppear(perform: {
-            let delayInterval = 0.3
-            for (index, info) in viewModel.addressHistoryResponse!.enumerated() {
-                DispatchQueue.main.asyncAfter(deadline: .now() + delayInterval * Double(index)) {
-                    viewModel.dateOrderHistory(id: info.id, location: DataHolder.location)
+        .onReceive(viewModel.$addressHistoryResponse) { result in
+            if let r = result {
+                if !hasResponse {
+                    hasResponse = true
+                    let delayInterval = 0.3
+                    for (index, info) in r.enumerated() {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + delayInterval * Double(index)) {
+                            viewModel.dateOrderHistory(id: info.id, location: DataHolder.location)
+                        }
+                    }
                 }
             }
-        })
+        }
+        
     }
+        
+            
     
-    func mockTrips(for tab: TripTab) -> [ShortOrderInfo] {
-
-        let transformedList = viewModel.addressHistoryResponse!
+    func mockTrips(for tab: TripTab, transformedList: [ShortOrderInfo]) -> [ShortOrderInfo] {
         
         switch tab {
             case .completed:

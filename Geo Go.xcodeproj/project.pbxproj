@@ -62,12 +62,12 @@
 		256EAED82C309DE900FA7A5C /* MapConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256EAED72C309DE900FA7A5C /* MapConfig.swift */; };
 		256EAEDA2C309F9900FA7A5C /* HomeScreenDrawer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256EAED92C309F9900FA7A5C /* HomeScreenDrawer.swift */; };
 		256EAEDC2C30A2C500FA7A5C /* DrawerBtn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256EAEDB2C30A2C500FA7A5C /* DrawerBtn.swift */; };
+		259DEA0B2CC2F74700B1AB41 /* ProfileScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259DEA0A2CC2F74700B1AB41 /* ProfileScreen.swift */; };
 		25A51DCA2C6CDF6D00C2FBB0 /* MyTripsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A51DC92C6CDF6D00C2FBB0 /* MyTripsScreen.swift */; };
 		25A51DCC2C6CDF8400C2FBB0 /* MyTripsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A51DCB2C6CDF8400C2FBB0 /* MyTripsViewModel.swift */; };
 		25A51DCF2C6CE52200C2FBB0 /* PaymentScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A51DCE2C6CE52200C2FBB0 /* PaymentScreen.swift */; };
 		25A51DD22C6CE54900C2FBB0 /* FavScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A51DD12C6CE54900C2FBB0 /* FavScreen.swift */; };
 		25A51DD82C6CE57700C2FBB0 /* DiscountScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A51DD72C6CE57700C2FBB0 /* DiscountScreen.swift */; };
-		25A51DDB2C6CE5D300C2FBB0 /* SettingsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A51DDA2C6CE5D300C2FBB0 /* SettingsScreen.swift */; };
 		25A51DDE2C6CE5EB00C2FBB0 /* NewsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A51DDD2C6CE5EB00C2FBB0 /* NewsScreen.swift */; };
 		25A51DE42C6CE62600C2FBB0 /* AboutAppScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A51DE32C6CE62600C2FBB0 /* AboutAppScreen.swift */; };
 		25A51DE62C6E2CC100C2FBB0 /* DateOrderHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A51DE52C6E2CC100C2FBB0 /* DateOrderHistory.swift */; };
@@ -171,12 +171,12 @@
 		256EAED72C309DE900FA7A5C /* MapConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapConfig.swift; sourceTree = "<group>"; };
 		256EAED92C309F9900FA7A5C /* HomeScreenDrawer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreenDrawer.swift; sourceTree = "<group>"; };
 		256EAEDB2C30A2C500FA7A5C /* DrawerBtn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawerBtn.swift; sourceTree = "<group>"; };
+		259DEA0A2CC2F74700B1AB41 /* ProfileScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileScreen.swift; sourceTree = "<group>"; };
 		25A51DC92C6CDF6D00C2FBB0 /* MyTripsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTripsScreen.swift; sourceTree = "<group>"; };
 		25A51DCB2C6CDF8400C2FBB0 /* MyTripsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTripsViewModel.swift; sourceTree = "<group>"; };
 		25A51DCE2C6CE52200C2FBB0 /* PaymentScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentScreen.swift; sourceTree = "<group>"; };
 		25A51DD12C6CE54900C2FBB0 /* FavScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavScreen.swift; sourceTree = "<group>"; };
 		25A51DD72C6CE57700C2FBB0 /* DiscountScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscountScreen.swift; sourceTree = "<group>"; };
-		25A51DDA2C6CE5D300C2FBB0 /* SettingsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsScreen.swift; sourceTree = "<group>"; };
 		25A51DDD2C6CE5EB00C2FBB0 /* NewsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsScreen.swift; sourceTree = "<group>"; };
 		25A51DE32C6CE62600C2FBB0 /* AboutAppScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutAppScreen.swift; sourceTree = "<group>"; };
 		25A51DE52C6E2CC100C2FBB0 /* DateOrderHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateOrderHistory.swift; sourceTree = "<group>"; };
@@ -389,9 +389,9 @@
 		256877832C25C14D0041E16A /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				259DEA092CC2F72F00B1AB41 /* Profile */,
 				25A51DE22C6CE61800C2FBB0 /* AboutApp */,
 				25A51DDC2C6CE5E000C2FBB0 /* News */,
-				25A51DD92C6CE5BB00C2FBB0 /* Settings */,
 				25A51DD62C6CE56B00C2FBB0 /* Discount */,
 				25A51DD02C6CE53600C2FBB0 /* favourites */,
 				25A51DCD2C6CE51100C2FBB0 /* Payment */,
@@ -571,6 +571,14 @@
 			path = MapBox;
 			sourceTree = "<group>";
 		};
+		259DEA092CC2F72F00B1AB41 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				259DEA0A2CC2F74700B1AB41 /* ProfileScreen.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
 		25A51DC82C6CDF5800C2FBB0 /* MyTrips */ = {
 			isa = PBXGroup;
 			children = (
@@ -605,14 +613,6 @@
 				25F91C822C8086E1001CAAB7 /* DiscountVm.swift */,
 			);
 			path = Discount;
-			sourceTree = "<group>";
-		};
-		25A51DD92C6CE5BB00C2FBB0 /* Settings */ = {
-			isa = PBXGroup;
-			children = (
-				25A51DDA2C6CE5D300C2FBB0 /* SettingsScreen.swift */,
-			);
-			path = Settings;
 			sourceTree = "<group>";
 		};
 		25A51DDC2C6CE5E000C2FBB0 /* News */ = {
@@ -869,7 +869,6 @@
 				25F91C792C7CD5FC001CAAB7 /* DialogBonus.swift in Sources */,
 				256EAEDC2C30A2C500FA7A5C /* DrawerBtn.swift in Sources */,
 				256EAECF2C2F22F100FA7A5C /* EnterPhoneViewModel.swift in Sources */,
-				25A51DDB2C6CE5D300C2FBB0 /* SettingsScreen.swift in Sources */,
 				256877882C25C1D90041E16A /* AccessViewModel.swift in Sources */,
 				256EAECD2C2F21DE00FA7A5C /* RegistrationRequest.swift in Sources */,
 				25BC2C582C76099600484F69 /* TermsOfUseAndPPScreen.swift in Sources */,
@@ -880,6 +879,7 @@
 				25BFDB5B2C33E61700D73993 /* RoundedCorners.swift in Sources */,
 				256877722C258B190041E16A /* Geo_GoApp.swift in Sources */,
 				252E5C242C3C29CF00C132AF /* EstimateHelper.swift in Sources */,
+				259DEA0B2CC2F74700B1AB41 /* ProfileScreen.swift in Sources */,
 				25B20C1F2C5F6AC900F50017 /* CancelOrder.swift in Sources */,
 				256877A82C25D1FF0041E16A /* NetworkError.swift in Sources */,
 				25BC2C5A2C761E8A00484F69 /* NewsModel.swift in Sources */,

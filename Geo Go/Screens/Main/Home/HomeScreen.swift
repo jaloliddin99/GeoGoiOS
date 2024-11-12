@@ -192,7 +192,7 @@ struct HomeScreen: View {
         switch destination {
             case .myTrips:
                 if viewModel.addressHistoryResponse != nil {
-                    return AnyView(MyTripsScreen(viewModel: viewModel))
+                    return AnyView(MyTripsScreen())
                 }else {
                     return AnyView(PaymentScreen(paymentMethod: $paymentMethod))
                 }
@@ -203,8 +203,8 @@ struct HomeScreen: View {
                 return AnyView(FavScreen())
             case .discount:
                 return AnyView(DiscountScreen())
-            case .settings:
-                return AnyView(SettingsScreen())
+            case .profile:
+                return AnyView(ProfileScreen())
             case .news:
                 return AnyView(NewsScreen())
             case .aboutApp:
