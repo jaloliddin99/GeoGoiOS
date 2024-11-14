@@ -44,7 +44,7 @@ final class ViewModelAddCard: ObservableObject {
                         if response.success {
                             self.addCardResponse = response
                         }else {
-                            alertItem = AlertItem(title: Text("Server Error"),
+                            alertItem = AlertItem(title: Text("alert_title_server_error"),
                                                   message: Text(response.error ?? ""),
                                                   dismissButton: .default(Text("OK")))
                         }
@@ -97,7 +97,7 @@ final class ViewModelAddCard: ObservableObject {
                         if response.success {
                             self.confirmCardResponse = response
                         }else {
-                            alertItem = AlertItem(title: Text("Server Error"),
+                            alertItem = AlertItem(title: Text("alert_title_server_error"),
                                                   message: Text(response.error ?? ""),
                                                   dismissButton: .default(Text("OK")))
                         }
@@ -197,7 +197,7 @@ final class ViewModelAddCard: ObservableObject {
                             self.setCardAsMainResponse = response
                             getAllCardsRequest()
                         }else {
-                            alertItem = AlertItem(title: Text("Server Error"),
+                            alertItem = AlertItem(title: Text("alert_title_server_error"),
                                                   message: Text(response.error ?? ""),
                                                   dismissButton: .default(Text("OK")))
                         }

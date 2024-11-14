@@ -33,7 +33,7 @@ struct DriverFoundViewUpperView: View {
                 text = "Travel Started! "
             default:
                 text = "Driver is coming to you! "
-
+                
         }
         return Text(text)
             .font(.system(size: 20, weight: .medium))
@@ -63,26 +63,28 @@ struct DriverFoundViewUpperView: View {
 
 struct DriverDetailsView: View {
     @ObservedObject var viewModel: MainViewModel
+    
     var body: some View {
-        let orderInfo = viewModel.getOrderDetail!
-        let car: Car = orderInfo.assignee!.car
-        let num = car.regNum
-        let color = car.color
-        let carName = "\(color) \(car.brand) \(car.model)"
-        HStack {
-            
-            if viewModel.status == 5 {
-                RemoteRoundedImage(image: viewModel.image, radius: 24, imageName: "profile-image")
-                    .onAppear { viewModel.loadImage(fromURLString: getImageUrl(orderDetails: viewModel.getOrderDetail!)) }
-            }
-            
-            VStack(alignment: .leading) {
-                Text(carName)
-                    .font(.system(size: 12, weight: .regular))
-                    .foregroundColor(.black)
-                Text(num)
-                    .font(.system(size: 18, weight: .medium))
-                    .foregroundColor(.black)
+        return HStack {
+            let orderInfo = viewModel.getOrderDetail!
+            if let car: Car = orderInfo.assignee?.car {
+                let num = car.regNum
+                let color = car.color
+                let carName = "\(color) \(car.brand) \(car.model)"
+                
+                if viewModel.status == 5 {
+                    RemoteRoundedImage(image: viewModel.image, radius: 24, imageName: "profile-image")
+                        .onAppear { viewModel.loadImage(fromURLString: getImageUrl(orderDetails: viewModel.getOrderDetail!)) }
+                }
+                
+                VStack(alignment: .leading) {
+                    Text(carName)
+                        .font(.system(size: 12, weight: .regular))
+                        .foregroundColor(.black)
+                    Text(num)
+                        .font(.system(size: 18, weight: .medium))
+                        .foregroundColor(.black)
+                }
             }
             Spacer()
             HStack(spacing: 5) {
@@ -115,27 +117,24 @@ struct DriverDetailsView: View {
 
 struct TariffView: View {
     @ObservedObject var viewModel: MainViewModel
-
     var body: some View {
         let orderInfo = viewModel.getOrderDetail!
         HStack {
-            let tariff = DataHolder.selectedTariff!
-            Image(imageNameForType(tariff.icon))
+            let tariffName = UserDefaults.standard.string(forKey: Constants.TARIFF) ?? "Ekonom"
+            let tariffIcon = UserDefaults.standard.string(forKey: Constants.TARIFF_ICON) ?? "Ekonom"
+            Image(imageNameForType(tariffIcon))
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 72, height: 32)
             
             VStack(alignment: .leading) {
-                Text("Tariff")
+                Text("tariff")
                     .font(.system(size: 12))
                 
                 
-                let tariff =  convertTariff(lang: DataHolder.lang, data: tariff)
-                Text(tariff)
+                Text(tariffName)
                     .font(.system(size: 16, weight: .medium))
                     .foregroundColor(.black)
-                
-                
             }
             .padding(.leading, 8)
             
@@ -210,7 +209,7 @@ struct DriverFoundViewBottomViewt: View {
                         .background(.white)
                         .cornerRadius(20)
                     
-                    Text("Add Second Place")
+                    Text("add_second_space")
                         .font(.system(size: 14, weight: .bold))
                         .foregroundColor(.black)
                         .lineLimit(1)
@@ -225,24 +224,20 @@ struct DriverFoundViewBottomViewt: View {
             Button(action: {
                 viewModel.showCancelOrderAlert.toggle()
             }, label: {
-                Text("Cancel Order")
-                    .font(.system(size: 14, weight: .medium))
-                    .foregroundColor(Color.red)
+                Text("cancel")
+                    .font(.system(size: 16))
+                    .fontWeight(.semibold)
+                    .frame(maxWidth: .infinity, maxHeight: 56)
+                
             })
-            .foregroundColor(.red)
-            .background(.white)
+            .foregroundColor(.white)
+            .background(.red)
             .cornerRadius(10)
-            .frame(height: 56)
-            .frame(maxWidth: .infinity)
-            .overlay(
-                RoundedRectangle(cornerRadius: 10)
-                    .stroke(Color.red, lineWidth: 1)
-            )
-            .padding(.bottom, 16)
+            .padding(.bottom, 24)
         }
         .padding(.horizontal, 16)
         .padding(.top, 4)
-        .padding(.bottom, 16)
+        .padding(.bottom, 24)
         .background(.white)
     }
 }
@@ -267,53 +262,3 @@ struct DriverFoundView: View {
         .edgesIgnoringSafeArea(.bottom)
     }
 }
-//struct DriverFoundView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        let sampleOrderInfo = OrderInfo(
-//            state: 1,
-//            costFixAllowed: true,
-//            route: [
-//                ClientAddress(
-//                    address: SearchedAddress(
-//                        name: "Sample Address",
-//                        components: nil,
-//                        types: nil,
-//                        position: SearchPosition(lat: 37.7749, lon: -122.4194)
-//                    ),
-//                    entrance: nil,
-//                    flat: nil,
-//                    comment: nil,
-//                    pickupPointId: nil
-//                )
-//            ],
-//            assignee:AsigneeBody(
-//                car: Car(alias: "Sample Alias", brand: "Sample Brand", model: "Sample Model", color: "Sample Color", regNum: "XYZ123"),
-//                location: SearchPosition(lat: 37.7749, lon: -122.4194),
-//                call: AssigneeCall(allow: "Yes", numbers: ["123-456-7890"])
-//            ),
-//            options: [12121212],
-//            time: "12:00 PM",
-//            needsProlongation: false,
-//            comment: "Sample Comment",
-//            distance: 5.0,
-//            cost: Cost(
-//                type: "Base",
-//                amount: 25000.0,
-//                calculation: "Base Fare + Distance",
-//                modifier: CostModifier(type: "Discount", value: 5.0),
-//                fixed: 20000.0,
-//                details: [CostItem(title: "Base Fare", cost: 10.0), CostItem(title: "Distance", cost: 15.0)]
-//            ),
-//            executionTime: "15 mins",
-//            usedBonuses: 2.0,
-//            paymentMethod: PaymentMethod(kind: "Cash", id: "123", name: "Cash Payment", enoughMoney: true),
-//            costChangeAllowed: true,
-//            costChangeStep: false,
-//            isComing: true,
-//            paidWaitingStartsAt: "12:15 PM"
-//        )
-//        
-//        return DriverFoundView(orderInfo: sampleOrderInfo)
-//    }
-//}
-//

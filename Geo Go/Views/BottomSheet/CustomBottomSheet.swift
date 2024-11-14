@@ -24,6 +24,5 @@ struct BottomSheet<Content: View>: View {
             content
             Spacer()
         }
-        .edgesIgnoringSafeArea(.bottom)
     }
 }

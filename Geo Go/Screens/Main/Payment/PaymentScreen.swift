@@ -25,7 +25,7 @@ struct PaymentScreen: View {
     var body: some View {
         ZStack {
             VStack(alignment: .leading, spacing: 0) {
-                Text("Choose your default payment method")
+                Text("txt_choose_default_payment")
                     .font(.system(size: 18, weight: .medium))
                     .foregroundColor(Color.txt)
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -46,7 +46,7 @@ struct PaymentScreen: View {
             .padding(16)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .navigationTitle("Payment Method")
+        .navigationTitle("payment_method")
         .background(Color.white)
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
@@ -59,7 +59,7 @@ struct PaymentScreen: View {
     
     private var paymentMethodSelection: some View {
         HStack(alignment: .center, spacing: 0) {
-            Text("Cash")
+            Text("cash")
                 .foregroundColor(.txt)
             Spacer()
             RadioButton(isSelected: isCashSelected)
@@ -77,7 +77,7 @@ struct PaymentScreen: View {
         NavigationLink(destination: AddCardScreen()) {
             HStack(spacing: 12) {
                 Image(systemName: "plus")
-                Text("Add card")
+                Text("add_card")
                     .font(.custom("Roboto-Regular", size: 18))
                     .foregroundColor(Color.txt)
                 Spacer()
@@ -102,7 +102,7 @@ struct PaymentScreen: View {
             LottieEmptyStateView(fileName: "empty_list")
                 .frame(width: 120, height: 120, alignment: .center)
                 .padding()
-            Text("No cards found")
+            Text("no_cards_found")
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .padding(.top, 20)
@@ -170,7 +170,7 @@ struct CardViewItem: View {
                 .font(.system(size: 16))
                 .foregroundColor(.white)
             
-            Text("Expires: \(card.cardExpiry)")
+            Text("expires, \(card.cardExpiry)")
                 .font(.system(size: 14))
                 .foregroundColor(.white)
             

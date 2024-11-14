@@ -21,7 +21,7 @@ struct CarSelectionView: View {
                 if item.Type == "add" || item.Type == "multiply" {
                     if let bonus = item.costChangeStep2 {
                         HStack(spacing: 4){
-                            Text("+\(formatNumberWithSpaces(bonus) ?? "---")")
+                            Text("+\(formatNumberWithSpaces(bonus))")
                                 .font(.system(size: 10))
                                 .foregroundColor(.white)
                             Image(systemName: "circle.fill")

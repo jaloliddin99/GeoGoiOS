@@ -122,7 +122,7 @@ final class DiscountVm: ObservableObject {
             headers: [
                 "Accept-Language": DataHolder.lang,
                 "Hive-Profile": Constants.HIVE_PROFILE,
-                "X-Hive-GPS-Position": "\(DataHolder.latitude) \(DataHolder.longitude)",
+                "X-Hive-GPS-Position": "\(DataHolder.location.latitude) \(DataHolder.location.longitude)",
                 "Date": responseDetails.data,
                 "Authentication": responseDetails.hmac,
             ],

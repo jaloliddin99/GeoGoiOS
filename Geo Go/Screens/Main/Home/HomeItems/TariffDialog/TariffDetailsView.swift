@@ -9,8 +9,6 @@ import SwiftUI
 
 struct TariffDetailsView: View {
     let item: ServiceTariff
-    @State private var showWishDialog = false
-    
     
 
     var body: some View {
@@ -81,10 +79,10 @@ struct TariffDetailsView: View {
                             .rotationEffect(.degrees(-90))
                         
                         VStack(spacing: 2){
-                            Text("Tariff temporarily reduced")
+                            Text("tariff_reduced")
                                 .font(.system(size: 14, weight: .regular))
                                 .frame(maxWidth: .infinity, alignment: .leading)
-                            Text("Tariff temporarily increased")
+                            Text("tariff_increased")
                                 .font(.system(size: 14, weight: .regular))
                                 .frame(maxWidth: .infinity, alignment: .leading)
                                 .foregroundColor(.black.opacity(0.5))
@@ -97,7 +95,7 @@ struct TariffDetailsView: View {
                 
                 
                 if let description = item.description {
-                    Text("About Tariff")
+                    Text("about_tariff")
                         .font(.system(size: 24, weight: .bold))
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.top, 8)
@@ -111,17 +109,12 @@ struct TariffDetailsView: View {
                         .frame(height: 200)
                     }
                 }
-                
                 DiscountView()
-                
-                Divider()
-             
-                PaymentAndWishSection(showWishDialog: $showWishDialog)
-                
             }
-            .padding(.horizontal, 16)
-            .padding(.top, 12)
+            .padding(16)
+           
         }
+    
     }
 }
 
@@ -152,13 +145,13 @@ struct TariffInfoItem: View {
 
 struct DiscountView: View {
     var body: some View {
-        Text("Discount")
+        Text("discount")
             .font(.system(size: 24, weight: .bold))
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.top, 8)
         
         VStack(spacing: 20){
-            Text("Если у вас есть промокод,введите его")
+            Text("enter_promo_code_if_have")
                 .font(.system(size: 20, weight: .medium))
                 .foregroundColor(.black.opacity(0.6))
                 .multilineTextAlignment(.center)
@@ -168,7 +161,7 @@ struct DiscountView: View {
             Button(action: {
                 
             }, label: {
-                GGButton(title: "Add Promo Code")
+                GGButton(title: "add_promo_code")
             })
             .frame(height: 50)
         }

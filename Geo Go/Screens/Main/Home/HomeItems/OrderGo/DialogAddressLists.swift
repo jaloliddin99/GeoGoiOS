@@ -13,7 +13,7 @@ struct DialogAddressLists: View {
 
     var body: some View {
         VStack {
-            Text("Your Destinations!")
+            Text("your_destination")
                 .font(.title)
                 .fontWeight(.bold)
                 .padding(EdgeInsets(top: 24, leading: 12, bottom: 12, trailing: 12))
@@ -66,7 +66,7 @@ struct DialogAddressLists: View {
             Button {
                 dialogAddressList.toggle()
             } label: {
-                GGButton(title: "Close")
+                GGButton(title: "close")
             }
             .padding()
         }

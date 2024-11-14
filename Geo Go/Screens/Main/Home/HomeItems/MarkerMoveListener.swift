@@ -51,8 +51,6 @@ struct CustomMapView: UIViewRepresentable {
         
         mapView.ornaments.options = ornamentOptions
     }
-    
-    
     class Coordinator: NSObject {
         var parent: CustomMapView
         var cancellable: AnyCancellable?
@@ -75,29 +73,33 @@ struct CustomMapView: UIViewRepresentable {
                     }else if DataHolder.status == 3 {
                         self?.drawRoute(mapView: mapView, coordinates: routeCoordinates,
                                         userLocations: getCoorWithDriverLocation(
-                                        orderInfo: viewModel.getOrderDetail!,
-                                        clientLocation: DataHolder.location)
+                                        orderInfo: viewModel.getOrderDetail!)
                         )
                     }
                 }
             locationChangeObserver = viewModel.$refocusButtonListener
-                .sink { [weak self] isButtonClicked in
-                    mapView.mapboxMap.setCamera(to: CameraOptions(center: viewModel.location, zoom: 12))
+                .sink { isButtonClicked in
+                    mapView.camera.ease(to: CameraOptions(center: viewModel.location, zoom: 12), duration: 1.0)
                 }
             
             
             statusCancellable = viewModel.$status
-                .sink { [weak self] status in
-                    if (status == 0 || status == 2) {
-                        self?.removeRoute(mapView: mapView)
-                        mapView.viewAnnotations.removeAll()
-                        
-                        if status == 2 {
+                .sink { status in
+                    switch status {
+                        case 0:
+                            self.removeRoute(mapView: mapView)
+                            mapView.viewAnnotations.removeAll()
+                        case 2:
+                            mapView.viewAnnotations.removeAll()
                             let loc = viewModel.locationHolder[0].addressLocation
-                            let location  = CLLocationCoordinate2D(latitude: loc.latitude, longitude: loc.longitude)
-                            let options = CameraOptions(center: location, zoom: 12)
-                            mapView.camera.fly(to: options, duration: 1.0)
-                        }
+                            let options = CameraOptions(center: loc, zoom: 15)
+                            
+                            mapView.camera.fly(to: options, duration: 2.0) {_ in
+                                mapView.camera.fly(to: CameraOptions(center: loc, zoom: 11), duration: 8.0)
+                            }
+                            
+                        default:
+                            print("Hello World")
                     }
                 }
         }
@@ -137,12 +139,40 @@ struct CustomMapView: UIViewRepresentable {
             let lineFeature = Feature(geometry: .lineString(LineString(lineCoordinates)))
             var lineSource = GeoJSONSource(id: sourceId)
             lineSource.data = .feature(lineFeature)
+            lineSource.lineMetrics = true
             
             var lineLayer = LineLayer(id: layerId, source: sourceId)
             lineLayer.lineColor = .constant(StyleColor(.main))
-            lineLayer.lineWidth = .constant(6.0)
+            lineLayer.lineGradient = .expression(
+                Exp(.interpolate) {
+                    Exp(.linear)
+                    Exp(.lineProgress)
+                    0.5
+                    UIColor.main
+                    0.6
+                    UIColor.green
+                    0.7
+                    UIColor.yellow
+                    1
+                    UIColor.main
+                }
+            )
+            
+            let lowZoomWidth = 10
+            let highZoomWidth = 20
+            lineLayer.lineWidth = .expression(
+                Exp(.interpolate) {
+                    Exp(.linear)
+                    Exp(.zoom)
+                    14
+                    lowZoomWidth
+                    18
+                    highZoomWidth
+                }
+            )
             lineLayer.lineCap = .constant(.round)
             lineLayer.lineJoin = .constant(.round)
+            
             
             try! mapView.mapboxMap.addSource(lineSource)
             try! mapView.mapboxMap.addLayer(lineLayer, layerPosition: nil)
@@ -174,8 +204,7 @@ struct CustomMapView: UIViewRepresentable {
                     }
                 }
                 
-                
-                addCircleLayers(mapView: mapView, userLocations: userLocations)
+                addCircleLayers(mapView: mapView, userLocations: userLocations, coordinates: coordinates)
                 
                 let referenceCamera = CameraOptions(zoom: 5, bearing: 45)
                 guard let camera = try? mapView.mapboxMap.camera(
@@ -191,8 +220,6 @@ struct CustomMapView: UIViewRepresentable {
             let annotationView = AnnotationView(text: address)
             annotationView.frame.size = CGSize(width: 150, height: 50)
             
-            //            let anchor = coordinate.longitude - mapView.mapboxMap.cameraState.center.longitude > 0 ?
-            //            ViewAnnotationAnchor.bottomRight : ViewAnnotationAnchor.bottomLeft
             
             let annotation = ViewAnnotation(
                 coordinate: coordinate,
@@ -204,10 +231,20 @@ struct CustomMapView: UIViewRepresentable {
             annotation.view.anchorPoint = CGPoint(x: 50.0, y: 1000.0)
             mapView.viewAnnotations.add(annotation)
         }
-        private func addCircleLayers(mapView: MapView, userLocations: [UserSelectedAddress]){
+        private func addCircleLayers(mapView: MapView, userLocations: [UserSelectedAddress], coordinates: [MyPoint]){
             let pointSourceId = "point-source"
             let pointLayerId = "point-layer"
-            let pointFeatures = userLocations.map { coordinate -> Feature in
+            
+            
+            
+            var list: [UserSelectedAddress] = userLocations
+            if DataHolder.status == 3 {
+                addMarkerAnnotation(mapView: mapView, coordinates:coordinates)
+                _ = list.popLast()
+            }
+            let newList = list
+            
+            let pointFeatures = newList.map { coordinate -> Feature in
                 return Feature(geometry: .point(Point(coordinate.addressLocation)))
             }
             
@@ -215,9 +252,9 @@ struct CustomMapView: UIViewRepresentable {
             pointSource.data = .featureCollection(FeatureCollection(features: pointFeatures))
             
             var pointLayer = CircleLayer(id: pointLayerId, source: pointSourceId)
-            pointLayer.circleColor = .constant(StyleColor(.red))
-            pointLayer.circleRadius = .constant(8.0)
-            pointLayer.circleStrokeWidth = .constant(2.0)
+            pointLayer.circleColor = .constant(StyleColor(.white))
+            pointLayer.circleRadius = .constant(7)
+            pointLayer.circleStrokeWidth = .constant(5.0)
             pointLayer.circleStrokeColor = .constant(StyleColor(.black))
             
             if mapView.mapboxMap.sourceExists(withId: pointSourceId) {
@@ -230,6 +267,44 @@ struct CustomMapView: UIViewRepresentable {
             try! mapView.mapboxMap.addSource(pointSource)
             try! mapView.mapboxMap.addLayer(pointLayer, layerPosition: nil)
         }
+        
+        private func addMarkerAnnotation(mapView: MapView, coordinates: [MyPoint]
+        ) {
+            let points = coordinates.map { point in
+                Point(CLLocationCoordinate2D(latitude: point.latitude, longitude: point.longitude))
+            }
+            if let _ = try? mapView.mapboxMap.layer(withId: Constants.CAR_ICON_LAYER_ID) {
+                try? mapView.mapboxMap.removeLayer(withId: Constants.CAR_ICON_LAYER_ID)
+            }
+            if let _ = try? mapView.mapboxMap.source(withId: Constants.CAR_ICON_SOURCE_ID) {
+                try? mapView.mapboxMap.removeSource(withId: Constants.CAR_ICON_SOURCE_ID)
+            }
+            
+            try? mapView.mapboxMap.addImage(UIImage(named: "car_from_above")!, id: Constants.CAR_ICON_ID)
+            
+            var source = GeoJSONSource(id: Constants.CAR_ICON_SOURCE_ID)
+            source.data = .feature(Feature(geometry: points[points.count-1]))
+            try? mapView.mapboxMap.addSource(source)
+            
+            
+            var layer = SymbolLayer(id: Constants.CAR_ICON_LAYER_ID, source: Constants.CAR_ICON_SOURCE_ID)
+            layer.iconImage = .constant(.name(Constants.CAR_ICON_ID))
+            layer.iconAnchor = .constant(.bottom)
+            layer.iconOffset = .constant([0, 12])
+            layer.iconSize = .constant(0.12)
+            layer.iconOffset = .constant([0, -50])
+            
+            let bearingToB =
+            bearing(
+                from:points[points.count-1].coordinates,
+                to: points[points.endIndex-2].coordinates
+            )
+            layer.iconRotate = .constant(bearingToB)
+
+            try? mapView.mapboxMap.addLayer(layer)
+        }
+        
+        
         func removeRoute(mapView: MapView) {
             do {
                 let layers = mapView.mapboxMap.allLayerIdentifiers

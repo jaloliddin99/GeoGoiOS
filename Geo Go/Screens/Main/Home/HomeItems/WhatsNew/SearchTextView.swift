@@ -18,7 +18,7 @@ struct SearchTextView: View {
                 Button {
                     viewModel.isSearchDialogShowing = true
                 } label: {
-                    Text("Where are we going?")
+                    Text("txt_where_to_go")
                         .padding()
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .foregroundColor(.black.opacity(0.7))
@@ -27,7 +27,7 @@ struct SearchTextView: View {
                 Button(action: {
                     viewModel.setStatus(value: 1)
                 }, label: {
-                    Text("Order ->")
+                    Text("txt_order_with_arrow")
                         .font(.system(size: 14, weight: .medium))
                         .padding(.horizontal, 8)
                         .frame(maxHeight: .infinity)
@@ -60,6 +60,7 @@ struct ShortOrderInfoView: View {
     var body: some View {
         HStack(spacing: 10) {
             Image(systemName: "bookmark.fill")
+                .foregroundColor(.main)
                 .padding(8)
                 .frame(maxWidth: 32, maxHeight: 32)
                 .background(Color.white)
@@ -84,6 +85,8 @@ struct ShortOrderInfoView: View {
             let name = address.name
             let lat = address.position?.lat ?? 0.0
             let lon = address.position?.lon ?? 0.0
+            
+            print("Lattitude and longitude` \(lat), \(lon)")
             let location = CLLocationCoordinate2D(latitude: lat, longitude: lon)
             let uAddress = UserSelectedAddress(addressName: name, addressLocation: location)
             viewModel.locationUpdated(uAddress)

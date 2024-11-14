@@ -54,7 +54,7 @@ struct MainMarkerBox: View {
                     .opacity(isShowingLottie)
             }
             
-            AddressView(viewModel: viewModel)
+            AddressView(viewModel: viewModel, markerOffset: $markerOffset)
                 .padding(.leading, 12)
                 .padding(.trailing, 12)
         }
@@ -83,10 +83,12 @@ struct MinuteTextView: View {
 
 struct AddressView: View {
     @ObservedObject var viewModel: MainViewModel
+    @Binding var markerOffset: CGFloat
 
     var body: some View {
-        let name = viewModel.currentAddress?.display_name ?? "Point on the map"
-        Text(name)
+        let name = markerOffset != 0 ? "searching_with_dot" :
+        (viewModel.currentAddress?.display_name ?? "point_on_map")
+        Text(LocalizedStringKey(name))
             .font(.system(size: 16))
             .foregroundColor(.white)
             .lineLimit(1)

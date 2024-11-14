@@ -21,7 +21,7 @@ struct SearchScreenDialog: View {
     
     var body: some View {
         VStack {
-            DialogToolBar(showDialog: $viewModel.isSearchDialogShowing, title: "Where are we going?")
+            DialogToolBar(showDialog: $viewModel.isSearchDialogShowing, title: "txt_where_to_go")
             
             HStack {
                 Image(systemName: "location.fill")
@@ -31,7 +31,7 @@ struct SearchScreenDialog: View {
                     .clipShape(Circle())
                     .shadow(radius: 4)
                 
-                Text(viewModel.currentAddress?.display_name ?? "Searching...")
+                Text(viewModel.currentAddress?.display_name ?? "searching_with_dot")
                     .padding()
                     .frame(maxWidth: .infinity, maxHeight: 50)
                     .background(Color(.secondarySystemBackground))
@@ -47,7 +47,7 @@ struct SearchScreenDialog: View {
                     .clipShape(Circle())
                     .shadow(radius: 4)
                 
-                TextField("Search...", text: $whereLocName)
+                TextField("enter_address_here", text: $whereLocName)
                     .padding()
                     .frame(maxWidth: .infinity, maxHeight: 50)
                     .background(Color(.secondarySystemBackground))
@@ -111,8 +111,8 @@ struct ElasticSearchResult: View {
         .padding(.leading, 4)
         .onTapGesture(perform: {
             let address = searchInfo.properties.name
-            let lat = searchInfo.geometry.coordinates[0]
-            let lon = searchInfo.geometry.coordinates[1]
+            let lat = searchInfo.geometry.coordinates[1]
+            let lon = searchInfo.geometry.coordinates[0]
             let location = CLLocationCoordinate2D(latitude: lat, longitude: lon)
             let uAddress = UserSelectedAddress(addressName: address, addressLocation: location)
             viewModel.locationUpdated(uAddress)

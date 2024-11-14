@@ -32,18 +32,18 @@ struct AddCardScreen: View {
     var body: some View {
         ZStack{
             VStack(alignment: .leading, spacing: 0){
-                Text("Enter card details")
+                Text("enter_card_details")
                     .font(.system(size: 18, weight: .medium))
                     .foregroundColor(Color.txt)
                     .padding(.top, 24)
                 
                 
-                Text("Card name")
+                Text("card_name")
                     .font(.system(size: 16))
                     .fontWeight(.regular)
                     .padding(.top, 16)
                 
-                TextField("Eg: Main", text: $cardName)
+                TextField("for_example", text: $cardName)
                     .padding()
                     .background(Color(.secondarySystemBackground))
                     .overlay(
@@ -57,12 +57,12 @@ struct AddCardScreen: View {
                     }
                     .padding(.top, 6)
                 
-                Text("Card number")
+                Text("card_number")
                     .font(.system(size: 16))
                     .fontWeight(.regular)
                     .padding(.top, 16)
                 
-                TextField("Card Number", text: $cardNumber)
+                TextField("card_number_camel", text: $cardNumber)
                     .padding()
                     .background(Color(.secondarySystemBackground))
                     .overlay(
@@ -77,7 +77,7 @@ struct AddCardScreen: View {
                     }
                     .padding(.top, 6)
                 
-                Text("Expire date")
+                Text("expire_date")
                     .font(.system(size: 16))
                     .fontWeight(.regular)
                     
@@ -101,7 +101,7 @@ struct AddCardScreen: View {
                     .padding(.top, 6)
                 
                 if !isCardInit {
-                    Text("Enter code")
+                    Text("enter_code")
                         .font(.system(size: 16))
                         .fontWeight(.regular)
                         .padding(.top, 16)
@@ -139,7 +139,7 @@ struct AddCardScreen: View {
                         }
                     }
                 }) {
-                    GGButton(title: "Send")
+                    GGButton(title: "send")
                 }
                 .disabled(isButtonDisabled)
                 .opacity(isButtonDisabled ? 0.5 : 1.0)
@@ -150,7 +150,7 @@ struct AddCardScreen: View {
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .navigationTitle("Add Card")
+        .navigationTitle("add_card")
         .background(.white)
         .padding(16)
         .navigationBarTitleDisplayMode(.inline)

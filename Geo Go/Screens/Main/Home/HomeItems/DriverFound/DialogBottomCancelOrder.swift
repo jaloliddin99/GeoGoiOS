@@ -16,8 +16,8 @@ struct DialogBottomCancelOrder: View {
         ZStack {
             
             VStack(alignment: .leading, spacing: 12){
-                DialogToolBar(showDialog: $mainVm.showCancelBottomDialog, title: "Cancel Order")
-                Text("Tell us why you wanted to cancel the order")
+                DialogToolBar(showDialog: $mainVm.showCancelBottomDialog, title: "cancel_order")
+                Text("cancel_order_reason")
                     .font(.system(size: 16, weight: .bold))
                     .foregroundColor(.black)
                 
@@ -56,7 +56,7 @@ struct DialogBottomCancelOrder: View {
                     
                     mainVm.showCancelBottomDialog.toggle()
                 }) {
-                    GGButton(title: "Confirm")
+                    GGButton(title: "confirm")
                 }
                 .disabled(viewModel.selectedOptionID == nil)
                 .opacity(viewModel.selectedOptionID == nil ? 0.5 : 1.0)

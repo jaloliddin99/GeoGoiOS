@@ -19,7 +19,7 @@ struct MyTripsScreen: View {
                     Button(action: {
                         selectedTab = tab
                     }) {
-                        Text(tab.rawValue)
+                        Text(LocalizedStringKey(tab.rawValue))
                             .fontWeight(.semibold)
                             .frame(maxWidth: .infinity)
                             .padding(.vertical, 10)
@@ -45,7 +45,7 @@ struct MyTripsScreen: View {
             
         }
         .background(.white)
-        .navigationTitle("My Trips")
+        .navigationTitle("drawer_item_my_trips")
         .navigationBarTitleDisplayMode(.inline)
         .onReceive(viewModel.$addressHistoryResponse) { result in
             if let r = result {
@@ -81,8 +81,8 @@ struct MyTripsScreen: View {
 }
 
 enum TripTab: String, CaseIterable {
-    case completed = "Completed"
-    case cancelled = "Cancelled"
+    case completed = "completed"
+    case cancelled = "cancelled"
 }
 
 
@@ -109,7 +109,7 @@ struct TripCardView: View {
                 .foregroundColor(.gray)
             
             HStack {
-                Text("Order price")
+                Text("order_price")
                     .fontWeight(.medium)
                 Spacer()
                 Text(formatNumberWithSpaces(trip.total ?? 0.0))
@@ -118,7 +118,7 @@ struct TripCardView: View {
             Button(action: {
                 
             }) {
-                Text("View order")
+                Text("view_order")
                     .frame(maxWidth: .infinity)
                     .padding()
                     .background(Color.gray.opacity(0.2))

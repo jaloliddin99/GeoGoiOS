@@ -9,8 +9,12 @@ import Foundation
 
 class Constants{
     
+    static let CAR_ICON_ID = "CAR_ICON_ID"
+    static let CAR_ICON_SOURCE_ID = "CAR_ICON_SOURCE_ID"
+    static let CAR_ICON_LAYER_ID = "CAR_ICON_LAYER_ID"
 
-    
+    static let TARIFF = "TARIFF_ORDER"
+    static let TARIFF_ICON = "TARIFF_ICON"
     
     static let USER_NAME: String = "USER_NAME"
     

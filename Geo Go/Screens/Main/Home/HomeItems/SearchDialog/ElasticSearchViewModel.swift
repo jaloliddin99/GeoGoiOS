@@ -16,11 +16,11 @@ final class ElasticSearchViewModel: ObservableObject{
         NetworkService.shared.sendRequest(
             url: "https://map.uz.taxi/v1/autocomplete",
             params: ["text": address,
-                     "boundary.circle.lat": String(DataHolder.latitude),
-                     "boundary.circle.lon": String(DataHolder.longitude),
+                     "boundary.circle.lat": String(DataHolder.location.latitude),
+                     "boundary.circle.lon": String(DataHolder.location.longitude),
                      "boundary.circle.radius": "15",
-                     "focus.point.lat": String(DataHolder.latitude),
-                     "focus.point.lon": String(DataHolder.longitude),
+                     "focus.point.lat": String(DataHolder.location.latitude),
+                     "focus.point.lon": String(DataHolder.location.longitude),
                      "boundary.country": "UZB",
                      "api_key": Constants.GEOCODE_TOKEN,
                      "size": "15",
@@ -54,10 +54,5 @@ final class ElasticSearchViewModel: ObservableObject{
             }
         }
     }
-    
-    
-    
-    
-    
     
 }

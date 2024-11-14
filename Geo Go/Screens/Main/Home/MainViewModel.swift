@@ -22,17 +22,20 @@ final class MainViewModel: ObservableObject{
     @Published var showRateDriver = false
     @Published var showBonusDialog = false
     @Published var showTariffDetailsDialog = false
-    @Published var location: CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: 41.3385, longitude: 69.3346)
+    @Published var location: CLLocationCoordinate2D = DataHolder.location
+    @Published var selectedLocation: CLLocationCoordinate2D = DataHolder.location
     @Published var refocusButtonListener = false
     
     @Published var discountModel: DiscountModel?
     var hasOrderGoViewAppeared = false
     
     func setStatus(value: Int) {
-        self.status = value
-        DataHolder.status = value
-        if value == 0 {
-            hasOrderGoViewAppeared = false
+        withAnimation {
+            self.status = value
+            DataHolder.status = value
+            if value == 0 {
+                hasOrderGoViewAppeared = false
+            }
         }
     }
     
@@ -55,6 +58,20 @@ final class MainViewModel: ObservableObject{
         getClientOrders()
     }
     
+    func findUserRealPosition(loc: CLLocationCoordinate2D, offset: CGFloat) {
+        withAnimation {
+            location = location
+            refocusButtonListener.toggle()
+            reverseGeocodeIfNeeded(offset: offset)
+        }
+    }
+    
+    
+    func reverseGeocodeIfNeeded(offset: CGFloat) {
+        if offset == 0 && status == 0 {
+            reverseLocation(lat: selectedLocation.latitude, lon: selectedLocation.longitude)
+        }
+    }
     
     
     @Published var currentAddress: UpdateReverseModel?
@@ -84,11 +101,13 @@ final class MainViewModel: ObservableObject{
                 case .success(let response):
                     if let appetizers = response as? UpdateReverseModel {
                         self.currentAddress = appetizers
-                        let name = currentAddress?.display_name ?? "Point on the map"
-                        let lat = Double(currentAddress?.lat ?? "0") ?? 0.0
-                        let lon = Double(currentAddress?.lon ?? "0") ?? 0.0
+                        
+                        let name = appetizers.display_name ?? "Point on the map"
+                        let lat = Double(appetizers.lat) ?? 0.0
+                        let lon = Double(appetizers.lon) ?? 0.0
                         locationHolder.removeAll()
                         locationUpdated(UserSelectedAddress(addressName: name, addressLocation: CLLocationCoordinate2D(latitude: lat, longitude: lon)))
+                        
                     }
                     
                     
@@ -269,7 +288,7 @@ final class MainViewModel: ObservableObject{
             headers: [
                 "Accept-Language": DataHolder.lang,
                 "Hive-Profile": Constants.HIVE_PROFILE,
-                "X-Hive-GPS-Position": "\(DataHolder.latitude) \(DataHolder.longitude)",
+                "X-Hive-GPS-Position": "\(location.latitude) \(location.longitude)",
                 "Date": responseDetails.data,
                 "Authentication": responseDetails.hmac,
             ],
@@ -333,11 +352,12 @@ final class MainViewModel: ObservableObject{
             queryString += "&point=\(point)"
         }
         
-        let urlWithParams = Constants.NAVI_BASE_URL + "?" + queryString
+        let urlWithParams = Constants.NAVI_BASE_URL + "&" + queryString
         
         NetworkService.shared.sendRequest(
             url: urlWithParams,
             method: "GET",
+            isPrintable: true,
             completed: handleDrawRouteRequestResponse as (Result<GraphopperNavResponse, APError>) -> Void)
     }
     
@@ -430,13 +450,14 @@ final class MainViewModel: ObservableObject{
             switch result {
                 case .success(let response):
                     if let appetizers = response as? CreateOrderResponse {
-                        self.createOrder = appetizers
+                        innerOrderInfoState = status
                         status = 2
+                        self.createOrder = appetizers
                         DataHolder.status = status
                         DataHolder.orderId = appetizers.id
-                        startTimer()
+                        startTimer(orderId: appetizers.id)
+                        
                     }
-                    
                 case .failure(_): break
             }
         }
@@ -461,6 +482,7 @@ final class MainViewModel: ObservableObject{
                 "Date": responseDetails.data,
                 "Authentication": responseDetails.hmac,
             ],
+            isPrintable: true,
             completed: handleCancelOrderResponse as (Result<EmptyModel, APError>) -> Void)
     }
     
@@ -472,8 +494,10 @@ final class MainViewModel: ObservableObject{
                 case .success(let response):
                     if let appetizers = response as? EmptyModel {
                         self.cancelOrder = appetizers
-                        status = 1
-                        DataHolder.status = status
+                        withAnimation {
+                            status = 1
+                            DataHolder.status = status
+                        }
                     }
                     
                 case .failure(let error):
@@ -490,9 +514,7 @@ final class MainViewModel: ObservableObject{
             }
         }
     }
-    
-    @Published var getMyOrders: [ShortOrderInfo]?
-    
+        
     func getClientOrders() {
         guard let responseDetails = generateResponse?.generateHmacData(id: Constants.ORDERS_GET) else { return }
         NetworkService.shared.sendRequest(
@@ -512,18 +534,25 @@ final class MainViewModel: ObservableObject{
             switch result {
                 case .success(let response):
                     if let res = response as? [ShortOrderInfo] {
-                        self.getMyOrders = res
+                        filterClientOrders(res: res)
                     }
                 case .failure(_): break
             }
         }
     }
     
+    private func filterClientOrders(res: [ShortOrderInfo]) {
+        if let highestStateOrder = res.max(by: { $0.state < $1.state }) {
+            startTimer(orderId: highestStateOrder.id)
+            DataHolder.orderId = highestStateOrder.id
+        }
+    }
+    
     
     @Published var getOrderDetail: OrderInfo?
     
-    private func getOrderDetails() {
-        guard let responseDetails = generateResponse?.generateHmacDataForOrderId(id: Constants.GET_ORDER_DETAILS, orderId: DataHolder.orderId) else { return }
+    private func getOrderDetails(orderId: Int64) {
+        guard let responseDetails = generateResponse?.generateHmacDataForOrderId(id: Constants.GET_ORDER_DETAILS, orderId: orderId) else { return }
         
         NetworkService.shared.sendRequest(
             url: responseDetails.url,
@@ -534,6 +563,7 @@ final class MainViewModel: ObservableObject{
                 "Date": responseDetails.data,
                 "Authentication": responseDetails.hmac,
             ],
+            isPrintable: true,
             completed: handleOrderInfoResponse as (Result<OrderInfo, APError>) -> Void)
     }
     
@@ -542,6 +572,7 @@ final class MainViewModel: ObservableObject{
             switch result {
                 case .success(let response):
                     if let res = response as? OrderInfo {
+                        getOrderDetail = res
                         handleUIByOrderStatus(orderInfo: res)
                     }
                 case .failure(_): break
@@ -549,22 +580,38 @@ final class MainViewModel: ObservableObject{
         }
     }
     
+    private var innerOrderInfoState: Int = -1
     private func handleUIByOrderStatus(orderInfo: OrderInfo){
-        if orderInfo.state == 2 {
-            self.getOrderDetail = orderInfo
-            status = 3
-            requestToDrawRoute(list: getCoorWithDriverLoc(orderInfo: orderInfo, clientLocation: DataHolder.location))
+        if innerOrderInfoState == orderInfo.state { return }
+        innerOrderInfoState = orderInfo.state
+        
+        if orderInfo.state == 1 {
+            withAnimation {
+                status = 2
+            }
+        }else if orderInfo.state == 2 {
+            withAnimation {
+                status = 3
+            }
+            requestToDrawRoute(list: getCoorWithDriverLoc(orderInfo: orderInfo))
         }else if orderInfo.state == 6 || orderInfo.state == 5 {
-            status = 0
             stopTimer()
             if orderInfo.state == 5 {
                 showRateDriver.toggle()
             }
+            withAnimation {
+                status = 0
+            }
+            
         }else if orderInfo.state == 3 {
-            status = 4
+            withAnimation {
+                status = 4
+            }
         }
         else if orderInfo.state == 4 {
-            status = 5
+            withAnimation {
+                status = 5
+            }
         }
         DataHolder.status = status
     }
@@ -585,10 +632,10 @@ final class MainViewModel: ObservableObject{
     private var timer: Timer?
     private var cancellables = Set<AnyCancellable>()
     
-    func startTimer() {
+    func startTimer(orderId: Int64) {
         stopTimer()
         timer = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: true) { [weak self] _ in
-            self?.getOrderDetails()
+            self?.getOrderDetails(orderId: orderId)
         }
     }
     

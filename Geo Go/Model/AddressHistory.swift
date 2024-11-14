@@ -55,8 +55,6 @@ struct CostModifier: Codable {
 }
 
 struct SearchedAddress: Codable {
-    
-    
     let name: String
     var components: [SearchComponent]?
     var types: AddressTypes?

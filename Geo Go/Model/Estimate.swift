@@ -54,21 +54,25 @@ func mapToRouteCoordinates(addresses: [UserSelectedAddress]) -> [RouteCoordinate
     }
 }
 
-func getCoorWithDriverLoc(orderInfo: OrderInfo, clientLocation: CLLocationCoordinate2D) -> [String] {
+func getCoorWithDriverLoc(orderInfo: OrderInfo) -> [String] {
     guard let driverLocation = orderInfo.assignee?.location else { return []}
+    guard let clientLocation = orderInfo.route.count > 0 ? orderInfo.route[0].point.coordinates : nil else { return []}
     
     return [
-        "\(driverLocation.lat),\(driverLocation.lon)",
-        "\(clientLocation.latitude),\(clientLocation.longitude)"
+        "\(clientLocation.lat),\(clientLocation.lon)",
+        "\(driverLocation.lat),\(driverLocation.lon)"
     ]
 }
 
 
-func getCoorWithDriverLocation(orderInfo: OrderInfo, clientLocation: CLLocationCoordinate2D) -> [UserSelectedAddress] {
+func getCoorWithDriverLocation(orderInfo: OrderInfo) -> [UserSelectedAddress] {
     guard let driverLocation = orderInfo.assignee?.location else { return []}
     let location = CLLocationCoordinate2D(latitude: driverLocation.lat, longitude: driverLocation.lon)
+    guard let clientLocation = orderInfo.route.count > 0 ? orderInfo.route[0].point.coordinates : nil else { return []}
+
+    let cLocation = CLLocationCoordinate2D(latitude: clientLocation.lat, longitude: clientLocation.lon)
     return [
-        UserSelectedAddress(addressName: "", addressLocation: clientLocation),
+        UserSelectedAddress(addressName: "", addressLocation: cLocation),
         UserSelectedAddress(addressName: "", addressLocation: location),
     ]
 }

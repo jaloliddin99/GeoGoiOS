@@ -23,4 +23,111 @@
 "terms_and" = " jäne öz jekje ma'lımetlerimdi qayta işlewge kelisem şartlar boyınsha ";
 "privacy_policy" = "Qupiya Säyasatı";
 
-"enter_phone" = "Enter Phone";
+"enter_phone" = "Telefon engiziń";
+"txt_where_to_go" = "Qayda baramız?";
+"txt_order_with_arrow" = "Buyırtpa ->";
+
+
+"alert_title_server_error" = "Server xatası";
+"alert_title_invalid_form" = "Nawqıs forma";
+"alert_title_invalid_email" = "Nawqıs elektron pochta";
+"alert_title_profile_saved" = "Profil saqlandı";
+"alert_title_profile_error" = "Profil xatası";
+
+"alert_message_invalid_data" = "Serverden alınğan málimet nawqıs. Qollaw xızmetine qabıslasıń.";
+"alert_message_invalid_response" = "Serverden nawqıs juwap alındı. Keyinraq qayta urınıp kóriń nemese qollaw xızmetine qabıslasıń.";
+"alert_message_invalid_url" = "Serverge qosılısta məsile payda boldı. Agar bu jaǵday jaýaplasıp dursa, qollaw xızmetine qabıslasıń.";
+"alert_message_unable_to_complete" = "Sizdiń sorawıńızdı orındaw hámánda múnkin emes. Internet qosılıwińızdı tekseriń.";
+
+"alert_message_invalid_form" = "Formaǵa kiritilgen barlıq maydandardıń toltırılǵanın tekseriń.";
+"alert_message_invalid_email" = "Elektron pochta adresińizdiń durıs bolǵanın tekseriń.";
+
+"alert_message_profile_saved" = "Sizdiń profil málimetlerińiz saqlandı.";
+"alert_message_profile_error" = "Profil málimetlerińizdi saqlawda nemese tápsırwda xata.";
+
+
+"txt_application_language" = "Ilova tili";
+"txt_profile" = "Profil";
+"txt_terms_of_use" = "Paydalanıw sharaitları";
+"txt_privacy_policy" = "Qupiyalıq siyasatı";
+"txt_more" = "Kóbirek";
+"txt_enter_promocode" = "Promokodni engiz";
+"promocode" = "Promokod";
+"cancel" = "Bekar qılıw";
+"submit" = "Jiberiw";
+"promo_codes" = "Promokodlar";
+"actions" = "Áreketler";
+"txt_choose_default_payment" = "Ádepi tolew táriyin tanlań";
+"payment_method" = "Tolew táriyi";
+"cash" = "Qolma-qol";
+"add_card" = "Karta qosıw";
+"no_cards_found" = "Karta tabılmadı";
+"expires" = "Múdiri:";
+"enter_card_details" = "Kartanın derejelerin engiz";
+"card_name" = "Kartanın ati";
+"for_example" = "Mısal ushın: Asasıy";
+"card_number" = "Kartanın nomeri";
+"card_number_camel" = "Karta Nomeri";
+"expire_date" = "Múdiri awmaqtı";
+"enter_code" = "Kod engiz";
+"send" = "Jiberiw";
+"order_price" = "Buyırttıń nárxi";
+"view_order" = "Buyırttı qara";
+"tariff_reduced" = "Tarif vaqtsha tómendetiw";
+"tariff_increased" = "Tarif vaqtsha kóbeytiw";
+"about_tariff" = "Tarif haqqında";
+"discount" = "Chegirme";
+"enter_promo_code_if_have" = "Agar promokodińiz bar bolsa, engiziń";
+"add_promo_code" = "Promokod qosıw";
+"order_completed" = "Buyırtma ámelge asırıldı";
+"total_fare" = "Jámiy nárx";
+"rate_driver" = "Júrikshige baǵa beriw";
+"hint_good_driver" = "Jaqsı júrikshi";
+"tariff" = "Tarif";
+"add_second_space" = "Ekinshi orın qosıw";
+"cancel_order" = "Buyırttı bekarlaw";
+"cancel_order_reason" = "Buyırttı bekarlaw sababın kiritiń";
+"confirm" = "Rastlaw";
+"searching_car_dot" = "Mashina izlewde...";
+"destination_not_entered" = "Baratın orın engizilmegen!";
+"error_occurred" = "Qate payda boldı";
+"order" = "Buyırtpa";
+"no_bonus_order" = "Bonus buyırttı joq";
+"max" = "máks";
+"min" = "mín";
+"bonus_short_desc" = "Sayahattıń bir boligin bonuslar menen tolew";
+"bonus_desc" = "Qiymet artqan dawamda qalǵan bonuslar esabińizge qaytarıladı";
+"your_bonuses" = "Sizdiń bonuslarıńız";
+"wish" = "Tilek";
+"comment" = "Pikir";
+"with_kids" = "Bala menen";
+"order_another_person" = "Basqa kisi ushın buyırtpa";
+"options" = "PARAMETRLI";
+"select_all" = "Hámini tanla";
+"comment_hint_be_quick" = "Shamdi bolıń...";
+"enter_comment" = "Júrikshi ushın pikir kiritiń!";
+"enter_another_person" = "Basqa kisini kiritiń!";
+"your_destination" = "Sizdiń baratın orınıńız!";
+"close" = "Jabıw";
+"km" = "km";
+"searching_with_dot" = "Izlewde...";
+"point_on_map" = "Xaritada nuqta";
+"cancel_order_question" = "Buyırttanı bekarlawǵa shınımen qızıǵasızba?";
+"continue" = "Dawam etiw";
+"card" = "Karta";
+"wishes" = "Tilekler";
+"drawer_item_my_trips" = "Saparlarım";
+"drawer_item_payment_method" = "Tolew táriyi";
+"drawer_item_favourite_addresses" = "Jaqarı manziller";
+"drawer_item_discount" = "Chegirme";
+"drawer_item_news" = "Jańalıqlar";
+"drawer_item_about_app" = "Ilova haqqında";
+
+"completed" = "Támamlandı";
+"cancelled" = "Bekar qılındı";
+
+"picked_locations" = "tanalğan ornılar";
+"enter_address_here" = "Baratılğan ornıdı mında kiritiñiz";
+"hint_format" = "%@ %d, %@ %d UZS";
+"payment_with_bonus" = "Bonuspen tolandi:";
+

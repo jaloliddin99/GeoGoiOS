@@ -21,10 +21,10 @@ struct DialogWish: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             
+            
             Form{
-                
-                Section(header: Text("Wish")){
-                    WishListItem(title: "Comment", subTitle: comment, action: {
+                Section(header: Text("wish")){
+                    WishListItem(title: "comment", subTitle: comment, action: {
                         showCommentDialog.toggle()
                         DataHolder.globalComment = comment
                     })
@@ -33,12 +33,12 @@ struct DialogWish: View {
                     }
                 
                     
-                    WishListItem(title: "With Kids", action: {
+                    WishListItem(title: "with_kids", action: {
                         
                     })
                     
                     let subTitle = namePhone == nil ? "" : "\(namePhone!.name) | \(namePhone!.phone)"
-                    WishListItem(title: "Order another person", subTitle: subTitle, action: {
+                    WishListItem(title: "order_another_person", subTitle: subTitle, action: {
                         showAnotherUserDialog.toggle()
                     })
                     
@@ -46,14 +46,14 @@ struct DialogWish: View {
                         DialogAnotherPerson(showOtherPersonDialog: $showAnotherUserDialog, userNameAndPhone: $namePhone)
                     })
                 }
-                Section(header: Text("OPTIONS")){
+                Section(header: Text("options")){
                     ForEach($lists, id: \.optionId) { $list in
                         Toggle(list.optionName, isOn: $list.isChecked)
                     }
                 }
                 
                 Section {
-                    Toggle("Select all", sources: $lists, isOn: \.isChecked)
+                    Toggle("select_all", sources: $lists, isOn: \.isChecked)
                 }
             }
             
@@ -64,8 +64,10 @@ struct DialogWish: View {
             }, label: {
                 GGButton(title: "save")
             })
+            .background(Color(UIColor.secondarySystemBackground))
             .padding(.horizontal, 12)
         }
+        
     }
 }
 
@@ -77,7 +79,7 @@ struct WishListItem: View {
         Button(action: action) {
             HStack{
                 VStack(alignment: .leading){
-                    Text(title)
+                    Text(LocalizedStringKey(title))
                         .foregroundColor(.black)
                     
                     if !subTitle.isEmpty {

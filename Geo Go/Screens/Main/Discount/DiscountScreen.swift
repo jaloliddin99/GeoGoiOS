@@ -42,7 +42,7 @@ struct DiscountScreen: View {
 
         }
         .background(.white)
-        .navigationTitle("My Trips")
+        .navigationTitle("drawer_item_my_trips")
         .navigationBarTitleDisplayMode(.inline)
         .padding(16)
         .alert(item: $viewModel.alertItem){ alertItem in
@@ -110,7 +110,7 @@ struct PromoCodeScreen: View {
                 Button {
                     viewModel.isShowingPopup.toggle()
                 } label: {
-                    GGButton(title: "Enter Promocode")
+                    GGButton(title: "txt_enter_promocode")
                 }
             }
         }
@@ -208,11 +208,11 @@ struct PromoCodePopup: View {
     
     var body: some View {
         VStack(spacing: 20) {
-            Text("Enter Promocode")
+            Text("txt_enter_promocode")
                 .font(.headline)
             
             
-            TextField("Promocode", text: $promoCodeText)
+            TextField("promocode", text: $promoCodeText)
                 .padding(10)
                 .background(Color(.secondarySystemBackground))
                 .cornerRadius(9)
@@ -223,7 +223,7 @@ struct PromoCodePopup: View {
                 Button {
                     viewModel.isShowingPopup = false
                 } label: {
-                    GGButton(title: "Cancel", bgColor: Color.gray.opacity(0.5))
+                    GGButton(title: "cancel", bgColor: Color.gray.opacity(0.5))
                         .frame(maxHeight: 40)
                 }
                 .frame(maxWidth: .infinity)
@@ -233,7 +233,7 @@ struct PromoCodePopup: View {
                     viewModel.postPromoCode(body: PromoCodeSend(value: promoCodeText))
                     
                 } label: {
-                    GGButton(title: "Submit")
+                    GGButton(title: "submit")
                         .frame(maxHeight: 40)
                 }
                 .frame(maxWidth: .infinity)
@@ -252,6 +252,6 @@ struct PromoCodePopup: View {
 
 
 enum PromoCodeTabTab: String, CaseIterable {
-    case promoCodes = "Promo Codes"
-    case actions = "Actions"
+    case promoCodes = "promo_codes"
+    case actions = "actions"
 }

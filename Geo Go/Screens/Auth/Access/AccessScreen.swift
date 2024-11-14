@@ -22,7 +22,6 @@ struct AccessScreen: View {
         NavigationStack{
             ZStack{
                 VStack {
-                    
                     PermissionView(
                         imageName: "gps_map",
                         title: gps,
@@ -35,17 +34,17 @@ struct AccessScreen: View {
                     }
                 }
                 
-
                 if viewModel.isLoading {
                     LoadingView()
                 }
             }
             .padding()
             .onReceive(locationManager.$location) { location in
-                        //guard let location = location else { return }
-                        //let coor = location.coordinate
-                        viewModel.getAppetizer(lat: 41.33851520919809, lon: 69.33460926588599)
-                    }
+                guard let location = location else { return }
+                let coor = location.coordinate
+                viewModel.getAppetizer(lat: coor.latitude, lon: coor.longitude)
+            
+            }
             .alert(item: $viewModel.alertItem){ alertItem in
                 Alert(title: alertItem.title,
                       message: alertItem.message,

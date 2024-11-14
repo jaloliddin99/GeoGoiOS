@@ -27,3 +27,110 @@
 
 
 "enter_phone" = "Raqamingizni Kiriting";
+
+"txt_where_to_go" = "Qayerga boramiz?";
+"txt_order_with_arrow" = "Chaqirish ->";
+
+
+"alert_title_server_error" = "Server xatosi";
+"alert_title_invalid_form" = "Noto‘g‘ri shakl";
+"alert_title_invalid_email" = "Noto‘g‘ri elektron pochta";
+"alert_title_profile_saved" = "Profil saqlandi";
+"alert_title_profile_error" = "Profil xatosi";
+
+"alert_message_invalid_data" = "Serverdan olingan ma'lumotlar noto‘g‘ri. Iltimos, qo‘llab-quvvatlash xizmatiga murojaat qiling.";
+"alert_message_invalid_response" = "Serverdan noto‘g‘ri javob olindi. Iltimos, keyinroq qayta urinib ko‘ring yoki qo‘llab-quvvatlash xizmatiga murojaat qiling.";
+"alert_message_invalid_url" = "Server bilan ulanishda muammo yuzaga keldi. Agar bu davom etsa, qo‘llab-quvvatlash xizmatiga murojaat qiling.";
+"alert_message_unable_to_complete" = "Sizning so‘rovingizni hozir bajarishning iloji yo‘q. Iltimos, internet ulanishingizni tekshiring.";
+
+"alert_message_invalid_form" = "Iltimos, formadagi barcha maydonlar to‘ldirilganligiga ishonch hosil qiling.";
+"alert_message_invalid_email" = "Iltimos, elektron pochta manzilingiz to‘g‘riligini tekshiring.";
+
+"alert_message_profile_saved" = "Profil ma'lumotlaringiz muvaffaqiyatli saqlandi.";
+"alert_message_profile_error" = "Profilingizni saqlash yoki olishda xatolik yuz berdi.";
+
+"txt_application_language" = "Ilova tili";
+"txt_profile" = "Profil";
+"txt_terms_of_use" = "Foydalanish shartlari";
+"txt_privacy_policy" = "Maxfiylik siyosati";
+"txt_more" = "Ko‘proq";
+"txt_enter_promocode" = "Promokodni kiriting";
+"promocode" = "Promokod";
+"cancel" = "Bekor qilish";
+"submit" = "Tasdiqlash";
+"promo_codes" = "Promo kodlar";
+"actions" = "Harakatlar";
+"txt_choose_default_payment" = "Standart to‘lov usulini tanlang";
+"payment_method" = "To‘lov usuli";
+"cash" = "Naqd";
+"add_card" = "Karta qo‘shish";
+"no_cards_found" = "Karta topilmadi";
+"expires" = "Muddati:";
+"enter_card_details" = "Karta tafsilotlarini kiriting";
+"card_name" = "Karta nomi";
+"for_example" = "Masalan: Asosiy";
+"card_number" = "Karta raqami";
+"card_number_camel" = "Karta Raqami";
+"expire_date" = "Amal qilish muddati";
+"enter_code" = "Kod kiriting";
+"send" = "Yuborish";
+"order_price" = "Buyurtma narxi";
+"view_order" = "Buyurtmani ko‘rish";
+"tariff_reduced" = "Tarif vaqtincha kamaytirildi";
+"tariff_increased" = "Tarif vaqtincha oshirildi";
+"about_tariff" = "Tarif haqida";
+"discount" = "Chegirma";
+"enter_promo_code_if_have" = "Agar promokodingiz bo‘lsa, kiriting";
+"add_promo_code" = "Promokodni qo‘shish";
+"order_completed" = "Buyurtma yakunlandi";
+"total_fare" = "Umumiy narx";
+"rate_driver" = "Haydovchini baholang";
+"hint_good_driver" = "Yaxshi haydovchi";
+"tariff" = "Tarif";
+"add_second_space" = "Ikkinchi joyni qo‘shing";
+"cancel_order" = "Buyurtmani bekor qilish";
+"cancel_order_reason" = "Buyurtmani bekor qilish sababini ko‘rsating";
+"confirm" = "Tasdiqlash";
+"searching_car_dot" = "Mashina qidirilmoqda...";
+"destination_not_entered" = "Manzil kiritilmagan!";
+"error_occurred" = "Xato yuz berdi";
+"order" = "Buyurtma";
+"no_bonus_order" = "Bonussiz buyurtma";
+"max" = "maks";
+"min" = "min";
+"bonus_short_desc" = "Sayohatning bir qismini bonuslar bilan to‘lash";
+"bonus_desc" = "Qiymat oshgan taqdirda, qolgan bonuslar hisobingizga qaytariladi";
+"your_bonuses" = "Bonuslaringiz";
+"wish" = "Istak";
+"comment" = "Izoh";
+"with_kids" = "Bolalar bilan";
+"order_another_person" = "Boshqa odam uchun buyurtma";
+"options" = "PARAMETRLAR";
+"select_all" = "Hammasini tanlash";
+"comment_hint_be_quick" = "Tezroq...";
+"enter_comment" = "Haydovchi uchun izoh kiriting!";
+"enter_another_person" = "Boshqa odamni kiriting!";
+"your_destination" = "Sizning manzilingiz!";
+"close" = "Yopish";
+"km" = "km";
+"searching_with_dot" = "Qidirilmoqda...";
+"point_on_map" = "Xaritada nuqta";
+"cancel_order_question" = "Buyurtmani bekor qilishni xohlaysizmi?";
+"continue" = "Davom etish";
+"card" = "Karta";
+"wishes" = "Istaklar";
+
+"drawer_item_my_trips" = "Safarlarim";
+"drawer_item_payment_method" = "To‘lov usuli";
+"drawer_item_favourite_addresses" = "Sevimli manzillar";
+"drawer_item_discount" = "Chegirma";
+"drawer_item_news" = "Yangiliklar";
+"drawer_item_about_app" = "Ilova haqida";
+
+"completed" = "Yakunlangan";
+"cancelled" = "Bekor qilingan";
+
+"picked_locations" = "ta tanlangan manzil";
+"enter_address_here" = "Manzilingizni bu yerga kiriting";
+"hint_format" = "%@ %d, %@ %d UZS";
+"payment_with_bonus" = "Bonus bilan to‘landi:";

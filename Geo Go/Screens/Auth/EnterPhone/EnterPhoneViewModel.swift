@@ -24,6 +24,7 @@ final class EnterPhoneViewModel : ObservableObject{
             headers: ["Accept-Language": "uz",
                       "Hive-Profile": Constants.HIVE_PROFILE
                      ],
+            isPrintable: true,
             completed: handleAppetizersResponse as (Result<RegisterUserResponse, APError>) -> Void)
     }
     private func handleAppetizersResponse<T: Decodable>(_ result: Result<T, APError>) {
@@ -33,6 +34,7 @@ final class EnterPhoneViewModel : ObservableObject{
             case .success(let response):
                 if let appetizers = response as? RegisterUserResponse {
                     self.postData = appetizers
+                    print("Hello worlddawjkanwdkj")
                 }
             case .failure(let error):
                 switch error {

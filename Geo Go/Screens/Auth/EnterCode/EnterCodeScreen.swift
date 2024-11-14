@@ -69,7 +69,6 @@ struct EnterCodeScreen: View {
             .onAppear{
                 UserDefaults.standard.setValue(phoneNumber, forKey: Constants.USER_PHONE)
             }
-            
         }
         
     }

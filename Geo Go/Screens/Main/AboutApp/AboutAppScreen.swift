@@ -30,7 +30,7 @@ struct AboutAppScreen: View {
                 
                 NavigationLink(destination: TermsOfUseAndPPScreen(url: termsOfUse(lang: DataHolder.lang, url: bUrl))) {
                     HStack {
-                        Text("Terms of Use")
+                        Text("txt_terms_of_use")
                             .font(.system(size: 16, weight: .medium))
                             .foregroundColor(.primary)
                         Spacer()
@@ -45,7 +45,7 @@ struct AboutAppScreen: View {
                 
                 NavigationLink(destination: TermsOfUseAndPPScreen(url: privacyPolicyUrl(lang: DataHolder.lang, url: bUrl))) {
                     HStack {
-                        Text("Privacy Policy")
+                        Text("txt_privacy_policy")
                             .font(.system(size: 16, weight: .medium))
                             .foregroundColor(.primary)
                         Spacer()

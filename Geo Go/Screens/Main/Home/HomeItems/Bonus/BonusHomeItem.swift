@@ -12,18 +12,18 @@ struct BonusHomeItem: View {
     var body: some View {
         HStack{
             Text(formatNumberWithSpaces(viewModel.bonusResponse.balance))
-                .font(.system(size: 16, weight: .medium))
+                .font(.system(size: 18, weight: .semibold))
                 .foregroundColor(.txt)
             
             Image("menu_icon")
                 .resizable()
                 .scaledToFit()
-                .frame(width: 30, height: 30)
+                .frame(width: 36, height: 36)
         }
-        .padding(.horizontal, 8)
-        .padding(.vertical, 6)
+        .frame(maxHeight: 56, alignment: .center)
+        .padding(.horizontal, 12)
         .background(.white)
-        .cornerRadius(12)
+        .cornerRadius(28)
         .shadow(radius: 2)
     }
 }

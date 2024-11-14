@@ -24,33 +24,31 @@ struct HomeScreenDrawer: View {
                 }
             
             Divider()
-            DrawerItem(title: "My Trips", action: {
+            DrawerItem(title: Text("drawer_item_my_trips"), action: {
                 navigate(to: .myTrips)
             })
             Divider()
-            DrawerItem(title: "Payment Method", action: {
+            DrawerItem(title: Text("drawer_item_payment_method"), action: {
                 navigate(to: .paymentMethod)
             })
             Divider()
-            DrawerItem(title: "Favourite Addresses", action: {
+            DrawerItem(title: Text("drawer_item_favourite_addresses"), action: {
                 navigate(to: .favouriteAddresses)
             })
-           
             Divider()
-            DrawerItem(title: "Discount", action: {
+            DrawerItem(title: Text("drawer_item_discount"), action: {
                 navigate(to: .discount)
             })
-           
             Divider()
-            DrawerItem(title: "News", action: {
+            DrawerItem(title: Text("drawer_item_news"), action: {
                 navigate(to: .news)
             })
-        
             Divider()
-            DrawerItem(title: "About App", action: {
+            DrawerItem(title: Text("drawer_item_about_app"), action: {
                 navigate(to: .aboutApp)
             })
             Spacer()
+
         }
         .background(Color.white)
         .clipShape(RoundedCorners(topRight: 20, bottomRight: 20))
@@ -100,11 +98,11 @@ func ProfileImageView(viewModel: MainViewModel) -> some View{
 }
 
 struct DrawerItem: View {
-    var title: String
+    var title: Text
     var action: () -> Void
     var body: some View {
         Button(action: action) {
-            Text(title)
+            title
                 .foregroundColor(.black)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.leading, 12)

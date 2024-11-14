@@ -21,85 +21,87 @@ struct EnterPhoneScreen: View {
     @State var pn: PhoneNumber?
     @State private var actualNumber: String = ""
     var body: some View {
-        NavigationStack {
-            ZStack{
+        ZStack{
+            VStack {
+                Spacer()
                 VStack {
-                    Spacer()
-                    VStack {
-                        Text("enter_your_phone")
-                            .font(.system(size: 24))
-                            .padding(.bottom, 8)
-                            .fontWeight(.bold)
-                        
-                        Text("we_send_code")
-                            .font(.system(size: 20))
-                            .fontWeight(.regular)
-                            .padding(.bottom, 10)
-                        
-                        
-                        iPhoneNumberField(text: $phoneNumber)
-                            .flagHidden(false)
-                            .flagSelectable(true)
-                            .defaultRegion("UZ")
-                            .font(UIFont(size: 24, weight: .bold, design: .rounded))
-                            .onNumberChange(perform: { code in
-                                if code != nil {
-                                    isButtonDisabled = false
-                                    pn = code
-                                }else{
-                                    isButtonDisabled = true
-                                }
-                            })
-                            .padding()
-                            .background(Color(.secondarySystemBackground))
-                            .cornerRadius(8)
-                            .autocapitalization(.none)
-                            .disableAutocorrection(true)
-                        
-                        
-                        agreementSection
-                    }
+                    Text("enter_your_phone")
+                        .font(.system(size: 24))
+                        .padding(.bottom, 8)
+                        .fontWeight(.bold)
                     
-                    Spacer()
+                    Text("we_send_code")
+                        .font(.system(size: 20))
+                        .fontWeight(.regular)
+                        .padding(.bottom, 10)
                     
-                    Button(action: {
-                        guard let pn = pn else { return }
-                        actualNumber = "+\(pn.countryCode)\(pn.nationalNumber)"
-                        let registrationReq = RegistrationRequest(
-                            confirmationType: Constants.CONFIRMATION_TYPE,
-                            phone: actualNumber,
-                            info: ClientInfo(firstName: username)
-                        )
-                        viewModel.submitRegistration(regRequest: registrationReq)
-                    }) {
-                        GGButton(title: "get_code")
-                    }
-                    .disabled(isButtonDisabled)
-                    .opacity(isButtonDisabled ? 0.5 : 1.0)
+                    
+                    iPhoneNumberField(text: $phoneNumber)
+                        .flagHidden(false)
+                        .flagSelectable(true)
+                        .defaultRegion("UZ")
+                        .font(UIFont(size: 24, weight: .bold, design: .rounded))
+                        .onNumberChange(perform: { code in
+                            if code != nil {
+                                isButtonDisabled = false
+                                pn = code
+                            }else{
+                                isButtonDisabled = true
+                            }
+                        })
+                        .padding()
+                        .background(Color(.secondarySystemBackground))
+                        .cornerRadius(8)
+                        .autocapitalization(.none)
+                        .disableAutocorrection(true)
+                    
+                    
+                    agreementSection
                 }
                 
-                if viewModel.isLoading {
-                    LoadingView()
+                Spacer()
+                
+                Button(action: {
+                    guard let pn = pn else { return }
+                    actualNumber = "+\(pn.countryCode)\(pn.nationalNumber)"
+                    let registrationReq = RegistrationRequest(
+                        confirmationType: Constants.CONFIRMATION_TYPE,
+                        phone: actualNumber,
+                        info: ClientInfo(firstName: username)
+                    )
+                    viewModel.submitRegistration(regRequest: registrationReq)
+                }) {
+                    GGButton(title: "get_code")
+                }
+                .disabled(isButtonDisabled)
+                .opacity(isButtonDisabled ? 0.5 : 1.0)
+                .navigationDestination(isPresented: Binding<Bool>(
+                    get: { viewModel.postData != nil },
+                    set: { _ in }
+                )) {
+                    if let postData = viewModel.postData {
+                        EnterCodeScreen(userId: postData.id, phoneNumber: actualNumber)
+                    }
                 }
                 
             }
-            .navigationBarTitleDisplayMode(.inline)
-            .padding()
-            .alert(item: $viewModel.alertItem){ alertItem in
-                Alert(title: alertItem.title,
-                      message: alertItem.message,
-                      dismissButton: alertItem.dismissButton
-                )
+            
+            if viewModel.isLoading {
+                LoadingView()
             }
-            .navigationDestination(isPresented: Binding<Bool>(
-                get: { viewModel.postData != nil },
-                set: { _ in }
-            )) {
-                if let postData = viewModel.postData {
-                    EnterCodeScreen(userId: postData.id, phoneNumber: actualNumber)
-                }
-            }
+         
+
+            
         }
+        .navigationBarTitleDisplayMode(.inline)
+        .padding()
+        .alert(item: $viewModel.alertItem){ alertItem in
+            Alert(title: alertItem.title,
+                  message: alertItem.message,
+                  dismissButton: alertItem.dismissButton
+            )
+        }
+       
     }
     
     private var agreementSection: some View {

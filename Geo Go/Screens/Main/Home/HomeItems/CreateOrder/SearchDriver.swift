@@ -15,13 +15,28 @@ struct SearchDriver: View {
     
 
     var body: some View {
+        ZStack {
+            LottieEmptyStateView(fileName: "search_car")
+                .frame(width: UIScreen.main.bounds.width - 24, height: UIScreen.main.bounds.width - 24)
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+
+            VStack {
+                displayBottomView()
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
+            }
+                        
+        }
+        .ignoresSafeArea()
+    }
+    
+    private func displayBottomView() -> some View {
         VStack(spacing: 12) {
             Rectangle()
                 .frame(width: 40, height: 5)
                 .foregroundColor(.gray.opacity(0.4))
                 .cornerRadius(10)
             
-            Text("Searching Car...")
+            Text("searching_car_dot")
                 .font(.title2)
                 .fontWeight(.semibold)
                 .padding(.top, 4)
@@ -42,36 +57,27 @@ struct SearchDriver: View {
                 }
             }
             
-            let lh = viewModel.locationHolder
-            
             AddressFieldStatic(mainViewModel: viewModel)
-
+            
             Button(action: {
                 viewModel.showCancelOrderAlert.toggle()
             }, label: {
-                Text("Cancel")
+                Text("cancel")
                     .font(.system(size: 16))
                     .fontWeight(.semibold)
-                    .frame(maxWidth: .infinity, maxHeight: 50)
-                    
+                    .frame(maxWidth: .infinity, maxHeight: 56)
+                
             })
-            .foregroundColor(.red)
-            .background(.white)
+            .foregroundColor(.white)
+            .background(.red)
             .cornerRadius(10)
-            .overlay(
-                RoundedRectangle(cornerRadius: 10)
-                    .stroke(Color.red, lineWidth: 1)
-            )
             .padding(.bottom, 16)
             
         }
-        .padding()
+        .padding(16)
         .background(.white)
         .cornerRadius(12, corners: [.topLeft, .topRight])
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
         .shadow(radius: 2)
-        .ignoresSafeArea()
-        
     }
     
     private func formattedTime(_ value: Double) -> String {
@@ -126,7 +132,7 @@ struct AddressFieldStatic: View {
                 HStack{
                     let count = mainViewModel.locationHolder.count
                     if count == 1{
-                        Text("Destination is not entered!")
+                        Text("destination_not_entered")
                             .fontWeight(.medium)
                             .foregroundColor(.black.opacity(0.5))
                         
@@ -137,7 +143,7 @@ struct AddressFieldStatic: View {
                             .foregroundColor(.txt)
                         
                     }else  {
-                        Text("Error Occured")
+                        Text("error_occurred")
                             .fontWeight(.medium)
                             .foregroundColor(.txt)
                             .lineLimit(1)

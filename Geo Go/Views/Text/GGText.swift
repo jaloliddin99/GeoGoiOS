@@ -11,7 +11,7 @@ struct GGText: View {
     
     let text: String
     var body: some View {
-        Text(text)
+        Text(LocalizedStringKey(text))
             .font(.system(size: 24, weight: .bold))
             .foregroundColor(.black)
     }
@@ -22,7 +22,7 @@ struct CommentField: View {
     @Binding var comment: String
     let hint: String
     var body: some View {
-        TextField(hint, text: $comment)
+        TextField(LocalizedStringKey(hint), text: $comment)
             .padding()
             .frame(maxWidth: .infinity, maxHeight: 150, alignment: .topLeading)
             .background(Color(.secondarySystemBackground))

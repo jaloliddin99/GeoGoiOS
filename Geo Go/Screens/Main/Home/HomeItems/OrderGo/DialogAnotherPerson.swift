@@ -33,7 +33,7 @@ struct DialogAnotherPerson: View {
     var body: some View {
         
         VStack(alignment: .leading){
-            Text("Enter Another Person!")
+            Text("enter_another_person")
                 .font(.title)
                 .fontWeight(.bold)
                 .padding(EdgeInsets(top: 24, leading: 12, bottom: 12, trailing: 12))
@@ -71,7 +71,7 @@ struct DialogAnotherPerson: View {
                 userNameAndPhone = UserNameAndPhone(name: name, phone: phone)
                 showOtherPersonDialog.toggle()
             }, label: {
-                GGButton(title: "Save")
+                GGButton(title: "save")
             })
             .disabled(isButtonDisabled)
             .opacity(isButtonDisabled ? 0.5 : 1.0)

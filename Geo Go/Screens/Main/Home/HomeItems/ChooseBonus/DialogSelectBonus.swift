@@ -14,9 +14,6 @@ struct DialogSelectBonus: View {
     var isButtonDisabled: Bool {
         let res = viewModel.bonusResponse
         let amount: Double = Double(txtAmount) ?? 0
-        
-        print("text entered \(amount)")
-        print(res)
         if res.balance == 0{
             return true
         }else if (amount <= res.capabilities.max && amount >= res.capabilities.min) {
@@ -24,14 +21,14 @@ struct DialogSelectBonus: View {
         } else {
             return true
         }
-        
+         
     }
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0){
             
             
-            Text("Your bonuses")
+            Text("your_bonuses")
                 .font(.system(size: 20, weight: .bold))
                 .foregroundColor(.main)
                 .padding(.top, 16)
@@ -42,16 +39,28 @@ struct DialogSelectBonus: View {
                 .foregroundColor(.main)
                 .padding(.top, 2)
             
-            Text("In the event of an increase in value, the remaining amount of bonuses will be returned to your account")
+            Text("bonus_desc")
                 .font(.system(size: 16, weight: .medium))
                 .padding(.top, 12)
             
             
-            Text("Pay for part of the trip with bonuses")
+            Text("bonus_short_desc")
                 .font(.system(size: 16, weight: .medium))
                 .padding(.top, 24)
             
-            let hint = "min \(Int(bonus.capabilities.min)), max \(Int(bonus.capabilities.max)) uzs"
+          
+            let minText = NSLocalizedString("min", comment: "")
+            let maxText = NSLocalizedString("max", comment: "")
+            
+            let hint = String(
+                format: NSLocalizedString("hint_format", comment: ""),
+                minText,
+                Int(bonus.capabilities.min),
+                maxText,
+                Int(bonus.capabilities.max)
+            )
+
+
             TextField(hint, text: $txtAmount)
                 .keyboardType(.decimalPad)
                 .padding()
@@ -59,7 +68,7 @@ struct DialogSelectBonus: View {
                 .background(Color(.secondarySystemBackground))
                 .cornerRadius(10)
                 .padding(.top, 8)
-            
+                
             
             Spacer()
             
@@ -73,7 +82,7 @@ struct DialogSelectBonus: View {
                     viewModel.createOrder(lat: lat,lon: lon, createOrderRequest: createOrder)
 
                 } label: {
-                    GGButton(title: "No Bonus Order", bgColor: .gray)
+                    GGButton(title: "no_bonus_order", bgColor: .gray)
                         .frame(maxWidth: .infinity)
                 }
                 Button {
@@ -82,7 +91,7 @@ struct DialogSelectBonus: View {
                     viewModel.createOrder(lat: lat, lon: lon,
                         createOrderRequest: createOrder)
                 } label: {
-                    GGButton(title: "Order")
+                    GGButton(title: "order")
                         .frame(maxWidth: .infinity)
                         .disabled(isButtonDisabled)
                         .opacity(isButtonDisabled ? 0.5 : 1.0)
@@ -93,7 +102,7 @@ struct DialogSelectBonus: View {
             
         }
         .padding(.horizontal, 16)
-        .padding(.bottom, 32)
+        .padding(.bottom, 16)
         .edgesIgnoringSafeArea(.bottom)
     }
 }

@@ -79,35 +79,49 @@ func titleConvertor(stringItem: String, lang: String) -> [TariffDetails] {
     } catch {
         print(error)
     }
-    
     return list
 }
-
 
 
 func convertTariff(lang: String, data: ServiceTariff) -> String {
     var name = ""
     do {
         switch lang {
-        case "uz":
-            name = data.name.split(separator: "tariffNameUz:")[1].split(separator: "@")[0].replacingOccurrences(of: "[", with: "")
-        case "ru":
-            name = data.name.split(separator: "tariffNameRu:")[1].split(separator: "@")[0].trimmingCharacters(in: .whitespacesAndNewlines)
-        case "ka":
-            name = data.name.split(separator: "tariffNameGr:")[1].split(separator: "@")[0].trimmingCharacters(in: .whitespacesAndNewlines)
-        case "kaa":
-            name = data.name.split(separator: "tariffNameKr:")[1].split(separator: "@")[0].trimmingCharacters(in: .whitespacesAndNewlines)
-        case "en":
-            name = data.name.split(separator: "tariffNameEn:")[1].split(separator: "@")[0].trimmingCharacters(in: .whitespacesAndNewlines)
-        default:
-                name = "Confort"
-            break
+            case "uz":
+                if let uzName = data.name.components(separatedBy: "tariffNameUz:").dropFirst().first?
+                    .components(separatedBy: "@").first?
+                    .replacingOccurrences(of: "[", with: "") {
+                    name = uzName
+                }
+            case "ru":
+                if let ruName = data.name.components(separatedBy: "tariffNameRu:").dropFirst().first?
+                    .components(separatedBy: "@").first {
+                    name = ruName
+                }
+            case "ka":
+                if let kaName = data.name.components(separatedBy: "tariffNameGr:").dropFirst().first?
+                    .components(separatedBy: "@").first {
+                    name = kaName
+                }
+            case "kaa":
+                if let kaaName = data.name.components(separatedBy: "tariffNameKr:").dropFirst().first?
+                    .components(separatedBy: "@").first {
+                    name = kaaName
+                }
+            case "en":
+                if let enName = data.name.components(separatedBy: "tariffNameEn:").dropFirst().first?
+                    .components(separatedBy: "@").first {
+                    name = enName
+                }
+            default:
+                name = ""
         }
     } catch {
-        print(error.localizedDescription)
+        print("Error extracting tariff name: \(error.localizedDescription)")
     }
     return name
 }
+
 
 struct MyDescriptionModel {
     var title: String

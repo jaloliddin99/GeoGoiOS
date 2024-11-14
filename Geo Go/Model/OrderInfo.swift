@@ -11,7 +11,7 @@ import Foundation
 struct OrderInfo: Codable {
     let state: Int
     let costFixAllowed: Bool?
-    let route: [ClientAddress]
+    let route: [RouteItem]
     let assignee: AsigneeBody?
     let options: [Int64]?
     let time: String?
@@ -27,6 +27,22 @@ struct OrderInfo: Codable {
     let isComing: Bool?
     let paidWaitingStartsAt: String?
 }
+
+struct RouteItem: Codable {
+    var point: RoutePoint
+}
+struct RoutePoint: Codable {
+    var info: Info
+    var coordinates: Coordinates
+}
+struct Info: Codable {
+    var alias: String
+}
+struct Coordinates: Codable {
+    var lon: Double
+    var lat: Double
+}
+
 
 struct AsigneeBody: Codable {
     let car: Car

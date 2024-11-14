@@ -20,18 +20,18 @@ struct DialogComment: View {
     var body: some View {
         
         VStack(alignment: .leading){
-            Text("Enter comment for driver!")
+            Text("enter_comment")
                 .font(.title)
                 .fontWeight(.bold)
                 .padding(.top, 24)
                 .padding(.bottom, 12)
-            CommentField(comment: $comment, hint: "Be Quick...")
+            CommentField(comment: $comment, hint: "comment_hint_be_quick")
             Spacer()
             Button(action: {
                 commentSend = comment
                 showCommentDialog.toggle()
             }, label: {
-                GGButton(title: "Save")
+                GGButton(title: "save")
             })
             .disabled(isButtonDisabled)
             .opacity(isButtonDisabled ? 0.5 : 1.0)

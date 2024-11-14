@@ -9,22 +9,52 @@ import SwiftUI
 
 struct ProfileScreen: View {
     @StateObject var viewModel = MainViewModel()
+    @StateObject var languageViewModel = LanguageViewModel()
+
     var body: some View {
         ZStack{
             VStack{
                 ProfileImageView(viewModel: viewModel)
                     .padding(.bottom, 12)
                 
+                Divider()
+                
+                
+                Button {
+                    languageViewModel.showLanguageSheet = true
+                } label: {
+                    HStack(){
+                        Image(systemName: "globe")
+                        VStack(alignment: .leading){
+                            Text("txt_application_language")
+                                .font(.system(size: 16, weight: .regular))
+                                .foregroundColor(.txt)
+                            
+                            
+                            Text("\(languageViewModel.selectedLanguage)")
+                                .font(.system(size: 14, weight: .semibold))
+                                .foregroundColor(.txt)
+                        }
+                        
+                        Spacer()
+                        Image(systemName: "chevron.forward")
+                        
+                    }
+                }
                 Spacer()
-                
-                
                 
             }
         }
+        .sheet(isPresented: $languageViewModel.showLanguageSheet, content: {
+            BottomSheet{
+                DialogLanguage(languageViewModel: languageViewModel)
+            }
+        })
         .background(.white)
-        .navigationTitle("Profile")
+        .navigationTitle("txt_profile")
         .navigationBarTitleDisplayMode(.inline)
         .padding(16)
+        
     }
     
     

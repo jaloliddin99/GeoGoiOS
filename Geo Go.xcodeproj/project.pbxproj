@@ -62,6 +62,12 @@
 		256EAED82C309DE900FA7A5C /* MapConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256EAED72C309DE900FA7A5C /* MapConfig.swift */; };
 		256EAEDA2C309F9900FA7A5C /* HomeScreenDrawer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256EAED92C309F9900FA7A5C /* HomeScreenDrawer.swift */; };
 		256EAEDC2C30A2C500FA7A5C /* DrawerBtn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256EAEDB2C30A2C500FA7A5C /* DrawerBtn.swift */; };
+		25966BCE2CE4076C0036D4DF /* DefaultContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25966BCD2CE4076C0036D4DF /* DefaultContentView.swift */; };
+		25966BD02CE408730036D4DF /* StatusDependentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25966BCF2CE408730036D4DF /* StatusDependentView.swift */; };
+		25966BD22CE531E70036D4DF /* ShimmerViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25966BD12CE531E70036D4DF /* ShimmerViewModifier.swift */; };
+		25966BD42CE543A40036D4DF /* search_car.json in Resources */ = {isa = PBXBuildFile; fileRef = 25966BD32CE543A40036D4DF /* search_car.json */; };
+		25966BD82CE650170036D4DF /* LanguageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25966BD72CE650170036D4DF /* LanguageViewModel.swift */; };
+		25966BDA2CE6507E0036D4DF /* DialogLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25966BD92CE6507E0036D4DF /* DialogLanguage.swift */; };
 		259DEA0B2CC2F74700B1AB41 /* ProfileScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259DEA0A2CC2F74700B1AB41 /* ProfileScreen.swift */; };
 		25A51DCA2C6CDF6D00C2FBB0 /* MyTripsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A51DC92C6CDF6D00C2FBB0 /* MyTripsScreen.swift */; };
 		25A51DCC2C6CDF8400C2FBB0 /* MyTripsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A51DCB2C6CDF8400C2FBB0 /* MyTripsViewModel.swift */; };
@@ -171,6 +177,12 @@
 		256EAED72C309DE900FA7A5C /* MapConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapConfig.swift; sourceTree = "<group>"; };
 		256EAED92C309F9900FA7A5C /* HomeScreenDrawer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreenDrawer.swift; sourceTree = "<group>"; };
 		256EAEDB2C30A2C500FA7A5C /* DrawerBtn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawerBtn.swift; sourceTree = "<group>"; };
+		25966BCD2CE4076C0036D4DF /* DefaultContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultContentView.swift; sourceTree = "<group>"; };
+		25966BCF2CE408730036D4DF /* StatusDependentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusDependentView.swift; sourceTree = "<group>"; };
+		25966BD12CE531E70036D4DF /* ShimmerViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShimmerViewModifier.swift; sourceTree = "<group>"; };
+		25966BD32CE543A40036D4DF /* search_car.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = search_car.json; sourceTree = "<group>"; };
+		25966BD72CE650170036D4DF /* LanguageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageViewModel.swift; sourceTree = "<group>"; };
+		25966BD92CE6507E0036D4DF /* DialogLanguage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogLanguage.swift; sourceTree = "<group>"; };
 		259DEA0A2CC2F74700B1AB41 /* ProfileScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileScreen.swift; sourceTree = "<group>"; };
 		25A51DC92C6CDF6D00C2FBB0 /* MyTripsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTripsScreen.swift; sourceTree = "<group>"; };
 		25A51DCB2C6CDF8400C2FBB0 /* MyTripsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTripsViewModel.swift; sourceTree = "<group>"; };
@@ -344,6 +356,7 @@
 				25B20C2F2C6355DF00F50017 /* RateView.swift */,
 				25B20C312C63978F00F50017 /* DialogToolBar.swift */,
 				256C138A2C99B66F007FAAC9 /* OTPField.swift */,
+				25966BD12CE531E70036D4DF /* ShimmerViewModifier.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -431,6 +444,7 @@
 		256877902C25C3500041E16A /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				25966BD32CE543A40036D4DF /* search_car.json */,
 				25F91C802C807EA3001CAAB7 /* empty_list.json */,
 				2565CFAF2C5D145000FCC08A /* loading.json */,
 				25BFDB802C35DE8B00D73993 /* swipe_right.json */,
@@ -550,6 +564,8 @@
 				25BFDB692C346FB600D73993 /* WhatsNew */,
 				25BFDB5C2C33EAA000D73993 /* MarkerView.swift */,
 				25BFDB632C3404BC00D73993 /* MarkerMoveListener.swift */,
+				25966BCD2CE4076C0036D4DF /* DefaultContentView.swift */,
+				25966BCF2CE408730036D4DF /* StatusDependentView.swift */,
 			);
 			path = HomeItems;
 			sourceTree = "<group>";
@@ -574,7 +590,9 @@
 		259DEA092CC2F72F00B1AB41 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				25966BD72CE650170036D4DF /* LanguageViewModel.swift */,
 				259DEA0A2CC2F74700B1AB41 /* ProfileScreen.swift */,
+				25966BD92CE6507E0036D4DF /* DialogLanguage.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -797,6 +815,7 @@
 			files = (
 				256877792C258B1B0041E16A /* Preview Assets.xcassets in Resources */,
 				25BFDB812C35DE8B00D73993 /* swipe_right.json in Resources */,
+				25966BD42CE543A40036D4DF /* search_car.json in Resources */,
 				2565CFB02C5D145000FCC08A /* loading.json in Resources */,
 				25F91C812C807EA3001CAAB7 /* empty_list.json in Resources */,
 				256877932C25C4E80041E16A /* Localizable.strings in Resources */,
@@ -869,6 +888,8 @@
 				25F91C792C7CD5FC001CAAB7 /* DialogBonus.swift in Sources */,
 				256EAEDC2C30A2C500FA7A5C /* DrawerBtn.swift in Sources */,
 				256EAECF2C2F22F100FA7A5C /* EnterPhoneViewModel.swift in Sources */,
+				25966BD02CE408730036D4DF /* StatusDependentView.swift in Sources */,
+				25966BD82CE650170036D4DF /* LanguageViewModel.swift in Sources */,
 				256877882C25C1D90041E16A /* AccessViewModel.swift in Sources */,
 				256EAECD2C2F21DE00FA7A5C /* RegistrationRequest.swift in Sources */,
 				25BC2C582C76099600484F69 /* TermsOfUseAndPPScreen.swift in Sources */,
@@ -894,8 +915,11 @@
 				256C13912CA0087B007FAAC9 /* AddConfirmCardModels.swift in Sources */,
 				2565CF8D2C42690300FCC08A /* DialogWish.swift in Sources */,
 				25B20C1D2C5F67A100F50017 /* DialogBottomCancelOrder.swift in Sources */,
+				25966BD22CE531E70036D4DF /* ShimmerViewModifier.swift in Sources */,
+				25966BCE2CE4076C0036D4DF /* DefaultContentView.swift in Sources */,
 				25A51DCC2C6CDF8400C2FBB0 /* MyTripsViewModel.swift in Sources */,
 				256877AE2C26DD560041E16A /* EnterPhoneScreen.swift in Sources */,
+				25966BDA2CE6507E0036D4DF /* DialogLanguage.swift in Sources */,
 				25BFDB832C35E62500D73993 /* ServiceTariffs.swift in Sources */,
 				2565CFB22C5DDFC400FCC08A /* OrderInfo.swift in Sources */,
 				25B20C322C63978F00F50017 /* DialogToolBar.swift in Sources */,
@@ -1052,7 +1076,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Geo Go/Preview Content\"";
-				DEVELOPMENT_TEAM = CXF4H79P75;
+				DEVELOPMENT_TEAM = V7RW49DS4B;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Geo-Go-Info.plist";
@@ -1085,7 +1109,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Geo Go/Preview Content\"";
-				DEVELOPMENT_TEAM = CXF4H79P75;
+				DEVELOPMENT_TEAM = V7RW49DS4B;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Geo-Go-Info.plist";
