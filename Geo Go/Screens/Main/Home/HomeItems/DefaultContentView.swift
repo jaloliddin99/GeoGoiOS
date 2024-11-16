@@ -30,7 +30,7 @@ struct DefaultContentView: View {
         Button(action: {
             viewModel.findUserRealPosition(loc: viewModel.location,  offset: markerOffset)
         }) {
-            DrawerBtn(name: "location", fromAssets: false)
+            DrawerBtn(name: "location.fill", fromAssets: false, color: .txt)
         }
         .padding(.trailing, 16)
         .padding(.bottom, 262)

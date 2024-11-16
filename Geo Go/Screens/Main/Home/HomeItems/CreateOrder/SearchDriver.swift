@@ -19,6 +19,13 @@ struct SearchDriver: View {
             LottieEmptyStateView(fileName: "search_car")
                 .frame(width: UIScreen.main.bounds.width - 24, height: UIScreen.main.bounds.width - 24)
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+            
+            Image("client_flag")
+                .resizable()
+                .frame(width: 80, height: 80)
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+
+           
 
             VStack {
                 displayBottomView()
@@ -47,9 +54,9 @@ struct SearchDriver: View {
                     .frame(height: 20)
                 
                 Text(formattedTime(elapsedTime))
-                    .font(.system(size: 20, weight: .medium, design: .monospaced))
+                    .font(.system(size: 20, weight: .semibold, design: .monospaced))
                     .frame(width: 80, alignment: .trailing)
-                    .foregroundColor(.main)
+                    .foregroundColor(.txt)
             }
             .onReceive(timer) { _ in
                 if elapsedTime < maxTime {
@@ -62,16 +69,21 @@ struct SearchDriver: View {
             Button(action: {
                 viewModel.showCancelOrderAlert.toggle()
             }, label: {
-                Text("cancel")
+                Text("cancel_order".localized.capitalizeFirstLetter())
                     .font(.system(size: 16))
                     .fontWeight(.semibold)
                     .frame(maxWidth: .infinity, maxHeight: 56)
-                
             })
-            .foregroundColor(.white)
-            .background(.red)
-            .cornerRadius(10)
+            .foregroundColor(.red)
+            .overlay(
+                RoundedRectangle(cornerRadius: 12)
+                    .stroke(.red, lineWidth: 1)
+            )
+            .background(.white)
             .padding(.bottom, 16)
+
+
+
             
         }
         .padding(16)
@@ -114,49 +126,67 @@ struct AddressFieldStatic: View {
     @ObservedObject var mainViewModel: MainViewModel
     
     var body: some View {
-        HStack(alignment: .center,spacing: 8) {
-            Image("route_image")
-                .resizable()
-                .scaledToFit()
-                .frame(maxHeight: 64)
-            
-            VStack(spacing: 12) {
+        
+        if mainViewModel.locationHolder.count == 1 {
+            HStack(alignment: .center,spacing: 8) {
+                Circle()
+                    .frame(width: 8, height: 8)
+                    .foregroundColor(.main)
+
+                
                 if !mainViewModel.locationHolder.isEmpty {
                     Text(mainViewModel.locationHolder[0].addressName)
                         .fontWeight(.medium)
                         .lineLimit(1)
                 }
                 
-                Divider()
+            }
+            .padding(.horizontal, 12)
+            .frame(height: 56)
+            .background(RoundedRectangle(cornerRadius: 12)
+                .fill(Color(.secondarySystemBackground).opacity(0.7))
+            )
+        }else {
+            HStack(alignment: .center,spacing: 8) {
+                Image("route_image")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(maxHeight: 64)
                 
-                HStack{
-                    let count = mainViewModel.locationHolder.count
-                    if count == 1{
-                        Text("destination_not_entered")
+                VStack(spacing: 12) {
+                    if !mainViewModel.locationHolder.isEmpty {
+                        Text(mainViewModel.locationHolder[0].addressName)
                             .fontWeight(.medium)
-                            .foregroundColor(.black.opacity(0.5))
-                        
-                    }else if count >= 2 {
-                        Text(mainViewModel.locationHolder[count-1].addressName)
-                            .fontWeight(.medium)
-                            .lineLimit(1)
-                            .foregroundColor(.txt)
-                        
-                    }else  {
-                        Text("error_occurred")
-                            .fontWeight(.medium)
-                            .foregroundColor(.txt)
                             .lineLimit(1)
                     }
-                    Spacer()
+                    
+                    Divider()
+                    
+                    HStack{
+                        let count = mainViewModel.locationHolder.count
+                        if count > 1 {
+                            Text(mainViewModel.locationHolder[count-1].addressName)
+                                .fontWeight(.medium)
+                                .lineLimit(1)
+                                .foregroundColor(.txt)
+                        }else  {
+                            Text("error_occurred")
+                                .fontWeight(.medium)
+                                .foregroundColor(.txt)
+                                .lineLimit(1)
+                        }
+                        Spacer()
+                    }
                 }
+                
             }
-            
+            .padding(12)
+            .background(RoundedRectangle(cornerRadius: 12)
+                .fill(Color(.secondarySystemBackground).opacity(0.7))
+            )
         }
-        .padding(12)
-        .background(RoundedRectangle(cornerRadius: 12)
-            .fill(Color(.secondarySystemBackground).opacity(0.7))
-        )
+        
+        
     }
 }
 

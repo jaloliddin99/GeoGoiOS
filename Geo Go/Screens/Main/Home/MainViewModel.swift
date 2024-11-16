@@ -30,17 +30,15 @@ final class MainViewModel: ObservableObject{
     var hasOrderGoViewAppeared = false
     
     func setStatus(value: Int) {
-        withAnimation {
-            self.status = value
-            DataHolder.status = value
-            if value == 0 {
-                hasOrderGoViewAppeared = false
-            }
+        self.status = value
+        DataHolder.status = value
+        if value == 0 {
+            hasOrderGoViewAppeared = false
         }
     }
     
     init() {
-        MapboxOptions.accessToken = "pk.eyJ1Ijoic2FkdWwiLCJhIjoiY2txNnQwY2VwMDN3MDJucGM0NDZ6YzNybSJ9.K1Pz4WVYeYY0eaqy1tbgWw"
+        MapboxOptions.accessToken = "pk.eyJ1IjoiZ2VvZ29hcHAiLCJhIjoiY2xnaHJleWNyMGRvczNkbGY2Ym41eHY3NyJ9.xI3D0Q4YyqNxCl8j1c7kZg"
         initMain()
     }
     
@@ -59,11 +57,9 @@ final class MainViewModel: ObservableObject{
     }
     
     func findUserRealPosition(loc: CLLocationCoordinate2D, offset: CGFloat) {
-        withAnimation {
-            location = location
-            refocusButtonListener.toggle()
-            reverseGeocodeIfNeeded(offset: offset)
-        }
+        location = location
+        refocusButtonListener.toggle()
+        reverseGeocodeIfNeeded(offset: offset)
     }
     
     
@@ -341,7 +337,7 @@ final class MainViewModel: ObservableObject{
     
     func requestToDrawRoute(list: [String]) {
         let params: [String: String] = [
-            "locale": "uz",
+            "locale": DataHolder.lang,
             "calc_points": "true",
             "profile": "car"
         ]
@@ -494,10 +490,8 @@ final class MainViewModel: ObservableObject{
                 case .success(let response):
                     if let appetizers = response as? EmptyModel {
                         self.cancelOrder = appetizers
-                        withAnimation {
-                            status = 1
-                            DataHolder.status = status
-                        }
+                        status = 1
+                        DataHolder.status = status
                     }
                     
                 case .failure(let error):
@@ -581,40 +575,42 @@ final class MainViewModel: ObservableObject{
     }
     
     private var innerOrderInfoState: Int = -1
-    private func handleUIByOrderStatus(orderInfo: OrderInfo){
-        if innerOrderInfoState == orderInfo.state { return }
+    private func handleUIByOrderStatus(orderInfo: OrderInfo) {
+        guard innerOrderInfoState != orderInfo.state else { return }
         innerOrderInfoState = orderInfo.state
         
-        if orderInfo.state == 1 {
-            withAnimation {
+        switch orderInfo.state {
+            case 1:
                 status = 2
-            }
-        }else if orderInfo.state == 2 {
-            withAnimation {
+                
+            case 2:
                 status = 3
-            }
-            requestToDrawRoute(list: getCoorWithDriverLoc(orderInfo: orderInfo))
-        }else if orderInfo.state == 6 || orderInfo.state == 5 {
-            stopTimer()
-            if orderInfo.state == 5 {
-                showRateDriver.toggle()
-            }
-            withAnimation {
-                status = 0
-            }
-            
-        }else if orderInfo.state == 3 {
-            withAnimation {
+                let coordinates = getCoorWithDriverLoc(orderInfo: orderInfo)
+                requestToDrawRoute(list: coordinates)
+                
+            case 3:
                 status = 4
-            }
-        }
-        else if orderInfo.state == 4 {
-            withAnimation {
+                
+            case 4:
+                let routeCoordinates = mapToRouteCoordinatesLatLng(coordinates: locationHolder)
+                requestToDrawRoute(list: routeCoordinates)
                 status = 5
-            }
+                
+            case 5:
+                stopTimer()
+                showRateDriver.toggle()
+                status = 0
+                
+            case 6:
+                stopTimer()
+                status = 0
+                
+            default:
+                print("Unexpected order state: \(orderInfo.state)")
         }
         DataHolder.status = status
     }
+
     
     @Published var image: Image? = nil
     

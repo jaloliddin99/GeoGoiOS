@@ -16,9 +16,11 @@ struct EnterPhoneScreen: View {
     
     @State private var phoneNumber: String = ""
     @State private var isChecked: Bool = false
-    
-    @State private var isButtonDisabled: Bool = true
     @State var pn: PhoneNumber?
+
+    var isButtonDisabled: Bool {
+        return !(pn != nil && isChecked)
+    }
     @State private var actualNumber: String = ""
     var body: some View {
         ZStack{
@@ -43,10 +45,9 @@ struct EnterPhoneScreen: View {
                         .font(UIFont(size: 24, weight: .bold, design: .rounded))
                         .onNumberChange(perform: { code in
                             if code != nil {
-                                isButtonDisabled = false
                                 pn = code
                             }else{
-                                isButtonDisabled = true
+                                pn = nil
                             }
                         })
                         .padding()
@@ -58,6 +59,8 @@ struct EnterPhoneScreen: View {
                     
                     agreementSection
                 }
+                
+                
                 
                 Spacer()
                 

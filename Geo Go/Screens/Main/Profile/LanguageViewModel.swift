@@ -24,6 +24,7 @@ class LanguageViewModel: ObservableObject {
             UserDefaults.standard.set([languageCode], forKey: "AppleLanguages")
             UserDefaults.standard.synchronize()
             NotificationCenter.default.post(name: NSNotification.Name("LanguageChanged"), object: nil)
+
         }
         showLanguageSheet = false
     }

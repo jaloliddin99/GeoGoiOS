@@ -21,25 +21,31 @@ struct DriverFoundViewUpperView: View {
         .padding(.horizontal, 16)
     }
     
-    func OrderStatusView() -> some View{
+    func OrderStatusView() -> some View {
         let status = viewModel.status
         var text: String = ""
+        let minutes: Int = Int((viewModel.getOrderDetail?.distance ?? 2.0) * 1000 / (12*60))
         switch status {
             case 3:
-                text = "Driver is coming to you! "
+                if minutes == 1 {
+                    text = String(format: NSLocalizedString("status_arrival_time", comment: ""), minutes)
+                } else {
+                    text = String(format: NSLocalizedString("status_arrival_time_plural", comment: ""), minutes)
+                }
             case 4:
-                text = "Driver arrived and  waiting for you! "
+                text = NSLocalizedString("status_driver_waiting", comment: "")
             case 5:
-                text = "Travel Started! "
+                text = NSLocalizedString("status_travel_started", comment: "")
             default:
-                text = "Driver is coming to you! "
-                
+                text = NSLocalizedString("status_driver_coming", comment: "")
         }
+        
         return Text(text)
             .font(.system(size: 20, weight: .medium))
             .foregroundColor(.black)
             .padding(0)
     }
+
     
     
     
@@ -125,15 +131,14 @@ struct TariffView: View {
             Image(imageNameForType(tariffIcon))
                 .resizable()
                 .aspectRatio(contentMode: .fit)
-                .frame(width: 72, height: 32)
+                .frame(width: 90, height: 40)
             
             VStack(alignment: .leading) {
                 Text("tariff")
-                    .font(.system(size: 12))
-                
+                    .font(.system(size: 15, weight: .medium))
                 
                 Text(tariffName)
-                    .font(.system(size: 16, weight: .medium))
+                    .font(.system(size: 18, weight: .medium))
                     .foregroundColor(.black)
             }
             .padding(.leading, 8)
@@ -142,9 +147,8 @@ struct TariffView: View {
             
             let cost: Double = orderInfo.cost.fixed ?? orderInfo.cost.amount
             Text(formatNumberWithSpaces(cost))
-                .font(.system(size: 16, weight: .medium))
-                .foregroundColor(.black)
-                .padding(.trailing, 16)
+                .font(.system(size: 22, weight: .medium))
+                .foregroundColor(.main)
         }
         .padding(12)
         .background(RoundedRectangle(cornerRadius: 12)
@@ -169,7 +173,10 @@ struct AddressListItem: View {
                 .frame(width: 24, height: 24)
                 .background(Circle().fill(Color.white))
             Text(title)
+                .font(.system(size: 15, weight: .medium))
+                .foregroundColor(.txt)
              .lineLimit(2)
+             
             Spacer()
             
             Button(action: {
@@ -186,15 +193,16 @@ struct AddressListItem: View {
 
 struct DriverFoundViewBottomViewt: View {
     @ObservedObject var viewModel: MainViewModel
+    var paymentMethod: String = getPaymentMethod()
 
     var body: some View {
         VStack {
+            
             HStack(spacing: 12) {
                 HStack {
-                    Image(systemName: "dollarsign")
+                    Image(paymentMethod == "cash" ? "cash" : "card")
                         .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 28, height: 28)
+                        .frame(width: 36, height: 36)
                 }
                 .frame(width: 56, height: 56)
                 .background(RoundedRectangle(cornerRadius: 12)
@@ -203,17 +211,20 @@ struct DriverFoundViewBottomViewt: View {
                 
                 HStack {
                     Image(systemName: "plus")
-                        .padding(8)
+                        .padding(10)
                         .foregroundColor(.main)
                         .frame(maxWidth: 32, maxHeight: 32)
                         .background(.white)
                         .cornerRadius(20)
+                        .padding(.leading, 12)
                     
                     Text("add_second_space")
-                        .font(.system(size: 14, weight: .bold))
+                        .font(.system(size: 18, weight: .semibold))
                         .foregroundColor(.black)
                         .lineLimit(1)
                         .truncationMode(.tail)
+                    
+                    Spacer()
                 }
                 .frame(maxWidth: .infinity, maxHeight: 56)
                 .background(RoundedRectangle(cornerRadius: 12)
@@ -221,19 +232,24 @@ struct DriverFoundViewBottomViewt: View {
                 )
             }
             
-            Button(action: {
-                viewModel.showCancelOrderAlert.toggle()
-            }, label: {
-                Text("cancel")
-                    .font(.system(size: 16))
-                    .fontWeight(.semibold)
-                    .frame(maxWidth: .infinity, maxHeight: 56)
-                
-            })
-            .foregroundColor(.white)
-            .background(.red)
-            .cornerRadius(10)
-            .padding(.bottom, 24)
+            if viewModel.status != 5{
+                Button(action: {
+                    viewModel.showCancelOrderAlert.toggle()
+                }, label: {
+                    Text("cancel_order".localized.capitalizeFirstLetter())
+                        .font(.system(size: 16))
+                        .fontWeight(.semibold)
+                        .frame(maxWidth: .infinity, maxHeight: 56)
+                })
+                .foregroundColor(.red)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 12)
+                        .stroke(.red, lineWidth: 1)
+                )
+                .background(.white)
+                .padding(.bottom, 16)
+
+            }
         }
         .padding(.horizontal, 16)
         .padding(.top, 4)
@@ -245,15 +261,21 @@ struct DriverFoundViewBottomViewt: View {
 
 struct DriverFoundView: View {
     @ObservedObject var viewModel: MainViewModel
-    
+    @State private var bottomSheetShown = false
+
     var body: some View {
         ZStack {
-            BottomSheetView(isOpen: $viewModel.bottomSheetShown,
-                            minHeight: 294,
-                            maxHeight: 700) {
-                DriverFoundViewUpperView(viewModel: viewModel)
-            }
-            
+            GeometryReader { geometry in
+                BottomSheetViewCustom(
+                    isOpen: self.$bottomSheetShown,
+                    maxHeight: geometry.size.height * 0.6,
+                    minHeight: 294,
+                    content: {
+                        DriverFoundViewUpperView(viewModel: viewModel)
+                    }
+                )
+            }.edgesIgnoringSafeArea(.all)
+
             VStack(spacing: 0){
                 Spacer()
                 DriverFoundViewBottomViewt(viewModel: viewModel)

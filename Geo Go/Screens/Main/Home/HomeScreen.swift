@@ -90,7 +90,7 @@ struct HomeScreen: View {
     
     
     private var mapLayer: some View {
-        let uri = StyleURI(rawValue: "mapbox://styles/uzdriver/cl0j7klhe001415o8wpkop805")!
+        let uri = StyleURI(rawValue: "mapbox://styles/geogoapp/clghsbol4005301r7dqsxfu1n")!
         let cameraOptions = CameraOptions(center: viewModel.location, zoom: 12)
         
         return CustomMapView(markerOffset: $markerOffset,

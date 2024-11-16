@@ -35,7 +35,7 @@
 "send" = "Send";
 
 "txt_where_to_go" = "Where are we going?";
-"txt_order_with_arrow" = "Order ->";
+"txt_order_with_arrow" = "Order";
 
 
 "alert_title_server_error" = "Server Error";
@@ -137,8 +137,14 @@
 "cancelled" = "Cancelled";
 
 
-"picked_locations" = "picked locations";
+"picked_locations" = "%d picked locations";
 "enter_address_here" = "Enter destination here";
 "hint_format" = "%@ %d, %@ %d UZS";
 "payment_with_bonus" = "Paid with bonus:";
+
+"status_arrival_time" = "Arrival time is %d minute";
+"status_arrival_time_plural" = "Arrival time is %d minutes";
+"status_driver_waiting" = "Driver arrived and waiting for you!";
+"status_travel_started" = "Travel started!";
+"status_driver_coming" = "Driver is coming to you!";
 

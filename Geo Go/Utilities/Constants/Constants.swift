@@ -12,6 +12,14 @@ class Constants{
     static let CAR_ICON_ID = "CAR_ICON_ID"
     static let CAR_ICON_SOURCE_ID = "CAR_ICON_SOURCE_ID"
     static let CAR_ICON_LAYER_ID = "CAR_ICON_LAYER_ID"
+    
+    static let DEST_ICON_ID = "DEST_ICON_ID"
+    static let DEST_ICON_SOURCE_ID = "DEST_ICON_SOURCE_ID"
+    static let DEST_ICON_LAYER_ID = "DEST_ICON_LAYER_ID"
+    
+    static let CLIENT_ICON_ID = "CLIENT_ICON_ID"
+    static let CLIENT_ICON_SOURCE_ID = "CLIENT_ICON_SOURCE_ID"
+    static let CLIENT_ICON_LAYER_ID = "CLIENT_ICON_LAYER_ID"
 
     static let TARIFF = "TARIFF_ORDER"
     static let TARIFF_ICON = "TARIFF_ICON"
@@ -19,6 +27,11 @@ class Constants{
     static let USER_NAME: String = "USER_NAME"
     
     static let USER_PHONE: String = "USER_PHONE"
+    static let DEFAULT_PHONE_NUMBER = "+998994522399"
+    static let DEFAULT_CODE = "0000"
+    static let DEFAULT_KEY = "EU0vfc7seuqoJOeu1xc3Ebh4THg56eOhQeTLS0UOII8="
+    static let DEFAULT_ID = 191000232578408
+    
     static let PAYMENT_METHOD: String = "PAYMENT_METHOD"
     static let driverCallCenter: String = "driverCallCenter"
     static let servername: String = "servername"

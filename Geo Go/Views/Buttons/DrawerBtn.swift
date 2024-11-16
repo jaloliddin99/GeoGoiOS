@@ -10,6 +10,8 @@ import SwiftUI
 struct DrawerBtn: View {
     let name: String
     var fromAssets: Bool
+    
+    var color = Color.main
     var body: some View {
         if fromAssets {
             Image(name)
@@ -23,9 +25,9 @@ struct DrawerBtn: View {
         } else {
             Image(systemName: name)
                 .resizable()
-                .foregroundColor(.main)
+                .foregroundColor(color)
                 .aspectRatio(contentMode: .fit)
-                .padding(12)
+                .padding(16)
                 .frame(width: 56, height: 56)
                 .background(Circle()
                     .fill(Color.white)

@@ -19,7 +19,6 @@ struct ShortOrderInfo: Codable{
     var toPay: Double?
     var total: Double?
     var usedBonuses: Double?
-    
 }
 
 

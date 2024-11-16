@@ -25,11 +25,15 @@
 "terms_and" = " va shaxsiy ma'lumotlarimning qayta ishlanishiga rozilik bildiraman shartlar asosida ";
 "privacy_policy" = "Maxfiylik Siyosati";
 
+"get_code" = "Yuborish";
+"enter_your_phone" = "Telefon raqamingizni kiriting";
+"we_send_code" = "Biz sizga tasdiqlash kodi yuboramiz";
+
 
 "enter_phone" = "Raqamingizni Kiriting";
 
 "txt_where_to_go" = "Qayerga boramiz?";
-"txt_order_with_arrow" = "Chaqirish ->";
+"txt_order_with_arrow" = "Chaqirish";
 
 
 "alert_title_server_error" = "Server xatosi";
@@ -130,7 +134,13 @@
 "completed" = "Yakunlangan";
 "cancelled" = "Bekor qilingan";
 
-"picked_locations" = "ta tanlangan manzil";
+"picked_locations" = "%d ta tanlangan manzil";
 "enter_address_here" = "Manzilingizni bu yerga kiriting";
 "hint_format" = "%@ %d, %@ %d UZS";
 "payment_with_bonus" = "Bonus bilan to‘landi:";
+
+"status_arrival_time" = "Yetib kelish vaqti %d daqiqa";
+"status_arrival_time_plural" = "Yetib kelish vaqti %d daqiqa";
+"status_driver_waiting" = "Haydovchi keldi va sizni kutmoqda!";
+"status_travel_started" = "Sayohat boshlandi!";
+"status_driver_coming" = "Haydovchi sizga kelmoqda!";

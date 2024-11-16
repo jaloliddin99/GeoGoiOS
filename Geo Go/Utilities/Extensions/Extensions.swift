@@ -7,6 +7,16 @@
 
 import Foundation
 import SwiftUI
+extension String {
+    var localized: String {
+        return NSLocalizedString(self, comment: "")
+    }
+    
+    func capitalizeFirstLetter() -> String {
+        guard let firstLetter = self.first else { return self }
+        return firstLetter.uppercased() + self.dropFirst().lowercased()
+    }
+}
 
 extension Color {
     init(hex: String) {

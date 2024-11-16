@@ -18,24 +18,45 @@ struct SearchTextView: View {
                 Button {
                     viewModel.isSearchDialogShowing = true
                 } label: {
-                    Text("txt_where_to_go")
-                        .padding()
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .foregroundColor(.black.opacity(0.7))
-                        .cornerRadius(10)
+                    HStack(alignment: .center){
+                        Image(systemName: "magnifyingglass")
+                            .foregroundColor(.black.opacity(0.7))
+                            .padding(.leading, 12)
+
+                        Text("txt_where_to_go")
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .foregroundColor(.black.opacity(0.7))
+                            .cornerRadius(10)
+                        
+                        Spacer()
+                    }
+                    .frame(minHeight: 56, maxHeight: 56)
+            
                 }
                 Button(action: {
                     viewModel.setStatus(value: 1)
                 }, label: {
-                    Text("txt_order_with_arrow")
-                        .font(.system(size: 14, weight: .medium))
-                        .padding(.horizontal, 8)
-                        .frame(maxHeight: .infinity)
-                        .foregroundColor(.white)
-                        .background(.main)
-                        .cornerRadius(12)
-                        .padding(.trailing, 8)
-                        .padding(.vertical, 8)
+                    
+                    HStack(alignment: .center, spacing: 8){
+                        Text("txt_order_with_arrow")
+                            .font(.system(size: 14, weight: .medium))
+                            .padding(.leading, 8)
+                            .foregroundColor(.white)
+                            
+                        Image(systemName: "arrow.right")
+                            .resizable()
+                            .foregroundColor(.white)
+                            .frame(minWidth: 17, maxWidth: 17, minHeight: 11, maxHeight: 11)
+                            .padding(.trailing, 8)
+                        
+                    }
+                    .frame(maxHeight: .infinity)
+                    .background(.main)
+                    .cornerRadius(12)
+                    .padding(.trailing, 8)
+                    .padding(.vertical, 8)
+                    
+                    
                 })
             }
         }

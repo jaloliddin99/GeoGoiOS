@@ -17,10 +17,6 @@ struct DialogRateDriver: View {
         return comment.count < 4
     }
     
-    
-    
-    
-    
     var body: some View {
         VStack(spacing: 12){
             DialogToolBar(showDialog: $invokeDialog, title: "order_completed")

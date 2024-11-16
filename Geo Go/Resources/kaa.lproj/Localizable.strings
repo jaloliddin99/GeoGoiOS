@@ -23,9 +23,14 @@
 "terms_and" = " jäne öz jekje ma'lımetlerimdi qayta işlewge kelisem şartlar boyınsha ";
 "privacy_policy" = "Qupiya Säyasatı";
 
+"get_code" = "Kod aluǵ";
+"enter_your_phone" = "Telefón nomerińizdi kiritiń";
+"we_send_code" = "Biz sizge rastlaw kodi júberemiz";
+
+
 "enter_phone" = "Telefon engiziń";
 "txt_where_to_go" = "Qayda baramız?";
-"txt_order_with_arrow" = "Buyırtpa ->";
+"txt_order_with_arrow" = "Buyırtpa";
 
 
 "alert_title_server_error" = "Server xatası";
@@ -126,8 +131,13 @@
 "completed" = "Támamlandı";
 "cancelled" = "Bekar qılındı";
 
-"picked_locations" = "tanalğan ornılar";
+"picked_locations" = "%d tanalğan ornılar";
 "enter_address_here" = "Baratılğan ornıdı mında kiritiñiz";
 "hint_format" = "%@ %d, %@ %d UZS";
 "payment_with_bonus" = "Bonuspen tolandi:";
 
+"status_arrival_time" = "Jetiw waqti %d minut";
+"status_arrival_time_plural" = "Jetiw waqti %d minut";
+"status_driver_waiting" = "Júrikshi jetti hám sizdi kútip atır!";
+"status_travel_started" = "Sapar baslandı!";
+"status_driver_coming" = "Júrikshi sizge keliwde!";

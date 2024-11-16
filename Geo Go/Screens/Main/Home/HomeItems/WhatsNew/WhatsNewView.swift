@@ -34,7 +34,8 @@ struct BottomSheetView<Content: View>: View {
                         .padding(.bottom, 4)
                     self.content
                 }
-                .frame(width: geometry.size.width, height: self.maxHeight, alignment: .top)
+                .frame(width: geometry.size.width, height: self.maxHeight,
+                       alignment: .top)
                 .background(Color(.white))
                 .cornerRadius(20)
                 .frame(height: geometry.size.height, alignment: .bottom)
@@ -72,7 +73,6 @@ struct BottomSheetView<Content: View>: View {
         return offset + translation
     }
 }
-
 
 struct BottomSheetContent: View{
     @ObservedObject var viewModel: MainViewModel

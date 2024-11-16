@@ -43,7 +43,7 @@ struct EnterCodeScreen: View {
                 Spacer()
                 
                 Button(action: {
-                    viewModel.getAppetizer(id: String(userId), code: code)
+                    viewModel.getAppetizer(id: String(userId), code: code, phone: phoneNumber)
                 }) {
                     GGButton(title: "send")
                 }
@@ -68,6 +68,7 @@ struct EnterCodeScreen: View {
             }
             .onAppear{
                 UserDefaults.standard.setValue(phoneNumber, forKey: Constants.USER_PHONE)
+                
             }
         }
         

@@ -11,7 +11,7 @@ struct OrderGoView: View {
     @ObservedObject var mainViewModel: MainViewModel
     @State private var showWishDialog = false
     @State private var selectedItem: ServiceTariff?
-     
+    
     var body: some View {
         VStack(spacing: 12){
             Spacer()
@@ -94,6 +94,7 @@ struct AddressField: View {
     @State private var showAddressesDialog = false
     
     var body: some View {
+        
         HStack(alignment: .center,spacing: 8) {
             Image("route_image")
                 .resizable()
@@ -115,9 +116,18 @@ struct AddressField: View {
                         Button {
                             mainViewModel.isSearchDialogShowing = true
                         } label: {
-                            Text("txt_where_to_go")
-                                .fontWeight(.medium)
-                                .foregroundColor(.black.opacity(0.5))
+                            
+                            HStack(alignment: .center){
+                                Image(systemName: "magnifyingglass")
+                                    .foregroundColor(.black.opacity(0.7))
+                                
+                                Text("txt_where_to_go")
+                                    .fontWeight(.medium)
+                                    .foregroundColor(.black.opacity(0.7))
+                                
+                                Spacer()
+                            }
+                            
                         }
                         Spacer()
                     }else if count == 2 {
@@ -137,7 +147,8 @@ struct AddressField: View {
                         Button(action: {
                             showAddressesDialog.toggle()
                         }, label: {
-                            Text("\(count-1) \(LocalizedStringKey("picked_locations"))")
+                            let text = String(format: NSLocalizedString("picked_locations", comment: ""), count-1)
+                            Text(text)
                                 .fontWeight(.medium)
                                 .foregroundColor(.txt)
                                 .lineLimit(1)
@@ -157,13 +168,17 @@ struct AddressField: View {
                     }
                 }
             }
-    
+            
         }
         .padding(12)
         .background(RoundedRectangle(cornerRadius: 12)
             .fill(Color(.secondarySystemBackground).opacity(0.7))
         )
+        
     }
+    
+    
+    
 }
 
 

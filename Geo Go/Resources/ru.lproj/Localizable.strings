@@ -23,9 +23,14 @@
 "terms_and" = " и соглашаюсь на обработку моих персональных данных на условиях ";
 "privacy_policy" = "Политики конфиденциальности";
 
+"get_code" = "Получить код";
+"enter_your_phone" = "Введите ваш номер телефона";
+"we_send_code" = "Мы отправим вам код подтверждения";
+
+
 "enter_phone" = "Введите телефон";
 "txt_where_to_go" = "Куда едем?";
-"txt_order_with_arrow" = "Заказать ->";
+"txt_order_with_arrow" = "Заказать";
 
 
 "alert_title_server_error" = "Ошибка сервера";
@@ -125,8 +130,14 @@
 "completed" = "Завершено";
 "cancelled" = "Отменено";
 
-"picked_locations" = "выбранные места";
+"picked_locations" = "выбранные места %d";
 "enter_address_here" = "Введите пункт назначения здесь";
 "hint_format" = "%@ %d, %@ %d UZS";
 "payment_with_bonus" = "Оплачено бонусом:";
 
+
+"status_arrival_time" = "Время прибытия %d минута";
+"status_arrival_time_plural" = "Время прибытия %d минут";
+"status_driver_waiting" = "Водитель прибыл и ждет вас!";
+"status_travel_started" = "Поездка началась!";
+"status_driver_coming" = "Водитель едет к вам!";
