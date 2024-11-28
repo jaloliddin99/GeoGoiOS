@@ -13,3 +13,143 @@
 "app_must_work" = "Требуется для работы приложения";
 "next" = "Next";
 "allow" = "Allow";
+
+"what_is_your_name" = "What is your name?";
+"enter_your_name" = "Enter your name";
+"save" = "Save";
+
+"terms_prefix" = "Я принимаю условия ";
+"user_agreement" = "Пользовательского соглашения";
+"terms_and" = " и соглашаюсь на обработку моих персональных данных на условиях ";
+"privacy_policy" = "Политики конфиденциальности";
+
+"get_code" = "Получить код";
+"enter_your_phone" = "Введите ваш номер телефона";
+"we_send_code" = "Мы отправим вам код подтверждения";
+
+
+"enter_phone" = "Введите телефон";
+"txt_where_to_go" = "Куда едем?";
+"txt_order_with_arrow" = "Заказать";
+
+
+"alert_title_server_error" = "Ошибка сервера";
+"alert_title_invalid_form" = "Недопустимая форма";
+"alert_title_invalid_email" = "Недопустимый адрес электронной почты";
+"alert_title_profile_saved" = "Профиль сохранен";
+"alert_title_profile_error" = "Ошибка профиля";
+
+"alert_message_invalid_data" = "Полученные данные с сервера недействительны. Пожалуйста, свяжитесь с поддержкой.";
+"alert_message_invalid_response" = "Недействительный ответ от сервера. Пожалуйста, попробуйте позже или свяжитесь с поддержкой.";
+"alert_message_invalid_url" = "Проблема с подключением к серверу. Если это продолжается, пожалуйста, свяжитесь с поддержкой.";
+"alert_message_unable_to_complete" = "Невозможно выполнить ваш запрос в данный момент. Пожалуйста, проверьте подключение к интернету.";
+
+"alert_message_invalid_form" = "Пожалуйста, убедитесь, что все поля формы заполнены.";
+"alert_message_invalid_email" = "Пожалуйста, проверьте правильность введенного адреса электронной почты.";
+
+"alert_message_profile_saved" = "Информация вашего профиля успешно сохранена.";
+"alert_message_profile_error" = "Произошла ошибка при сохранении или загрузке вашего профиля.";
+
+"txt_application_language" = "Язык приложения";
+"txt_profile" = "Профиль";
+"txt_terms_of_use" = "Условия использования";
+"txt_privacy_policy" = "Политика конфиденциальности";
+"txt_more" = "Еще";
+"txt_enter_promocode" = "Введите промокод";
+"promocode" = "Промокод";
+"cancel" = "Отмена";
+"submit" = "Отправить";
+"promo_codes" = "Промокоды";
+"actions" = "Действия";
+"txt_choose_default_payment" = "Выберите способ оплаты по умолчанию";
+"payment_method" = "Способ оплаты";
+"cash" = "Наличные";
+"add_card" = "Добавить карту";
+"no_cards_found" = "Карты не найдены";
+"expires" = "Срок действия:";
+"enter_card_details" = "Введите данные карты";
+"card_name" = "Название карты";
+"for_example" = "Например: Основная";
+"card_number" = "Номер карты";
+"card_number_camel" = "Номер Карты";
+"expire_date" = "Дата истечения";
+"enter_code" = "Введите код";
+"send" = "Отправить";
+"order_price" = "Стоимость заказа";
+"view_order" = "Просмотр заказа";
+"tariff_reduced" = "Тариф временно снижен";
+"tariff_increased" = "Тариф временно увеличен";
+"about_tariff" = "О тарифе";
+"discount" = "Скидка";
+"enter_promo_code_if_have" = "Если у вас есть промокод, введите его";
+"add_promo_code" = "Добавить промокод";
+"order_completed" = "Заказ завершен";
+"total_fare" = "Общая стоимость";
+"rate_driver" = "Оцените водителя";
+"hint_good_driver" = "Хороший водитель";
+"tariff" = "Тариф";
+"add_second_space" = "Заказать ещё";
+"cancel_order" = "Отменить заказ";
+"cancel_order_reason" = "Расскажите, почему вы хотите отменить заказ";
+"confirm" = "Подтвердить";
+"searching_car_dot" = "Поиск машины...";
+"destination_not_entered" = "Место назначения не введено!";
+"error_occurred" = "Произошла ошибка";
+"order" = "Заказ";
+"no_bonus_order" = "Без бонусов";
+"max" = "макс";
+"min" = "мин";
+"bonus_short_desc" = "Оплатите часть поездки бонусами";
+"bonus_desc" = "В случае увеличения стоимости оставшаяся сумма бонусов вернется на ваш счет";
+"your_bonuses" = "Ваши бонусы";
+"wish" = "Пожелание";
+"comment" = "Комментарий";
+"with_kids" = "С детьми";
+"order_another_person" = "Заказать для другого человека";
+"options" = "ОПЦИИ";
+"select_all" = "Выбрать все";
+"comment_hint_be_quick" = "Поторопитесь...";
+"enter_comment" = "Введите комментарий для водителя!";
+"enter_another_person" = "Введите другого человека!";
+"your_destination" = "Ваше место назначения!";
+"close" = "Закрыть";
+"km" = "км";
+"searching_with_dot" = "Поиск...";
+"point_on_map" = "Точка на карте";
+"cancel_order_question" = "Вы уверены, что хотите отменить заказ?";
+"continue" = "Продолжить";
+"card" = "Карта";
+"wishes" = "Пожелания";
+
+"drawer_item_my_trips" = "Мои поездки";
+"drawer_item_payment_method" = "Способ оплаты";
+"drawer_item_favourite_addresses" = "Избранные адреса";
+"drawer_item_discount" = "Скидка";
+"drawer_item_news" = "Новости";
+"drawer_item_about_app" = "О приложении";
+"completed" = "Завершено";
+"cancelled" = "Отменено";
+
+"picked_locations" = "выбранные места %d";
+"enter_address_here" = "Введите пункт назначения здесь";
+"hint_format" = "%@ %d, %@ %d UZS";
+"payment_with_bonus" = "Оплачено бонусом:";
+
+
+"status_arrival_time" = "Через %d мин. приедет";
+"status_arrival_time_plural" = "Через %d мин. приедет";
+"status_driver_waiting" = "Водитель прибыл и ждет вас!";
+"status_travel_started" = "Поездка началась!";
+"status_driver_coming" = "Водитель едет к вам!";
+
+"enter_amount" = "Введите сумму:";
+"order_with_bonus" = "Заказ с бонусами";
+
+"select_language" = "Выберите язык";
+
+"whats_up" = "Что нового?";
+"choosing_comfort" = "Выбор комфорта";
+"how_to_check_d" = "Как мы проверяем водителей";
+"why_prices_increased" = "Почему цены выросли?";
+"parcel_delivery" = "Доставка посылок";
+"why_card_better" = "Почему карта лучше наличных?";

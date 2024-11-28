@@ -13,3 +13,150 @@
 "app_must_work" = "Important for app to function";
 "next" = "Next";
 "allow" = "Allow";
+
+"what_is_your_name" = "What is your name?";
+"enter_your_name" = "Enter your name";
+"save" = "Save";
+
+"terms_prefix" = "I accept the terms of the ";
+"user_agreement" = "User Agreement";
+"terms_and" = " and consent to the processing of my personal data on the terms of the ";
+"privacy_policy" = "Privacy Policy";
+
+
+"get_code" = "Get Code";
+"enter_your_phone" = "Enter your phone";
+"we_send_code" = "We will send it a verification code";
+
+"enter_phone" = "Enter Phone";
+
+"enter_sms_code" = "Enter SMS code";
+"enter_sms_code_desc" = "Enter SMS code that we send to your %@ phone number";
+"send" = "Send";
+
+"txt_where_to_go" = "Where are we going?";
+"txt_order_with_arrow" = "Order";
+
+
+"alert_title_server_error" = "Server Error";
+"alert_title_invalid_form" = "Invalid Form";
+"alert_title_invalid_email" = "Invalid Email";
+"alert_title_profile_saved" = "Profile Saved";
+"alert_title_profile_error" = "Profile Error";
+
+"alert_message_invalid_data" = "The data received from the server was invalid. Please contact support.";
+"alert_message_invalid_response" = "Invalid response from the server. Please try again later or contact support.";
+"alert_message_invalid_url" = "There was an issue connecting to the server. If this persists, please contact support.";
+"alert_message_unable_to_complete" = "Unable to complete your request at this time. Please check your internet connection.";
+
+"alert_message_invalid_form" = "Please ensure all fields in the form have been filled out.";
+"alert_message_invalid_email" = "Please ensure your email is correct.";
+
+"alert_message_profile_saved" = "Your profile information was successfully saved.";
+"alert_message_profile_error" = "There was an error saving or retrieving your profile.";
+
+
+"txt_application_language" = "Application Language";
+"txt_profile" = "Profile";
+"txt_terms_of_use" = "Terms of Use";
+"txt_privacy_policy" = "Privacy Policy";
+"txt_more" = "More";
+"txt_enter_promocode" = "Enter Promocode";
+"promocode" = "Promocode";
+"cancel" = "Cancel";
+"submit" = "Submit";
+"promo_codes" = "Promo Codes";
+"actions" = "Actions";
+"txt_choose_default_payment" = "Choose your default payment method";
+"payment_method" = "Payment Method";
+"cash" = "Cash";
+"add_card" = "Add card";
+"no_cards_found" = "No cards found";
+"expires" = "Expires:";
+"enter_card_details" = "Enter card details";
+"card_name" = "Card name";
+"for_example" = "Eg: Main";
+"card_number" = "Card number";
+"card_number_camel" = "Card Number";
+"expire_date" = "Expire date";
+"enter_code" = "Enter code";
+"send" = "Send";
+"order_price" = "Order price";
+"view_order" = "View order";
+"tariff_reduced" = "Tariff temporarily reduced";
+"tariff_increased" = "Tariff temporarily increased";
+"about_tariff" = "About Tariff";
+"discount" = "Discount";
+"enter_promo_code_if_have" = "If you have a promo code, enter it";
+"add_promo_code" = "Add Promo Code";
+"order_completed" = "Order Completed";
+"total_fare" = "Total Fare";
+"rate_driver" = "Rate Driver";
+"hint_good_driver" = "Good Driver";
+"tariff" = "Tariff";
+"add_second_space" = "Add Second Place";
+"cancel_order" = "Cancel Order";
+"cancel_order_reason" = "Tell us why you wanted to cancel the order";
+"confirm" = "Confirm";
+"searching_car_dot" = "Searching Car...";
+"destination_not_entered" = "Destination is not entered!";
+"error_occurred" = "Error Occurred";
+"order" = "Order";
+"no_bonus_order" = "No Bonus Order";
+"max" = "max";
+"min" = "min";
+"bonus_short_desc" = "Pay for part of the trip with bonuses";
+"bonus_desc" = "In the event of an increase in value, the remaining amount of bonuses will be returned to your account";
+"your_bonuses" = "Your bonuses";
+"wish" = "Wish";
+"comment" = "Comment";
+"with_kids" = "With Kids";
+"order_another_person" = "Order another person";
+"options" = "OPTIONS";
+"select_all" = "Select all";
+"comment_hint_be_quick" = "Be Quick...";
+"enter_comment" = "Enter comment for driver!";
+"enter_another_person" = "Enter Another Person!";
+"your_destination" = "Your Destination!";
+"close" = "Close";
+"km" = "km";
+"searching_with_dot" = "Searching...";
+"point_on_map" = "Point on the map";
+"cancel_order_question" = "Are you sure you want to cancel the order?";
+"continue" = "Continue";
+
+"card" = "Card";
+"wishes" = "Wishes";
+"drawer_item_my_trips" = "My Trips";
+"drawer_item_payment_method" = "Payment Method";
+"drawer_item_favourite_addresses" = "Favourite Addresses";
+"drawer_item_discount" = "Discount";
+"drawer_item_news" = "News";
+"drawer_item_about_app" = "About App";
+"completed" = "Completed";
+"cancelled" = "Cancelled";
+
+
+"picked_locations" = "%d picked locations";
+"enter_address_here" = "Enter destination here";
+"hint_format" = "%@ %d, %@ %d UZS";
+"payment_with_bonus" = "Paid with bonus:";
+
+"status_arrival_time" = "Arrival time is %d minute";
+"status_arrival_time_plural" = "Arrival time is %d minutes";
+"status_driver_waiting" = "Driver arrived and waiting for you!";
+"status_travel_started" = "Travel started!";
+"status_driver_coming" = "Driver is coming to you!";
+
+
+"enter_amount" = "Enter the amount:";
+"order_with_bonus" = "With bonus";
+
+"select_language" = "Select language";
+
+"whats_up" = "What's up?";
+"choosing_comfort" = "Choosing Comfort";
+"how_to_check_d" = "How we check \ndrivers";
+"why_prices_increased" = "Why the prices \nincreased?";
+"parcel_delivery" = "Parcel delivery";
+"why_card_better" = "Why is the card better than cash?";

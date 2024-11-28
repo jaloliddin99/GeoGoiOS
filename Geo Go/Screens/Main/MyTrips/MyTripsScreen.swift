@@ -1,0 +1,138 @@
+//
+//  MyTripsScreen.swift
+//  Geo Go
+//
+//  Created by Jaloliddin Abdullaev on 14/08/24.
+//
+
+import SwiftUI
+
+struct MyTripsScreen: View {
+    @StateObject var viewModel = MainViewModel()
+    @State private var selectedTab: TripTab = .completed
+    @State private var hasResponse: Bool = false
+    
+    var body: some View {
+        VStack {
+            HStack {
+                ForEach(TripTab.allCases, id: \.self) { tab in
+                    Button(action: {
+                        selectedTab = tab
+                    }) {
+                        Text(LocalizedStringKey(tab.rawValue))
+                            .fontWeight(.semibold)
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 10)
+                            .background(selectedTab == tab ? Color.blue : Color.clear)
+                            .foregroundColor(selectedTab == tab ? .white : .black)
+                            .cornerRadius(12)
+                    }
+                }
+            }
+            .padding(4)
+            .background(Color.gray.opacity(0.2))
+            .cornerRadius(12)
+            .padding()
+            
+            if let list = viewModel.addressHistoryResponse {
+                List {
+                    ForEach(mockTrips(for: selectedTab, transformedList: list), id: \.id) { trip in
+                        TripCardView(trip: trip)
+                    }
+                }
+                .listStyle(PlainListStyle())
+            }
+            
+        }
+        .background(.white)
+        .navigationTitle("drawer_item_my_trips")
+        .navigationBarTitleDisplayMode(.inline)
+        .onReceive(viewModel.$addressHistoryResponse) { result in
+            if let r = result {
+                if !hasResponse {
+                    hasResponse = true
+                    let delayInterval = 0.3
+                    for (index, info) in r.enumerated() {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + delayInterval * Double(index)) {
+                            viewModel.dateOrderHistory(id: info.id, location: DataHolder.location)
+                        }
+                    }
+                }
+            }
+        }
+        
+    }
+        
+            
+    
+    func mockTrips(for tab: TripTab, transformedList: [ShortOrderInfo]) -> [ShortOrderInfo] {
+        
+        switch tab {
+            case .completed:
+                return transformedList.filter { history in
+                    history.state == 5
+                }
+            case .cancelled:
+                return transformedList.filter { history in
+                    history.state == 6
+                }
+        }
+    }
+}
+
+enum TripTab: String, CaseIterable {
+    case completed = "completed"
+    case cancelled = "cancelled"
+}
+
+
+struct TripCardView: View {
+    var trip: ShortOrderInfo
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            
+            ForEach(trip.route, id: \.name) { t in
+                HStack {
+                    Circle()
+                        .fill(Color.blue)
+                        .frame(width: 12, height: 12)
+                    Text(t.name)
+                        .fontWeight(.medium)
+                        .lineLimit(2)
+                }
+            }
+            
+            let time = formatTime(time: trip.time ?? "")
+            Text(time)
+                .font(.footnote)
+                .foregroundColor(.gray)
+            
+            HStack {
+                Text("order_price")
+                    .fontWeight(.medium)
+                Spacer()
+                Text(formatNumberWithSpaces(trip.total ?? 0.0))
+                    .fontWeight(.bold)
+            }
+            Button(action: {
+                
+            }) {
+                Text("view_order")
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(Color.gray.opacity(0.2))
+                    .cornerRadius(12)
+            }
+        }
+        .padding()
+        .background(Color.white)
+        .cornerRadius(12)
+        .shadow(color: Color.gray.opacity(0.2), radius: 5, x: 0, y: 2)
+        .padding(.vertical, 5)
+    }
+}
+
+//#Preview {
+//    MyTripsScreen()
+//}
