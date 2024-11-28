@@ -57,7 +57,7 @@ final class MainViewModel: ObservableObject{
     }
     
     func findUserRealPosition(loc: CLLocationCoordinate2D, offset: CGFloat) {
-        location = location
+        location = loc
         refocusButtonListener.toggle()
         reverseGeocodeIfNeeded(offset: offset)
     }
@@ -465,7 +465,7 @@ final class MainViewModel: ObservableObject{
     func cancelMyOrder() {
         guard let responseDetails = generateResponse?.generateHmacDataForOrderId(id: "cancelOrder", orderId: DataHolder.orderId) else { return }
         
-        if status >= 2 {
+        if status > 2 {
             showCancelBottomDialog.toggle()
         }
         self.isLoading = true
@@ -641,8 +641,17 @@ final class MainViewModel: ObservableObject{
     }
     
     @Published var locationHolder: [UserSelectedAddress] = []
+    @Published var showAlert: Bool = false
+
     
     func locationUpdated(_ address: UserSelectedAddress) {
+        if let lastAddress = locationHolder.last {
+            if lastAddress.addressLocation.latitude == address.addressLocation.latitude &&
+                lastAddress.addressLocation.longitude == address.addressLocation.longitude {
+                showAlert = true
+                return
+            }
+        }
         locationHolder.append(address)
         if status == 1 && locationHolder.count > 2 {
             requestToDrawRoute(list: mapToRouteCoordinatesLatLng(coordinates: locationHolder))

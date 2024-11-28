@@ -26,16 +26,16 @@ struct WhatsUpView: View {
         VStack {
             GeometryReader { geometry in
                 HStack(spacing: 12) {
-                    CardView(imageName: "image_1", title: "What's up?", textColor: .black, width: 150)
+                    CardView(imageName: "image_1", title: "whats_up", textColor: .black, width: 150)
                     
-                    CardView(imageName: "image_2", title: "Choosing Comfort", textColor: .white, width: geometry.size.width-162)
+                    CardView(imageName: "image_2", title: "choosing_comfort", textColor: .white, width: geometry.size.width-162)
                 }
             }
             .frame(height: 150)
             
             
             GeometryReader { geometry in
-                CardView(imageName: "image_3", title: "How we check \ndrivers", textColor: .white, maxLines: 2, width: geometry.size.width)
+                CardView(imageName: "image_3", title: "how_to_check_d", textColor: .white, maxLines: 2, width: geometry.size.width)
             }
             .frame(height: 150)
            
@@ -43,21 +43,19 @@ struct WhatsUpView: View {
             
             GeometryReader { geometry in
                 HStack(spacing: 4) {
-                    FrameView(imageName: "image_4", title: "Why the prices \nincreased?", textColor: .black, isCard: true, width: geometry.size.width-162, bgImage: "card_1")
+                    FrameView(imageName: "image_4", title: "why_prices_increased", textColor: .black, isCard: true, width: geometry.size.width-162, bgImage: "card_1")
                     
-                    FrameView(imageName: "image_5", title: "Delivery of parcels", textColor: .black, isCard: false, width: 150, bgImage: "card_5")
+                    FrameView(imageName: "image_5", title: "parcel_delivery", textColor: .black, isCard: false, width: 150, bgImage: "card_5")
                 }
             }
             .frame(height: 150)
            
             GeometryReader { geometry in
-                FrameView(imageName: "image_6", title: "How is the card better than cash", textColor: .black, isCard: true, width: geometry.size.width, bgImage: "card_6")
+                FrameView(imageName: "image_6", title: "why_card_better", textColor: .black, isCard: true, width: geometry.size.width, bgImage: "card_6")
             }
             .frame(height: 150)
            
-              
         }
-        .padding(.horizontal, 16)
         .padding(.bottom, 16)
     }
 }
@@ -80,7 +78,7 @@ struct CardView: View {
             
             VStack {
                 HStack {
-                    Text(title)
+                    Text(LocalizedStringKey(title))
                         .font(.custom("Roboto-Medium", size: 14))
                         .foregroundColor(textColor)
                         .lineLimit(maxLines)
@@ -88,7 +86,6 @@ struct CardView: View {
                     
                     Spacer()
                 }
-                
                 Spacer()
             }
         }
@@ -116,7 +113,7 @@ struct FrameView: View {
             
             VStack {
                 HStack {
-                    Text(title)
+                    Text(LocalizedStringKey(title))
                         .font(.custom("Roboto-Medium", size: 14))
                         .foregroundColor(textColor)
                         .lineLimit(maxLines)

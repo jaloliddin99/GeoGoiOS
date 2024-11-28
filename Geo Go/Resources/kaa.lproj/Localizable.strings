@@ -89,7 +89,7 @@
 "rate_driver" = "Júrikshige baǵa beriw";
 "hint_good_driver" = "Jaqsı júrikshi";
 "tariff" = "Tarif";
-"add_second_space" = "Ekinshi orın qosıw";
+"add_second_space" = "Yana bir ret chaqırıw";
 "cancel_order" = "Buyırttı bekarlaw";
 "cancel_order_reason" = "Buyırttı bekarlaw sababın kiritiń";
 "confirm" = "Rastlaw";
@@ -141,3 +141,14 @@
 "status_driver_waiting" = "Júrikshi jetti hám sizdi kútip atır!";
 "status_travel_started" = "Sapar baslandı!";
 "status_driver_coming" = "Júrikshi sizge keliwde!";
+
+"enter_amount" = "Summani kiriting:";
+"order_with_bonus" = "Заказ с бонусами";
+"select_language" = "Tilni tanlang";
+
+"whats_up" = "Näme jañalıq?";
+"choosing_comfort" = "Yañıllıq tanlaw";
+"how_to_check_d" = "Jürgizüwshilerni qalay tekseremiz";
+"why_prices_increased" = "Baalar näme üşin köterildi?";
+"parcel_delivery" = "Jük jetkizbiw";
+"why_card_better" = "Näme üşin karta naqtan jaqsı?";

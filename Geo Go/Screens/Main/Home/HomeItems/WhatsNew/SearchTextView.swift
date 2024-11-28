@@ -60,9 +60,9 @@ struct SearchTextView: View {
                 })
             }
         }
+        .frame(height: 56)
         .background(Color(.secondarySystemBackground))
         .cornerRadius(12)
-        .padding(.horizontal, 16)
         
         
     }
@@ -94,13 +94,13 @@ struct ShortOrderInfoView: View {
                     .opacity(0.4)
                     .font(.system(size: 12))
             }
-            
         }
         .padding(.horizontal, 12)
         .padding(.vertical, 8)
+        .frame(maxWidth: 250, maxHeight: 56)
         .background(Color(.secondarySystemBackground))
-        .frame(maxWidth: 250)
         .cornerRadius(12)
+        
         .onTapGesture(perform: {
             let address = orderInfo.route[orderInfo.route.count-1]
             let name = address.name

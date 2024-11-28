@@ -148,3 +148,15 @@
 "status_travel_started" = "Travel started!";
 "status_driver_coming" = "Driver is coming to you!";
 
+
+"enter_amount" = "Enter the amount:";
+"order_with_bonus" = "With bonus";
+
+"select_language" = "Select language";
+
+"whats_up" = "What's up?";
+"choosing_comfort" = "Choosing Comfort";
+"how_to_check_d" = "How we check \ndrivers";
+"why_prices_increased" = "Why the prices \nincreased?";
+"parcel_delivery" = "Parcel delivery";
+"why_card_better" = "Why is the card better than cash?";

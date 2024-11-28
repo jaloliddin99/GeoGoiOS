@@ -7,6 +7,23 @@
 
 import Foundation
 import SwiftUI
+
+struct CustomButtonStyle: ButtonStyle {
+    var isDisabled: Bool
+    
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .padding()
+            .frame(maxWidth: .infinity)
+            .background(isDisabled ? .main.opacity(0.5) : .main)
+            .foregroundColor(.white)
+            .cornerRadius(8)
+            .scaleEffect(configuration.isPressed ? 0.95 : 1.0)
+            .animation(.easeOut, value: configuration.isPressed)
+    }
+}
+
+
 extension String {
     var localized: String {
         return NSLocalizedString(self, comment: "")

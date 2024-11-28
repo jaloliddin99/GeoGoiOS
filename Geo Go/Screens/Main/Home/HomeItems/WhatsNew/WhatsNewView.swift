@@ -79,26 +79,22 @@ struct BottomSheetContent: View{
     
     var body: some View {
         
-        ScrollView(.vertical, showsIndicators: false) {
-            VStack(spacing: 8) {
-                SearchTextView(viewModel: viewModel)
-                
-                BussAndDeliveryView()
-                
-                ScrollView(.horizontal, showsIndicators: false) {
-                    LazyHStack(spacing: 12) {
-                        ForEach(viewModel.addressHistoryResponse ?? [], id: \.id) { orderInfo in
-                            ShortOrderInfoView(viewModel: viewModel, orderInfo: orderInfo)
-                        }
+        VStack(spacing: 8) {
+            SearchTextView(viewModel: viewModel)
+            
+            ScrollView(.horizontal, showsIndicators: false) {
+                LazyHStack(spacing: 12) {
+                    ForEach(viewModel.addressHistoryResponse ?? [], id: \.id) { orderInfo in
+                        ShortOrderInfoView(viewModel: viewModel, orderInfo: orderInfo)
                     }
-                    .padding(.horizontal, 16)
-
                 }
-                WhatsUpView()
-                Spacer()
             }
-            .padding(.bottom, 64)
+            .frame(height: 60)
+            
+            WhatsUpView()
+            Spacer()
         }
+        .padding(.horizontal, 16)
     }
 }
 
@@ -130,7 +126,6 @@ struct BussAndDeliveryView: View {
             .background(.appGray)
             .cornerRadius(12)
         }
-        .padding(.horizontal, 16)
     }
 }
 

@@ -91,7 +91,7 @@
 "rate_driver" = "Haydovchini baholang";
 "hint_good_driver" = "Yaxshi haydovchi";
 "tariff" = "Tarif";
-"add_second_space" = "Ikkinchi joyni qo‘shing";
+"add_second_space" = "Yana bitta chaqirish";
 "cancel_order" = "Buyurtmani bekor qilish";
 "cancel_order_reason" = "Buyurtmani bekor qilish sababini ko‘rsating";
 "confirm" = "Tasdiqlash";
@@ -99,7 +99,7 @@
 "destination_not_entered" = "Manzil kiritilmagan!";
 "error_occurred" = "Xato yuz berdi";
 "order" = "Buyurtma";
-"no_bonus_order" = "Bonussiz buyurtma";
+"no_bonus_order" = "Bonuslarsiz";
 "max" = "maks";
 "min" = "min";
 "bonus_short_desc" = "Sayohatning bir qismini bonuslar bilan to‘lash";
@@ -144,3 +144,15 @@
 "status_driver_waiting" = "Haydovchi keldi va sizni kutmoqda!";
 "status_travel_started" = "Sayohat boshlandi!";
 "status_driver_coming" = "Haydovchi sizga kelmoqda!";
+
+
+"enter_amount" = "Summani kiriting:";
+"order_with_bonus" = "Bonuslar bilan";
+"select_language" = "Tilni tanlang";
+
+"whats_up" = "Nima gaplar?";
+"choosing_comfort" = "Qulaylikni tanlash";
+"how_to_check_d" = "Haydovchilarni qanday tekshiramiz";
+"why_prices_increased" = "Narxlar nega ko'tarildi?";
+"parcel_delivery" = "Paket yetkazib berish";
+"why_card_better" = "Nega karta naqddan yaxshiroq?";

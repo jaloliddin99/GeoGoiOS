@@ -88,7 +88,7 @@
 "rate_driver" = "Оцените водителя";
 "hint_good_driver" = "Хороший водитель";
 "tariff" = "Тариф";
-"add_second_space" = "Добавить второе место";
+"add_second_space" = "Заказать ещё";
 "cancel_order" = "Отменить заказ";
 "cancel_order_reason" = "Расскажите, почему вы хотите отменить заказ";
 "confirm" = "Подтвердить";
@@ -96,11 +96,11 @@
 "destination_not_entered" = "Место назначения не введено!";
 "error_occurred" = "Произошла ошибка";
 "order" = "Заказ";
-"no_bonus_order" = "Заказ без бонусов";
+"no_bonus_order" = "Без бонусов";
 "max" = "макс";
 "min" = "мин";
 "bonus_short_desc" = "Оплатите часть поездки бонусами";
-"bonus_desc" = "При увеличении стоимости остаток бонусов будет возвращен на ваш счет";
+"bonus_desc" = "В случае увеличения стоимости оставшаяся сумма бонусов вернется на ваш счет";
 "your_bonuses" = "Ваши бонусы";
 "wish" = "Пожелание";
 "comment" = "Комментарий";
@@ -136,8 +136,20 @@
 "payment_with_bonus" = "Оплачено бонусом:";
 
 
-"status_arrival_time" = "Время прибытия %d минута";
-"status_arrival_time_plural" = "Время прибытия %d минут";
+"status_arrival_time" = "Через %d мин. приедет";
+"status_arrival_time_plural" = "Через %d мин. приедет";
 "status_driver_waiting" = "Водитель прибыл и ждет вас!";
 "status_travel_started" = "Поездка началась!";
 "status_driver_coming" = "Водитель едет к вам!";
+
+"enter_amount" = "Введите сумму:";
+"order_with_bonus" = "Заказ с бонусами";
+
+"select_language" = "Выберите язык";
+
+"whats_up" = "Что нового?";
+"choosing_comfort" = "Выбор комфорта";
+"how_to_check_d" = "Как мы проверяем водителей";
+"why_prices_increased" = "Почему цены выросли?";
+"parcel_delivery" = "Доставка посылок";
+"why_card_better" = "Почему карта лучше наличных?";

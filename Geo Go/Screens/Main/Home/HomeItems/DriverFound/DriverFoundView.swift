@@ -269,7 +269,7 @@ struct DriverFoundView: View {
                 BottomSheetViewCustom(
                     isOpen: self.$bottomSheetShown,
                     maxHeight: geometry.size.height * 0.6,
-                    minHeight: 294,
+                    minHeight: 282,
                     content: {
                         DriverFoundViewUpperView(viewModel: viewModel)
                     }

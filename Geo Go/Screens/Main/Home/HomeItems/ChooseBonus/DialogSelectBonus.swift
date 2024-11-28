@@ -9,11 +9,11 @@ import SwiftUI
 
 struct DialogSelectBonus: View {
     @ObservedObject var viewModel: MainViewModel
-    @State private var txtAmount: String = ""
-    
+    @State private var inputText: String = ""
+
     var isButtonDisabled: Bool {
         let res = viewModel.bonusResponse
-        let amount: Double = Double(txtAmount) ?? 0
+        let amount: Double = Double(inputText) ?? 0
         if res.balance == 0{
             return true
         }else if (amount <= res.capabilities.max && amount >= res.capabilities.min) {
@@ -25,8 +25,7 @@ struct DialogSelectBonus: View {
     }
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 0){
-            
+        VStack(alignment: .leading, spacing: 12){
             
             Text("your_bonuses")
                 .font(.system(size: 20, weight: .bold))
@@ -35,22 +34,18 @@ struct DialogSelectBonus: View {
             
             let bonus = viewModel.bonusResponse
             Text(formatNumberWithSpaces(bonus.balance))
-                .font(.system(size: 24, weight: .bold))
+                .font(.system(size: 40, weight: .bold))
                 .foregroundColor(.main)
-                .padding(.top, 2)
+            
+            Spacer()
             
             Text("bonus_desc")
                 .font(.system(size: 16, weight: .medium))
-                .padding(.top, 12)
-            
-            
-            Text("bonus_short_desc")
-                .font(.system(size: 16, weight: .medium))
-                .padding(.top, 24)
             
           
             let minText = NSLocalizedString("min", comment: "")
             let maxText = NSLocalizedString("max", comment: "")
+            
             
             let hint = String(
                 format: NSLocalizedString("hint_format", comment: ""),
@@ -59,18 +54,58 @@ struct DialogSelectBonus: View {
                 maxText,
                 Int(bonus.capabilities.max)
             )
-
-
-            TextField(hint, text: $txtAmount)
-                .keyboardType(.decimalPad)
-                .padding()
-                .frame(maxWidth: .infinity, maxHeight: 56)
-                .background(Color(.secondarySystemBackground))
-                .cornerRadius(10)
-                .padding(.top, 8)
-                
+            
+            Text(hint)
+                .foregroundColor(.main)
+                .font(.system(size: 20, weight: .medium))
             
             Spacer()
+
+            VStack(alignment: .leading, spacing: 4){
+                Text("bonus_short_desc")
+                    .foregroundColor(.white)
+                    .font(.system(size: 16, weight: .semibold))
+                
+                HStack(alignment: .bottom){
+                    Text("enter_amount")
+                        .foregroundColor(.white)
+                        .font(.system(size: 16, weight: .regular))
+                        .padding(.top, 24)
+                    
+                    Spacer()
+                    
+                    
+                    Text(getBonusAmount(inputText: inputText))
+                        .foregroundColor(.white)
+                        .font(.system(size: 20, weight: .medium))
+
+                    Spacer()
+                    
+                    Button {
+                        if bonus.balance > bonus.capabilities.max {
+                            inputText = String(Int(bonus.capabilities.max))
+                        }else if bonus.balance <= bonus.capabilities.max
+                                    && bonus.balance >= bonus.capabilities.min {
+                            inputText = String(Int(bonus.balance))
+                        }
+                    } label: {
+                        Image("magnet")
+                            .resizable()
+                            .frame(width: 20, height: 20)
+                    }
+
+
+                }
+            }
+            .padding(16)
+            .background(.main)
+            .cornerRadius(20)
+            .shadow(radius: 12)
+            
+            Spacer()
+            
+            CustomKeyboardView(inputText: $inputText)
+                .background(.blue)
             
             HStack{
                 let addresses = viewModel.locationHolder
@@ -82,27 +117,35 @@ struct DialogSelectBonus: View {
                     viewModel.createOrder(lat: lat,lon: lon, createOrderRequest: createOrder)
 
                 } label: {
-                    GGButton(title: "no_bonus_order", bgColor: .gray)
+                    GGButton(title: "no_bonus_order")
                         .frame(maxWidth: .infinity)
                 }
                 Button {
                     let createOrder =
-                    getCreateOrderRoute(addressList: addresses, bonusInt: Double(txtAmount)!)
+                    getCreateOrderRoute(addressList: addresses, bonusInt: Double(inputText)!)
                     viewModel.createOrder(lat: lat, lon: lon,
                         createOrderRequest: createOrder)
                 } label: {
-                    GGButton(title: "order")
+                    GGButton(title: "order_with_bonus", isDisabled: isButtonDisabled)
                         .frame(maxWidth: .infinity)
-                        .disabled(isButtonDisabled)
-                        .opacity(isButtonDisabled ? 0.5 : 1.0)
                 }
+                .disabled(isButtonDisabled)
+
+
             }
             .frame(maxWidth: .infinity)
+            .padding(.top, 4)
             
             
         }
         .padding(.horizontal, 16)
         .padding(.bottom, 16)
         .edgesIgnoringSafeArea(.bottom)
+    }
+    
+    private func getBonusAmount(inputText: String) -> String {
+        let sign = (UserDefaults.standard.string(forKey: Constants.sign) ?? "uzs").lowercased()
+
+        return "\(inputText)\(inputText.isEmpty ? "" : " \(sign)")"
     }
 }

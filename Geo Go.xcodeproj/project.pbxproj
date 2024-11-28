@@ -89,6 +89,7 @@
 		25B20C2E2C634B0300F50017 /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B20C2D2C634B0300F50017 /* Line.swift */; };
 		25B20C302C6355DF00F50017 /* RateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B20C2F2C6355DF00F50017 /* RateView.swift */; };
 		25B20C322C63978F00F50017 /* DialogToolBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B20C312C63978F00F50017 /* DialogToolBar.swift */; };
+		25B56A852CEA6B59001B58EC /* CustomKeyboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B56A842CEA6B59001B58EC /* CustomKeyboardView.swift */; };
 		25BC2C562C76093B00484F69 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25BC2C552C76093B00484F69 /* WebView.swift */; };
 		25BC2C582C76099600484F69 /* TermsOfUseAndPPScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25BC2C572C76099600484F69 /* TermsOfUseAndPPScreen.swift */; };
 		25BC2C5A2C761E8A00484F69 /* NewsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25BC2C592C761E8A00484F69 /* NewsModel.swift */; };
@@ -206,6 +207,7 @@
 		25B20C2D2C634B0300F50017 /* Line.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
 		25B20C2F2C6355DF00F50017 /* RateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateView.swift; sourceTree = "<group>"; };
 		25B20C312C63978F00F50017 /* DialogToolBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogToolBar.swift; sourceTree = "<group>"; };
+		25B56A842CEA6B59001B58EC /* CustomKeyboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomKeyboardView.swift; sourceTree = "<group>"; };
 		25BC2C552C76093B00484F69 /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		25BC2C572C76099600484F69 /* TermsOfUseAndPPScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsOfUseAndPPScreen.swift; sourceTree = "<group>"; };
 		25BC2C592C761E8A00484F69 /* NewsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsModel.swift; sourceTree = "<group>"; };
@@ -362,6 +364,7 @@
 				256C138A2C99B66F007FAAC9 /* OTPField.swift */,
 				25966BD12CE531E70036D4DF /* ShimmerViewModifier.swift */,
 				25966BDB2CE6D2250036D4DF /* BottomSheetViewCustom.swift */,
+				25B56A842CEA6B59001B58EC /* CustomKeyboardView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -912,6 +915,7 @@
 				25B20C1F2C5F6AC900F50017 /* CancelOrder.swift in Sources */,
 				256877A82C25D1FF0041E16A /* NetworkError.swift in Sources */,
 				25BC2C5A2C761E8A00484F69 /* NewsModel.swift in Sources */,
+				25B56A852CEA6B59001B58EC /* CustomKeyboardView.swift in Sources */,
 				25B20C262C6328C400F50017 /* GGImage.swift in Sources */,
 				2565CF9E2C4547FF00FCC08A /* Algorithms.swift in Sources */,
 				25F91C7F2C807B34001CAAB7 /* Discount.swift in Sources */,
@@ -1083,7 +1087,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_ASSET_PATHS = "\"Geo Go/Preview Content\"";
 				DEVELOPMENT_TEAM = V7RW49DS4B;
 				ENABLE_PREVIEWS = YES;
@@ -1102,7 +1106,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.12.0;
+				MARKETING_VERSION = 1.12.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "geogo-client";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1119,7 +1123,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_ASSET_PATHS = "\"Geo Go/Preview Content\"";
 				DEVELOPMENT_TEAM = V7RW49DS4B;
 				ENABLE_PREVIEWS = YES;
@@ -1138,7 +1142,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.12.0;
+				MARKETING_VERSION = 1.12.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "geogo-client";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;

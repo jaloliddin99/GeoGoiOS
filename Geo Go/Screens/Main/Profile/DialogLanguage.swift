@@ -6,33 +6,56 @@
 //
 
 import SwiftUI
-
 struct DialogLanguage: View {
-    @ObservedObject var languageViewModel: LanguageViewModel
+    @ObservedObject var vm: LanguageViewModel
     let languages = ["O'zbek", "English", "Русский", "Qaraqalpaq"]
     
     var body: some View {
-        NavigationView {
-            List {
-                ForEach(languages, id: \.self) { language in
-                    HStack {
-                        Text(language)
-                        Spacer()
-                        if language == languageViewModel.tempSelectedLanguage ?? languageViewModel.selectedLanguage {
-                            Image(systemName: "checkmark.circle.fill")
-                                .foregroundColor(.blue)
+        ZStack {
+            VStack(alignment: .leading, spacing: 12) {
+                
+                GGText(text: "select_language")
+
+                
+                
+                VStack(spacing: 4) {
+                    ForEach(languages, id: \.self) { option in
+                        HStack(alignment: .center) {
+                            RadioButton(isSelected: (vm.tempSelectedLanguage ?? vm.selectedLanguage) == option)
+                            Text(option)
+                                .foregroundColor(.black)
+                                .lineLimit(2)
+                                .padding(.leading, 12)
+                            Spacer()
+                        }
+                        .frame(height: 40)
+                        .onTapGesture {
+                            vm.tempSelectedLanguage = option
                         }
                     }
-                    .contentShape(Rectangle())
-                    .onTapGesture {
-                        languageViewModel.tempSelectedLanguage = language
-                    }
                 }
+                .padding(.top, 20)
+                
+                Spacer()
+                
+                Button(action: {
+                    vm.saveLanguage()
+                }) {
+                    GGButton(title: "save", isDisabled: vm.tempSelectedLanguage == nil)
+                        .frame(maxWidth: .infinity)
+                }
+                .disabled(vm.tempSelectedLanguage == nil)
             }
-            .navigationBarItems(trailing: Button("Save") {
-                languageViewModel.saveLanguage()
-            })
-            .navigationBarTitle("Select Language", displayMode: .inline)
+            .padding(.horizontal, 16)
         }
+    }
+}
+
+struct DialogLanguage_Previews: PreviewProvider {
+    static var previews: some View {
+        let mockViewModel = LanguageViewModel()
+        mockViewModel.tempSelectedLanguage = "O'zbek"
+        
+        return DialogLanguage(vm: mockViewModel)
     }
 }

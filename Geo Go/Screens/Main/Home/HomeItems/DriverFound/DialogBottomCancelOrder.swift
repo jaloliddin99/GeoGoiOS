@@ -10,7 +10,6 @@ import SwiftUI
 struct DialogBottomCancelOrder: View {
     @StateObject var viewModel = FeedbackViewModel()
     @ObservedObject var mainVm : MainViewModel
-    @State private var contentSize: CGSize = .zero
 
     var body: some View {
         ZStack {
@@ -66,14 +65,12 @@ struct DialogBottomCancelOrder: View {
                 viewModel.getFeedbacks()
             }
             .padding(.horizontal, 16)
-            .padding(.bottom, 32)
             
             if viewModel.isLoading {
                 LoadingView()
             }
             
         }
-        
         
     }
 }

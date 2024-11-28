@@ -7,11 +7,11 @@
 
 import Foundation
 import SwiftUI
-
 class LanguageViewModel: ObservableObject {
     @Published var showLanguageSheet = false
     @Published var selectedLanguage: String
     @Published var tempSelectedLanguage: String?
+    @Published var restartApp = false
     
     init() {
         self.selectedLanguage = UserDefaults.standard.string(forKey: "selectedLanguage") ?? "English"
@@ -21,14 +21,16 @@ class LanguageViewModel: ObservableObject {
         if let newLanguage = tempSelectedLanguage, let languageCode = languageCodes[newLanguage] {
             selectedLanguage = newLanguage
             DataHolder.lang = languageCode
+            UserDefaults.standard.set(newLanguage, forKey: "selectedLanguage")
             UserDefaults.standard.set([languageCode], forKey: "AppleLanguages")
             UserDefaults.standard.synchronize()
             NotificationCenter.default.post(name: NSNotification.Name("LanguageChanged"), object: nil)
-
         }
         showLanguageSheet = false
+        restartApp = true
     }
 }
+
 
 func updateLanguage() {
     let lang = UserDefaults.standard.string(forKey: "selectedLanguage") ?? "English"

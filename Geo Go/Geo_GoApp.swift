@@ -4,27 +4,41 @@
 //
 //  Created by Jaloliddin Abdullaev on 21/06/24.
 //
-
 import SwiftUI
-
 @main
 struct Geo_GoApp: App {
     @StateObject private var languageViewModel = LanguageViewModel()
+    @State private var isRestarting = false
     
     var body: some Scene {
         WindowGroup {
-            if UserDefaults.standard.bool(forKey: Constants.isUserLoggedIn){
-                HomeScreen()
-                    .environmentObject(languageViewModel)
+            if isRestarting {
+                EmptyView()
                     .onAppear {
-                        updateLanguage()
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                            isRestarting = false
+                        }
                     }
             } else {
-                AccessScreen()
-                    .environmentObject(languageViewModel)
-                    .onAppear {
-                        updateLanguage()
-                    }
+                if UserDefaults.standard.bool(forKey: Constants.isUserLoggedIn) {
+                    HomeScreen()
+                        .environmentObject(languageViewModel)
+                        .onAppear {
+                            updateLanguage()
+                        }
+                } else {
+                    AccessScreen()
+                        .environmentObject(languageViewModel)
+                        .onAppear {
+                            updateLanguage()
+                        }
+                }
+            }
+        }
+        .onChange(of: languageViewModel.restartApp) { shouldRestart in
+            if shouldRestart {
+                isRestarting = true
+                languageViewModel.restartApp = false
             }
         }
     }

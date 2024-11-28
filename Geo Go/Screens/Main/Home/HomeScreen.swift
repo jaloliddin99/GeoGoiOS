@@ -27,6 +27,7 @@ struct HomeScreen: View {
             }
             .alert(item: $viewModel.alertItem, content: createAlert)
             .alert(isPresented: $viewModel.showCancelOrderAlert, content: cancelOrderAlert)
+            .alert(isPresented: $viewModel.showAlert, content: duplicateAddressAlert)
             .sheet(isPresented: $viewModel.isSearchDialogShowing) {
                 BottomSheet {
                     SearchScreenDialog(viewModel: viewModel)
@@ -66,6 +67,7 @@ struct HomeScreen: View {
                 guard let loc = location else { return }
                 viewModel.findUserRealPosition(loc: loc.coordinate, offset: markerOffset)
             }
+            
         }
     }
     
@@ -85,6 +87,16 @@ struct HomeScreen: View {
             secondaryButton: .cancel(Text("continue")) {
                 viewModel.showCancelOrderAlert.toggle()
             }
+        )
+    }
+    
+    private func duplicateAddressAlert() -> Alert {
+        Alert(
+            title: Text("Duplicate Address"),
+            message: Text("This address is already the most recent one!"),
+            dismissButton: .default(Text("OK"), action: {
+                viewModel.showAlert = false
+            })
         )
     }
     
@@ -164,7 +176,7 @@ struct HomeScreen: View {
 
     
     
-    private func getDestinationView(for destination: DestinationScreen) -> some View {
+    private func getDestinationView(for destination: DestinationScreen) -> some View{
         @State var paymentMethod: String = getPaymentMethod()
 
         switch destination {
