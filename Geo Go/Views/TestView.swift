@@ -26,13 +26,14 @@ struct WhatsUpView: View {
         GeometryReader { geometry in
             VStack(spacing: 12){
                 HStack(spacing: 12) {
-                    CardView(imageName: "image_1", title: "whats_up", textColor: .black, width: 150)
+                    CardView(imageName: "image_1", title: "whats_up", textColor: .white, width: 150, imageNumber:1)
                     
                     
-                    CardView(imageName: "image_2", title: "choosing_comfort", textColor: .white, width: geometry.size.width-162)
+                    CardView(imageName: "image_2", title: "choosing_comfort", textColor: .white, width: geometry.size.width-162, imageNumber: 2)
                 }
                 
-                CardView(imageName: "image_3", title: "how_to_check_d", textColor: .white, maxLines: 2, width: geometry.size.width)
+                CardView(imageName: "image_3", title: "how_to_check_d", textColor: .white, width: geometry.size.width,
+                         imageNumber: 2)
                 
                 HStack(spacing: 12) {
                     FrameView(imageName: "image_4", title: "why_prices_increased", textColor: .black, width: geometry.size.width-162, bgColor: .colorWs1)
@@ -54,24 +55,31 @@ struct CardView: View {
     var imageName: String
     var title: String
     var textColor: Color
-    var maxLines: Int = 1
     var width: CGFloat
+    var imageNumber = 1
     
     var body: some View {
         ZStack {
-            Image(imageName)
-                .resizable()
-                .scaledToFill()
-                .clipped()
-                .cornerRadius(16)
-                .frame(maxWidth: width, maxHeight: 150)
+            if imageNumber == 1 {
+                Image(imageName)
+                    .resizable()
+                    .scaledToFill()
+                    .frame(maxWidth: 100, maxHeight: 100)
+                    .padding(.bottom, 4)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
+            }else{
+                Image(imageName)
+                    .resizable()
+                    .scaledToFill()
+                    .frame(maxWidth: width, maxHeight: 135)
+            }
+            
             
             VStack {
                 HStack {
                     Text(LocalizedStringKey(title))
-                        .font(.system(size: 16, weight: .medium))
+                        .font(.system(size: 14, weight: .medium))
                         .foregroundColor(textColor)
-                        .lineLimit(maxLines)
                         .padding()
                     
                     Spacer()
@@ -79,9 +87,9 @@ struct CardView: View {
                 Spacer()
             }
         }
-        .background(.colorWs3)
+        .background(.colorWs0)
         .cornerRadius(16)
-        .frame(height: 150)
+        .frame(height: 135)
     }
 }
 
@@ -100,7 +108,7 @@ struct FrameView: View {
                 .edgesIgnoringSafeArea(.all)
 
             Text(LocalizedStringKey(title))
-                .font(.system(size: 16, weight: .medium))
+                .font(.system(size: 14, weight: .medium))
                 .foregroundColor(textColor)
                 .lineLimit(maxLines)
                 .padding()
@@ -112,7 +120,7 @@ struct FrameView: View {
             if isCustomImage {
                 Image(imageName)
                     .resizable()
-                    .frame(width: 135, height: 90)
+                    .frame(width: 120, height: 90)
                     .scaledToFill()
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
 
@@ -127,7 +135,7 @@ struct FrameView: View {
                 
             
         }
-        .frame(height: 150)
+        .frame(height: 135)
         .background(bgColor)
         .cornerRadius(16)
         

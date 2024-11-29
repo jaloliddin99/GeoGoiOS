@@ -33,6 +33,8 @@ struct BottomSheetView<Content: View>: View {
                         .padding(.top, 12)
                         .padding(.bottom, 4)
                     self.content
+                        .simultaneousGesture(DragGesture(), including: .subviews)
+
                 }
                 .frame(width: geometry.size.width, height: self.maxHeight,
                        alignment: .top)
@@ -52,7 +54,6 @@ struct BottomSheetView<Content: View>: View {
                             }
                         }
                         .onEnded { value in
-                            
                             let snapDistance = self.minHeight * 0.25
                             if value.translation.height < -snapDistance {
                                 withAnimation {

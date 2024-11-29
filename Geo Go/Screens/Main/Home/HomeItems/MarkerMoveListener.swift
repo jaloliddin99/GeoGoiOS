@@ -48,7 +48,11 @@ struct CustomMapView: UIViewRepresentable {
             logo: OrnamentConfigurations.hiddenLogoOptions,
             attributionButton: OrnamentConfigurations.hiddenAttributionButtonOptions
         )
-        
+ //       mapView.gestures.panGestureRecognizer.isEnabled = false
+ //       mapView.gestures.options.panEnabled = false
+        mapView.gestures.options.rotateEnabled = false
+        mapView.gestures.options.pitchEnabled = false
+        mapView.gestures.options.pinchEnabled = false
         mapView.ornaments.options = ornamentOptions
     }
     class Coordinator: NSObject {
@@ -77,7 +81,7 @@ struct CustomMapView: UIViewRepresentable {
                 }
             locationChangeObserver = viewModel.$refocusButtonListener
                 .sink { isButtonClicked in
-                    mapView.camera.ease(to: CameraOptions(center: viewModel.location, zoom: 13), duration: 1.0)
+                    mapView.camera.ease(to: CameraOptions(center: viewModel.location, zoom: 17), duration: 0.7)
                 }
             
             
@@ -96,7 +100,7 @@ struct CustomMapView: UIViewRepresentable {
                             self.removeCircleLayers(mapView: mapView)
                             mapView.viewAnnotations.removeAll()
                             
-                            let options = CameraOptions(center: loc, zoom: 13)
+                            let options = CameraOptions(center: loc, zoom: 17)
                             mapView.camera.fly(to: options, duration: 2.0)
                         case 1:
                             let holder = viewModel.locationHolder
@@ -130,7 +134,7 @@ struct CustomMapView: UIViewRepresentable {
                             self.removeRoute(mapView: mapView)
                             mapView.viewAnnotations.removeAll()
                             let loc = viewModel.locationHolder[0].addressLocation
-                            let options = CameraOptions(center: loc, zoom: 15)
+                            let options = CameraOptions(center: loc, zoom: 17)
                             mapView.camera.fly(to: options, duration: 2.0) {_ in
                                 mapView.camera.fly(to: CameraOptions(center: loc, zoom: 11), duration: 8.0)
                             }
