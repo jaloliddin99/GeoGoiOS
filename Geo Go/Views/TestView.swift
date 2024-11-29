@@ -23,40 +23,30 @@ struct EditBtn: View {
 
 struct WhatsUpView: View {
     var body: some View {
-        VStack {
-            GeometryReader { geometry in
+        GeometryReader { geometry in
+            VStack(spacing: 12){
                 HStack(spacing: 12) {
                     CardView(imageName: "image_1", title: "whats_up", textColor: .black, width: 150)
                     
+                    
                     CardView(imageName: "image_2", title: "choosing_comfort", textColor: .white, width: geometry.size.width-162)
                 }
-            }
-            .frame(height: 150)
-            
-            
-            GeometryReader { geometry in
-                CardView(imageName: "image_3", title: "how_to_check_d", textColor: .white, maxLines: 2, width: geometry.size.width)
-            }
-            .frame(height: 150)
-           
                 
-            
-            GeometryReader { geometry in
-                HStack(spacing: 4) {
-                    FrameView(imageName: "image_4", title: "why_prices_increased", textColor: .black, isCard: true, width: geometry.size.width-162, bgImage: "card_1")
+                CardView(imageName: "image_3", title: "how_to_check_d", textColor: .white, maxLines: 2, width: geometry.size.width)
+                
+                HStack(spacing: 12) {
+                    FrameView(imageName: "image_4", title: "why_prices_increased", textColor: .black, width: geometry.size.width-162, bgColor: .colorWs1)
                     
-                    FrameView(imageName: "image_5", title: "parcel_delivery", textColor: .black, isCard: false, width: 150, bgImage: "card_5")
+                    FrameView(imageName: "image_5", title: "parcel_delivery", textColor: .black, width: 150, bgColor: .colorWs2)
+                    
                 }
+                
+                FrameView(imageName: "image_6", title: "why_card_better", textColor: .black, isCustomImage: true, width: geometry.size.width, bgColor: .colorWs3)
             }
-            .frame(height: 150)
-           
-            GeometryReader { geometry in
-                FrameView(imageName: "image_6", title: "why_card_better", textColor: .black, isCard: true, width: geometry.size.width, bgImage: "card_6")
-            }
-            .frame(height: 150)
-           
+            
         }
-        .padding(.bottom, 16)
+        .frame(height: 150)
+        
     }
 }
 
@@ -79,7 +69,7 @@ struct CardView: View {
             VStack {
                 HStack {
                     Text(LocalizedStringKey(title))
-                        .font(.custom("Roboto-Medium", size: 14))
+                        .font(.system(size: 16, weight: .medium))
                         .foregroundColor(textColor)
                         .lineLimit(maxLines)
                         .padding()
@@ -89,6 +79,7 @@ struct CardView: View {
                 Spacer()
             }
         }
+        .background(.colorWs3)
         .cornerRadius(16)
         .frame(height: 150)
     }
@@ -99,58 +90,47 @@ struct FrameView: View {
     var imageName: String
     var title: String
     var textColor: Color
-    var isCard: Bool
+    var isCustomImage: Bool = false
     var maxLines: Int = 2
     let width: CGFloat
-    let bgImage: String
+    let bgColor: Color
     var body: some View {
         ZStack {
-            Image(bgImage)
-                .resizable()
-                .scaledToFill()
-                .cornerRadius(16)
-                .frame(maxWidth: width, maxHeight: 150)
+            bgColor
+                .edgesIgnoringSafeArea(.all)
+
+            Text(LocalizedStringKey(title))
+                .font(.system(size: 16, weight: .medium))
+                .foregroundColor(textColor)
+                .lineLimit(maxLines)
+                .padding()
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+
             
-            VStack {
-                HStack {
-                    Text(LocalizedStringKey(title))
-                        .font(.custom("Roboto-Medium", size: 14))
-                        .foregroundColor(textColor)
-                        .lineLimit(maxLines)
-                        .padding(.top, 10)
-                        .padding(.leading, 10)
-                    
-                    Spacer()
-                }
-                
-                Spacer()
-                
-                if !isCard {
-                    Image(imageName)
-                        .resizable()
-                        .frame(width: 100, height: 100)
-                        .scaledToFit()
-                        .padding(.leading, 10)
-                        .padding(.bottom, 10)
-                    
-                    Spacer()
-                } else {
-                    Spacer()
-                    HStack{
-                        Spacer()
-                        Image(imageName)
-                            .resizable()
-                            .scaledToFill()
-                            .frame(width: 100, height: 100)
-                            
-                            
-                    }
-                        
-                }
+            
+            
+            if isCustomImage {
+                Image(imageName)
+                    .resizable()
+                    .frame(width: 135, height: 90)
+                    .scaledToFill()
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
+
+            }else{
+                Image(imageName)
+                    .resizable()
+                    .frame(width: 90, height: 90)
+                    .scaledToFill()
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
+
             }
+                
+            
         }
-        .cornerRadius(16)
         .frame(height: 150)
+        .background(bgColor)
+        .cornerRadius(16)
+        
        
     }
 }

@@ -82,14 +82,17 @@ struct BottomSheetContent: View{
         VStack(spacing: 8) {
             SearchTextView(viewModel: viewModel)
             
-            ScrollView(.horizontal, showsIndicators: false) {
-                LazyHStack(spacing: 12) {
-                    ForEach(viewModel.addressHistoryResponse ?? [], id: \.id) { orderInfo in
-                        ShortOrderInfoView(viewModel: viewModel, orderInfo: orderInfo)
+            if let list = viewModel.addressHistoryResponse {
+                ScrollView(.horizontal, showsIndicators: false) {
+                    LazyHStack(spacing: 12) {
+                        ForEach(list, id: \.id) { orderInfo in
+                            ShortOrderInfoView(viewModel: viewModel, orderInfo: orderInfo)
+                        }
                     }
                 }
+                .frame(height: 60)
             }
-            .frame(height: 60)
+            
             
             WhatsUpView()
             Spacer()
