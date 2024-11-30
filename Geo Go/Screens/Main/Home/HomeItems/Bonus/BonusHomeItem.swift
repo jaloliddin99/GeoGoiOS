@@ -11,19 +11,19 @@ struct BonusHomeItem: View {
     @ObservedObject var viewModel: MainViewModel
     var body: some View {
         HStack{
-            Text(formatNumberWithSpaces(viewModel.bonusResponse.balance))
-                .font(.system(size: 18, weight: .semibold))
+            Text(formatNumberWtCurrency(viewModel.bonusResponse.balance))
+                .font(.system(size: 16, weight: .semibold))
                 .foregroundColor(.txt)
             
             Image("menu_icon")
                 .resizable()
                 .scaledToFit()
-                .frame(width: 36, height: 36)
+                .frame(width: 32, height: 32)
         }
-        .frame(maxHeight: 56, alignment: .center)
+        .frame(maxHeight: 48, alignment: .center)
         .padding(.horizontal, 12)
         .background(.white)
-        .cornerRadius(28)
+        .cornerRadius(16)
         .shadow(radius: 2)
     }
 }

@@ -13,16 +13,17 @@ struct OrderGoView: View {
     @State private var selectedItem: ServiceTariff?
     
     var body: some View {
-        VStack(spacing: 12){
+        VStack(spacing: 0){
             Spacer()
             HStack{
                 Button(action: {
                     mainViewModel.retainFirstElement()
                     mainViewModel.setStatus(value: 0)
                 }, label: {
-                    DrawerBtn(name: "arrow.left", fromAssets: false)
+                    DrawerBtn(name: "left-arrow", fromAssets: true, color: .txt)
                 })
                 Spacer()
+                locationButton
             }
             .padding(.horizontal, 12)
             
@@ -87,6 +88,15 @@ struct OrderGoView: View {
         }
         
     }
+    
+    var locationButton: some View {
+        Button(action: {
+            mainViewModel.findUserRealPosition(loc: mainViewModel.location)
+        }) {
+            DrawerBtn(name: "location.fill", fromAssets: false, color: .txt)
+        }
+       
+    }
 }
 
 struct AddressField: View {
@@ -133,28 +143,7 @@ struct AddressField: View {
                     }else if count == 2 {
                         Text(mainViewModel.locationHolder[1].addressName)
                             .fontWeight(.medium)
-                            .lineLimit(1)
                             .foregroundColor(.txt)
-                        
-                        Spacer()
-                        Button(action: {
-                            mainViewModel.isSearchDialogShowing = true
-                        }, label: {
-                            Image(systemName: "plus")
-                                .foregroundColor(.main)
-                        })
-                    }else if count > 2 {
-                        Button(action: {
-                            showAddressesDialog.toggle()
-                        }, label: {
-                            let text = String(format: NSLocalizedString("picked_locations", comment: ""), count-1)
-                            Text(text)
-                                .fontWeight(.medium)
-                                .foregroundColor(.txt)
-                                .lineLimit(1)
-                        }).sheet(isPresented: $showAddressesDialog){
-                            DialogAddressLists(dialogAddressList: $showAddressesDialog, viewModel: mainViewModel)
-                        }
                         
                         Spacer()
                         Button(action: {
@@ -168,7 +157,6 @@ struct AddressField: View {
                     }
                 }
             }
-            
         }
         .padding(12)
         .background(RoundedRectangle(cornerRadius: 12)

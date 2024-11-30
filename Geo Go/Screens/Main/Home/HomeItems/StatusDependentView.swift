@@ -8,16 +8,17 @@
 import SwiftUI
 
 struct StatusDependentView: View {
-    @Binding var markerOffset: CGFloat
     @ObservedObject var viewModel: MainViewModel
 
     var body: some View {
         switch viewModel.status {
             case 0:
-                DefaultContentView(markerOffset: $markerOffset, viewModel: viewModel)
+                DefaultContentView(viewModel: viewModel)
+                
             case 1:
                 OrderGoView(mainViewModel: viewModel)
                     .onAppear(perform: handleOrderGoViewAppearance)
+                
             case 2:
                 SearchDriver(viewModel: viewModel)
             case 3:
@@ -27,9 +28,12 @@ struct StatusDependentView: View {
             case 5:
                 DriverFoundView(viewModel: viewModel)
             default:
-                DefaultContentView(markerOffset: $markerOffset, viewModel: viewModel)
+                DefaultContentView(viewModel: viewModel)
         }
+        
     }
+    
+    
     
     private func handleOrderGoViewAppearance() {
         if !viewModel.hasOrderGoViewAppeared {

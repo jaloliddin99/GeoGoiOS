@@ -10,15 +10,16 @@ import SwiftUI
 struct DrawerBtn: View {
     let name: String
     var fromAssets: Bool
-    
     var color = Color.main
     var body: some View {
         if fromAssets {
             Image(name)
                 .resizable()
+                .renderingMode(.template)
+                .foregroundColor(color)
                 .aspectRatio(contentMode: .fit)
                 .padding(10)
-                .frame(width: 56, height: 56)
+                .frame(width: 48, height: 48)
                 .background(Circle()
                     .fill(Color.white)
                     .shadow(radius: 2))
@@ -27,8 +28,8 @@ struct DrawerBtn: View {
                 .resizable()
                 .foregroundColor(color)
                 .aspectRatio(contentMode: .fit)
-                .padding(16)
-                .frame(width: 56, height: 56)
+                .padding(12)
+                .frame(width: 48, height: 48)
                 .background(Circle()
                     .fill(Color.white)
                     .shadow(radius: 2))

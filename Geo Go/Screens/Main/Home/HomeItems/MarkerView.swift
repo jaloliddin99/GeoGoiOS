@@ -12,14 +12,13 @@ import Lottie
 
 struct MarkerView: View {
     
-    @Binding var markerOffset: CGFloat
     @ObservedObject var viewModel: MainViewModel
 
     
     var body: some View {
         VStack(alignment: .center, spacing: 0) {
             
-            MainMarkerBox(markerOffset: $markerOffset, viewModel: viewModel)
+            MainMarkerBox(viewModel: viewModel)
                 .background(Color.blue)
                 .cornerRadius(12)
                 .frame(maxHeight: 56)
@@ -35,15 +34,14 @@ struct MarkerView: View {
 }
 
 struct MainMarkerBox: View {
-    @Binding var markerOffset: CGFloat
     @ObservedObject var viewModel: MainViewModel
 
 
     var body: some View {
         HStack(alignment: .center) {
             ZStack{
-                let isShowingMarker: Double = markerOffset.isEqual(to: 0) ? 1 : 0
-                let isShowingLottie: Double = markerOffset.isEqual(to: 0) ? 0 : 1
+                let isShowingMarker: Double = viewModel.markerOffset.isEqual(to: 0) ? 1 : 0
+                let isShowingLottie: Double = viewModel.markerOffset.isEqual(to: 0) ? 0 : 1
                 MinuteTextView()
                     .opacity(isShowingMarker)
                 LottieEmptyStateView(fileName: "marker_location")
@@ -54,7 +52,7 @@ struct MainMarkerBox: View {
                     .opacity(isShowingLottie)
             }
             
-            AddressView(viewModel: viewModel, markerOffset: $markerOffset)
+            AddressView(viewModel: viewModel, markerOffset: $viewModel.markerOffset)
                 .padding(.leading, 12)
                 .padding(.trailing, 12)
         }

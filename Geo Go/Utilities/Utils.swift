@@ -15,6 +15,12 @@ func formatNumberWithSpaces(_ number: Double) -> String {
     return "\(formatter.string(from: NSNumber(value: number))!) \(UserDefaults.standard.string(forKey: Constants.sign)!.lowercased())"
 }
 
+func formatNumberWtCurrency(_ number: Double) -> String {
+    let formatter = NumberFormatter()
+    formatter.numberStyle = .decimal
+    formatter.groupingSeparator = " "
+    return formatter.string(from: NSNumber(value: number))!
+}
 
 func getCreateOrderRoute(addressList: [UserSelectedAddress], bonusInt: Double) -> CreateOrderRequest {
     var routeORDER = [ClientAddress]()

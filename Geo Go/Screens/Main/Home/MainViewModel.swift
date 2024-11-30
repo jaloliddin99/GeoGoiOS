@@ -11,7 +11,10 @@ import SwiftUI
 @_spi(Experimental) import MapboxMaps
 
 final class MainViewModel: ObservableObject{
-    
+    @Published var isDrawerOpen = false
+
+    @Published var markerOffset: CGFloat = 0
+
     @Published var isSearchDialogShowing = false
     @Published var isShowBonusDialog = false
     @Published var isShowingMain = false
@@ -40,6 +43,7 @@ final class MainViewModel: ObservableObject{
     init() {
         MapboxOptions.accessToken = "pk.eyJ1IjoiZ2VvZ29hcHAiLCJhIjoiY2xnaHJleWNyMGRvczNkbGY2Ym41eHY3NyJ9.xI3D0Q4YyqNxCl8j1c7kZg"
         initMain()
+        getNearDrivers()
     }
     
     
@@ -56,10 +60,10 @@ final class MainViewModel: ObservableObject{
         getClientOrders()
     }
     
-    func findUserRealPosition(loc: CLLocationCoordinate2D, offset: CGFloat) {
+    func findUserRealPosition(loc: CLLocationCoordinate2D) {
         location = loc
         refocusButtonListener.toggle()
-        reverseGeocodeIfNeeded(offset: offset)
+        reverseGeocodeIfNeeded(offset: markerOffset)
     }
     
     
@@ -179,7 +183,6 @@ final class MainViewModel: ObservableObject{
                 "Authentication": responseDetails.hmac,
                 "X-Hive-GPS-Position": "\(location.latitude) \(location.longitude)",
             ],
-            isPrintable: true,
             completed: { [weak self] (result: Result<DateOrderHistory, APError>) in
                 self?.handleDateOrderHistoryResponse(result, with: id)
             }
@@ -236,6 +239,41 @@ final class MainViewModel: ObservableObject{
         )
     }
     
+    
+    func getNearDrivers(){
+        
+        guard let responseDetails = generateResponse?.generateHmacData(id: "drivers") else { return }
+        
+       
+        NetworkService.shared.sendRequest(
+            url: responseDetails.url,
+            method: "POST",
+            headers: [
+                "Accept-Language": DataHolder.lang,
+                "Hive-Profile": Constants.HIVE_PROFILE,
+                "Date": responseDetails.data,
+                "Authentication": responseDetails.hmac,
+                "X-Hive-GPS-Position": "\(location.latitude) \(location.longitude)",
+            ],
+            isPrintable: true,
+            completed: handleNearDriversResponse as (Result<BonusResponse, APError>) -> Void)
+        
+        
+    }
+    
+    private func handleNearDriversResponse<T: Decodable>(_ result: Result<T, APError>) {
+        DispatchQueue.main.async {
+            switch result {
+                case .success(let response): break
+                    
+                    
+                case .failure(_): break
+                    
+            }
+        }
+    }
+    
+    
     private func handleserviceEstimateRideRequestResponse<T: Decodable>(_ result: Result<T, APError>, with body: EstimateRideRequest) {
         DispatchQueue.main.async { [self] in
             self.isLoading = false
@@ -288,6 +326,7 @@ final class MainViewModel: ObservableObject{
                 "Date": responseDetails.data,
                 "Authentication": responseDetails.hmac,
             ],
+            isPrintable: true,
             completed: handleServiceTariffRequestResponse as (Result<ServiceResponse, APError>) -> Void)
     }
     
@@ -310,7 +349,7 @@ final class MainViewModel: ObservableObject{
                             let estimate = getEstimateRideRequest(
                                 serviceTariff: tariff,
                                 route: mapToRouteCoordinates(addresses: locationHolder))
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
                                 self.serviceEstimateRide(body: estimate)
                             }
                         })

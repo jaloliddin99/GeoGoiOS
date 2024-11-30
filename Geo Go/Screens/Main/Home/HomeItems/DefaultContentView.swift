@@ -9,26 +9,30 @@ import SwiftUI
 
 struct DefaultContentView: View {
     
-    @Binding var markerOffset: CGFloat
     @ObservedObject var viewModel: MainViewModel
 
     
     var body: some View {
-        MarkerView(markerOffset: $markerOffset, viewModel: viewModel)
-            .offset(y: markerOffset)
-            .animation(.easeInOut, value: markerOffset)
-        
-        locationButton
-        BottomSheetView(isOpen: $viewModel.bottomSheetShown,
-                        minHeight: 250,
-                        maxHeight: UIScreen.main.bounds.height) {
-            BottomSheetContent(viewModel: viewModel)
-        }.edgesIgnoringSafeArea(.bottom)
+    
+        ZStack{
+            drawerAndBonusButton()
+            
+            MarkerView(viewModel: viewModel)
+                .offset(y: viewModel.markerOffset)
+                .animation(.easeInOut, value: viewModel.markerOffset)
+            
+            locationButton
+            BottomSheetView(isOpen: $viewModel.bottomSheetShown,
+                            minHeight: 250,
+                            maxHeight: UIScreen.main.bounds.height) {
+                BottomSheetContent(viewModel: viewModel)
+            }.edgesIgnoringSafeArea(.bottom)
+        }
     }
 
-    private var locationButton: some View {
+    var locationButton: some View {
         Button(action: {
-            viewModel.findUserRealPosition(loc: viewModel.location,  offset: markerOffset)
+            viewModel.findUserRealPosition(loc: viewModel.location)
         }) {
             DrawerBtn(name: "location.fill", fromAssets: false, color: .txt)
         }
@@ -37,6 +41,29 @@ struct DefaultContentView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
         .ignoresSafeArea()
     }
+    
+    private func drawerAndBonusButton() -> some View {
+        HStack{
+            Button(action: {
+                withAnimation {
+                    viewModel.isDrawerOpen.toggle()
+                }
+            }) {
+                DrawerBtn(name: "menu_navigation", fromAssets: true)
+            }
+            Spacer()
+            Button(action: {
+                viewModel.serviceTariffRequest()
+                viewModel.showBonusDialog.toggle()
+            }, label: {
+                BonusHomeItem(viewModel: viewModel)
+            })
+        }
+        .padding(.top, 12)
+        .padding(.horizontal, 16)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+    }
+    
     
     
     

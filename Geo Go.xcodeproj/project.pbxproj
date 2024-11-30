@@ -120,6 +120,9 @@
 		25F91C7F2C807B34001CAAB7 /* Discount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F91C7E2C807B34001CAAB7 /* Discount.swift */; };
 		25F91C812C807EA3001CAAB7 /* empty_list.json in Resources */ = {isa = PBXBuildFile; fileRef = 25F91C802C807EA3001CAAB7 /* empty_list.json */; };
 		25F91C832C8086E1001CAAB7 /* DiscountVm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F91C822C8086E1001CAAB7 /* DiscountVm.swift */; };
+		25F9E97A2CFAAC0A00475A57 /* SocketIO in Frameworks */ = {isa = PBXBuildFile; productRef = 25F9E9792CFAAC0A00475A57 /* SocketIO */; };
+		25F9E97D2CFAAD2400475A57 /* CustomSocketManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F9E97C2CFAAD2400475A57 /* CustomSocketManager.swift */; };
+		25F9E97F2CFAAEBA00475A57 /* SocketViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F9E97E2CFAAEB600475A57 /* SocketViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -238,6 +241,8 @@
 		25F91C7E2C807B34001CAAB7 /* Discount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Discount.swift; sourceTree = "<group>"; };
 		25F91C802C807EA3001CAAB7 /* empty_list.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = empty_list.json; sourceTree = "<group>"; };
 		25F91C822C8086E1001CAAB7 /* DiscountVm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscountVm.swift; sourceTree = "<group>"; };
+		25F9E97C2CFAAD2400475A57 /* CustomSocketManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSocketManager.swift; sourceTree = "<group>"; };
+		25F9E97E2CFAAEB600475A57 /* SocketViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -248,6 +253,7 @@
 				256EAECB2C2F1CE400FA7A5C /* OTPView in Frameworks */,
 				256EAEBB2C2D9A8100FA7A5C /* MapboxMaps in Frameworks */,
 				256877B42C2D5F5D0041E16A /* iPhoneNumberField in Frameworks */,
+				25F9E97A2CFAAC0A00475A57 /* SocketIO in Frameworks */,
 				25BFDB602C33EB9700D73993 /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -325,6 +331,7 @@
 		256877702C258B190041E16A /* Geo Go */ = {
 			isa = PBXGroup;
 			children = (
+				25F9E97B2CFAAD1100475A57 /* Socket */,
 				256877812C25C1300041E16A /* Utilities */,
 				256877B52C2D6DC60041E16A /* Geo-Go-Info.plist */,
 				256877A02C25D1230041E16A /* Model */,
@@ -749,6 +756,15 @@
 			path = Bonus;
 			sourceTree = "<group>";
 		};
+		25F9E97B2CFAAD1100475A57 /* Socket */ = {
+			isa = PBXGroup;
+			children = (
+				25F9E97E2CFAAEB600475A57 /* SocketViewModel.swift */,
+				25F9E97C2CFAAD2400475A57 /* CustomSocketManager.swift */,
+			);
+			path = Socket;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -770,6 +786,7 @@
 				256EAEBA2C2D9A8100FA7A5C /* MapboxMaps */,
 				256EAECA2C2F1CE400FA7A5C /* OTPView */,
 				25BFDB5F2C33EB9700D73993 /* Lottie */,
+				25F9E9792CFAAC0A00475A57 /* SocketIO */,
 			);
 			productName = "Geo Go";
 			productReference = 2568776E2C258B190041E16A /* Geo Go.app */;
@@ -807,6 +824,7 @@
 				256EAEB92C2D9A8100FA7A5C /* XCRemoteSwiftPackageReference "mapbox-maps-ios" */,
 				256EAEC92C2F1CE400FA7A5C /* XCRemoteSwiftPackageReference "otpview-swiftui" */,
 				25BFDB5E2C33EB9700D73993 /* XCRemoteSwiftPackageReference "lottie-spm" */,
+				25F9E9782CFAAC0900475A57 /* XCRemoteSwiftPackageReference "socket" */,
 			);
 			productRefGroup = 2568776F2C258B190041E16A /* Products */;
 			projectDirPath = "";
@@ -878,6 +896,7 @@
 				25B20C2C2C6347B000F50017 /* GGText.swift in Sources */,
 				256C138B2C99B670007FAAC9 /* OTPField.swift in Sources */,
 				25BFDB7D2C35CFA400D73993 /* OrderGoView.swift in Sources */,
+				25F9E97D2CFAAD2400475A57 /* CustomSocketManager.swift in Sources */,
 				25BFDB682C345DF700D73993 /* WhatsNewView.swift in Sources */,
 				25BC2C562C76093B00484F69 /* WebView.swift in Sources */,
 				25BFDB732C34891800D73993 /* AddressHistory.swift in Sources */,
@@ -889,6 +908,7 @@
 				25966BDC2CE6D2250036D4DF /* BottomSheetViewCustom.swift in Sources */,
 				2565CF952C43D62600FCC08A /* DialogAddressLists.swift in Sources */,
 				25B20C292C63464900F50017 /* FinishOrder.swift in Sources */,
+				25F9E97F2CFAAEBA00475A57 /* SocketViewModel.swift in Sources */,
 				25BFDB7A2C357BC800D73993 /* ElasticSearchViewModel.swift in Sources */,
 				2565CFAE2C5BA85F00FCC08A /* SearchDriver.swift in Sources */,
 				25A51DD82C6CE57700C2FBB0 /* DiscountScreen.swift in Sources */,
@@ -1208,6 +1228,14 @@
 				minimumVersion = 4.4.3;
 			};
 		};
+		25F9E9782CFAAC0900475A57 /* XCRemoteSwiftPackageReference "socket" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/socketio/socket.io-client-swift";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1230,6 +1258,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 25BFDB5E2C33EB9700D73993 /* XCRemoteSwiftPackageReference "lottie-spm" */;
 			productName = Lottie;
+		};
+		25F9E9792CFAAC0A00475A57 /* SocketIO */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 25F9E9782CFAAC0900475A57 /* XCRemoteSwiftPackageReference "socket" */;
+			productName = SocketIO;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

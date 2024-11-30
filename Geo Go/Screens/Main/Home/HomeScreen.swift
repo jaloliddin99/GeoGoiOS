@@ -13,15 +13,12 @@ struct HomeScreen: View {
     @StateObject var viewModel = MainViewModel()
     @StateObject var locationManager = LocationManager()
     
-    @State private var isDrawerOpen = false
-    @State private var markerOffset: CGFloat = 0
     @State private var selectedScreen: DestinationScreen? = nil
     
     var body: some View {
         NavigationStack {
             ZStack {
                 mapLayer
-                drawerAndBonusButton()
                 contentViews
                 drawerLayer
             }
@@ -65,7 +62,7 @@ struct HomeScreen: View {
             }
             .onReceive(locationManager.$location) { location in
                 guard let loc = location else { return }
-                viewModel.findUserRealPosition(loc: loc.coordinate, offset: markerOffset)
+                viewModel.findUserRealPosition(loc: loc.coordinate)
             }
             
         }
@@ -105,59 +102,36 @@ struct HomeScreen: View {
         let uri = StyleURI(rawValue: "mapbox://styles/geogoapp/clghsbol4005301r7dqsxfu1n")!
         let cameraOptions = CameraOptions(center: viewModel.location, zoom: 17)
         
-        return CustomMapView(markerOffset: $markerOffset,
+        return CustomMapView(markerOffset: $viewModel.markerOffset,
                              currentCenterCoordinate: $viewModel.selectedLocation,
                              viewModel: viewModel,
                              vp: cameraOptions,
                              mapStyle: uri)
         .ignoresSafeArea()
-        .onChange(of: markerOffset) {
-            viewModel.reverseGeocodeIfNeeded(offset: markerOffset)
+        .onChange(of: viewModel.markerOffset) {
+            viewModel.reverseGeocodeIfNeeded(offset: viewModel.markerOffset)
         }
-    }
-    
-    
-    private func drawerAndBonusButton() -> some View {
-        HStack{
-            Button(action: {
-                withAnimation {
-                    isDrawerOpen.toggle()
-                }
-            }) {
-                DrawerBtn(name: "menu_navigation", fromAssets: true)
-            }
-            Spacer()
-            Button(action: {
-                viewModel.serviceTariffRequest()
-                viewModel.showBonusDialog.toggle()
-            }, label: {
-                BonusHomeItem(viewModel: viewModel)
-            })
-        }
-        .padding(.top, 12)
-        .padding(.horizontal, 16)
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
     }
 
  
     private var contentViews: some View {
-        StatusDependentView(markerOffset: $markerOffset, viewModel: viewModel)
+        StatusDependentView(viewModel: viewModel)
     }
 
     
     private var drawerLayer: some View {
         ZStack {
-            if isDrawerOpen {
+            if viewModel.isDrawerOpen {
                 Color.black.opacity(0.5)
                     .edgesIgnoringSafeArea(.all)
                     .onTapGesture {
                         withAnimation {
-                            isDrawerOpen.toggle()
+                            viewModel.isDrawerOpen.toggle()
                         }
                     }
             }
             
-            HomeScreenDrawer(isOpen: $isDrawerOpen, selectedScreen: $selectedScreen,
+            HomeScreenDrawer(isOpen: $viewModel.isDrawerOpen, selectedScreen: $selectedScreen,
                              viewModel: viewModel)
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
             .ignoresSafeArea()
