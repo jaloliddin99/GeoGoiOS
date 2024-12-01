@@ -1,12 +1,11 @@
 {
   "images" : [
     {
-      "filename" : "car_komfort.png",
+      "filename" : "car_comfort.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "car_komfort 1.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
