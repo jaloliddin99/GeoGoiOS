@@ -103,7 +103,6 @@ struct ShortOrderInfoView: View {
             let lat = address.position?.lat ?? 0.0
             let lon = address.position?.lon ?? 0.0
             
-            print("Lattitude and longitude` \(lat), \(lon)")
             let location = CLLocationCoordinate2D(latitude: lat, longitude: lon)
             let uAddress = UserSelectedAddress(addressName: name, addressLocation: location)
             viewModel.locationUpdated(uAddress)

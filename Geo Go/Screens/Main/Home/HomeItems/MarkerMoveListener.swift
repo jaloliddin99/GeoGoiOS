@@ -62,6 +62,14 @@ struct CustomMapView: UIViewRepresentable {
         private var cameraIdleObserver: Cancelable?
         private var locationChangeObserver: Cancellable?
         
+        @MainActor @Published private var isEdgeInsetsChanging: Bool = false
+        
+        func updateEdgeInsets(isChanging: Bool) {
+            Task { @MainActor in
+                self.isEdgeInsetsChanging = isChanging
+            }
+        }
+
         init(_ parent: CustomMapView) {
             self.parent = parent
         }
@@ -91,6 +99,8 @@ struct CustomMapView: UIViewRepresentable {
 
                     switch status {
                         case 0:
+                            
+                            self.updateEdgeInsets(isChanging: true)
                             self.removeRoute(mapView: mapView)
                             self.removeCarMarkerAnnotation(mapView: mapView)
                             self.removeClientMarkerAnnotation(mapView: mapView)
@@ -98,13 +108,19 @@ struct CustomMapView: UIViewRepresentable {
                             self.removeCircleLayers(mapView: mapView)
                             mapView.viewAnnotations.removeAll()
                             
-                            let options = CameraOptions(center: loc, zoom: 17)
-                            mapView.camera.fly(to: options, duration: 2.0)
+                            var options = CameraOptions(center: loc, zoom: 17)
+                            self.configureCamera(mapView: mapView, padding: 0)
+                            let edgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+                            options.padding = edgeInsets
+                            mapView.camera.fly(to: options, duration: 0.4){_ in
+                                self.updateEdgeInsets(isChanging: false)
+                            }
+
                         case 1:
                             let holder = viewModel.locationHolder
                             
                             if holder.count == 1 {
-                                self.addClientMarkerAnnotation(mapView: mapView, clientAddress: cSelectedPoint)
+                                self.configureCamera(mapView: mapView, padding: 250)
                             }else {
                                 let pointFeatures = holder.map { coordinate -> Feature in
                                     return Feature(geometry: .point(Point(coordinate.addressLocation)))
@@ -177,19 +193,30 @@ struct CustomMapView: UIViewRepresentable {
         func setupObserver(mapView: MapView) {
             
             cameraChangedObserver = mapView.mapboxMap.onCameraChanged.observe { [weak self] _ in
-                guard let self = self else { return }
+               
                 DispatchQueue.main.async {
-                    self.parent.markerOffset = -50
+                    print("cameraChangedObserver -\(String(describing: self?.isEdgeInsetsChanging))")
+                    if ((self?.isEdgeInsetsChanging) == false) {
+                        guard let self = self else { return }
+                        self.parent.markerOffset = -50
+                    }
                 }
             }
             
             cameraIdleObserver = mapView.mapboxMap.onMapIdle.observe { [weak self] _ in
-                guard let self = self else { return }
+                
                 DispatchQueue.main.async {
-                    self.parent.markerOffset = 0
-                    let center = mapView.mapboxMap.cameraState.center
-                    self.parent.currentCenterCoordinate = center
+                    print("cameraIdleObserver -\(String(describing: self?.isEdgeInsetsChanging))")
+                    
+                    if ((self?.isEdgeInsetsChanging) == false) {
+                        guard let self = self else { return }
+                        self.parent.markerOffset = 0
+                        let center = mapView.mapboxMap.cameraState.center
+                        self.parent.currentCenterCoordinate = center
+                    }
                 }
+                
+               
             }
         }
         
@@ -274,6 +301,20 @@ struct CustomMapView: UIViewRepresentable {
                     maxZoom: nil,
                     offset: nil) else { return }
                 mapView.camera.fly(to: camera, duration: 2.0)
+            }
+        }
+        
+        private func configureCamera(mapView: MapView, padding: CGFloat) {
+            self.updateEdgeInsets(isChanging: true)
+            let currentCamera = mapView.mapboxMap.cameraState
+            
+            let edgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: padding, right: 0)
+            
+            var cameraOptions = CameraOptions(center: currentCamera.center, zoom: currentCamera.zoom, bearing: currentCamera.bearing, pitch: currentCamera.pitch)
+            cameraOptions.padding = edgeInsets
+            
+            mapView.camera.fly(to: cameraOptions, duration: 0.4){_ in
+                self.updateEdgeInsets(isChanging: false)
             }
         }
         func addViewAnnotation(coordinate: CLLocationCoordinate2D, mapView: MapView, address: String) {

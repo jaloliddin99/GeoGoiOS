@@ -29,7 +29,7 @@ final class MainViewModel: ObservableObject{
     @Published var selectedLocation: CLLocationCoordinate2D = DataHolder.location
     @Published var refocusButtonListener = false
     
-    @Published var orderGoViewHeight: CGFloat = 200
+    @Published var orderGoViewHeight: CGFloat = 250
     @Published var discountModel: DiscountModel?
     var hasOrderGoViewAppeared = false
     
@@ -69,7 +69,7 @@ final class MainViewModel: ObservableObject{
     
     
     func reverseGeocodeIfNeeded(offset: CGFloat) {
-        if offset == 0 && status == 0 {
+        if (offset == 0 && status == 0) || (offset == 0 && status == 1) {
             reverseLocation(lat: selectedLocation.latitude, lon: selectedLocation.longitude)
         }
     }
@@ -106,9 +106,15 @@ final class MainViewModel: ObservableObject{
                         let name = appetizers.display_name ?? "Point on the map"
                         let lat = Double(appetizers.lat) ?? 0.0
                         let lon = Double(appetizers.lon) ?? 0.0
-                        locationHolder.removeAll()
-                        locationUpdated(UserSelectedAddress(addressName: name, addressLocation: CLLocationCoordinate2D(latitude: lat, longitude: lon)))
-                        
+                        let loc = CLLocationCoordinate2D(latitude: lat, longitude: lon)
+                        let model = UserSelectedAddress(addressName: name, addressLocation: loc)
+                        if status == 0 {
+                            locationHolder.removeAll()
+                            locationUpdated(model)
+                        }else if status == 1 {
+                            locationUpdated(model, true, 0)
+                            serviceTariffRequest()
+                        }
                     }
                     
                     
@@ -246,7 +252,6 @@ final class MainViewModel: ObservableObject{
             "tariff": tariffId
         ]
 
-        print("bodydawdaw \(body)")
         guard let jsonData = try? JSONSerialization.data(withJSONObject: body, options: []) else {
             return
         }
@@ -266,7 +271,7 @@ final class MainViewModel: ObservableObject{
             completed: { [weak self] (result: Result<[NDriver], APError>) in
                 self?.handleNearDriversResponse(result, with: tariffId)
             }
-            )
+       )
     }
     
     @Published var nearDrivers: [NDriver]?
@@ -366,7 +371,7 @@ final class MainViewModel: ObservableObject{
                                 serviceTariff: tariff,
                                 route: mapToRouteCoordinates(addresses: locationHolder))
                             
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
                                 self.serviceEstimateRide(body: estimate)
                                 self.getNearDrivers(tariffId: tariff.id)
                             }
@@ -701,7 +706,7 @@ final class MainViewModel: ObservableObject{
     @Published var showAlert: Bool = false
 
     
-    func locationUpdated(_ address: UserSelectedAddress) {
+    func locationUpdated(_ address: UserSelectedAddress, _ isSetIndex: Bool = false, _ index: Int = 0){
         if let lastAddress = locationHolder.last {
             if lastAddress.addressLocation.latitude == address.addressLocation.latitude &&
                 lastAddress.addressLocation.longitude == address.addressLocation.longitude {
@@ -709,7 +714,11 @@ final class MainViewModel: ObservableObject{
                 return
             }
         }
-        locationHolder.append(address)
+        if isSetIndex{
+            locationHolder[index] = address
+        }else{
+            locationHolder.append(address)
+        }
         if status == 1 && locationHolder.count > 2 {
             requestToDrawRoute(list: mapToRouteCoordinatesLatLng(coordinates: locationHolder))
         }

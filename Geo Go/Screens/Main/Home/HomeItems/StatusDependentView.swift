@@ -38,8 +38,6 @@ struct StatusDependentView: View {
     private func handleOrderGoViewAppearance() {
         if !viewModel.hasOrderGoViewAppeared {
             viewModel.serviceTariffRequest()
-            print("Lattitude and longitudemmmm")
-
             viewModel.requestToDrawRoute(list: mapToRouteCoordinatesLatLng(coordinates: viewModel.locationHolder))
             viewModel.hasOrderGoViewAppeared = true
         }

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Shimmer
 
 struct OrderGoView: View {
     @ObservedObject var mainViewModel: MainViewModel
@@ -19,21 +20,22 @@ struct OrderGoView: View {
     @State private var topBarHeight: CGFloat = 0
     @State private var mainContentHeight: CGFloat = 0
 
-    
     var body: some View {
         VStack(spacing: 0) {
             Spacer()
             topBar
             mainContent()
         }
+        .onReceive(mainViewModel.$tariff) { updateSelectedItem(from: $0) }
         .ignoresSafeArea()
     }
     
     private var topBar: some View {
         HStack {
             Button(action: {
-                mainViewModel.retainFirstElement()
+                isButtonDisabled = true
                 mainViewModel.setStatus(value: 0)
+                mainViewModel.retainFirstElement()
             }) {
                 DrawerBtn(name: "left-arrow", fromAssets: true, color: .txt)
             }
@@ -65,13 +67,11 @@ struct OrderGoView: View {
                                      tariffs: [ServiceTariff]?) -> some View {
         ScrollViewReader { proxy in
             ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 15) {
+                HStack(spacing: 10) {
                     ForEach(array, id: \.element.id) { index, orderInfo in
-                        CarSelectionView(item: orderInfo, isSelected: selectedTab == index,
-                                         animation: animation) {
+                        CarSelectionView(item: orderInfo, isSelected: selectedTab == index, animation: animation) {
                             handleCarSelection(index: index, orderInfo: orderInfo, tariffs: tariffs, proxy: proxy)
-                        }
-                                         .id(index)
+                        }.id(index)
                     }
                 }
                 .padding()
@@ -116,10 +116,14 @@ struct OrderGoView: View {
     }
     
     private func updateButtonState() {
-        if let selectedItem, selectedItem.minArriveTime == nil || selectedItem.minArriveTime == -1 {
+        if let selectedItem {
+            if selectedItem.minArriveTime == nil || selectedItem.minArriveTime == -1 {
+                isButtonDisabled = true
+            }else{
+                isButtonDisabled = false
+            }
+        }else{
             isButtonDisabled = true
-        } else {
-            isButtonDisabled = false
         }
     }
     
@@ -130,6 +134,7 @@ struct OrderGoView: View {
         let name = convertTariff(lang: DataHolder.lang, data: selectedItem!)
         UserDefaults.standard.set(name, forKey: Constants.TARIFF)
         UserDefaults.standard.set(selectedItem!.icon, forKey: Constants.TARIFF_ICON)
+        
     }
     
     var locationButton: some View {
@@ -138,7 +143,6 @@ struct OrderGoView: View {
         }) {
             DrawerBtn(name: "location.fill", fromAssets: false, color: .txt)
         }
-       
     }
 }
 

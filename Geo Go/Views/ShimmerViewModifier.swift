@@ -6,26 +6,37 @@
 //
 
 import SwiftUI
-
-//struct ShimmerViewModifier: ViewModifier {
-//    @State private var animationPhase = -1.0
+import SwiftUI
+//
+//struct ShimmerModifier: ViewModifier {
+//    @State private var phase: CGFloat = 0
 //    
 //    func body(content: Content) -> some View {
-//        content
-//            .mask(LinearGradient(gradient: Gradient(colors: [Color.clear, Color.white.opacity(0.75), Color.clear]),
-//                                 startPoint: .leading, endPoint: .trailing))
-//            .overlay(LinearGradient(gradient: Gradient(colors: [Color.clear, Color.white.opacity(0.75), Color.clear]),
-//                                    startPoint: .leading, endPoint: .trailing)
-//                .offset(x: animationPhase * UIScreen.main.bounds.width))
-//            .animation(Animation.linear(duration: 1.5).repeatForever(autoreverses: false), value: animationPhase))
-//            .onAppear() {
-//                animationPhase = 1.0
+//        ZStack {
+//            content
+//                .opacity(0.5) // Base content with reduced opacity
+//            LinearGradient(
+//                gradient: Gradient(colors: [Color.clear, Color.white.opacity(0.3), Color.clear]),
+//                startPoint: .leading,
+//                endPoint: .trailing
+//            )
+//            .rotationEffect(.degrees(30))
+//            .offset(x: phase * 200 - 100)
+//            .mask(content) // Apply the gradient only to the content
+//        }
+//        .onAppear {
+//            withAnimation(
+//                Animation.linear(duration: 1.5)
+//                    .repeatForever(autoreverses: false)
+//            ) {
+//                phase = 1
 //            }
+//        }
 //    }
 //}
 //
 //extension View {
-//    func shimmering() -> some View {
-//        self.modifier(ShimmerViewModifier())
+//    func shimmer() -> some View {
+//        self.modifier(ShimmerModifier())
 //    }
 //}

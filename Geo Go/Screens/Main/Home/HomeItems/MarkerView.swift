@@ -16,7 +16,7 @@ struct MarkerView: View {
 
     
     var body: some View {
-        let height = (UIScreen.main.bounds.height - viewModel.orderGoViewHeight)/2
+        let height = viewModel.orderGoViewHeight
         VStack(alignment: .center, spacing: 0) {
             MainMarkerBox(viewModel: viewModel)
                 .background(Color.blue)
@@ -31,6 +31,8 @@ struct MarkerView: View {
         }
         
         .padding(.bottom, viewModel.status > 0 ? height : 0)
+        .animation(.easeInOut(duration: 0.4), value: viewModel.status)
+
     }
 }
 

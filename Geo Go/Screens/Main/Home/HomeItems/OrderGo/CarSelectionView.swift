@@ -8,6 +8,7 @@
 import SwiftUI
 import Lottie
 import UIKit
+import Shimmer
 
 struct CarSelectionView: View {
     let item: ServiceTariff
@@ -25,41 +26,61 @@ struct CarSelectionView: View {
                 VStack(alignment: .leading, spacing: 0) {
                     carAndMinView()
                     
-                    Text(convertTariff(lang: DataHolder.lang, data: item))
-                        .font(.system(size: 14, weight: .semibold))
-                        .frame(alignment: .leading)
+                    if !item.showEstimation {
+                        Text(convertTariff(lang: DataHolder.lang, data: item))
+                            .font(.system(size: 14, weight: .semibold))
+                            .frame(alignment: .leading)
+                        
+                    } else {
+                        Text(convertTariff(lang: DataHolder.lang, data: item))
+                            .font(.system(size: 14, weight: .semibold))
+                            .frame(alignment: .leading)
+                            .shimmer()
+                    }
+                    
                     
                     HStack(spacing: 0) {
                         if !item.showEstimation {
                             HStack(alignment: .bottom,spacing: 4){
-                                if DataHolder.lang == "ru" || DataHolder.lang == "en" {
-                                    Text(LocalizedStringKey("from"))
-                                        .font(.system(size: 14, weight: .semibold))
-                                        .foregroundColor(.txt)
+                                if shouldShowFromText {
+                                    fromText
                                 }
+                                
                                 Text(String(Int(item.minCost)))
-                                    .font(.system(size: 17, weight: .semibold))
-                                    .foregroundColor(.txt)
+                                    .customStyle()
                                 
                                 Text(getCurrencySymbol())
-                                    .font(.system(size: 14, weight: .regular))
-                                    .foregroundColor(.txt)
-                                if DataHolder.lang == "uz" || DataHolder.lang == "kaa" {
-                                    Text(LocalizedStringKey("from"))
-                                        .font(.system(size: 14, weight: .regular))
-                                        .foregroundColor(.txt)
+                                    .customStyle(font: .regular, size: 14)
+                                
+                                if shouldShowFromTextForOtherLang {
+                                    fromText.font(.system(size: 14, weight: .regular))
                                 }
                             }
                         }else{
-                            ProgressView(value: 0.5)
-                                .progressViewStyle(CircularProgressViewStyle(tint: Color.main))
-                                .frame(width: 20, height: 20)
-                                .padding(.leading, 4)
+                            HStack(alignment: .bottom,spacing: 4){
+                                if shouldShowFromText {
+                                    fromText
+                                        .shimmer()
+                                }
+                                
+                                Text(String(Int(item.minCost)))
+                                    .customStyle()
+                                    .shimmer()
+                                
+                                Text(getCurrencySymbol())
+                                    .customStyle(font: .regular, size: 14)
+                                    .shimmer()
+                                
+                                if shouldShowFromTextForOtherLang {
+                                    fromText.font(.system(size: 14, weight: .regular))
+                                        .shimmer()
+                                }
+                            }
                         }
                     }
                 }
                 .padding(.vertical, 4)
-                .padding(.leading, 6)
+                .padding(.leading, isSelected ? 6 : 0)
                 .padding(.trailing, hasExtra ? 44 : 40)
                 .background(
                     ZStack {
@@ -124,6 +145,8 @@ struct CarSelectionView: View {
                 .frame(width: 95, height: 40)
                 .opacity(isSelected ? 1 : 0.3)
                 .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.leading, isSelected ? 0 : -8)
+                .clipped()
             
             if let minTime = item.minArriveTime, minTime != -1 {
                 let minuteText = NSLocalizedString("min", comment: "")
@@ -140,6 +163,34 @@ struct CarSelectionView: View {
         }
         
     }
+    
+    private var shouldShowFromText: Bool {
+        DataHolder.lang == "ru" || DataHolder.lang == "en"
+    }
+    
+    private var shouldShowFromTextForOtherLang: Bool {
+        DataHolder.lang == "uz" || DataHolder.lang == "kaa"
+    }
+    
+    private var fromText: some View {
+        Text(LocalizedStringKey("from"))
+            .customStyle()
+    }
 
+}
+
+
+
+extension View {
+    func customStyle(font: Font.Weight = .semibold, size: CGFloat = 17) -> some View {
+        self.font(.system(size: size, weight: font))
+            .foregroundColor(.txt)
+    }
+    
+    func shimmer() -> some View {
+        self.shimmering(
+            animation:.easeInOut(duration: 0.7).repeatCount(5, autoreverses: false).delay(0.05)
+        )
+    }
 }
 

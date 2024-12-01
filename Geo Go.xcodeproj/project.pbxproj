@@ -64,6 +64,7 @@
 		256EAED82C309DE900FA7A5C /* MapConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256EAED72C309DE900FA7A5C /* MapConfig.swift */; };
 		256EAEDA2C309F9900FA7A5C /* HomeScreenDrawer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256EAED92C309F9900FA7A5C /* HomeScreenDrawer.swift */; };
 		256EAEDC2C30A2C500FA7A5C /* DrawerBtn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256EAEDB2C30A2C500FA7A5C /* DrawerBtn.swift */; };
+		256F36EF2CFCE78C00CE3E8A /* Shimmer in Frameworks */ = {isa = PBXBuildFile; productRef = 256F36EE2CFCE78C00CE3E8A /* Shimmer */; };
 		25966BCE2CE4076C0036D4DF /* DefaultContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25966BCD2CE4076C0036D4DF /* DefaultContentView.swift */; };
 		25966BD02CE408730036D4DF /* StatusDependentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25966BCF2CE408730036D4DF /* StatusDependentView.swift */; };
 		25966BD22CE531E70036D4DF /* ShimmerViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25966BD12CE531E70036D4DF /* ShimmerViewModifier.swift */; };
@@ -252,6 +253,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				256F36EF2CFCE78C00CE3E8A /* Shimmer in Frameworks */,
 				256EAECB2C2F1CE400FA7A5C /* OTPView in Frameworks */,
 				256EAEBB2C2D9A8100FA7A5C /* MapboxMaps in Frameworks */,
 				256877B42C2D5F5D0041E16A /* iPhoneNumberField in Frameworks */,
@@ -790,6 +792,7 @@
 				256EAECA2C2F1CE400FA7A5C /* OTPView */,
 				25BFDB5F2C33EB9700D73993 /* Lottie */,
 				25F9E9792CFAAC0A00475A57 /* SocketIO */,
+				256F36EE2CFCE78C00CE3E8A /* Shimmer */,
 			);
 			productName = "Geo Go";
 			productReference = 2568776E2C258B190041E16A /* Geo Go.app */;
@@ -828,6 +831,7 @@
 				256EAEC92C2F1CE400FA7A5C /* XCRemoteSwiftPackageReference "otpview-swiftui" */,
 				25BFDB5E2C33EB9700D73993 /* XCRemoteSwiftPackageReference "lottie-spm" */,
 				25F9E9782CFAAC0900475A57 /* XCRemoteSwiftPackageReference "socket" */,
+				256F36ED2CFCE78C00CE3E8A /* XCRemoteSwiftPackageReference "SwiftUI-Shimmer" */,
 			);
 			productRefGroup = 2568776F2C258B190041E16A /* Products */;
 			projectDirPath = "";
@@ -1224,6 +1228,14 @@
 				minimumVersion = 1.0.0;
 			};
 		};
+		256F36ED2CFCE78C00CE3E8A /* XCRemoteSwiftPackageReference "SwiftUI-Shimmer" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/markiv/SwiftUI-Shimmer.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.5.1;
+			};
+		};
 		25BFDB5E2C33EB9700D73993 /* XCRemoteSwiftPackageReference "lottie-spm" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/airbnb/lottie-spm.git";
@@ -1257,6 +1269,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 256EAEC92C2F1CE400FA7A5C /* XCRemoteSwiftPackageReference "otpview-swiftui" */;
 			productName = OTPView;
+		};
+		256F36EE2CFCE78C00CE3E8A /* Shimmer */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 256F36ED2CFCE78C00CE3E8A /* XCRemoteSwiftPackageReference "SwiftUI-Shimmer" */;
+			productName = Shimmer;
 		};
 		25BFDB5F2C33EB9700D73993 /* Lottie */ = {
 			isa = XCSwiftPackageProductDependency;

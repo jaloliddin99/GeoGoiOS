@@ -102,7 +102,6 @@ func getCurrentTime(block: @escaping (String) -> Void) {
 
 
 func imageNameForType(_ type: String) -> String {
-    print("carImageType \(type)")
     switch type {
         case Constants.CAR_PEREGON:
             return "car_peregon"
