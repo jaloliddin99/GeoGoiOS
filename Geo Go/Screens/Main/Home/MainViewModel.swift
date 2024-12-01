@@ -29,6 +29,7 @@ final class MainViewModel: ObservableObject{
     @Published var selectedLocation: CLLocationCoordinate2D = DataHolder.location
     @Published var refocusButtonListener = false
     
+    @Published var orderGoViewHeight: CGFloat = 200
     @Published var discountModel: DiscountModel?
     var hasOrderGoViewAppeared = false
     
@@ -43,7 +44,7 @@ final class MainViewModel: ObservableObject{
     init() {
         MapboxOptions.accessToken = "pk.eyJ1IjoiZ2VvZ29hcHAiLCJhIjoiY2xnaHJleWNyMGRvczNkbGY2Ym41eHY3NyJ9.xI3D0Q4YyqNxCl8j1c7kZg"
         initMain()
-        getNearDrivers()
+       
     }
     
     
@@ -188,16 +189,12 @@ final class MainViewModel: ObservableObject{
             }
         )
     }
-    
-    private var counter = 0
-    
+        
     private func handleDateOrderHistoryResponse<T: Decodable>(_ result: Result<T, APError>, with body: Int64) {
         DispatchQueue.main.async { [self] in
             switch result {
                 case .success(let response):
                     if let response = response as? DateOrderHistory {
-                        counter = counter + 1
-                        print("Counter number \(counter)")
                         self.dateOrderHistory = response
                         var shortOrderInfo = self.addressHistoryResponse
                         if shortOrderInfo != nil {
@@ -209,9 +206,6 @@ final class MainViewModel: ObservableObject{
             }
         }
     }
-    
-    
-    
     
     
     @Published var estimateResponse: EstimateResponse?
@@ -240,13 +234,26 @@ final class MainViewModel: ObservableObject{
     }
     
     
-    func getNearDrivers(){
-        
+    func getNearDrivers(tariffId: Int64){
         guard let responseDetails = generateResponse?.generateHmacData(id: "drivers") else { return }
         
-       
+        let paymentMethod: [String: Any] = [
+            "kind": "cash"
+        ]
+        
+        let body: [String: Any] = [
+            "paymentMethod": paymentMethod,
+            "tariff": tariffId
+        ]
+
+        print("bodydawdaw \(body)")
+        guard let jsonData = try? JSONSerialization.data(withJSONObject: body, options: []) else {
+            return
+        }
+        
         NetworkService.shared.sendRequest(
             url: responseDetails.url,
+            body: jsonData,
             method: "POST",
             headers: [
                 "Accept-Language": DataHolder.lang,
@@ -256,16 +263,26 @@ final class MainViewModel: ObservableObject{
                 "X-Hive-GPS-Position": "\(location.latitude) \(location.longitude)",
             ],
             isPrintable: true,
-            completed: handleNearDriversResponse as (Result<BonusResponse, APError>) -> Void)
-        
-        
+            completed: { [weak self] (result: Result<[NDriver], APError>) in
+                self?.handleNearDriversResponse(result, with: tariffId)
+            }
+            )
     }
     
-    private func handleNearDriversResponse<T: Decodable>(_ result: Result<T, APError>) {
+    @Published var nearDrivers: [NDriver]?
+    
+    private func handleNearDriversResponse<T:Decodable>(_ result: Result<T,APError>, with tariffId: Int64) {
         DispatchQueue.main.async {
             switch result {
-                case .success(let response): break
-                    
+                case .success(let response):
+                    if let res = response as? [NDriver] {
+                        self.nearDrivers = res
+                        var tariffs = self.tariff?.tariffs
+                        if tariffs != nil {
+                            changeDistance(response: res, tariffId: tariffId, list: &tariffs!, clientLocation: self.location)
+                            self.tariff?.tariffs = tariffs
+                        }
+                    }
                     
                 case .failure(_): break
                     
@@ -326,7 +343,6 @@ final class MainViewModel: ObservableObject{
                 "Date": responseDetails.data,
                 "Authentication": responseDetails.hmac,
             ],
-            isPrintable: true,
             completed: handleServiceTariffRequestResponse as (Result<ServiceResponse, APError>) -> Void)
     }
     
@@ -349,8 +365,10 @@ final class MainViewModel: ObservableObject{
                             let estimate = getEstimateRideRequest(
                                 serviceTariff: tariff,
                                 route: mapToRouteCoordinates(addresses: locationHolder))
+                            
                             DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
                                 self.serviceEstimateRide(body: estimate)
+                                self.getNearDrivers(tariffId: tariff.id)
                             }
                         })
                     }

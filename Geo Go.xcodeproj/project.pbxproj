@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2508EACA2C73DEB3008CCC12 /* CheckBoxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2508EAC92C73DEB3008CCC12 /* CheckBoxView.swift */; };
+		252BACDC2CFBC616004EBC64 /* NearDrivers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252BACDB2CFBC611004EBC64 /* NearDrivers.swift */; };
 		252C75B92CE931F800779995 /* loader_circles.json in Resources */ = {isa = PBXBuildFile; fileRef = 252C75B82CE931F700779995 /* loader_circles.json */; };
 		252E5C212C3C075900C132AF /* Estimate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252E5C202C3C075900C132AF /* Estimate.swift */; };
 		252E5C242C3C29CF00C132AF /* EstimateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252E5C232C3C29CF00C132AF /* EstimateHelper.swift */; };
@@ -127,6 +128,7 @@
 
 /* Begin PBXFileReference section */
 		2508EAC92C73DEB3008CCC12 /* CheckBoxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckBoxView.swift; sourceTree = "<group>"; };
+		252BACDB2CFBC611004EBC64 /* NearDrivers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearDrivers.swift; sourceTree = "<group>"; };
 		252C75B82CE931F700779995 /* loader_circles.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = loader_circles.json; sourceTree = "<group>"; };
 		252E5C202C3C075900C132AF /* Estimate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Estimate.swift; sourceTree = "<group>"; };
 		252E5C232C3C29CF00C132AF /* EstimateHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EstimateHelper.swift; sourceTree = "<group>"; };
@@ -501,6 +503,7 @@
 		256877A02C25D1230041E16A /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				252BACDB2CFBC611004EBC64 /* NearDrivers.swift */,
 				256877A12C25D1300041E16A /* Network */,
 				256877A42C25D16F0041E16A /* GetServerLinks.swift */,
 				256EAECC2C2F21DE00FA7A5C /* RegistrationRequest.swift */,
@@ -903,6 +906,7 @@
 				2565CFA72C54FC3400FCC08A /* Bonus.swift in Sources */,
 				2565CF9C2C453CED00FCC08A /* PolyLineUtils.swift in Sources */,
 				2565CF8F2C42A36F00FCC08A /* Options.swift in Sources */,
+				252BACDC2CFBC616004EBC64 /* NearDrivers.swift in Sources */,
 				2565CF932C42C25E00FCC08A /* DialogAnotherPerson.swift in Sources */,
 				25A51DDE2C6CE5EB00C2FBB0 /* NewsScreen.swift in Sources */,
 				25966BDC2CE6D2250036D4DF /* BottomSheetViewCustom.swift in Sources */,
@@ -1126,7 +1130,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = Ja;
+				MARKETING_VERSION = 1.12.5;
 				PRODUCT_BUNDLE_IDENTIFIER = "geogo-client";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1162,7 +1166,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = Ja;
+				MARKETING_VERSION = 1.12.5;
 				PRODUCT_BUNDLE_IDENTIFIER = "geogo-client";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;

@@ -48,8 +48,6 @@ struct CustomMapView: UIViewRepresentable {
             logo: OrnamentConfigurations.hiddenLogoOptions,
             attributionButton: OrnamentConfigurations.hiddenAttributionButtonOptions
         )
- //       mapView.gestures.panGestureRecognizer.isEnabled = false
- //       mapView.gestures.options.panEnabled = false
         mapView.gestures.options.rotateEnabled = false
         mapView.gestures.options.pitchEnabled = false
         mapView.gestures.options.pinchEnabled = false
@@ -72,7 +70,7 @@ struct CustomMapView: UIViewRepresentable {
             cancellable = viewModel.$routeCoordinates
                 .compactMap { $0 }
                 .sink { [weak self] coor in
-                    if viewModel.status == 1 || viewModel.status == 3 {
+                    if ((viewModel.status == 1 || viewModel.status == 3) && coor.count > 1) {
                         self?.drawRoute(mapView: mapView, coordinates: coor)
                         if mapView.camera.cameraAnimators.isEmpty {
                             self?.setCameraBounds(mapView: mapView, coordinates: coor)

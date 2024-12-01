@@ -17,10 +17,6 @@ struct DefaultContentView: View {
         ZStack{
             drawerAndBonusButton()
             
-            MarkerView(viewModel: viewModel)
-                .offset(y: viewModel.markerOffset)
-                .animation(.easeInOut, value: viewModel.markerOffset)
-            
             locationButton
             BottomSheetView(isOpen: $viewModel.bottomSheetShown,
                             minHeight: 250,

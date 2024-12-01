@@ -156,4 +156,6 @@
 "why_prices_increased" = "Narxlar nega ko'tarildi?";
 "parcel_delivery" = "Pochta yetkazib berish.";
 "why_card_better" = "Nega karta  \nnaqddan yaxshiroq?";
+"from" = "dan";
+"no_available_car" = "Bo'sh mashina yo'q";
 

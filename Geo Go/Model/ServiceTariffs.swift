@@ -42,6 +42,7 @@ struct ServiceTariff: Codable, Identifiable, Equatable {
     var hint: String?
     var showEstimation: Bool
     var `Type`: String?
+    var minArriveTime: Int?
 }
 
 struct TariffOption: Codable, Identifiable, Equatable {

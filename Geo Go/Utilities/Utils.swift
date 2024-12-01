@@ -6,20 +6,23 @@
 //
 
 import Foundation
-
+import UIKit
 
 func formatNumberWithSpaces(_ number: Double) -> String {
-    let formatter = NumberFormatter()
-    formatter.numberStyle = .decimal
-    formatter.groupingSeparator = " "
-    return "\(formatter.string(from: NSNumber(value: number))!) \(UserDefaults.standard.string(forKey: Constants.sign)!.lowercased())"
+    return "\(number) \(UserDefaults.standard.string(forKey: Constants.sign)!.lowercased())"
+}
+
+func getFontHeight(_ fontSize: CGFloat, _ weight: UIFont.Weight) -> CGFloat {
+    let font = UIFont.systemFont(ofSize: fontSize, weight: weight)
+    return font.lineHeight
+}
+
+func getCurrencySymbol() -> String {
+    return UserDefaults.standard.string(forKey: Constants.sign)!.lowercased()
 }
 
 func formatNumberWtCurrency(_ number: Double) -> String {
-    let formatter = NumberFormatter()
-    formatter.numberStyle = .decimal
-    formatter.groupingSeparator = " "
-    return formatter.string(from: NSNumber(value: number))!
+    return String(number)
 }
 
 func getCreateOrderRoute(addressList: [UserSelectedAddress], bonusInt: Double) -> CreateOrderRequest {
@@ -99,10 +102,11 @@ func getCurrentTime(block: @escaping (String) -> Void) {
 
 
 func imageNameForType(_ type: String) -> String {
+    print("carImageType \(type)")
     switch type {
         case Constants.CAR_PEREGON:
             return "car_peregon"
-        case Constants.CAR_TYPE_3, Constants.CAR_KOMFORT:
+        case Constants.CAR_TYPE_3:
             return "car_comfort"
         case Constants.CAR_DELIVERY:
             return "car_delivery"

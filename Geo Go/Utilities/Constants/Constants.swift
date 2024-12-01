@@ -93,9 +93,8 @@ class Constants{
 
     
     static var CAR_TYPE_3 = "carType_3"
-    static var CAR_KOMFORT = "carType_4"
+    static var CAR_PEREGON = "carType_4"
     static var CAR_DELIVERY = "carType_10"
-    static var CAR_PEREGON = "carType_7"
     static let NAVI2_URL = "https://navi2.uz.taxi/api/v1"
 
     

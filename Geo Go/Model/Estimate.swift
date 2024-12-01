@@ -7,6 +7,7 @@
 
 import Foundation
 import CoreLocation
+import SwiftUI
 
 // estimate response
 
@@ -124,6 +125,47 @@ func changeCost(res: EstimateResponse, list: inout [ServiceTariff]) {
         }
     }
 }
+
+
+func changeDistance(response: [NDriver], tariffId: Int64, list: inout [ServiceTariff], clientLocation: CLLocationCoordinate2D) {
+    for i in list.indices {
+        if tariffId == list[i].id {
+            if !response.isEmpty{
+                let aDistance = calculateAverageDistance(myLocation: clientLocation, drivers: response)
+                print("averate distance \(aDistance)")
+                list[i].minArriveTime = calAvgTime(aDistance: aDistance, speed: speed)
+            }else{
+                list[i].minArriveTime = -1
+            }
+        }
+    }
+    
+}
+
+let speed = 45.0
+
+func calculateDistance(from location1: CLLocationCoordinate2D, to location2: DriverLocation) -> Double {
+    let loc = CLLocationCoordinate2D(latitude: location2.lat, longitude: location2.lon)
+    return location1.distance(to: loc)
+}
+
+func calAvgTime(aDistance: Double, speed: Double) -> Int {
+    let timeInHours = (aDistance/1000) / speed
+    let timeInMinutes = timeInHours * 60
+    return Int(timeInMinutes+2)
+}
+
+
+func calculateAverageDistance(myLocation: CLLocationCoordinate2D, drivers: [NDriver]) -> Double {
+    let driverCount = min(drivers.count, 10)
+    let distances = drivers.prefix(driverCount).map {
+        calculateDistance(from: myLocation, to: $0.location)
+    }
+    let totalDistance = distances.reduce(0, +)
+    return totalDistance / Double(driverCount)
+}
+
+
 
 func setShortOrderInfoProperties(res: DateOrderHistory, list: inout [ShortOrderInfo], orderId: Int64){
     for i in list.indices {

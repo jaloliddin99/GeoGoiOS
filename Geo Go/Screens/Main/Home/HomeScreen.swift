@@ -20,6 +20,13 @@ struct HomeScreen: View {
             ZStack {
                 mapLayer
                 contentViews
+                if viewModel.status == 0 || viewModel.status == 1 {
+                    if viewModel.locationHolder.count < 2 {
+                        MarkerView(viewModel: viewModel)
+                            .offset(y: viewModel.markerOffset)
+                            .animation(.easeInOut, value: viewModel.markerOffset)
+                    }
+                }
                 drawerLayer
             }
             .alert(item: $viewModel.alertItem, content: createAlert)

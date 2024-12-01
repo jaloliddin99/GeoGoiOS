@@ -70,8 +70,22 @@ class NetworkService{
                 return
             }
             if isPrintable {
-                print("HTTP response : \(String(describing: response))")
+                
+                if let data = data {
+                    do {
+                        let jsonObject = try JSONSerialization.jsonObject(with: data, options: [])
+                        let prettyData = try JSONSerialization.data(withJSONObject: jsonObject, options: .prettyPrinted)
+                        if let prettyString = String(data: prettyData, encoding: .utf8) {
+                            print("Pretty JSON response:\n\(prettyString)")
+                        }
+                    } catch {
+                        print("Error pretty-printing JSON: \(error)")
+                    }
+                }
+
             }
+            
+            
             
         
             guard let httpResponse = response as? HTTPURLResponse, (200..<300).contains(httpResponse.statusCode) else {

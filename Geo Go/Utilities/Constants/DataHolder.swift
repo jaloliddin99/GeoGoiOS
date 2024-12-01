@@ -29,8 +29,8 @@ class DataHolder {
     static var globalComment = ""
     
     static var location: CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-    private static var latitude: Double = 41.33851520919809
-    private static var longitude: Double = 69.33460926588599
+    private static var latitude: Double = 41.321307
+    private static var longitude: Double = 69.264380
     
     static var lang = "en"
     
