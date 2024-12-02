@@ -10,16 +10,14 @@ import CoreLocation
 
 struct SearchTextView: View {
     @ObservedObject var viewModel: MainViewModel
-    
-    
     var body: some View {
         ZStack{
             HStack{
-                
                 HStack(alignment: .center){
                     Image(systemName: "magnifyingglass")
                         .foregroundColor(.black.opacity(0.7))
                         .padding(.leading, 12)
+                    
                     
                     Text("txt_where_to_go")
                         .frame(maxWidth: .infinity, alignment: .leading)

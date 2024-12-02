@@ -18,8 +18,8 @@ struct HomeScreen: View {
     var body: some View {
         NavigationStack {
             ZStack {
+                
                 mapLayer
-                contentViews
                 if viewModel.status == 0 || viewModel.status == 1 {
                     if viewModel.locationHolder.count < 2 {
                         MarkerView(viewModel: viewModel)
@@ -27,6 +27,7 @@ struct HomeScreen: View {
                             .animation(.easeInOut, value: viewModel.markerOffset)
                     }
                 }
+                contentViews
                 drawerLayer
             }
             .alert(item: $viewModel.alertItem, content: createAlert)

@@ -141,7 +141,7 @@ struct OrderGoView: View {
         Button(action: {
             mainViewModel.findUserRealPosition(loc: mainViewModel.location)
         }) {
-            DrawerBtn(name: "location.fill", fromAssets: false, color: .txt)
+            DrawerBtn(name: "location_btn", fromAssets: true, color: .txt)
         }
     }
 }

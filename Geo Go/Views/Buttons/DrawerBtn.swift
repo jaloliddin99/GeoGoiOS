@@ -11,6 +11,7 @@ struct DrawerBtn: View {
     let name: String
     var fromAssets: Bool
     var color = Color.main
+    
     var body: some View {
         if fromAssets {
             Image(name)

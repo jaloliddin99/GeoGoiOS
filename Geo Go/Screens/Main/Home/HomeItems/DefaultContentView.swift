@@ -13,10 +13,8 @@ struct DefaultContentView: View {
 
     
     var body: some View {
-    
         ZStack{
             drawerAndBonusButton()
-            
             locationButton
             BottomSheetView(isOpen: $viewModel.bottomSheetShown,
                             minHeight: 250,
@@ -30,7 +28,7 @@ struct DefaultContentView: View {
         Button(action: {
             viewModel.findUserRealPosition(loc: viewModel.location)
         }) {
-            DrawerBtn(name: "location.fill", fromAssets: false, color: .txt)
+            DrawerBtn(name: "location_btn", fromAssets: true, color: .txt)
         }
         .padding(.trailing, 16)
         .padding(.bottom, 262)

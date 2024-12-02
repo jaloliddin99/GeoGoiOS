@@ -103,6 +103,37 @@ final class MainViewModel: ObservableObject{
                     if let appetizers = response as? UpdateReverseModel {
                         self.currentAddress = appetizers
                         
+                        
+                        
+                        
+                        
+                        it.body()?.let { updateReverseModel ->
+                            val house = updateReverseModel.address.house_number
+                            val road = updateReverseModel.address.road
+                            val name = updateReverseModel.name
+                            val neighbourhood = updateReverseModel.address.neighbourhood
+                            val village = updateReverseModel.address.village
+                            val state = updateReverseModel.address.state
+                            val addressName =
+                            searchAddress(
+                                dataStoreRepository.getLang(), name, house,
+                                road, neighbourhood, village, state,
+                            )
+                            responseModelReverse.postValue(
+                                Address(
+                                    addressName = addressName, LatLng(
+                                        updateReverseModel.lat.toDouble(),
+                                        updateReverseModel.lon.toDouble()
+                                    )
+                                )
+                            )
+                        }
+                        
+                        
+                        
+                        
+                        
+                        
                         let name = appetizers.display_name ?? "Point on the map"
                         let lat = Double(appetizers.lat) ?? 0.0
                         let lon = Double(appetizers.lon) ?? 0.0

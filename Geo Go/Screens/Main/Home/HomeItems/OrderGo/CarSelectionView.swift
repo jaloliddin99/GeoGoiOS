@@ -17,12 +17,11 @@ struct CarSelectionView: View {
     let action: () -> Void
 
     var body: some View {
-        
         Button(action: action) {
             
             let hasExtra = item.Type == "add" || item.Type == "multiply"
-            ZStack{
-               
+            ZStack {
+                
                 VStack(alignment: .leading, spacing: 0) {
                     carAndMinView()
                     
@@ -50,14 +49,14 @@ struct CarSelectionView: View {
                                     .customStyle()
                                 
                                 Text(getCurrencySymbol())
-                                    .customStyle(font: .regular, size: 14)
+                                    .customStyle(size: 14)
                                 
                                 if shouldShowFromTextForOtherLang {
-                                    fromText.font(.system(size: 14, weight: .regular))
+                                    fromText.font(.system(size: 14, weight: .semibold))
                                 }
                             }
-                        }else{
-                            HStack(alignment: .bottom,spacing: 4){
+                        } else {
+                            HStack(alignment: .bottom, spacing: 4){
                                 if shouldShowFromText {
                                     fromText
                                         .shimmer()
@@ -68,11 +67,11 @@ struct CarSelectionView: View {
                                     .shimmer()
                                 
                                 Text(getCurrencySymbol())
-                                    .customStyle(font: .regular, size: 14)
+                                    .customStyle(size: 14)
                                     .shimmer()
                                 
                                 if shouldShowFromTextForOtherLang {
-                                    fromText.font(.system(size: 14, weight: .regular))
+                                    fromText.font(.system(size: 14, weight: .semibold))
                                         .shimmer()
                                 }
                             }
@@ -133,8 +132,6 @@ struct CarSelectionView: View {
             .frame(height: 84)
             
         }
-
-        
     }
     
     func carAndMinView() -> some View {

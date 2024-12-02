@@ -108,7 +108,7 @@ func imageNameForType(_ type: String) -> String {
         case Constants.CAR_TYPE_3:
             return "car_comfort"
         case Constants.CAR_DELIVERY:
-            return "car_delivery"
+            return "car_peregon"
         default:
             return "car_econom"
     }
@@ -212,5 +212,60 @@ func termsOfUse(lang: String, url: String) -> String {
         default:
             return "\(url)/user-agreement/"
     }
+}
+
+
+func searchAddress(
+    lang: String,
+    name: String?,
+    house: String?,
+    road: String?,
+    neighbourhood: String?,
+    village: String?,
+    state: String?,
+    town: String?
+) -> String {
+    
+    let defaultResponse: String
+    switch lang {
+        case "uz":
+            defaultResponse = "Xaritadagi nuqta"
+        case "en":
+            defaultResponse = "Point on the map"
+        case "kaa":
+            defaultResponse = "Kartadaǵı noqat"
+        default:
+            defaultResponse = "Точка на карте"
+    }
+    
+    let result: String
+    switch true {
+        case house != nil && road == nil && neighbourhood == nil && state == nil && name == nil:
+            result = house ?? defaultResponse
+            
+        case house != nil && neighbourhood != nil && road == nil && name == nil:
+            result = "\(neighbourhood!), \(house!)"
+            
+        case house != nil && road != nil:
+            result = "\(road!), \(house!)"
+            
+        case road != nil && name != nil:
+            result = name!
+            
+        case neighbourhood != nil && house == nil && road == nil:
+            result = neighbourhood!
+            
+        case village != nil && house == nil && road == nil && name == nil && neighbourhood == nil:
+            result = defaultResponse
+            
+        case state != nil && house == nil && road == nil && name == nil && neighbourhood == nil && village == nil:
+            result = defaultResponse
+            
+        default:
+            result = defaultResponse
+    }
+    
+    return result.replacingOccurrences(of: "улица", with: "")
+        .replacingOccurrences(of: "проезд", with: "пр-д")
 }
 
