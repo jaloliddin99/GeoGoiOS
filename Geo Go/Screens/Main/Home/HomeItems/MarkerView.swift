@@ -88,12 +88,11 @@ struct AddressView: View {
 
     var body: some View {
         let name = markerOffset != 0 ? "searching_with_dot" :
-        (viewModel.currentAddress?.display_name ?? "point_on_map")
+        (viewModel.locationHolder.isEmpty ? "point_on_map" : viewModel.locationHolder[0].addressName)
         Text(LocalizedStringKey(name))
             .font(.system(size: 16))
             .foregroundColor(.white)
             .lineLimit(1)
-            
     }
 }
 

@@ -216,14 +216,14 @@ func termsOfUse(lang: String, url: String) -> String {
 
 
 func searchAddress(
-    lang: String,
-    name: String?,
-    house: String?,
-    road: String?,
-    neighbourhood: String?,
-    village: String?,
-    state: String?,
-    town: String?
+    _ lang: String,
+    _ name: String?,
+    _ house: String?,
+    _ road: String?,
+    _ neighbourhood: String?,
+    _ village: String?,
+    _ state: String?,
+    _ town: String?
 ) -> String {
     
     let defaultResponse: String
@@ -268,4 +268,3 @@ func searchAddress(
     return result.replacingOccurrences(of: "улица", with: "")
         .replacingOccurrences(of: "проезд", with: "пр-д")
 }
-

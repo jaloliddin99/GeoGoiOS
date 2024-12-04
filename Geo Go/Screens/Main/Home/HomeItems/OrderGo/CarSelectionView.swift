@@ -29,7 +29,6 @@ struct CarSelectionView: View {
                         Text(convertTariff(lang: DataHolder.lang, data: item))
                             .font(.system(size: 14, weight: .semibold))
                             .frame(alignment: .leading)
-                        
                     } else {
                         Text(convertTariff(lang: DataHolder.lang, data: item))
                             .font(.system(size: 14, weight: .semibold))
@@ -96,12 +95,6 @@ struct CarSelectionView: View {
                 
                 
                 HStack(spacing: 4){
-                    if item.costChangeStep2 ?? 0.0 > 0.0 && isSelected {
-                        LottieEmptyStateView(fileName: "swipe_right")
-                            .frame(width: 10, height: 12)
-                            .rotationEffect(.degrees(-90))
-                    }
-                    
                     if hasExtra {
                         if let bonus = item.costChangeStep2 {
                             Text("\(Int(bonus))".replacing(" ", with: ""))

@@ -104,41 +104,23 @@ final class MainViewModel: ObservableObject{
                         self.currentAddress = appetizers
                         
                         
+                        let house = appetizers.address.house_number
+                        let road = appetizers.address.road
+                        let name = appetizers.name
+                        let neighbourhood = appetizers.address.neighbourhood
+                        let village = appetizers.address.village
+                        let state = appetizers.address.state
+                        let town = appetizers.address.town
+
+                        let addressName = searchAddress(
+                            DataHolder.lang, name, house, road,
+                            neighbourhood, village, state, town
+                        )
                         
-                        
-                        
-                        it.body()?.let { updateReverseModel ->
-                            val house = updateReverseModel.address.house_number
-                            val road = updateReverseModel.address.road
-                            val name = updateReverseModel.name
-                            val neighbourhood = updateReverseModel.address.neighbourhood
-                            val village = updateReverseModel.address.village
-                            val state = updateReverseModel.address.state
-                            val addressName =
-                            searchAddress(
-                                dataStoreRepository.getLang(), name, house,
-                                road, neighbourhood, village, state,
-                            )
-                            responseModelReverse.postValue(
-                                Address(
-                                    addressName = addressName, LatLng(
-                                        updateReverseModel.lat.toDouble(),
-                                        updateReverseModel.lon.toDouble()
-                                    )
-                                )
-                            )
-                        }
-                        
-                        
-                        
-                        
-                        
-                        
-                        let name = appetizers.display_name ?? "Point on the map"
                         let lat = Double(appetizers.lat) ?? 0.0
                         let lon = Double(appetizers.lon) ?? 0.0
                         let loc = CLLocationCoordinate2D(latitude: lat, longitude: lon)
-                        let model = UserSelectedAddress(addressName: name, addressLocation: loc)
+                        let model = UserSelectedAddress(addressName: addressName.trimmingCharacters(in: .whitespacesAndNewlines), addressLocation: loc)
                         if status == 0 {
                             locationHolder.removeAll()
                             locationUpdated(model)

@@ -65,6 +65,7 @@
 		256EAEDA2C309F9900FA7A5C /* HomeScreenDrawer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256EAED92C309F9900FA7A5C /* HomeScreenDrawer.swift */; };
 		256EAEDC2C30A2C500FA7A5C /* DrawerBtn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256EAEDB2C30A2C500FA7A5C /* DrawerBtn.swift */; };
 		256F36EF2CFCE78C00CE3E8A /* Shimmer in Frameworks */ = {isa = PBXBuildFile; productRef = 256F36EE2CFCE78C00CE3E8A /* Shimmer */; };
+		256F370E2CFFA67000CE3E8A /* MapColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256F370D2CFFA66900CE3E8A /* MapColors.swift */; };
 		25966BCE2CE4076C0036D4DF /* DefaultContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25966BCD2CE4076C0036D4DF /* DefaultContentView.swift */; };
 		25966BD02CE408730036D4DF /* StatusDependentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25966BCF2CE408730036D4DF /* StatusDependentView.swift */; };
 		25966BD22CE531E70036D4DF /* ShimmerViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25966BD12CE531E70036D4DF /* ShimmerViewModifier.swift */; };
@@ -187,6 +188,7 @@
 		256EAED72C309DE900FA7A5C /* MapConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapConfig.swift; sourceTree = "<group>"; };
 		256EAED92C309F9900FA7A5C /* HomeScreenDrawer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreenDrawer.swift; sourceTree = "<group>"; };
 		256EAEDB2C30A2C500FA7A5C /* DrawerBtn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawerBtn.swift; sourceTree = "<group>"; };
+		256F370D2CFFA66900CE3E8A /* MapColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapColors.swift; sourceTree = "<group>"; };
 		25966BCD2CE4076C0036D4DF /* DefaultContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultContentView.swift; sourceTree = "<group>"; };
 		25966BCF2CE408730036D4DF /* StatusDependentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusDependentView.swift; sourceTree = "<group>"; };
 		25966BD12CE531E70036D4DF /* ShimmerViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShimmerViewModifier.swift; sourceTree = "<group>"; };
@@ -392,6 +394,7 @@
 		256877812C25C1300041E16A /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				256F370D2CFFA66900CE3E8A /* MapColors.swift */,
 				252E5C222C3C29BA00C132AF /* EstimationHelper */,
 				25BFDB6F2C34821300D73993 /* Hmac */,
 				25BFDB592C33E60700D73993 /* RoundedCorner */,
@@ -939,6 +942,7 @@
 				25BFDB5B2C33E61700D73993 /* RoundedCorners.swift in Sources */,
 				256877722C258B190041E16A /* Geo_GoApp.swift in Sources */,
 				252E5C242C3C29CF00C132AF /* EstimateHelper.swift in Sources */,
+				256F370E2CFFA67000CE3E8A /* MapColors.swift in Sources */,
 				259DEA0B2CC2F74700B1AB41 /* ProfileScreen.swift in Sources */,
 				25B20C1F2C5F6AC900F50017 /* CancelOrder.swift in Sources */,
 				256877A82C25D1FF0041E16A /* NetworkError.swift in Sources */,

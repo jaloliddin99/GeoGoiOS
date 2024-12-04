@@ -10,7 +10,6 @@ import CoreLocation
 
 class DataHolder {
     
-    static var locationHolder = Array<UserSelectedAddress>()
     
     static var serviceTariffConstant: [ServiceTariff]? = nil
     static var selectedTariff: ServiceTariff?

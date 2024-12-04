@@ -158,7 +158,7 @@ struct AddressField: View {
                 .scaledToFit()
                 .frame(maxHeight: 64)
             
-            VStack(spacing: 12) {
+            VStack(alignment: .leading, spacing: 12) {
                 if !mainViewModel.locationHolder.isEmpty {
                     Text(mainViewModel.locationHolder[0].addressName)
                         .fontWeight(.medium)
@@ -167,13 +167,12 @@ struct AddressField: View {
                 
                 Divider()
                 
-                HStack{
+                HStack {
                     let count = mainViewModel.locationHolder.count
                     if count == 1{
                         Button {
                             mainViewModel.isSearchDialogShowing = true
                         } label: {
-                            
                             HStack(alignment: .center){
                                 Image(systemName: "magnifyingglass")
                                     .foregroundColor(.black.opacity(0.7))

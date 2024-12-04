@@ -112,8 +112,7 @@ struct DialogSelectBonus: View {
                 let lat = addresses[0].addressLocation.latitude
                 let lon = addresses[0].addressLocation.longitude
                 Button {
-                    let createOrder = getCreateOrderRoute(
-                        addressList: addresses,bonusInt: 0)
+                    let createOrder = getCreateOrderRoute(addressList: addresses,bonusInt: 0)
                     viewModel.createOrder(lat: lat,lon: lon, createOrderRequest: createOrder)
 
                 } label: {
@@ -131,15 +130,11 @@ struct DialogSelectBonus: View {
                 }
                 .disabled(isButtonDisabled)
 
-
             }
             .frame(maxWidth: .infinity)
-            .padding(.top, 4)
-            
             
         }
         .padding(.horizontal, 16)
-        .padding(.bottom, 16)
         .edgesIgnoringSafeArea(.bottom)
     }
     

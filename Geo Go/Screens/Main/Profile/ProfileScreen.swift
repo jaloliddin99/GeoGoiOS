@@ -30,7 +30,6 @@ struct ProfileScreen: View {
                                 .font(.system(size: 16, weight: .regular))
                                 .foregroundColor(.txt)
                             
-                            
                             Text("\(languageViewModel.selectedLanguage)")
                                 .font(.system(size: 14, weight: .semibold))
                                 .foregroundColor(.txt)
