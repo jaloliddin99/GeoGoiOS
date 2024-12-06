@@ -159,3 +159,12 @@
 "from" = "dan";
 "no_available_car" = "Bo'sh mashina yo'q";
 
+"contact" = "Bog'lanish";
+"share" = "Ulashish";
+
+
+"add_stops" = "Bekat qo'shish";
+"arrival" = "Manzil";
+"edit" = "O'zgartirish";
+"show_driver_where_i_am" = "Haydovchiga qayerdaligimni ko'rsatish";
+"arrival_time" = "Jo'nab ketish ~%@ da";

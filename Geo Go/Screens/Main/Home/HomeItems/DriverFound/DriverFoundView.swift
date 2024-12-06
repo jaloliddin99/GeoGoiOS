@@ -9,138 +9,142 @@ import SwiftUI
 
 struct DriverFoundView: View {
     @ObservedObject var viewModel: MainViewModel
-    @State private var bottomSheetShown = false
+    @State private var isRideDetailsPresented = false
     var body: some View {
-        VStack(spacing: 0) {
-            Spacer()
-            topBar
-            
-            VStack(spacing: 16) {
-                let orderInfo = viewModel.getOrderDetail!
+        ZStack{
+            VStack(spacing: 0) {
                 
-                if let car: Car = orderInfo.assignee?.car {
-                    let num = car.regNum
-                    let color = car.color
-                    let carName = "\(color) \(car.brand) \(car.model)"
+                Spacer()
+                
+                topBar
+                
+                VStack(spacing: 16) {
+                    let orderInfo = viewModel.getOrderDetail!
                     
-                    VStack(spacing: 0){
-                        HStack{
-                            
-                            
-                            OrderStatusView()
-                            
-                            Spacer()
-                            
-                            Text(num)
-                                .font(.system(size: 16, weight: .semibold))
-                                .padding(.horizontal, 6)
-                                .padding(.vertical, 4)
-                                .background(.appGray)
-                                .cornerRadius(12)
-                                .foregroundColor(.txt)
-                        }
+                    if let car: Car = orderInfo.assignee?.car {
+                        let num = car.regNum
+                        let color = car.color
+                        let carName = "\(color) \(car.brand) \(car.model)"
                         
-                        HStack{
-                            Text(carName)
-                                .font(.system(size: 14, weight: .regular))
-                                .foregroundColor(.txt)
+                        VStack(spacing: 0){
+                            HStack{
+                                OrderStatusView()
+                                Spacer()
+                                
+                                Text(num)
+                                    .font(.system(size: 16, weight: .semibold))
+                                    .padding(.horizontal, 6)
+                                    .padding(.vertical, 4)
+                                    .background(.appGray)
+                                    .cornerRadius(12)
+                                    .foregroundColor(.txt)
+                            }
                             
-                            Spacer()
-                            
-                            let tariffIcon = UserDefaults.standard.string(forKey: Constants.TARIFF_ICON) ?? "Ekonom"
-                            Image(imageNameForType(tariffIcon))
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 40, height: 18)
-                            
+                            HStack{
+                                Text(carName)
+                                    .font(.system(size: 14, weight: .regular))
+                                    .foregroundColor(.txt)
+                                
+                                Spacer()
+                                
+                                let tariffIcon = UserDefaults.standard.string(forKey: Constants.TARIFF_ICON) ?? "Ekonom"
+                                Image(imageNameForType(tariffIcon))
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 40, height: 18)
+                            }
                         }
                     }
+                    Divider()
                     
-                    
+                    HStack(alignment: .top,spacing: 0) {
+                        
+                        VStack {
+                            RemoteRoundedImage(image: viewModel.image, radius: 28, imageName: "profile-image")
+                                .onAppear {
+                                    viewModel.loadImage(fromURLString: getImageUrl(orderDetails: viewModel.getOrderDetail!)) }
+                            Text("Уткир")
+                                .font(.system(size: 14, weight: .regular))
+                                .foregroundColor(.gray)
+                        }
+                        .frame(maxWidth: .infinity)
+                        
+                        Button(action: {
+                            
+                        }) {
+                            VStack {
+                                Image("phone")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .padding(12)
+                                    .frame(width: 56, height: 56)
+                                    .background(.appGray)
+                                    .clipShape(Circle())
+                                Text("Связь с водителем")
+                                    .font(.system(size: 14, weight: .regular))
+                                    .foregroundColor(.gray)
+                                    .multilineTextAlignment(.center)
+                            }
+                        }
+                        .frame(maxWidth: .infinity)
+                        
+                        Button(action: {
+                            isRideDetailsPresented.toggle()
+                        }) {
+                            VStack {
+                                Image("menu")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .padding(12)
+                                    .frame(width: 56, height: 56)
+                                    .background(.appGray)
+                                    .clipShape(Circle())
+                                Text("details")
+                                    .font(.system(size: 14, weight: .regular))
+                                    .foregroundColor(.gray)
+                                    .multilineTextAlignment(.center)
+                            }
+                        }
+                        .frame(maxWidth: .infinity)
+                        
+                        
+                        Button(action: {
+                        }) {
+                            VStack {
+                                Image("plus")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .padding(12)
+                                    .frame(width: 56, height: 56)
+                                    .background(.appGray)
+                                    .clipShape(Circle())
+                                Text("add_second_space")
+                                    .font(.system(size: 14, weight: .regular))
+                                    .foregroundColor(.gray)
+                                    .multilineTextAlignment(.center)
+                            }
+                        }
+                        .frame(maxWidth: .infinity)
+                    }
                     
                 }
-                Divider()
+                .padding(16)
+                .background(Color.white)
+                .cornerRadius(24)
+                .shadow(color: .black.opacity(0.1),radius: 24)
+                .padding(.horizontal, 12)
+                .padding(.top, 12)
+                .edgesIgnoringSafeArea(.bottom)
                 
-                HStack(alignment: .top,spacing: 0) {
-                   
-                    VStack {
-                        RemoteRoundedImage(image: viewModel.image, radius: 28, imageName: "profile-image")
-                            .onAppear {
-                                viewModel.loadImage(fromURLString: getImageUrl(orderDetails: viewModel.getOrderDetail!)) }
-                        Text("Уткир")
-                            .font(.system(size: 14, weight: .regular))
-                            .foregroundColor(.gray)
-                    }
-                    .frame(maxWidth: .infinity)
-                    
-                    Button(action: {
-                        
-                    }) {
-                        VStack {
-                            Image("phone")
-                                .resizable()
-                                .scaledToFit()
-                                .padding(12)
-                                .frame(width: 56, height: 56)
-                                .background(.appGray)
-                                .clipShape(Circle())
-                            Text("Связь с водителем")
-                                .font(.system(size: 14, weight: .regular))
-                                .foregroundColor(.gray)
-                                .multilineTextAlignment(.center)
-                        }
-                    }
-                    .frame(maxWidth: .infinity)
-                    
-                    Button(action: {
-
-                    }) {
-                        VStack {
-                            Image("menu")
-                                .resizable()
-                                .scaledToFit()
-                                .padding(12)
-                                .frame(width: 56, height: 56)
-                                .background(.appGray)
-                                .clipShape(Circle())
-                            Text("details")
-                                .font(.system(size: 14, weight: .regular))
-                                .foregroundColor(.gray)
-                                .multilineTextAlignment(.center)
-                        }
-                    }
-                    .frame(maxWidth: .infinity)
-                    
-                    
-                    Button(action: {
-                    }) {
-                        VStack {
-                            Image("plus")
-                                .resizable()
-                                .scaledToFit()
-                                .padding(12)
-                                .frame(width: 56, height: 56)
-                                .background(.appGray)
-                                .clipShape(Circle())
-                            Text("add_second_space")
-                                .font(.system(size: 14, weight: .regular))
-                                .foregroundColor(.gray)
-                                .multilineTextAlignment(.center)
-                        }
-                    }
-                    .frame(maxWidth: .infinity)
-                }
-
             }
-            .padding(16)
-            .background(Color.white)
-            .cornerRadius(24)
-            .shadow(color: .black.opacity(0.1),radius: 24)
-            .padding()
+            BottomSheetView(isOpen: $isRideDetailsPresented,
+                            minHeight: 0,
+                            maxHeight: UIScreen.main.bounds.height*0.9) {
+                RideDetailsView(viewModel: viewModel)
+            }.edgesIgnoringSafeArea(.bottom)
             
+           
         }
-        .background(Color(.systemGray6))
-        .edgesIgnoringSafeArea(.all)
     }
     
     func OrderStatusView() -> some View {

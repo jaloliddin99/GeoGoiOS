@@ -162,3 +162,12 @@
 "why_card_better" = "Why is the card  \nbetter than cash?";
 "from" = "from";
 "no_available_car" = "No available cars";
+
+"contact" = "Связаться";
+"share" = "Делиться";
+
+"add_stops" = "Add a stop";
+"arrival" = "Arrival";
+"edit" = "Edit";
+"show_driver_where_i_am" = "Show the driver where I am";
+"arrival_time" = "Pickup at ~%@";
