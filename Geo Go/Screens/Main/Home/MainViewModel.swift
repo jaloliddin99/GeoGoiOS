@@ -32,6 +32,7 @@ final class MainViewModel: ObservableObject{
     @Published var orderGoViewHeight: CGFloat = 250
     @Published var discountModel: DiscountModel?
     var hasOrderGoViewAppeared = false
+    var isSetLocations = false
     
     func setStatus(value: Int) {
         self.status = value
@@ -64,12 +65,13 @@ final class MainViewModel: ObservableObject{
     func findUserRealPosition(loc: CLLocationCoordinate2D) {
         location = loc
         refocusButtonListener.toggle()
-        reverseGeocodeIfNeeded(offset: markerOffset)
+        reverseGeocodeIfNeeded()
+        
     }
     
     
-    func reverseGeocodeIfNeeded(offset: CGFloat) {
-        if (offset == 0 && status == 0) || (offset == 0 && status == 1) {
+    func reverseGeocodeIfNeeded() {
+        if (markerOffset == 0 && status == 0) || (markerOffset == 0 && status == 1) {
             reverseLocation(lat: selectedLocation.latitude, lon: selectedLocation.longitude)
         }
     }
@@ -120,7 +122,7 @@ final class MainViewModel: ObservableObject{
                         let lat = Double(appetizers.lat) ?? 0.0
                         let lon = Double(appetizers.lon) ?? 0.0
                         let loc = CLLocationCoordinate2D(latitude: lat, longitude: lon)
-                        let model = UserSelectedAddress(addressName: addressName.trimmingCharacters(in: .whitespacesAndNewlines), addressLocation: loc)
+                        let model = UserSelectedAddress(addressName: addressName, addressLocation: loc)
                         if status == 0 {
                             locationHolder.removeAll()
                             locationUpdated(model)
@@ -280,7 +282,6 @@ final class MainViewModel: ObservableObject{
                 "Authentication": responseDetails.hmac,
                 "X-Hive-GPS-Position": "\(location.latitude) \(location.longitude)",
             ],
-            isPrintable: true,
             completed: { [weak self] (result: Result<[NDriver], APError>) in
                 self?.handleNearDriversResponse(result, with: tariffId)
             }
@@ -359,6 +360,7 @@ final class MainViewModel: ObservableObject{
                 "Hive-Profile": Constants.HIVE_PROFILE,
                 "X-Hive-GPS-Position": "\(location.latitude) \(location.longitude)",
                 "Date": responseDetails.data,
+                
                 "Authentication": responseDetails.hmac,
             ],
             completed: handleServiceTariffRequestResponse as (Result<ServiceResponse, APError>) -> Void)
@@ -428,7 +430,6 @@ final class MainViewModel: ObservableObject{
         NetworkService.shared.sendRequest(
             url: urlWithParams,
             method: "GET",
-            isPrintable: true,
             completed: handleDrawRouteRequestResponse as (Result<GraphopperNavResponse, APError>) -> Void)
     }
     
@@ -553,7 +554,6 @@ final class MainViewModel: ObservableObject{
                 "Date": responseDetails.data,
                 "Authentication": responseDetails.hmac,
             ],
-            isPrintable: true,
             completed: handleCancelOrderResponse as (Result<EmptyModel, APError>) -> Void)
     }
     
@@ -632,7 +632,6 @@ final class MainViewModel: ObservableObject{
                 "Date": responseDetails.data,
                 "Authentication": responseDetails.hmac,
             ],
-            isPrintable: true,
             completed: handleOrderInfoResponse as (Result<OrderInfo, APError>) -> Void)
     }
     
@@ -716,14 +715,12 @@ final class MainViewModel: ObservableObject{
     }
     
     @Published var locationHolder: [UserSelectedAddress] = []
-    @Published var showAlert: Bool = false
 
     
     func locationUpdated(_ address: UserSelectedAddress, _ isSetIndex: Bool = false, _ index: Int = 0){
         if let lastAddress = locationHolder.last {
             if lastAddress.addressLocation.latitude == address.addressLocation.latitude &&
                 lastAddress.addressLocation.longitude == address.addressLocation.longitude {
-                showAlert = true
                 return
             }
         }

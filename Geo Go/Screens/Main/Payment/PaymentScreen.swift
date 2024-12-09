@@ -176,7 +176,7 @@ struct CardViewItem: View {
             
         }
         .padding()
-        .background(backgroundGradient) // Apply the gradient
+        .background(backgroundGradient)
         .cornerRadius(12)
     }
 }

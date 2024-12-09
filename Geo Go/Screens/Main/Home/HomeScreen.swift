@@ -11,6 +11,7 @@ import SwiftUI
 struct HomeScreen: View {
     
     @StateObject var viewModel = MainViewModel()
+    @StateObject var socketViewModel = SocketViewModel()
     @StateObject var locationManager = LocationManager()
     
     @State private var selectedScreen: DestinationScreen? = nil
@@ -32,7 +33,6 @@ struct HomeScreen: View {
             }
             .alert(item: $viewModel.alertItem, content: createAlert)
             .alert(isPresented: $viewModel.showCancelOrderAlert, content: cancelOrderAlert)
-            .alert(isPresented: $viewModel.showAlert, content: duplicateAddressAlert)
             .sheet(isPresented: $viewModel.isSearchDialogShowing) {
                 BottomSheet {
                     SearchScreenDialog(viewModel: viewModel)
@@ -72,7 +72,6 @@ struct HomeScreen: View {
                 guard let loc = location else { return }
                 viewModel.findUserRealPosition(loc: loc.coordinate)
             }
-            
         }
     }
     
@@ -95,17 +94,6 @@ struct HomeScreen: View {
         )
     }
     
-    private func duplicateAddressAlert() -> Alert {
-        Alert(
-            title: Text("Duplicate Address"),
-            message: Text("This address is already the most recent one!"),
-            dismissButton: .default(Text("OK"), action: {
-                viewModel.showAlert = false
-            })
-        )
-    }
-    
-    
     private var mapLayer: some View {
         let uri = StyleURI(rawValue: "mapbox://styles/geogoapp/clghsbol4005301r7dqsxfu1n")!
         let cameraOptions = CameraOptions(center: viewModel.location, zoom: 17)
@@ -117,7 +105,8 @@ struct HomeScreen: View {
                              mapStyle: uri)
         .ignoresSafeArea()
         .onChange(of: viewModel.markerOffset) {
-            viewModel.reverseGeocodeIfNeeded(offset: viewModel.markerOffset)
+            print("HelloThere this is me")
+            viewModel.reverseGeocodeIfNeeded()
         }
     }
 

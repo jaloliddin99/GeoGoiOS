@@ -125,7 +125,6 @@
 		25F91C812C807EA3001CAAB7 /* empty_list.json in Resources */ = {isa = PBXBuildFile; fileRef = 25F91C802C807EA3001CAAB7 /* empty_list.json */; };
 		25F91C832C8086E1001CAAB7 /* DiscountVm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F91C822C8086E1001CAAB7 /* DiscountVm.swift */; };
 		25F9E97A2CFAAC0A00475A57 /* SocketIO in Frameworks */ = {isa = PBXBuildFile; productRef = 25F9E9792CFAAC0A00475A57 /* SocketIO */; };
-		25F9E97D2CFAAD2400475A57 /* CustomSocketManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F9E97C2CFAAD2400475A57 /* CustomSocketManager.swift */; };
 		25F9E97F2CFAAEBA00475A57 /* SocketViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F9E97E2CFAAEB600475A57 /* SocketViewModel.swift */; };
 /* End PBXBuildFile section */
 
@@ -248,7 +247,6 @@
 		25F91C7E2C807B34001CAAB7 /* Discount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Discount.swift; sourceTree = "<group>"; };
 		25F91C802C807EA3001CAAB7 /* empty_list.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = empty_list.json; sourceTree = "<group>"; };
 		25F91C822C8086E1001CAAB7 /* DiscountVm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscountVm.swift; sourceTree = "<group>"; };
-		25F9E97C2CFAAD2400475A57 /* CustomSocketManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSocketManager.swift; sourceTree = "<group>"; };
 		25F9E97E2CFAAEB600475A57 /* SocketViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -771,7 +769,6 @@
 			isa = PBXGroup;
 			children = (
 				25F9E97E2CFAAEB600475A57 /* SocketViewModel.swift */,
-				25F9E97C2CFAAD2400475A57 /* CustomSocketManager.swift */,
 			);
 			path = Socket;
 			sourceTree = "<group>";
@@ -909,7 +906,6 @@
 				25B20C2C2C6347B000F50017 /* GGText.swift in Sources */,
 				256C138B2C99B670007FAAC9 /* OTPField.swift in Sources */,
 				25BFDB7D2C35CFA400D73993 /* OrderGoView.swift in Sources */,
-				25F9E97D2CFAAD2400475A57 /* CustomSocketManager.swift in Sources */,
 				25BFDB682C345DF700D73993 /* WhatsNewView.swift in Sources */,
 				25BC2C562C76093B00484F69 /* WebView.swift in Sources */,
 				25BFDB732C34891800D73993 /* AddressHistory.swift in Sources */,
