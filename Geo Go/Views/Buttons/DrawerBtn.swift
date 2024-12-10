@@ -21,9 +21,9 @@ struct DrawerBtn: View {
                 .aspectRatio(contentMode: .fit)
                 .padding(10)
                 .frame(width: 48, height: 48)
-                .background(Circle()
-                    .fill(Color.white)
-                    .shadow(radius: 2))
+                .background(Circle().fill(Color.white))
+                .shadow(color: .black.opacity(0.1),radius: 16)
+
         } else {
             Image(systemName: name)
                 .resizable()
@@ -32,8 +32,9 @@ struct DrawerBtn: View {
                 .padding(12)
                 .frame(width: 48, height: 48)
                 .background(Circle()
-                    .fill(Color.white)
-                    .shadow(radius: 2))
+                    .fill(Color.white))
+                .shadow(color: .black.opacity(0.1),radius: 16)
+
         }
            
     }

@@ -76,10 +76,9 @@ struct CustomMapView: UIViewRepresentable {
                 .compactMap { $0 }
                 .sink { [weak self] coor in
                     if ((viewModel.status == 1 || viewModel.status == 3) && coor.count > 1) {
-                        self?.drawRoute(mapView: mapView, coordinates: coor)
-                        if mapView.camera.cameraAnimators.isEmpty {
-                            self?.setCameraBounds(mapView: mapView, coordinates: coor)
-                        }
+                        self?.drawRoute(mapView, coor)
+                        self?.setCameraBounds(mapView: mapView, coordinates: coor)
+                        self?.drawArrow(viewModel.locationHolder[0].toCll(), coor[0].toCLL(), mapView)
                     }
                 }
             locationChangeObserver = viewModel.$refocusButtonListener
@@ -98,7 +97,7 @@ struct CustomMapView: UIViewRepresentable {
                         case 0:
                             
                             self.parent.isEdgeInsetsChanging = true
-                            self.removeRoute(mapView: mapView)
+                            self.removeRoute(mapView: mapView,"line-source")
                             self.removeCarMarkerAnnotation(mapView: mapView)
                             self.removeClientMarkerAnnotation(mapView: mapView)
                             self.removeDestMarkerAnnotation(mapView: mapView)
@@ -126,6 +125,7 @@ struct CustomMapView: UIViewRepresentable {
                                 let myPoints = holder.map { point in
                                     return MyPoint(latitude: point.addressLocation.latitude, longitude: point.addressLocation.longitude)
                                 }
+                                
                                 self.setCameraBounds(mapView: mapView, coordinates: myPoints)
                                 
                                 self.addCircleLayers(mapView: mapView, userLocations: pointFeatures)
@@ -143,7 +143,7 @@ struct CustomMapView: UIViewRepresentable {
                         case 2:
                             self.removeClientMarkerAnnotation(mapView: mapView)
                             self.removeCircleLayers(mapView: mapView)
-                            self.removeRoute(mapView: mapView)
+                            self.removeRoute(mapView: mapView, "line-source")
                             mapView.viewAnnotations.removeAll()
                             let loc = viewModel.locationHolder[0].addressLocation
                             let options = CameraOptions(center: loc, zoom: 17)
@@ -152,7 +152,7 @@ struct CustomMapView: UIViewRepresentable {
                             }
 
                         case 3:
-                            self.removeRoute(mapView: mapView)
+                            self.removeRoute(mapView: mapView, "line-source")
                             self.removeCarMarkerAnnotation(mapView: mapView)
                             
                             self.addClientMarkerAnnotation(mapView: mapView, clientAddress: cSelectedPoint)
@@ -161,7 +161,7 @@ struct CustomMapView: UIViewRepresentable {
                             self.addCarMarkerAnnotation(mapView: mapView, point: point)
                             
                         case 4:
-                            self.removeRoute(mapView: mapView)
+                            self.removeRoute(mapView: mapView, "line-source")
                             guard let loc = viewModel.getOrderDetail?.assignee?.location else { return }
                             let point = MyPoint(latitude: loc.lat, longitude: loc.lon)
                             self.addCarMarkerAnnotation(mapView: mapView, point: point)
@@ -219,10 +219,10 @@ struct CustomMapView: UIViewRepresentable {
             gestureObserver?.cancel()
         }
         
-        func drawRoute(mapView: MapView, coordinates: [MyPoint]) {
+        func drawRoute(_ mapView: MapView, _ coordinates: [MyPoint]) {
             let sourceId = "line-source"
             let layerId = "line-layer"
-            removeRoute(mapView: mapView)
+            removeRoute(mapView: mapView, sourceId)
             
             DispatchQueue.global(qos: .userInitiated).async {
                 let lineCoordinates = coordinates.map { CLLocationCoordinate2D(latitude: $0.latitude, longitude: $0.longitude) }
@@ -249,8 +249,8 @@ struct CustomMapView: UIViewRepresentable {
                     }
                 )
                 
-                let lowZoomWidth = 10
-                let highZoomWidth = 20
+                let lowZoomWidth = 6
+                let highZoomWidth = 6
                 lineLayer.lineWidth = .expression(
                     Exp(.interpolate) {
                         Exp(.linear)
@@ -283,14 +283,14 @@ struct CustomMapView: UIViewRepresentable {
                 let coor = coordinates.map { point in
                     CLLocationCoordinate2DMake(point.latitude, point.longitude)
                 }
-                let referenceCamera = CameraOptions(zoom: 5, bearing: 45)
+                let referenceCamera = CameraOptions()
                 guard let camera = try? mapView.mapboxMap.camera(
                     for: coor,
                     camera: referenceCamera,
                     coordinatesPadding: UIEdgeInsets(top: 50, left: 50, bottom: 300, right: 50),
                     maxZoom: nil,
                     offset: nil) else { return }
-                mapView.camera.fly(to: camera, duration: 2.0)
+                mapView.camera.fly(to: camera, duration: 1.0)
             }
         }
         
@@ -309,6 +309,54 @@ struct CustomMapView: UIViewRepresentable {
                 }
             }
         }
+        
+        
+        func drawArrow(_ start: CLLocationCoordinate2D,_ end: CLLocationCoordinate2D, _ mapView: MapView) {
+            
+            let sourceId = "lineSource"
+            let layerId = "lineLayer"
+            
+            removeRoute(mapView: mapView, sourceId)
+            
+            let curvedPath = [start, end]
+            
+            let lineFeature = Feature(geometry: .lineString(LineString(curvedPath)))
+            
+            var lineSource = GeoJSONSource(id: sourceId)
+            lineSource.data = .feature(lineFeature)
+            lineSource.lineMetrics = true
+            
+            var lineLayer = LineLayer(id: layerId, source: sourceId)
+            lineLayer.lineColor = .constant(StyleColor(.main))
+            
+            
+            let lowZoomWidth = 4
+            let highZoomWidth = 4
+            lineLayer.lineWidth = .expression(
+                Exp(.interpolate) {
+                    Exp(.linear)
+                    Exp(.zoom)
+                    14
+                    lowZoomWidth
+                    18
+                    highZoomWidth
+                }
+            )
+            lineLayer.lineCap = .constant(.round)
+            lineLayer.lineJoin = .constant(.round)
+            lineLayer.lineDasharray = .constant([1, 1])
+            
+            
+            DispatchQueue.main.async {
+                do {
+                    try mapView.mapboxMap.addSource(lineSource)
+                    try mapView.mapboxMap.addLayer(lineLayer, layerPosition: nil)
+                } catch {
+                }
+            }
+        }
+        
+        
         func addViewAnnotation(coordinate: CLLocationCoordinate2D, mapView: MapView, address: String) {
             let annotationView = AnnotationView(text: address)
             annotationView.frame.size = CGSize(width: 150, height: 50)
@@ -324,6 +372,7 @@ struct CustomMapView: UIViewRepresentable {
             annotation.view.anchorPoint = CGPoint(x: 50.0, y: 1000.0)
             mapView.viewAnnotations.add(annotation)
         }
+        
         private func addCircleLayers(mapView: MapView, userLocations: [Feature]){
             removeCircleLayers(mapView: mapView)
             let pointSourceId = "point-source"
@@ -334,8 +383,8 @@ struct CustomMapView: UIViewRepresentable {
             
             var pointLayer = CircleLayer(id: pointLayerId, source: pointSourceId)
             pointLayer.circleColor = .constant(StyleColor(.white))
-            pointLayer.circleRadius = .constant(7)
-            pointLayer.circleStrokeWidth = .constant(5.0)
+            pointLayer.circleRadius = .constant(5)
+            pointLayer.circleStrokeWidth = .constant(3.0)
             pointLayer.circleStrokeColor = .constant(StyleColor(.black))
             
             if mapView.mapboxMap.sourceExists(withId: pointSourceId) {
@@ -431,21 +480,18 @@ struct CustomMapView: UIViewRepresentable {
         }
         
         
-        func removeRoute(mapView: MapView) {
+        func removeRoute(mapView: MapView, _ sourceId: String) {
             do {
                 let layers = mapView.mapboxMap.allLayerIdentifiers
                 for layer in layers {
                     if let source = mapView.mapboxMap.layerProperty(for: layer.id, property: "source").value as? String,
-                       source == "line-source" {
+                       source == sourceId {
                         try mapView.mapboxMap.removeLayer(withId: layer.id)
                     }
                 }
-                
-                if mapView.mapboxMap.sourceExists(withId: "line-source") {
-                    try mapView.mapboxMap.removeSource(withId: "line-source")
+                if mapView.mapboxMap.sourceExists(withId: sourceId) {
+                    try mapView.mapboxMap.removeSource(withId: sourceId)
                 }
-               
-                
             } catch {
                 print("Failed to remove source/layer from map: \(error)")
             }

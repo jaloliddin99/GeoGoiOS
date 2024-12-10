@@ -24,6 +24,7 @@ struct BonusHomeItem: View {
         .padding(.horizontal, 12)
         .background(.white)
         .cornerRadius(16)
-        .shadow(radius: 2)
+        .shadow(color: .black.opacity(0.1),radius: 16)
+
     }
 }

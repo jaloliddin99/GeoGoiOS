@@ -9,6 +9,8 @@ import SwiftUI
 
 struct DriverFoundView: View {
     @ObservedObject var viewModel: MainViewModel
+    @ObservedObject var socketViewModel: SocketViewModel
+
     @State private var isRideDetailsPresented = false
     var body: some View {
         ZStack{
@@ -63,9 +65,12 @@ struct DriverFoundView: View {
                             RemoteRoundedImage(image: viewModel.image, radius: 28, imageName: "profile-image")
                                 .onAppear {
                                     viewModel.loadImage(fromURLString: getImageUrl(orderDetails: viewModel.getOrderDetail!)) }
-                            Text("Уткир")
-                                .font(.system(size: 14, weight: .regular))
-                                .foregroundColor(.gray)
+                            
+                            if let name = socketViewModel.sOrderInfo{
+                                Text(name.driverFullName)
+                                    .font(.system(size: 14, weight: .regular))
+                                    .foregroundColor(.gray)
+                            }
                         }
                         .frame(maxWidth: .infinity)
                         
@@ -80,7 +85,7 @@ struct DriverFoundView: View {
                                     .frame(width: 56, height: 56)
                                     .background(.appGray)
                                     .clipShape(Circle())
-                                Text("Связь с водителем")
+                                Text("call_to_driver")
                                     .font(.system(size: 14, weight: .regular))
                                     .foregroundColor(.gray)
                                     .multilineTextAlignment(.center)
@@ -139,11 +144,10 @@ struct DriverFoundView: View {
             }
             BottomSheetView(isOpen: $isRideDetailsPresented,
                             minHeight: 0,
-                            maxHeight: UIScreen.main.bounds.height*0.9) {
-                RideDetailsView(viewModel: viewModel)
+                            maxHeight: UIScreen.main.bounds.height) {
+                RideDetailsView(viewModel: viewModel, socketViewModel: socketViewModel)
             }.edgesIgnoringSafeArea(.bottom)
             
-           
         }
     }
     

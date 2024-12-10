@@ -39,6 +39,8 @@ struct OrderGoView: View {
             }) {
                 DrawerBtn(name: "left-arrow", fromAssets: true, color: .txt)
             }
+            .shadow(color: .black.opacity(0.1),radius: 16)
+
             Spacer()
             locationButton
         }
@@ -60,7 +62,8 @@ struct OrderGoView: View {
         .background(Color.white)
         .cornerRadius(12, corners: [.topLeft, .topRight])
         .padding(.top, 12)
-        .shadow(radius: 2)
+        .shadow(color: .black.opacity(0.1),radius: 16)
+
     }
     
     private func carSelectionSection(array: [(offset: Int, element: ServiceTariff)],
@@ -143,6 +146,8 @@ struct OrderGoView: View {
         }) {
             DrawerBtn(name: "location_btn", fromAssets: true, color: .txt)
         }
+        .shadow(color: .black.opacity(0.1),radius: 16)
+
     }
 }
 

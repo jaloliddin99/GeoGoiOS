@@ -99,6 +99,7 @@ struct BottomSheetContent: View{
             Spacer()
         }
         .padding(.horizontal, 16)
+
     }
 }
 

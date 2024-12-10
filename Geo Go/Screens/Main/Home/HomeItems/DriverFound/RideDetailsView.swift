@@ -10,6 +10,8 @@ import SwiftUI
 struct RideDetailsView: View {
     
     @ObservedObject var viewModel: MainViewModel
+    @ObservedObject var socketViewModel: SocketViewModel
+
 
     var body: some View {
     
@@ -61,8 +63,6 @@ struct RideDetailsView: View {
                         RemoteRoundedImage(image: viewModel.image, radius: 28, imageName: "profile-image")
                             .onAppear {
                                 viewModel.loadImage(fromURLString: getImageUrl(orderDetails: viewModel.getOrderDetail!)) }
-                        
-                        
                     }
                 }
                 
@@ -155,7 +155,6 @@ struct RideDetailsView: View {
                 .frame(height: 60)
                 
                 
-                
                 Divider()
                     .padding(.trailing, 16)
                     .padding(.leading, 56)
@@ -179,26 +178,7 @@ struct RideDetailsView: View {
             .background(Color.white)
             .cornerRadius(16)
             
-            
             Spacer()
-            
-            HStack {
-                Image("cancel")
-                    .resizable()
-                    .padding(4)
-                    .frame(width: 30, height: 30)
-                
-                Text("cancel_order")
-                    .font(.body)
-                    .foregroundColor(.red)
-                Spacer()
-                Image(systemName: "chevron.right")
-                    .foregroundColor(.red)
-            }
-            .padding(.horizontal, 16)
-            .frame(height: 60)
-            .cornerRadius(16, corners: [.topLeft, .topRight])
-
             
             
         }

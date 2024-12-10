@@ -100,6 +100,44 @@ func getCurrentTime(block: @escaping (String) -> Void) {
     block(formattedDate)
 }
 
+import CoreLocation
+func generateCurvedPath(from start: CLLocationCoordinate2D, to end: CLLocationCoordinate2D, heightFactor: Double = 0.05) -> [CLLocationCoordinate2D] {
+    let lat1 = start.latitude.degreesToRadians
+    let lon1 = start.longitude.degreesToRadians
+    let lat2 = end.latitude.degreesToRadians
+    let lon2 = end.longitude.degreesToRadians
+    
+    let delta = acos(sin(lat1) * sin(lat2) + cos(lat1) * cos(lat2) * cos(lon2 - lon1))
+    let sinDelta = sin(delta)
+    
+    guard sinDelta > 0 else { return [start, end] } // Direct line if points are the same or antipodal
+    
+    var path: [CLLocationCoordinate2D] = []
+    
+    let steps = 1000
+    for i in 0...steps {
+        let fraction = Double(i) / Double(steps)
+        let A = sin((1 - fraction) * delta) / sinDelta
+        let B = sin(fraction * delta) / sinDelta
+        
+        let x = A * cos(lat1) * cos(lon1) + B * cos(lat2) * cos(lon2)
+        let y = A * cos(lat1) * sin(lon1) + B * cos(lat2) * sin(lon2)
+        let z = A * sin(lat1) + B * sin(lat2)
+        
+        let exaggeratedZ = z + heightFactor * sin(fraction * .pi)
+        
+        let lat = atan2(exaggeratedZ, sqrt(x * x + y * y))
+        let lon = atan2(y, x)
+        
+        path.append(CLLocationCoordinate2D(latitude: lat.radiansToDegrees, longitude: lon.radiansToDegrees))
+    }
+    
+    return path
+}
+extension Double {
+    var degreesToRadians: Double { self * .pi / 180 }
+    var radiansToDegrees: Double { self * 180 / .pi }
+}
 
 func imageNameForType(_ type: String) -> String {
     switch type {

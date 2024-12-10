@@ -10,9 +10,15 @@ import SwiftUI
 
 struct HomeScreen: View {
     
-    @StateObject var viewModel = MainViewModel()
-    @StateObject var socketViewModel = SocketViewModel()
-    @StateObject var locationManager = LocationManager()
+    @StateObject private var viewModel: MainViewModel
+    @StateObject private var socketViewModel: SocketViewModel
+    @StateObject private var locationManager = LocationManager()
+    
+    init() {
+        let source = MainViewModel()
+        _viewModel = StateObject(wrappedValue: source)
+        _socketViewModel = StateObject(wrappedValue: SocketViewModel(source: source))
+    }
     
     @State private var selectedScreen: DestinationScreen? = nil
     
@@ -112,7 +118,7 @@ struct HomeScreen: View {
 
  
     private var contentViews: some View {
-        StatusDependentView(viewModel: viewModel)
+        StatusDependentView(viewModel: viewModel, socketViewModel: socketViewModel)
     }
 
     

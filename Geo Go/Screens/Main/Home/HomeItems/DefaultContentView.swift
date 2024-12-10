@@ -21,6 +21,8 @@ struct DefaultContentView: View {
                             maxHeight: UIScreen.main.bounds.height) {
                 BottomSheetContent(viewModel: viewModel)
             }.edgesIgnoringSafeArea(.bottom)
+                .shadow(color: .black.opacity(0.1),radius: 16)
+
         }
     }
 
@@ -32,6 +34,8 @@ struct DefaultContentView: View {
         }
         .padding(.trailing, 16)
         .padding(.bottom, 262)
+        .shadow(color: .black.opacity(0.1),radius: 16)
+
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
         .ignoresSafeArea()
     }
@@ -45,6 +49,8 @@ struct DefaultContentView: View {
             }) {
                 DrawerBtn(name: "menu_navigation", fromAssets: true)
             }
+            .shadow(color: .black.opacity(0.1),radius: 16)
+
             Spacer()
             Button(action: {
                 viewModel.serviceTariffRequest()
@@ -52,6 +58,7 @@ struct DefaultContentView: View {
             }, label: {
                 BonusHomeItem(viewModel: viewModel)
             })
+
         }
         .padding(.top, 12)
         .padding(.horizontal, 16)

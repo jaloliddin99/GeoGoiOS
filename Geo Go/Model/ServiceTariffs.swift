@@ -70,6 +70,10 @@ struct UserSelectedAddress: Identifiable{
     let id = UUID()
     var addressName: String
     var addressLocation: CLLocationCoordinate2D
+    
+    func toCll() -> CLLocationCoordinate2D {
+        CLLocationCoordinate2D(latitude: addressLocation.latitude, longitude: addressLocation.longitude)
+    }
 }
 
 

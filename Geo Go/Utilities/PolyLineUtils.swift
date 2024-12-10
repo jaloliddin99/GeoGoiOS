@@ -32,6 +32,10 @@ struct MyPoint {
     var description: String {
         return "Point(latitude: \(latitude), longitude: \(longitude))"
     }
+    
+    func toCLL() -> CLLocationCoordinate2D {
+        CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+    }
 }
 
 func decode(encodedPath: String, precision: Int) -> [MyPoint] {

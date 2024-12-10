@@ -7,16 +7,29 @@
 
 import SwiftUI
 import SocketIO
+import Combine
 
 class SocketViewModel: ObservableObject {
     private var socketManager: SocketManager!
     var socket: SocketIOClient!
+    private var orderId: Int64?
+    private var cancellables: Set<AnyCancellable> = []
     
-    init() {
+    init(source: MainViewModel) {
+        source.$orderId
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] newValue in
+                if let orderId = newValue {
+                    self?.orderId = orderId
+                    self?.sendUserOrderIdAndLocs(orderId: orderId)
+                }
+            }
+            .store(in: &cancellables)
+        
         socketManager = SocketManager(
             socketURL: URL(string: "http://185.224.219.1:3007")!,
             config: [
-//                .log(true),
+                .log(true),
                 .compress,
                 .connectParams(["EIO": "2"]),
                 .forceWebsockets(true),
@@ -24,14 +37,13 @@ class SocketViewModel: ObservableObject {
             ]
         )
         socket = socketManager.defaultSocket
-        
-        
         socket.on(clientEvent: .connect) { _, _ in
             self.setupListeners()
         }
-        
         connect()
     }
+    
+   
 
     func connect() {
         guard socket.status != .connected else {
@@ -49,11 +61,19 @@ class SocketViewModel: ObservableObject {
     @Published var connectionState: SocketConnectionState = .disconnected
 
     
-    
     deinit {
         disconnect()
     }
 
+    func sendUserOrderIdAndLocs(orderId: Int64){
+        let message = ModelSend(
+            orderId: orderId,
+            departureLocation: [DataHolder.location.latitude, DataHolder.location.longitude]
+        )
+        if let messageData = message.toDictionary() {
+            socket.emit("listen-order", messageData)
+        }
+    }
     
     func sendUserLocation(){
         let message = Message(
@@ -68,19 +88,33 @@ class SocketViewModel: ObservableObject {
         }
     }
     
+    @Published var sOrderInfo: SOrderInfo?
+    @Published var sDriverLists: [SDriverData] = []
+   
+
+
     private func setupListeners() {
         sendUserLocation()
+        
+        if orderId != nil{
+            sendUserOrderIdAndLocs(orderId: orderId!)
+        }
         socket.on("getCars"){ data, ack in
             if let cars: [SDriverData] = self.parseSocketData(data: data, type: [SDriverData].self) {
-                
+                DispatchQueue.main.async {
+                    self.sDriverLists = cars
+                }
             }
         }
+        
         socket.on("listen-order") { [weak self] data, ack in
             guard let self = self else { return }
             print("Received listen-order event: \(data)")
             
             if let orderInfo: SOrderInfo = self.parseSocketData(data: data, type: SOrderInfo.self) {
-               
+                DispatchQueue.main.async {
+                    self.sOrderInfo = orderInfo
+                }
             }
         }
         
@@ -139,3 +173,18 @@ struct Message: Codable {
         return dict
     }
     }
+
+
+
+struct ModelSend: Codable {
+    let orderId: Int64
+    let departureLocation: [Double]
+    
+    func toDictionary() -> [String: Any]? {
+        guard let data = try? JSONEncoder().encode(self),
+              let dict = try? JSONSerialization.jsonObject(with: data, options: .fragmentsAllowed) as? [String: Any] else {
+            return nil
+        }
+        return dict
+    }
+}

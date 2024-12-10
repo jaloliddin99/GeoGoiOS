@@ -36,7 +36,8 @@ struct RoutePoint: Codable {
     var coordinates: Coordinates
 }
 struct Info: Codable {
-    var alias: String
+    var alias: String?
+    var house: String?
 }
 struct Coordinates: Codable {
     var lon: Double

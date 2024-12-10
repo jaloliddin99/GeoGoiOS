@@ -43,9 +43,9 @@ final class MainViewModel: ObservableObject{
     }
     
     init() {
+        print("MainViewModel init methiod")
         MapboxOptions.accessToken = "pk.eyJ1IjoiZ2VvZ29hcHAiLCJhIjoiY2xnaHJleWNyMGRvczNkbGY2Ym41eHY3NyJ9.xI3D0Q4YyqNxCl8j1c7kZg"
         initMain()
-       
     }
     
     
@@ -440,7 +440,6 @@ final class MainViewModel: ObservableObject{
                     if let response = response as? GraphopperNavResponse {
                         let locations = decode(encodedPath: response.paths[0].points, precision: 5)
                         routeCoordinates = locations
-                        addLine(points: locations)
                     }
                     
                 case .failure(_): break
@@ -489,6 +488,7 @@ final class MainViewModel: ObservableObject{
     
     @Published var createOrder: CreateOrderResponse?
     
+    
     func createOrder(lat: Double, lon: Double, createOrderRequest: CreateOrderRequest) {
         guard let responseDetails = generateResponse?.generateHmacData(id: "orders") else { return }
         
@@ -527,7 +527,8 @@ final class MainViewModel: ObservableObject{
                         self.createOrder = appetizers
                         DataHolder.status = status
                         DataHolder.orderId = appetizers.id
-                        startTimer(orderId: appetizers.id)
+                        orderId = appetizers.id
+                        getOrderDetails(orderId: appetizers.id)
                         
                     }
                 case .failure(_): break
@@ -537,6 +538,7 @@ final class MainViewModel: ObservableObject{
     
     
     @Published var cancelOrder: EmptyModel?
+    @Published var orderId: Int64?
     
     func cancelMyOrder() {
         guard let responseDetails = generateResponse?.generateHmacDataForOrderId(id: "cancelOrder", orderId: DataHolder.orderId) else { return }
@@ -612,7 +614,8 @@ final class MainViewModel: ObservableObject{
     
     private func filterClientOrders(res: [ShortOrderInfo]) {
         if let highestStateOrder = res.max(by: { $0.state < $1.state }) {
-            startTimer(orderId: highestStateOrder.id)
+            orderId = highestStateOrder.id
+            getOrderDetails(orderId: highestStateOrder.id)
             DataHolder.orderId = highestStateOrder.id
         }
     }
@@ -632,6 +635,7 @@ final class MainViewModel: ObservableObject{
                 "Date": responseDetails.data,
                 "Authentication": responseDetails.hmac,
             ],
+            isPrintable: true,
             completed: handleOrderInfoResponse as (Result<OrderInfo, APError>) -> Void)
     }
     
@@ -671,12 +675,10 @@ final class MainViewModel: ObservableObject{
                 status = 5
                 
             case 5:
-                stopTimer()
                 showRateDriver.toggle()
                 status = 0
                 
             case 6:
-                stopTimer()
                 status = 0
                 
             default:
@@ -695,23 +697,6 @@ final class MainViewModel: ObservableObject{
                 self.image = Image(uiImage: uiImage)
             }
         }
-    }
-    
-    
-    
-    private var timer: Timer?
-    private var cancellables = Set<AnyCancellable>()
-    
-    func startTimer(orderId: Int64) {
-        stopTimer()
-        timer = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: true) { [weak self] _ in
-            self?.getOrderDetails(orderId: orderId)
-        }
-    }
-    
-    func stopTimer() {
-        timer?.invalidate()
-        timer = nil
     }
     
     @Published var locationHolder: [UserSelectedAddress] = []
@@ -738,10 +723,5 @@ final class MainViewModel: ObservableObject{
         if locationHolder.count > 1 {
             locationHolder.removeSubrange(1..<locationHolder.count)
         }
-    }
-
-    
-    deinit {
-        stopTimer()
     }
 }
