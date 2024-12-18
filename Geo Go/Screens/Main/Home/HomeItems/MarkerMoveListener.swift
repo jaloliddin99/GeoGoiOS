@@ -24,13 +24,11 @@ struct CustomMapView: UIViewRepresentable {
     }
     
     
-    var isEdgeInsetsChanging: Bool = false
+    @State var isEdgeInsetsChanging: Bool = false
     
     func makeUIView(context: Context) -> MapView {
         let view = MapView(frame: .zero, mapInitOptions: MapInitOptions(cameraOptions: vp, styleURI: mapStyle))
         setupOrnaments(mapView: view)
-        context.coordinator.setupObserver(mapView: view)
-        
         context.coordinator.subscribeToRouteCoordinates(viewModel, mapView: view)
         
         return view
@@ -65,6 +63,8 @@ struct CustomMapView: UIViewRepresentable {
         private var gestureObserver: Cancelable?
         private var cameraIdleObserver: Cancelable?
         private var locationChangeObserver: Cancellable?
+        private var driverUpdateLocation: Cancellable?
+        private var locationHolderObserver: Cancellable?
         
 
         init(_ parent: CustomMapView) {
@@ -74,17 +74,59 @@ struct CustomMapView: UIViewRepresentable {
         func subscribeToRouteCoordinates(_ viewModel: MainViewModel, mapView: MapView) {
             cancellable = viewModel.$routeCoordinates
                 .compactMap { $0 }
-                .sink { [weak self] coor in
+                .sink { coor in
+                    
                     if ((viewModel.status == 1 || viewModel.status == 3) && coor.count > 1) {
-                        self?.drawRoute(mapView, coor)
-                        self?.setCameraBounds(mapView: mapView, coordinates: coor)
-                        self?.drawArrow(viewModel.locationHolder[0].toCll(), coor[0].toCLL(), mapView)
+                        drawRoute(mapView, coor)
+                        setCameraBounds(mapView, coor)
                     }
                 }
             locationChangeObserver = viewModel.$refocusButtonListener
                 .sink { isButtonClicked in
                     mapView.camera.ease(to: CameraOptions(center: viewModel.location, zoom: 17), duration: 0.7)
                 }
+            
+            driverUpdateLocation = viewModel.$sDriverRealTimeData
+                .sink{ realTimeData in
+                    guard let rtd = realTimeData else { return }
+                    let myPoint = MyPoint(latitude: rtd.lat, longitude: rtd.lon)
+                    
+                    updateCarMarkerLocation(mapView, myPoint, rtd.bearing)
+                }
+            
+            locationHolderObserver = viewModel.$locationHolder
+                .sink { list in
+                    if viewModel.status == 1 {
+                        let loc = list.map({ l in l.toMyPoint() })
+                        setCameraBounds(mapView, loc)
+                    }
+                }
+            
+            cameraChangedObserver = mapView.mapboxMap.onCameraChanged.observe { [weak self] _ in
+                DispatchQueue.main.async {
+                    guard let self = self else { return }
+                    if (!self.parent.isEdgeInsetsChanging) {
+                        let vm = self.parent.viewModel
+                        if (vm.status == 0 || vm.status == 1) && vm.locationHolder.count <= 1 {
+                            self.parent.markerOffset = -50
+                        }
+                    }
+                }
+            }
+            
+            cameraIdleObserver = mapView.mapboxMap.onMapIdle.observe { [weak self] _ in
+                DispatchQueue.main.async {
+                    guard let self = self else { return }
+                    if (!self.parent.isEdgeInsetsChanging) {
+                        let vm = self.parent.viewModel
+                        if (vm.status == 0 || vm.status == 1) && vm.locationHolder.count <= 1 {
+                            self.parent.markerOffset = 0
+                            let center = mapView.mapboxMap.cameraState.center
+                            self.parent.currentCenterCoordinate = center
+                        }
+                    }
+                }
+            }
             
             
             statusCancellable = viewModel.$status
@@ -95,13 +137,12 @@ struct CustomMapView: UIViewRepresentable {
 
                     switch status {
                         case 0:
-                            
                             self.parent.isEdgeInsetsChanging = true
-                            self.removeRoute(mapView: mapView,"line-source")
-                            self.removeCarMarkerAnnotation(mapView: mapView)
-                            self.removeClientMarkerAnnotation(mapView: mapView)
-                            self.removeDestMarkerAnnotation(mapView: mapView)
-                            self.removeCircleLayers(mapView: mapView)
+                            removeRoute(mapView: mapView,"line-source")
+                            removeCarMarkerAnnotation(mapView: mapView)
+                            removeClientMarkerAnnotation(mapView: mapView)
+                            removeDestMarkerAnnotation(mapView: mapView)
+                            removeCircleLayers(mapView: mapView)
                             mapView.viewAnnotations.removeAll()
                             
                             var options = CameraOptions(center: loc, zoom: 17)
@@ -117,70 +158,67 @@ struct CustomMapView: UIViewRepresentable {
                             let holder = viewModel.locationHolder
                             
                             if holder.count == 1 {
-                                self.configureCamera(mapView: mapView, padding: 250)
+                                configureCamera(mapView: mapView, padding: 250, self.parent.$isEdgeInsetsChanging)
                             }else {
-                                let pointFeatures = holder.map { coordinate -> Feature in
+                                var pointFeatures = holder.map { coordinate -> Feature in
                                     return Feature(geometry: .point(Point(coordinate.addressLocation)))
                                 }
                                 let myPoints = holder.map { point in
                                     return MyPoint(latitude: point.addressLocation.latitude, longitude: point.addressLocation.longitude)
                                 }
-                                
-                                self.setCameraBounds(mapView: mapView, coordinates: myPoints)
-                                
-                                self.addCircleLayers(mapView: mapView, userLocations: pointFeatures)
-                                
                                 mapView.viewAnnotations.removeAll()
+                                addViewAnnotation(coordinate: holder.first!.addressLocation, mapView: mapView)
+                                setCameraBounds(mapView, myPoints)
                                 
-                                holder.enumerated().forEach { index, ua in
-                                    if index == 0 || index == (holder.count - 1) {
-                                        self.addViewAnnotation(coordinate: ua.addressLocation, mapView: mapView, address: ua.addressName)
-                                    }
-                                }
+                                pointFeatures.removeLast()
+                                addCircleLayers(mapView: mapView, userLocations: pointFeatures)
+                                let point = myPoints.last!.toPoint()
+                                addDestMarkerAnnotation(mapView: mapView, destination: point)
                             }
                             
                             
                         case 2:
-                            self.removeClientMarkerAnnotation(mapView: mapView)
-                            self.removeCircleLayers(mapView: mapView)
-                            self.removeRoute(mapView: mapView, "line-source")
                             mapView.viewAnnotations.removeAll()
+                            removeClientMarkerAnnotation(mapView: mapView)
+                            removeCircleLayers(mapView: mapView)
+                            removeRoute(mapView: mapView, "line-source")
                             let loc = viewModel.locationHolder[0].addressLocation
                             let options = CameraOptions(center: loc, zoom: 17)
                             mapView.camera.fly(to: options, duration: 2.0) {_ in
-                                mapView.camera.fly(to: CameraOptions(center: loc, zoom: 11), duration: 8.0)
+                                mapView.camera.fly(to: CameraOptions(center: loc, zoom: 14), duration: 5.0)
                             }
 
                         case 3:
-                            self.removeRoute(mapView: mapView, "line-source")
-                            self.removeCarMarkerAnnotation(mapView: mapView)
+                            removeRoute(mapView: mapView, "line-source")
+                            removeCarMarkerAnnotation(mapView: mapView)
                             
-                            self.addClientMarkerAnnotation(mapView: mapView, clientAddress: cSelectedPoint)
+                            addClientMarkerAnnotation(mapView: mapView, clientAddress: cSelectedPoint)
                             guard let loc = viewModel.getOrderDetail?.assignee?.location else { return }
                             let point = MyPoint(latitude: loc.lat, longitude: loc.lon)
-                            self.addCarMarkerAnnotation(mapView: mapView, point: point)
+                            addCarMarkerAnnotation(mapView: mapView, point: point)
                             
                         case 4:
-                            self.removeRoute(mapView: mapView, "line-source")
+                            removeRoute(mapView: mapView, "line-source")
                             guard let loc = viewModel.getOrderDetail?.assignee?.location else { return }
                             let point = MyPoint(latitude: loc.lat, longitude: loc.lon)
-                            self.addCarMarkerAnnotation(mapView: mapView, point: point)
-                            self.addClientMarkerAnnotation(mapView: mapView, clientAddress: cSelectedPoint)
+                            addCarMarkerAnnotation(mapView: mapView, point: point)
+                            addClientMarkerAnnotation(mapView: mapView, clientAddress: cSelectedPoint)
 
                         case 5:
-                            self.removeClientMarkerAnnotation(mapView: mapView)
+                            removeClientMarkerAnnotation(mapView: mapView)
                             
                             if let route = viewModel.getOrderDetail?.route, route.count >= 1 {
                                 let lat = route[route.count-1].point.coordinates.lat
                                 let lon = route[route.count-1].point.coordinates.lon
                                 let point = Point(CLLocationCoordinate2D(latitude: lat, longitude: lon))
-                                self.addDestMarkerAnnotation(mapView: mapView, destination: point)
+                                addDestMarkerAnnotation(mapView: mapView, destination: point)
                             }
                             
                             guard let location = viewModel.getOrderDetail?.assignee?.location
                                     else { return }
                             let coor = MyPoint(latitude: location.lat, longitude: location.lon)
-                            self.addCarMarkerAnnotation(mapView: mapView, point: coor)
+
+                            addCarMarkerAnnotation(mapView: mapView, point: coor)
                             
                         default:
                             print("Hello World")
@@ -188,330 +226,14 @@ struct CustomMapView: UIViewRepresentable {
                 }
         }
         
-        func setupObserver(mapView: MapView) {
-            cameraChangedObserver = mapView.mapboxMap.onCameraChanged.observe { [weak self] _ in
-               
-                DispatchQueue.main.async {
-                    guard let self = self else { return }
-                    if (!self.parent.isEdgeInsetsChanging) {
-                        self.parent.markerOffset = -50
-                    }
-                }
-            }
-            
-            cameraIdleObserver = mapView.mapboxMap.onMapIdle.observe { [weak self] _ in
-                DispatchQueue.main.async {
-                    guard let self = self else { return }
-                    print("idle state called \(self.parent.isEdgeInsetsChanging)")
-                    if (!self.parent.isEdgeInsetsChanging) {
-                        self.parent.markerOffset = 0
-                        let center = mapView.mapboxMap.cameraState.center
-                        self.parent.currentCenterCoordinate = center
-                    }
-                }
-            }
-        }
         
         deinit {
             cameraChangedObserver?.cancel()
             cameraIdleObserver?.cancel()
             cancellable?.cancel()
             gestureObserver?.cancel()
+            locationHolderObserver?.cancel()
         }
-        
-        func drawRoute(_ mapView: MapView, _ coordinates: [MyPoint]) {
-            let sourceId = "line-source"
-            let layerId = "line-layer"
-            removeRoute(mapView: mapView, sourceId)
-            
-            DispatchQueue.global(qos: .userInitiated).async {
-                let lineCoordinates = coordinates.map { CLLocationCoordinate2D(latitude: $0.latitude, longitude: $0.longitude) }
-                let lineFeature = Feature(geometry: .lineString(LineString(lineCoordinates)))
-                
-                var lineSource = GeoJSONSource(id: sourceId)
-                lineSource.data = .feature(lineFeature)
-                lineSource.lineMetrics = true
-                
-                var lineLayer = LineLayer(id: layerId, source: sourceId)
-                lineLayer.lineColor = .constant(StyleColor(.main))
-                lineLayer.lineGradient = .expression(
-                    Exp(.interpolate) {
-                        Exp(.linear)
-                        Exp(.lineProgress)
-                        0.5
-                        UIColor.main
-                        0.6
-                        UIColor.green
-                        0.7
-                        UIColor.yellow
-                        1
-                        UIColor.main
-                    }
-                )
-                
-                let lowZoomWidth = 6
-                let highZoomWidth = 6
-                lineLayer.lineWidth = .expression(
-                    Exp(.interpolate) {
-                        Exp(.linear)
-                        Exp(.zoom)
-                        14
-                        lowZoomWidth
-                        18
-                        highZoomWidth
-                    }
-                )
-                lineLayer.lineCap = .constant(.round)
-                lineLayer.lineJoin = .constant(.round)
-                
-                DispatchQueue.main.async {
-                    do {
-                        try mapView.mapboxMap.addSource(lineSource)
-                        try mapView.mapboxMap.addLayer(lineLayer, layerPosition: nil)
-                    } catch {
-                        print("Error adding source or layer: \(error)")
-                    }
-                }
-            }
-        }
-
-        func setCameraBounds(
-            mapView: MapView,
-            coordinates: [MyPoint]
-        ){
-            if !coordinates.isEmpty {
-                let coor = coordinates.map { point in
-                    CLLocationCoordinate2DMake(point.latitude, point.longitude)
-                }
-                let referenceCamera = CameraOptions()
-                guard let camera = try? mapView.mapboxMap.camera(
-                    for: coor,
-                    camera: referenceCamera,
-                    coordinatesPadding: UIEdgeInsets(top: 50, left: 50, bottom: 300, right: 50),
-                    maxZoom: nil,
-                    offset: nil) else { return }
-                mapView.camera.fly(to: camera, duration: 1.0)
-            }
-        }
-        
-        private func configureCamera(mapView: MapView, padding: CGFloat) {
-            self.parent.isEdgeInsetsChanging = true
-            let currentCamera = mapView.mapboxMap.cameraState
-            
-            let edgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: padding, right: 0)
-            
-            var cameraOptions = CameraOptions(center: currentCamera.center, zoom: currentCamera.zoom, bearing: currentCamera.bearing, pitch: currentCamera.pitch)
-            cameraOptions.padding = edgeInsets
-            
-            mapView.camera.fly(to: cameraOptions, duration: 0.4){_ in
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                    self.parent.isEdgeInsetsChanging = false
-                }
-            }
-        }
-        
-        
-        func drawArrow(_ start: CLLocationCoordinate2D,_ end: CLLocationCoordinate2D, _ mapView: MapView) {
-            
-            let sourceId = "lineSource"
-            let layerId = "lineLayer"
-            
-            removeRoute(mapView: mapView, sourceId)
-            
-            let curvedPath = [start, end]
-            
-            let lineFeature = Feature(geometry: .lineString(LineString(curvedPath)))
-            
-            var lineSource = GeoJSONSource(id: sourceId)
-            lineSource.data = .feature(lineFeature)
-            lineSource.lineMetrics = true
-            
-            var lineLayer = LineLayer(id: layerId, source: sourceId)
-            lineLayer.lineColor = .constant(StyleColor(.main))
-            
-            
-            let lowZoomWidth = 4
-            let highZoomWidth = 4
-            lineLayer.lineWidth = .expression(
-                Exp(.interpolate) {
-                    Exp(.linear)
-                    Exp(.zoom)
-                    14
-                    lowZoomWidth
-                    18
-                    highZoomWidth
-                }
-            )
-            lineLayer.lineCap = .constant(.round)
-            lineLayer.lineJoin = .constant(.round)
-            lineLayer.lineDasharray = .constant([1, 1])
-            
-            
-            DispatchQueue.main.async {
-                do {
-                    try mapView.mapboxMap.addSource(lineSource)
-                    try mapView.mapboxMap.addLayer(lineLayer, layerPosition: nil)
-                } catch {
-                }
-            }
-        }
-        
-        
-        func addViewAnnotation(coordinate: CLLocationCoordinate2D, mapView: MapView, address: String) {
-            let annotationView = AnnotationView(text: address)
-            annotationView.frame.size = CGSize(width: 150, height: 50)
-            
-            
-            let annotation = ViewAnnotation(
-                coordinate: coordinate,
-                view: annotationView
-            )
-            annotation.variableAnchors = .all
-            
-            annotation.allowOverlap = true
-            annotation.view.anchorPoint = CGPoint(x: 50.0, y: 1000.0)
-            mapView.viewAnnotations.add(annotation)
-        }
-        
-        private func addCircleLayers(mapView: MapView, userLocations: [Feature]){
-            removeCircleLayers(mapView: mapView)
-            let pointSourceId = "point-source"
-            let pointLayerId = "point-layer"
-            
-            var pointSource = GeoJSONSource(id: pointSourceId)
-            pointSource.data = .featureCollection(FeatureCollection(features: userLocations))
-            
-            var pointLayer = CircleLayer(id: pointLayerId, source: pointSourceId)
-            pointLayer.circleColor = .constant(StyleColor(.white))
-            pointLayer.circleRadius = .constant(5)
-            pointLayer.circleStrokeWidth = .constant(3.0)
-            pointLayer.circleStrokeColor = .constant(StyleColor(.black))
-            
-            if mapView.mapboxMap.sourceExists(withId: pointSourceId) {
-                try? mapView.mapboxMap.removeSource(withId: pointSourceId)
-            }
-            if mapView.mapboxMap.layerExists(withId: pointLayerId) {
-                try? mapView.mapboxMap.removeLayer(withId: pointLayerId)
-            }
-            
-            try! mapView.mapboxMap.addSource(pointSource)
-            try! mapView.mapboxMap.addLayer(pointLayer, layerPosition: nil)
-        }
-        
-        private func addCarMarkerAnnotation(mapView: MapView, point: MyPoint) {
-          
-            removeCarMarkerAnnotation(mapView: mapView)
-            
-            try? mapView.mapboxMap.addImage(UIImage(named: "car_from_above")!, id: Constants.CAR_ICON_ID)
-            
-            var source = GeoJSONSource(id: Constants.CAR_ICON_SOURCE_ID)
-            let point = Point(CLLocationCoordinate2D(latitude: point.latitude, longitude: point.longitude))
-            source.data = .feature(Feature(geometry: point))
-            try? mapView.mapboxMap.addSource(source)
-            
-            
-            var layer = SymbolLayer(id: Constants.CAR_ICON_LAYER_ID, source: Constants.CAR_ICON_SOURCE_ID)
-            layer.iconImage = .constant(.name(Constants.CAR_ICON_ID))
-            layer.iconAnchor = .constant(.bottom)
-            layer.iconOffset = .constant([0, 12])
-            layer.iconSize = .constant(0.12)
-            layer.iconOffset = .constant([0, -50])
-                        
-            try? mapView.mapboxMap.addLayer(layer)
-        }
-        
-        
-        private func addDestMarkerAnnotation(mapView: MapView, destination: Point) {
-            removeDestMarkerAnnotation(mapView: mapView)
-            try? mapView.mapboxMap.addImage(UIImage(named: "destination")!, id: Constants.DEST_ICON_ID)
-            var source = GeoJSONSource(id: Constants.DEST_ICON_SOURCE_ID)
-            source.data = .feature(Feature(geometry: destination))
-            try? mapView.mapboxMap.addSource(source)
-            
-            var layer = SymbolLayer(id: Constants.DEST_ICON_LAYER_ID, source: Constants.DEST_ICON_SOURCE_ID)
-            layer.iconImage = .constant(.name(Constants.DEST_ICON_ID))
-            layer.iconSize = .constant(0.035)
-                       
-            try? mapView.mapboxMap.addLayer(layer)
-        }
-        
-        
-        private func addClientMarkerAnnotation(mapView: MapView, clientAddress: Point) {
-            removeClientMarkerAnnotation(mapView: mapView)
-            try? mapView.mapboxMap.addImage(UIImage(named: "client_flag")!, id: Constants.CLIENT_ICON_ID)
-            var source = GeoJSONSource(id: Constants.CLIENT_ICON_SOURCE_ID)
-            source.data = .feature(Feature(geometry: clientAddress))
-            try? mapView.mapboxMap.addSource(source)
-            
-            var layer = SymbolLayer(id: Constants.CLIENT_ICON_LAYER_ID, source: Constants.CLIENT_ICON_SOURCE_ID)
-            layer.iconImage = .constant(.name(Constants.CLIENT_ICON_ID))
-            layer.iconSize = .constant(0.08)
-            
-            try? mapView.mapboxMap.addLayer(layer)
-        }
-        
-        
-        
-        private func removeClientMarkerAnnotation(mapView: MapView) {
-            if let _ = try? mapView.mapboxMap.layer(withId: Constants.CLIENT_ICON_LAYER_ID) {
-                try? mapView.mapboxMap.removeLayer(withId: Constants.CLIENT_ICON_LAYER_ID)
-            }
-            if let _ = try? mapView.mapboxMap.source(withId: Constants.CLIENT_ICON_SOURCE_ID) {
-                try? mapView.mapboxMap.removeSource(withId: Constants.CLIENT_ICON_SOURCE_ID)
-            }
-        }
-        
-        private func removeCarMarkerAnnotation(mapView: MapView) {
-            if let _ = try? mapView.mapboxMap.layer(withId: Constants.CAR_ICON_LAYER_ID) {
-                try? mapView.mapboxMap.removeLayer(withId: Constants.CAR_ICON_LAYER_ID)
-            }
-            if let _ = try? mapView.mapboxMap.source(withId: Constants.CAR_ICON_SOURCE_ID) {
-                try? mapView.mapboxMap.removeSource(withId: Constants.CAR_ICON_SOURCE_ID)
-            }
-        }
-        
-        private func removeDestMarkerAnnotation(mapView: MapView) {
-            if let _ = try? mapView.mapboxMap.layer(withId: Constants.DEST_ICON_LAYER_ID) {
-                try? mapView.mapboxMap.removeLayer(withId: Constants.DEST_ICON_LAYER_ID)
-            }
-            if let _ = try? mapView.mapboxMap.source(withId: Constants.DEST_ICON_SOURCE_ID) {
-                try? mapView.mapboxMap.removeSource(withId: Constants.DEST_ICON_SOURCE_ID)
-            }
-        }
-        
-        
-        func removeRoute(mapView: MapView, _ sourceId: String) {
-            do {
-                let layers = mapView.mapboxMap.allLayerIdentifiers
-                for layer in layers {
-                    if let source = mapView.mapboxMap.layerProperty(for: layer.id, property: "source").value as? String,
-                       source == sourceId {
-                        try mapView.mapboxMap.removeLayer(withId: layer.id)
-                    }
-                }
-                if mapView.mapboxMap.sourceExists(withId: sourceId) {
-                    try mapView.mapboxMap.removeSource(withId: sourceId)
-                }
-            } catch {
-                print("Failed to remove source/layer from map: \(error)")
-            }
-        }
-        
-        func removeCircleLayers(mapView: MapView) {
-            do{
-                
-                let pointSourceId = "point-source"
-                let pointLayerId = "point-layer"
-                
-                if mapView.mapboxMap.sourceExists(withId: pointSourceId) {
-                    try? mapView.mapboxMap.removeSource(withId: pointSourceId)
-                }
-                if mapView.mapboxMap.layerExists(withId: pointLayerId) {
-                    try? mapView.mapboxMap.removeLayer(withId: pointLayerId)
-                }
-            }
-        }
-        
         
     }
 }

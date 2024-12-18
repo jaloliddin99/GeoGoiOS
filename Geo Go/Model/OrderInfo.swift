@@ -30,6 +30,11 @@ struct OrderInfo: Codable {
 
 struct RouteItem: Codable {
     var point: RoutePoint
+    
+    func toMyPoint() -> MyPoint {
+        return MyPoint(latitude: point.coordinates.lat, longitude: point.coordinates.lon)
+    }
+    
 }
 struct RoutePoint: Codable {
     var info: Info

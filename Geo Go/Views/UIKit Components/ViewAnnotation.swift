@@ -6,50 +6,83 @@
 //
 
 import Foundation
-
 import UIKit
 
 class AnnotationView: UIView {
-    private let label: UILabel
+    private let numberLabel: UILabel
+    private let textLabel: UILabel
+    private let stackView: UIStackView
     
-    init(text: String, maxCharacters: Int = 37) {
-        self.label = UILabel()
+    init(number: String, text: String, maxCharacters: Int = 37) {
+        // Initialize the labels and stack view
+        self.numberLabel = UILabel()
+        self.textLabel = UILabel()
+        self.stackView = UIStackView()
         super.init(frame: .zero)
+        
+        // Truncate the text if it exceeds maxCharacters
         let truncatedText = text.count > maxCharacters ? String(text.prefix(maxCharacters)) : text
-        setupView(text: truncatedText)
+        
+        // Setup the view
+        setupView(number: number, text: truncatedText)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setupView(text: String) {
-        label.text = text
-        label.textAlignment = .center
-        label.textColor = .black
-        label.font = .systemFont(ofSize: 15, weight: .medium)
-        label.translatesAutoresizingMaskIntoConstraints = false
+    private func setupView(number: String, text: String) {
+        // Configure the number label
+        numberLabel.text = number
+        numberLabel.textAlignment = .center
+        numberLabel.textColor = .white
+        numberLabel.font = .systemFont(ofSize: 15, weight: .bold)
+        numberLabel.translatesAutoresizingMaskIntoConstraints = false
         
-//        layer.shadowColor = UIColor.black.cgColor
-//        layer.shadowOpacity = 0.9
-//        
-
+        // Configure the text label
+        textLabel.text = text
+        textLabel.textAlignment = .center
+        textLabel.textColor = .white
+        textLabel.font = .systemFont(ofSize: 13, weight: .medium)
+        textLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        // Configure the stack view
+        stackView.axis = .vertical
+        stackView.alignment = .center
+        stackView.distribution = .fill
+        stackView.spacing = 0
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        
+        stackView.addArrangedSubview(numberLabel)
+        stackView.addArrangedSubview(textLabel)
+        
+        // Configure the view
+        backgroundColor = .main
+        layer.cornerRadius = 12
+        layer.masksToBounds = false
+        
+        // Add shadow
         layer.shadowColor = UIColor.black.cgColor
         layer.shadowOpacity = 0.25
         layer.shadowOffset = CGSize(width: 0, height: 2)
         layer.shadowRadius = 12
+        
+        // Add stroke (border)
+        layer.borderWidth = 3.0 // Stroke width
+        layer.borderColor = UIColor.white.cgColor // Stroke color (example: blue)
 
         
-        backgroundColor = .white
-        layer.cornerRadius = 12
-        layer.masksToBounds = false
-        addSubview(label)
+        addSubview(stackView)
         
         NSLayoutConstraint.activate([
-            label.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 12),
-            label.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -12),
-            label.topAnchor.constraint(equalTo: topAnchor, constant: 12),
-            label.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -12)
+            stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
+            stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
+            stackView.topAnchor.constraint(equalTo: topAnchor, constant: 6),
+            stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -6),
+            widthAnchor.constraint(equalTo: heightAnchor),
+
         ])
+        
+
     }
 }

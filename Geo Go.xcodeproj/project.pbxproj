@@ -66,6 +66,9 @@
 		256EAEDC2C30A2C500FA7A5C /* DrawerBtn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256EAEDB2C30A2C500FA7A5C /* DrawerBtn.swift */; };
 		256F36EF2CFCE78C00CE3E8A /* Shimmer in Frameworks */ = {isa = PBXBuildFile; productRef = 256F36EE2CFCE78C00CE3E8A /* Shimmer */; };
 		256F370E2CFFA67000CE3E8A /* MapColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256F370D2CFFA66900CE3E8A /* MapColors.swift */; };
+		257F40102D1174AF00BB2373 /* LineProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 257F400F2D1174AA00BB2373 /* LineProcessor.swift */; };
+		257F40122D11755900BB2373 /* LinkedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 257F40112D11755200BB2373 /* LinkedList.swift */; };
+		257F40142D11E64600BB2373 /* MapHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 257F40132D11E63700BB2373 /* MapHelper.swift */; };
 		25966BCE2CE4076C0036D4DF /* DefaultContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25966BCD2CE4076C0036D4DF /* DefaultContentView.swift */; };
 		25966BD02CE408730036D4DF /* StatusDependentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25966BCF2CE408730036D4DF /* StatusDependentView.swift */; };
 		25966BD22CE531E70036D4DF /* ShimmerViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25966BD12CE531E70036D4DF /* ShimmerViewModifier.swift */; };
@@ -189,6 +192,10 @@
 		256EAED92C309F9900FA7A5C /* HomeScreenDrawer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreenDrawer.swift; sourceTree = "<group>"; };
 		256EAEDB2C30A2C500FA7A5C /* DrawerBtn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawerBtn.swift; sourceTree = "<group>"; };
 		256F370D2CFFA66900CE3E8A /* MapColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapColors.swift; sourceTree = "<group>"; };
+		257F400E2D11026700BB2373 /* Geo Go.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Geo Go.entitlements"; sourceTree = "<group>"; };
+		257F400F2D1174AA00BB2373 /* LineProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineProcessor.swift; sourceTree = "<group>"; };
+		257F40112D11755200BB2373 /* LinkedList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkedList.swift; sourceTree = "<group>"; };
+		257F40132D11E63700BB2373 /* MapHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapHelper.swift; sourceTree = "<group>"; };
 		25966BCD2CE4076C0036D4DF /* DefaultContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultContentView.swift; sourceTree = "<group>"; };
 		25966BCF2CE408730036D4DF /* StatusDependentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusDependentView.swift; sourceTree = "<group>"; };
 		25966BD12CE531E70036D4DF /* ShimmerViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShimmerViewModifier.swift; sourceTree = "<group>"; };
@@ -338,6 +345,7 @@
 		256877702C258B190041E16A /* Geo Go */ = {
 			isa = PBXGroup;
 			children = (
+				257F400E2D11026700BB2373 /* Geo Go.entitlements */,
 				25F9E97B2CFAAD1100475A57 /* Socket */,
 				256877812C25C1300041E16A /* Utilities */,
 				256877B52C2D6DC60041E16A /* Geo-Go-Info.plist */,
@@ -395,6 +403,8 @@
 		256877812C25C1300041E16A /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				257F40112D11755200BB2373 /* LinkedList.swift */,
+				257F400F2D1174AA00BB2373 /* LineProcessor.swift */,
 				256F370D2CFFA66900CE3E8A /* MapColors.swift */,
 				252E5C222C3C29BA00C132AF /* EstimationHelper */,
 				25BFDB6F2C34821300D73993 /* Hmac */,
@@ -578,6 +588,7 @@
 		256EAEBE2C2EADD100FA7A5C /* HomeItems */ = {
 			isa = PBXGroup;
 			children = (
+				257F40132D11E63700BB2373 /* MapHelper.swift */,
 				25F91C772C7CD5E8001CAAB7 /* Bonus */,
 				25DA46842C649A2100C2A1AB /* TariffDialog */,
 				25B20C272C63462C00F50017 /* FinishOrder */,
@@ -925,6 +936,7 @@
 				2565CF972C44CC9F00FCC08A /* Utils.swift in Sources */,
 				2568778C2C25C25A0041E16A /* LocationManager.swift in Sources */,
 				2565CF9A2C45055D00FCC08A /* Routing.swift in Sources */,
+				257F40122D11755900BB2373 /* LinkedList.swift in Sources */,
 				256C138F2CA007A8007FAAC9 /* ViewModelAddCard.swift in Sources */,
 				25F91C792C7CD5FC001CAAB7 /* DialogBonus.swift in Sources */,
 				256EAEDC2C30A2C500FA7A5C /* DrawerBtn.swift in Sources */,
@@ -942,6 +954,7 @@
 				256877722C258B190041E16A /* Geo_GoApp.swift in Sources */,
 				252E5C242C3C29CF00C132AF /* EstimateHelper.swift in Sources */,
 				256F370E2CFFA67000CE3E8A /* MapColors.swift in Sources */,
+				257F40142D11E64600BB2373 /* MapHelper.swift in Sources */,
 				259DEA0B2CC2F74700B1AB41 /* ProfileScreen.swift in Sources */,
 				25B20C1F2C5F6AC900F50017 /* CancelOrder.swift in Sources */,
 				256877A82C25D1FF0041E16A /* NetworkError.swift in Sources */,
@@ -956,6 +969,7 @@
 				25BFDB872C36BFF900D73993 /* DataHolder.swift in Sources */,
 				256EAED52C309D8900FA7A5C /* MapStyle.swift in Sources */,
 				25F91C7B2C7CDB55001CAAB7 /* Extensions.swift in Sources */,
+				257F40102D1174AF00BB2373 /* LineProcessor.swift in Sources */,
 				256C13912CA0087B007FAAC9 /* AddConfirmCardModels.swift in Sources */,
 				2565CF8D2C42690300FCC08A /* DialogWish.swift in Sources */,
 				25B20C1D2C5F67A100F50017 /* DialogBottomCancelOrder.swift in Sources */,
@@ -1118,8 +1132,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
+				CODE_SIGN_ENTITLEMENTS = "Geo Go/Geo Go.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_ASSET_PATHS = "\"Geo Go/Preview Content\"";
 				DEVELOPMENT_TEAM = V7RW49DS4B;
 				ENABLE_PREVIEWS = YES;
@@ -1138,7 +1153,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.12.6;
+				MARKETING_VERSION = 1.12.7;
 				PRODUCT_BUNDLE_IDENTIFIER = "geogo-client";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1154,8 +1169,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
+				CODE_SIGN_ENTITLEMENTS = "Geo Go/Geo Go.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_ASSET_PATHS = "\"Geo Go/Preview Content\"";
 				DEVELOPMENT_TEAM = V7RW49DS4B;
 				ENABLE_PREVIEWS = YES;
@@ -1174,7 +1190,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.12.6;
+				MARKETING_VERSION = 1.12.7;
 				PRODUCT_BUNDLE_IDENTIFIER = "geogo-client";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;

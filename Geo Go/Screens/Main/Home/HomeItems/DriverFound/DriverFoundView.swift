@@ -4,150 +4,95 @@
 //
 //  Created by Jaloliddin Abdullaev on 03/08/24.
 //
-
 import SwiftUI
 
 struct DriverFoundView: View {
     @ObservedObject var viewModel: MainViewModel
-    @ObservedObject var socketViewModel: SocketViewModel
-
     @State private var isRideDetailsPresented = false
+    
     var body: some View {
-        ZStack{
+        ZStack {
             VStack(spacing: 0) {
+                Spacer()
+                topBar
+                rideInformation
+            }
+            bottomSheet
+        }
+    }
+    
+    private var topBar: some View {
+        HStack {
+            backButton
+            Spacer()
+            locationButton
+        }
+        .padding(.horizontal, 16)
+    }
+    
+    private var backButton: some View {
+        Button(action: {}) {
+            DrawerBtn(name: "left-arrow", fromAssets: true, color: .txt)
+        }
+    }
+    
+    private var locationButton: some View {
+        Button(action: {
+            viewModel.findUserRealPosition(loc: viewModel.location)
+        }) {
+            DrawerBtn(name: "location_btn", fromAssets: true, color: .txt)
+        }
+    }
+    
+    private var rideInformation: some View {
+        VStack(spacing: 16) {
+            orderDetails
+            Divider()
+            driverInteractionButtons
+        }
+        .padding(16)
+        .background(Color.white)
+        .cornerRadius(24)
+        .shadow(color: .black.opacity(0.1), radius: 24)
+        .padding(.horizontal, 12)
+        .padding(.top, 12)
+        .edgesIgnoringSafeArea(.bottom)
+    }
+    
+    @ViewBuilder
+    private var orderDetails: some View {
+        if let orderInfo = viewModel.getOrderDetail, let car = orderInfo.assignee?.car {
+            let carName = "\(car.color) \(car.brand) \(car.model)"
+            carDetailsView(regNum: car.regNum, carName: carName)
+        }
+    }
+    
+    private func carDetailsView(regNum: String, carName: String) -> some View {
+        VStack(spacing: 0) {
+            HStack {
+                OrderStatusView()
+                Spacer()
+                Text(regNum)
+                    .font(.system(size: 16, weight: .semibold))
+                    .padding(.horizontal, 6)
+                    .padding(.vertical, 4)
+                    .background(.appGray)
+                    .cornerRadius(12)
+                    .foregroundColor(.txt)
+            }
+            
+            HStack {
+                Text(carName)
+                    .font(.system(size: 14, weight: .regular))
+                    .foregroundColor(.txt)
                 
                 Spacer()
                 
-                topBar
-                
-                VStack(spacing: 16) {
-                    let orderInfo = viewModel.getOrderDetail!
-                    
-                    if let car: Car = orderInfo.assignee?.car {
-                        let num = car.regNum
-                        let color = car.color
-                        let carName = "\(color) \(car.brand) \(car.model)"
-                        
-                        VStack(spacing: 0){
-                            HStack{
-                                OrderStatusView()
-                                Spacer()
-                                
-                                Text(num)
-                                    .font(.system(size: 16, weight: .semibold))
-                                    .padding(.horizontal, 6)
-                                    .padding(.vertical, 4)
-                                    .background(.appGray)
-                                    .cornerRadius(12)
-                                    .foregroundColor(.txt)
-                            }
-                            
-                            HStack{
-                                Text(carName)
-                                    .font(.system(size: 14, weight: .regular))
-                                    .foregroundColor(.txt)
-                                
-                                Spacer()
-                                
-                                let tariffIcon = UserDefaults.standard.string(forKey: Constants.TARIFF_ICON) ?? "Ekonom"
-                                Image(imageNameForType(tariffIcon))
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(width: 40, height: 18)
-                            }
-                        }
-                    }
-                    Divider()
-                    
-                    HStack(alignment: .top,spacing: 0) {
-                        
-                        VStack {
-                            RemoteRoundedImage(image: viewModel.image, radius: 28, imageName: "profile-image")
-                                .onAppear {
-                                    viewModel.loadImage(fromURLString: getImageUrl(orderDetails: viewModel.getOrderDetail!)) }
-                            
-                            if let name = socketViewModel.sOrderInfo{
-                                Text(name.driverFullName)
-                                    .font(.system(size: 14, weight: .regular))
-                                    .foregroundColor(.gray)
-                            }
-                        }
-                        .frame(maxWidth: .infinity)
-                        
-                        Button(action: {
-                            
-                        }) {
-                            VStack {
-                                Image("phone")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .padding(12)
-                                    .frame(width: 56, height: 56)
-                                    .background(.appGray)
-                                    .clipShape(Circle())
-                                Text("call_to_driver")
-                                    .font(.system(size: 14, weight: .regular))
-                                    .foregroundColor(.gray)
-                                    .multilineTextAlignment(.center)
-                            }
-                        }
-                        .frame(maxWidth: .infinity)
-                        
-                        Button(action: {
-                            isRideDetailsPresented.toggle()
-                        }) {
-                            VStack {
-                                Image("menu")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .padding(12)
-                                    .frame(width: 56, height: 56)
-                                    .background(.appGray)
-                                    .clipShape(Circle())
-                                Text("details")
-                                    .font(.system(size: 14, weight: .regular))
-                                    .foregroundColor(.gray)
-                                    .multilineTextAlignment(.center)
-                            }
-                        }
-                        .frame(maxWidth: .infinity)
-                        
-                        
-                        Button(action: {
-                        }) {
-                            VStack {
-                                Image("plus")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .padding(12)
-                                    .frame(width: 56, height: 56)
-                                    .background(.appGray)
-                                    .clipShape(Circle())
-                                Text("add_second_space")
-                                    .font(.system(size: 14, weight: .regular))
-                                    .foregroundColor(.gray)
-                                    .multilineTextAlignment(.center)
-                            }
-                        }
-                        .frame(maxWidth: .infinity)
-                    }
-                    
-                }
-                .padding(16)
-                .background(Color.white)
-                .cornerRadius(24)
-                .shadow(color: .black.opacity(0.1),radius: 24)
-                .padding(.horizontal, 12)
-                .padding(.top, 12)
-                .edgesIgnoringSafeArea(.bottom)
-                
+                Image(imageNameForType(UserDefaults.standard.string(forKey: Constants.TARIFF_ICON) ?? "Ekonom"))
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 40, height: 18)
             }
-            BottomSheetView(isOpen: $isRideDetailsPresented,
-                            minHeight: 0,
-                            maxHeight: UIScreen.main.bounds.height) {
-                RideDetailsView(viewModel: viewModel, socketViewModel: socketViewModel)
-            }.edgesIgnoringSafeArea(.bottom)
-            
         }
     }
     
@@ -177,25 +122,86 @@ struct DriverFoundView: View {
     }
 
     
-    private var topBar: some View {
-        HStack {
-            Button(action: {
-
-            }) {
-                DrawerBtn(name: "left-arrow", fromAssets: true, color: .txt)
-            }
-            Spacer()
-            locationButton
+    private var driverInteractionButtons: some View {
+        HStack(alignment: .top, spacing: 0) {
+            driverImage
+            callButton
+            detailsButton
+            addButton
         }
-        .padding(.horizontal, 16)
     }
     
-    var locationButton: some View {
-        Button(action: {
-            viewModel.findUserRealPosition(loc: viewModel.location)
-        }) {
-            DrawerBtn(name: "location_btn", fromAssets: true, color: .txt)
+    private var driverImage: some View {
+        VStack {
+            RemoteRoundedImage(image: viewModel.image, radius: 28, imageName: "profile-image")
+                .onAppear {
+                    viewModel.loadImage(fromURLString: getImageUrl(orderDetails: viewModel.getOrderDetail!))
+                }
+            
+            if let name = viewModel.sOrderInfo?.driverFullName {
+                Text(name)
+                    .font(.system(size: 14, weight: .regular))
+                    .foregroundColor(.gray)
+            }
         }
-        
+        .frame(maxWidth: .infinity)
     }
+    
+    private var callButton: some View {
+        Button(action: {
+            makePhoneCall(viewModel.getOrderDetail!)
+        }) {
+            interactionButtonView(iconName: "phone", label: "call_to_driver")
+        }
+        .frame(maxWidth: .infinity)
+    }
+    
+    private var detailsButton: some View {
+        Button(action: {
+            isRideDetailsPresented.toggle()
+        }) {
+            interactionButtonView(iconName: "menu", label: "details")
+        }
+        .frame(maxWidth: .infinity)
+    }
+    
+    private var addButton: some View {
+        Button(action: {}) {
+            interactionButtonView(iconName: "plus", label: "add_second_space")
+        }
+        .frame(maxWidth: .infinity)
+    }
+    
+    private func interactionButtonView(iconName: String, label: String) -> some View {
+        VStack {
+            Image(iconName)
+                .resizable()
+                .scaledToFit()
+                .padding(12)
+                .frame(width: 56, height: 56)
+                .background(.appGray)
+                .clipShape(Circle())
+            Text(LocalizedStringKey(label))
+                .font(.system(size: 14, weight: .regular))
+                .foregroundColor(.gray)
+                .multilineTextAlignment(.center)
+        }
+    }
+    
+    private func makePhoneCall(_ orderInfo: OrderInfo) {
+        if let number = orderInfo.assignee?.call.numbers?.first, let url = URL(string: "tel://\(number)") {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
+    }
+    
+    private var bottomSheet: some View {
+        BottomSheetView(isOpen: $isRideDetailsPresented,
+                        minHeight: 0,
+                        maxHeight: UIScreen.main.bounds.height) {
+            RideDetailsView(viewModel: viewModel)
+        }
+                        .edgesIgnoringSafeArea(.bottom)
+    }
+    
+    
 }

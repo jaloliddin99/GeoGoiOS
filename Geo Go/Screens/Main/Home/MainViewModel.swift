@@ -9,16 +9,15 @@ import Foundation
 import Combine
 import SwiftUI
 @_spi(Experimental) import MapboxMaps
+import SocketIO
 
 final class MainViewModel: ObservableObject{
     @Published var isDrawerOpen = false
 
     @Published var markerOffset: CGFloat = 0
-
     @Published var isSearchDialogShowing = false
     @Published var isShowBonusDialog = false
     @Published var isShowingMain = false
-    @Published var status = DataHolder.status
     @Published var showCancelOrderAlert = false
     @Published var showCancelBottomDialog = false
     @Published var bottomSheetShown = false
@@ -34,18 +33,24 @@ final class MainViewModel: ObservableObject{
     var hasOrderGoViewAppeared = false
     var isSetLocations = false
     
-    func setStatus(value: Int) {
-        self.status = value
-        DataHolder.status = value
-        if value == 0 {
-            hasOrderGoViewAppeared = false
+    @Published var status: Int = DataHolder.status {
+        didSet {
+            DataHolder.status = status
+            if status == 0 {
+                hasOrderGoViewAppeared = false
+            }
         }
+    }
+
+    func setStatus(value: Int) {
+        status = value
     }
     
     init() {
         print("MainViewModel init methiod")
         MapboxOptions.accessToken = "pk.eyJ1IjoiZ2VvZ29hcHAiLCJhIjoiY2xnaHJleWNyMGRvczNkbGY2Ym41eHY3NyJ9.xI3D0Q4YyqNxCl8j1c7kZg"
         initMain()
+        setupSocket()
     }
     
     
@@ -128,7 +133,6 @@ final class MainViewModel: ObservableObject{
                             locationUpdated(model)
                         }else if status == 1 {
                             locationUpdated(model, true, 0)
-                            serviceTariffRequest()
                         }
                     }
                     
@@ -411,6 +415,7 @@ final class MainViewModel: ObservableObject{
     
     
     @Published var routeCoordinates: [MyPoint]?
+    @Published var condencedRoadCoor: [MyPoint] = []
     
     func requestToDrawRoute(list: [String]) {
         let params: [String: String] = [
@@ -430,6 +435,7 @@ final class MainViewModel: ObservableObject{
         NetworkService.shared.sendRequest(
             url: urlWithParams,
             method: "GET",
+            isPrintable: true,
             completed: handleDrawRouteRequestResponse as (Result<GraphopperNavResponse, APError>) -> Void)
     }
     
@@ -439,7 +445,9 @@ final class MainViewModel: ObservableObject{
                 case .success(let response):
                     if let response = response as? GraphopperNavResponse {
                         let locations = decode(encodedPath: response.paths[0].points, precision: 5)
+                        addLine(points: locations)
                         routeCoordinates = locations
+
                     }
                     
                 case .failure(_): break
@@ -522,14 +530,11 @@ final class MainViewModel: ObservableObject{
             switch result {
                 case .success(let response):
                     if let appetizers = response as? CreateOrderResponse {
-                        innerOrderInfoState = status
                         status = 2
                         self.createOrder = appetizers
                         DataHolder.status = status
                         DataHolder.orderId = appetizers.id
-                        orderId = appetizers.id
                         getOrderDetails(orderId: appetizers.id)
-                        
                     }
                 case .failure(_): break
             }
@@ -538,7 +543,6 @@ final class MainViewModel: ObservableObject{
     
     
     @Published var cancelOrder: EmptyModel?
-    @Published var orderId: Int64?
     
     func cancelMyOrder() {
         guard let responseDetails = generateResponse?.generateHmacDataForOrderId(id: "cancelOrder", orderId: DataHolder.orderId) else { return }
@@ -611,15 +615,14 @@ final class MainViewModel: ObservableObject{
             }
         }
     }
-    
+        
     private func filterClientOrders(res: [ShortOrderInfo]) {
-        if let highestStateOrder = res.max(by: { $0.state < $1.state }) {
-            orderId = highestStateOrder.id
-            getOrderDetails(orderId: highestStateOrder.id)
-            DataHolder.orderId = highestStateOrder.id
+        if let order = res.max(by: { $0.state < $1.state }) {
+            DataHolder.orderId = order.id
+            getOrderDetails(orderId: order.id)
         }
     }
-    
+
     
     @Published var getOrderDetail: OrderInfo?
     
@@ -645,46 +648,188 @@ final class MainViewModel: ObservableObject{
                 case .success(let response):
                     if let res = response as? OrderInfo {
                         getOrderDetail = res
-                        handleUIByOrderStatus(orderInfo: res)
+                        handleUIByOrderStatus(res.state)
+                        configureSocketListeners(orderId: DataHolder.orderId)
                     }
                 case .failure(_): break
             }
         }
     }
     
-    private var innerOrderInfoState: Int = -1
-    private func handleUIByOrderStatus(orderInfo: OrderInfo) {
-        guard innerOrderInfoState != orderInfo.state else { return }
-        innerOrderInfoState = orderInfo.state
+    
+    //socket
+    
+    @Published var sOrderInfo: SOrderInfo?
+    @Published var sDriverRealTimeData: SDriverRealTimeData?
+    @Published var sDriverLists: [SDriverData] = []
+    
+    private var socketManager: SocketManager!
+    var socket: SocketIOClient!
+    private var cancellables: Set<AnyCancellable> = []
+    
+    private func setupSocket() {
+        socketManager = SocketManager(
+            socketURL: URL(string: "http://185.224.219.1:3007")!,
+            config: [
+                .log(false),
+                .compress,
+                .connectParams(["EIO": "2"]),
+                .forceWebsockets(true),
+                .reconnects(true)
+            ]
+        )
+        socket = socketManager.defaultSocket
+        socket.on(clientEvent: .connect) { _, _ in
+            self.setupInitialListeners()
+        }
+        connect()
+    }
+    
+    func sendUserLocation(){
+        let message = Message(
+            lat: DataHolder.location.latitude,
+            long: DataHolder.location.longitude,
+            userId: getUserPhone(),
+            type: "all"
+        )
         
-        switch orderInfo.state {
+        if let messageData = message.toDictionary() {
+            socket.emit("user", messageData)
+        }
+    }
+    
+    func connect() {
+        guard socket.status != .connected else {
+            return
+        }
+        socket.connect()
+    }
+    
+    func disconnect() {
+        guard socket.status != .disconnected else { return }
+        socket.disconnect()
+        socket.removeAllHandlers()
+    }
+    
+    deinit {
+        disconnect()
+    }
+    
+    private var statusHolder: Int = -1
+    func sendUserOrderIdAndLocs(orderId: Int64){
+        let message = ModelSend(
+            orderId: orderId,
+            departureLocation: [DataHolder.location.latitude, DataHolder.location.longitude]
+        )
+        if let messageData = message.toDictionary() {
+            socket.off("listen-order")
+            socket.emit("listen-order", messageData)
+            
+            socket.on("listen-order") { [weak self] data, ack in
+                guard let self = self else { return }
+                if let orderInfo: SOrderInfo = parseSocketData(data: data, type: SOrderInfo.self) {
+                    if statusHolder == orderInfo.orderStatus { return }
+                    statusHolder = orderInfo.orderStatus
+                    handleUIByOrderStatus(orderInfo.orderStatus)
+                    
+                    if orderInfo.orderStatus == 2 {
+                        getOrderDetails(orderId: DataHolder.orderId)
+                        listenAttachedDriverLocation()
+                    } else {
+                        socket.off("update-driver-location")
+                    }
+                    DispatchQueue.main.async {
+                        self.sOrderInfo = orderInfo
+                    }
+                }
+            }
+        }
+    }
+    
+    private func configureSocketListeners(orderId: Int64) {
+        sendUserOrderIdAndLocs(orderId: orderId)
+        turnOffCars()
+    }
+    
+    private func turnOffCars(){
+        socket.off("getCars")
+    }
+    
+    private func setupInitialListeners() {
+        turnOffCars()
+        sendUserLocation()
+        attachGetCars()
+        
+        if getOrderDetail != nil {
+            sendUserOrderIdAndLocs(orderId: DataHolder.orderId)
+        }
+    }
+    
+    private func attachGetCars(){
+        if status != 0 {
+            return
+        }
+        socket.on("getCars"){ data, ack in
+            if let cars: [SDriverData] = parseSocketData(data: data, type: [SDriverData].self) {
+                DispatchQueue.main.async {
+                    self.sDriverLists = cars
+                }
+            }
+        }
+    }
+    
+    func listenAttachedDriverLocation(){
+        socket.on("update-driver-location"){ data, ack in
+            if let rtd: SDriverRealTimeData = parseSocketData(data: data, type: SDriverRealTimeData.self) {
+                DispatchQueue.main.async {
+                    self.sDriverRealTimeData = rtd
+                }
+            }
+        }
+    }
+    
+    func calculateIfDrawRoute(lat: Double, lon: Double){
+        guard let data = condensedLL.first else { return }
+        let coor1 = MyPoint(latitude: lat, longitude: lon)
+        let coor2 = data
+        if coor1.distanceTo(coor2) > 100 {
+            var arr : [String] = []
+            arr[0] = "\(coor1.latitude),\(coor1.longitude)"
+            arr[1] = "\(coor2.latitude),\(coor2.longitude)"
+        }
+    }
+    
+    // end of socket
+    
+    private func handleUIByOrderStatus(_ orderStatus: Int) {
+        switch orderStatus {
             case 1:
-                status = 2
-                
+                setStatus(value: 2)
             case 2:
-                status = 3
+                setStatus(value: 3)
+                guard let orderInfo = getOrderDetail else { return }
                 let coordinates = getCoorWithDriverLoc(orderInfo: orderInfo)
                 requestToDrawRoute(list: coordinates)
                 
             case 3:
-                status = 4
+                setStatus(value: 4)
                 
             case 4:
                 let routeCoordinates = mapToRouteCoordinatesLatLng(coordinates: locationHolder)
                 requestToDrawRoute(list: routeCoordinates)
-                status = 5
+                setStatus(value: 5)
                 
             case 5:
                 showRateDriver.toggle()
-                status = 0
+                setStatus(value: 0)
                 
             case 6:
-                status = 0
+                setStatus(value: 0)
                 
             default:
-                print("Unexpected order state: \(orderInfo.state)")
+                print("Unexpected order state: \(orderStatus)")
         }
-        DataHolder.status = status
+        DataHolder.status = orderStatus
     }
 
     
@@ -700,8 +845,6 @@ final class MainViewModel: ObservableObject{
     }
     
     @Published var locationHolder: [UserSelectedAddress] = []
-
-    
     func locationUpdated(_ address: UserSelectedAddress, _ isSetIndex: Bool = false, _ index: Int = 0){
         if let lastAddress = locationHolder.last {
             if lastAddress.addressLocation.latitude == address.addressLocation.latitude &&
@@ -709,12 +852,12 @@ final class MainViewModel: ObservableObject{
                 return
             }
         }
-        if isSetIndex{
+        if isSetIndex {
             locationHolder[index] = address
         }else{
             locationHolder.append(address)
         }
-        if status == 1 && locationHolder.count > 2 {
+        if status == 1 && locationHolder.count >= 2 {
             requestToDrawRoute(list: mapToRouteCoordinatesLatLng(coordinates: locationHolder))
         }
     }

@@ -8,38 +8,35 @@ import SwiftUI
 @main
 struct Geo_GoApp: App {
     @StateObject private var languageViewModel = LanguageViewModel()
-    @State private var isRestarting = false
     
     var body: some Scene {
         WindowGroup {
-            if isRestarting {
-                EmptyView()
+            if UserDefaults.standard.bool(forKey: Constants.isUserLoggedIn) {
+                HomeScreen()
+                    .environmentObject(languageViewModel)
                     .onAppear {
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                            isRestarting = false
-                        }
+                        updateLanguage()
+                        requestNotificationPermissions()
                     }
             } else {
-                if UserDefaults.standard.bool(forKey: Constants.isUserLoggedIn) {
-                    HomeScreen()
-                        .environmentObject(languageViewModel)
-                        .onAppear {
-                            updateLanguage()
-                        }
-                } else {
-                    AccessScreen()
-                        .environmentObject(languageViewModel)
-                        .onAppear {
-                            updateLanguage()
-                        }
-                }
-            }
-        }
-        .onChange(of: languageViewModel.restartApp) { shouldRestart in
-            if shouldRestart {
-                isRestarting = true
-                languageViewModel.restartApp = false
+                AccessScreen()
+                    .environmentObject(languageViewModel)
+                    .onAppear {
+                        updateLanguage()
+                    }
             }
         }
     }
+    
+    func requestNotificationPermissions() {
+        let center = UNUserNotificationCenter.current()
+        center.requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
+            if let error = error {
+                print("Error requesting notification permissions: \(error)")
+            } else {
+                print("Notification permissions granted: \(granted)")
+            }
+        }
+    }
+
 }

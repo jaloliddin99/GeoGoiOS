@@ -9,8 +9,6 @@ import SwiftUI
 
 struct StatusDependentView: View {
     @ObservedObject var viewModel: MainViewModel
-    @ObservedObject var socketViewModel: SocketViewModel
-    
     var body: some View {
         switch viewModel.status {
             case 0:
@@ -23,11 +21,11 @@ struct StatusDependentView: View {
             case 2:
                 SearchDriver(viewModel: viewModel)
             case 3:
-                DriverFoundView(viewModel: viewModel, socketViewModel: socketViewModel)
+                DriverFoundView(viewModel: viewModel)
             case 4:
-                DriverFoundView(viewModel: viewModel, socketViewModel: socketViewModel)
+                DriverFoundView(viewModel: viewModel)
             case 5:
-                DriverFoundView(viewModel: viewModel, socketViewModel: socketViewModel)
+                DriverFoundView(viewModel: viewModel)
             default:
                 DefaultContentView(viewModel: viewModel)
         }

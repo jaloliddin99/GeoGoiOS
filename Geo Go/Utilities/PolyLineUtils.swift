@@ -7,7 +7,7 @@
 
 import Foundation
 import CoreLocation
-
+import Turf
 struct MyPoint {
     let latitude: Double
     let longitude: Double
@@ -36,6 +36,10 @@ struct MyPoint {
     func toCLL() -> CLLocationCoordinate2D {
         CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
     }
+    func toPoint() -> Point {
+        Point(LocationCoordinate2D(latitude: latitude, longitude: longitude))
+    }
+    
 }
 
 func decode(encodedPath: String, precision: Int) -> [MyPoint] {

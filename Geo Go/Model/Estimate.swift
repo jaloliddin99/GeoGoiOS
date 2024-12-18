@@ -132,7 +132,6 @@ func changeDistance(response: [NDriver], tariffId: Int64, list: inout [ServiceTa
         if tariffId == list[i].id {
             if !response.isEmpty{
                 let aDistance = calculateAverageDistance(myLocation: clientLocation, drivers: response)
-                print("averate distance \(aDistance)")
                 list[i].minArriveTime = calAvgTime(aDistance: aDistance, speed: speed)
             }else{
                 list[i].minArriveTime = -1

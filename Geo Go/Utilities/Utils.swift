@@ -157,8 +157,8 @@ func getImageUrl(orderDetails: OrderInfo) -> String{
     let phone = orderDetails.assignee?.call.numbers![0]
         .replacingOccurrences(of: "+", with: "")
     let url = "https://central.uz.taxi/bosh/get_photo.php?type=worker&phone="
-    return "\(url)\(phone!)"
-
+    guard let ph = phone else { return url }
+    return "\(url)\(ph)"
 }
 
 

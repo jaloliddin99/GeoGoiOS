@@ -10,8 +10,6 @@ import SwiftUI
 struct RideDetailsView: View {
     
     @ObservedObject var viewModel: MainViewModel
-    @ObservedObject var socketViewModel: SocketViewModel
-
 
     var body: some View {
     
@@ -25,17 +23,18 @@ struct RideDetailsView: View {
                 
                 HStack(alignment: .top) {
                     VStack(alignment: .leading) {
-                        Text("Jaxongir 4.85")
-                            .font(.title3)
-                            .fontWeight(.semibold)
-                            .foregroundColor(.txt)
-                        
+                        if let info = viewModel.sOrderInfo {
+                            let nameAndRating = info.driverFullName + " ⭐️ \(info.driverRating)"
+                            Text(nameAndRating)
+                                .font(.title3)
+                                .fontWeight(.semibold)
+                                .foregroundColor(.txt)
+                        }
                         
                         if let car: Car = orderInfo.assignee?.car {
                             let num = car.regNum
                             let color = car.color
                             let carName = "\(color) \(car.brand) \(car.model)"
-                            
                             
                             Text(carName)
                                 .font(.subheadline)
@@ -211,73 +210,123 @@ struct RideDetailsView: View {
     
     
     func OrderRoute() -> some View {
-        VStack(spacing: 0) {
-            HStack {
-                Image("people_rise_hand")
-                    .resizable()
-                    .frame(width: 30, height: 30)
-                VStack(alignment: .leading, spacing: 4) {
-                    Text(String(format: NSLocalizedString("arrival_time", comment: ""), "10:32"))
-                        .font(.footnote)
-                        .foregroundColor(.gray)
+        let routeItems = viewModel.getOrderDetail?.route ?? []
+
+        return VStack(spacing: 0) {
+            
+            ForEach(0..<routeItems.count, id: \..self) { index in
+                let routeItem = routeItems[index]
+                
+                if index == 0 {
+                    HStack {
+                        Image("people_rise_hand")
+                            .resizable()
+                            .frame(width: 30, height: 30)
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text(String(format: NSLocalizedString("arrival_time", comment: ""), "10:32"))
+                                .font(.footnote)
+                                .lineLimit(1)
+                                .foregroundColor(.gray)
+                            
+                            Text(routeItem.point.info.alias ?? "Unknown Address")
+                                .lineLimit(1)
+                                .font(.body)
+                        }
+                        Spacer()
+                        Image(systemName: "chevron.right")
+                            .foregroundColor(.txt)
+                    }
+                    .padding(.horizontal, 16)
+                    .frame(height: 60)
                     
-                    Text("ул. Лабзак, 12/1")
-                        .font(.body)
+                    Divider()
+                        .padding(.trailing, 16)
+                        .padding(.leading, 56)
                 }
-                Spacer()
-                Image(systemName: "chevron.right")
-                    .foregroundColor(.txt)
-            }
-            .padding(.horizontal, 16)
-            .frame(height: 60)
-            
-            Divider()
-                .padding(.trailing, 16)
-                .padding(.leading, 56)
-            
-            HStack {
-                Image("plus")
-                    .resizable()
-                    .padding(4)
-                    .frame(width: 30, height: 30)
                 
-                Text("add_stops")
-                    .font(.body)
-                    .foregroundColor(.txt)
-                Spacer()
-                Image(systemName: "chevron.right")
-                    .foregroundColor(.txt)
-            }
-            .padding(.horizontal, 16)
-            .frame(height: 60)
-            
-            Divider()
-                .padding(.trailing, 16)
-                .padding(.leading, 56)
-            
-            HStack {
-                Image(systemName: "flag.2.crossed")
-                    .resizable()
-                    .padding(.vertical, 4)
-                    .frame(width: 30, height: 30)
-                
-                VStack(alignment: .leading, spacing: 4) {
-                    Text("arrival")
-                        .font(.system(size: 14))
-                        .foregroundColor(.gray)
-                    Text("улица Алишера Навои, 16A")
-                        .font(.body)
+                if index > 2 && index != 0 && index != routeItems.count - 1{
+                    HStack {
+                        Image(systemName: "pin.fill")
+                            .resizable()
+                            .padding(.vertical, 4)
+                            .frame(width: 30, height: 30)
+                        
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text("arrival")
+                                .font(.system(size: 14))
+                                .lineLimit(1)
+                                .foregroundColor(.gray)
+                            Text(routeItem.point.info.alias ?? "Unknown address")
+                                .font(.body)
+                        }
+                        Spacer()
+                        Image(systemName: "chevron.right")
+                            .foregroundColor(.txt)
+                    }
+                    .padding(.horizontal, 16)
+                    .frame(height: 60)
+                    
+                    Divider()
+                        .padding(.trailing, 16)
+                        .padding(.leading, 56)
                 }
-                Spacer()
-                Image(systemName: "chevron.right")
-                    .foregroundColor(.txt)
+                
+                
+                if index == routeItems.count - 1 {
+                    HStack {
+                        Image("plus")
+                            .resizable()
+                            .padding(4)
+                            .frame(width: 30, height: 30)
+                        
+                        Text("add_stops")
+                            .font(.body)
+                            .foregroundColor(.txt)
+                        
+                        Spacer()
+                        Image(systemName: "chevron.right")
+                            .foregroundColor(.txt)
+                    }
+                    .padding(.horizontal, 16)
+                    .frame(height: 60)
+                }
+                
+                if routeItems.count > 1 && index == routeItems.count - 1{
+                    Divider()
+                        .padding(.trailing, 16)
+                        .padding(.leading, 56)
+                    
+                    HStack {
+                        Image(systemName: "flag.2.crossed")
+                            .resizable()
+                            .padding(.vertical, 4)
+                            .frame(width: 30, height: 30)
+                        
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text("arrival")
+                                .font(.system(size: 14))
+                                .foregroundColor(.gray)
+                            Text(routeItem.point.info.alias ?? "Unknown address")
+                                .lineLimit(1)
+                                .font(.body)
+                        }
+                        Spacer()
+                        Image(systemName: "chevron.right")
+                            .foregroundColor(.txt)
+                    }
+                    .padding(.horizontal, 16)
+                    .frame(height: 60)
+                }
+                
+                
+                
             }
-            .padding(.horizontal, 16)
-            .frame(height: 60)
+           
         }
         .background(Color.white)
         .cornerRadius(16)
     }
     
+
     
 }

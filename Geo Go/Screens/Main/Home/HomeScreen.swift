@@ -10,16 +10,9 @@ import SwiftUI
 
 struct HomeScreen: View {
     
-    @StateObject private var viewModel: MainViewModel
-    @StateObject private var socketViewModel: SocketViewModel
+    @StateObject private var viewModel = MainViewModel()
     @StateObject private var locationManager = LocationManager()
-    
-    init() {
-        let source = MainViewModel()
-        _viewModel = StateObject(wrappedValue: source)
-        _socketViewModel = StateObject(wrappedValue: SocketViewModel(source: source))
-    }
-    
+
     @State private var selectedScreen: DestinationScreen? = nil
     
     var body: some View {
@@ -111,14 +104,13 @@ struct HomeScreen: View {
                              mapStyle: uri)
         .ignoresSafeArea()
         .onChange(of: viewModel.markerOffset) {
-            print("HelloThere this is me")
             viewModel.reverseGeocodeIfNeeded()
         }
     }
 
  
     private var contentViews: some View {
-        StatusDependentView(viewModel: viewModel, socketViewModel: socketViewModel)
+        StatusDependentView(viewModel: viewModel)
     }
 
     

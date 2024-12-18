@@ -157,63 +157,86 @@ struct AddressField: View {
     
     var body: some View {
         
-        HStack(alignment: .center,spacing: 8) {
-            Image("route_image")
-                .resizable()
-                .scaledToFit()
-                .frame(maxHeight: 64)
-            
-            VStack(alignment: .leading, spacing: 12) {
-                if !mainViewModel.locationHolder.isEmpty {
-                    Text(mainViewModel.locationHolder[0].addressName)
+        let holder = mainViewModel.locationHolder
+        
+        if !holder.isEmpty {
+            HStack(alignment: .center,spacing: 8) {
+                Image("route_image")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(maxHeight: 64)
+                
+                VStack(alignment: .leading, spacing: 12) {
+                    Text(holder[0].addressName)
                         .fontWeight(.medium)
                         .lineLimit(1)
-                }
-                
-                Divider()
-                
-                HStack {
-                    let count = mainViewModel.locationHolder.count
-                    if count == 1{
-                        Button {
-                            mainViewModel.isSearchDialogShowing = true
-                        } label: {
-                            HStack(alignment: .center){
-                                Image(systemName: "magnifyingglass")
-                                    .foregroundColor(.black.opacity(0.7))
+                    
+                    Divider()
+                    
+                    HStack {
+                        if holder.count == 1{
+                            Button {
+                                mainViewModel.isSearchDialogShowing = true
+                            } label: {
+                                HStack(alignment: .center){
+                                    Image(systemName: "magnifyingglass")
+                                        .foregroundColor(.black.opacity(0.7))
+                                    
+                                    Text("txt_where_to_go")
+                                        .fontWeight(.medium)
+                                        .foregroundColor(.black.opacity(0.7))
+                                    
+                                    Spacer()
+                                }
                                 
-                                Text("txt_where_to_go")
-                                    .fontWeight(.medium)
-                                    .foregroundColor(.black.opacity(0.7))
-                                
-                                Spacer()
+                            }
+                            Spacer()
+                        }else if holder.count == 2 {
+                            Text(holder[1].addressName)
+                                .fontWeight(.medium)
+                                .lineLimit(1)
+                                .foregroundColor(.txt)
+                            
+                            Spacer()
+                            Button(action: {
+                                if holder.count < 4 {
+                                    mainViewModel.isSearchDialogShowing = true
+                                }
+                            }, label: {
+                                Image(systemName: "plus")
+                                    .foregroundColor(.main)
+                            })
+                        }else{
+                            let text = String(format: NSLocalizedString("picked_locations", comment: ""), holder.count-1)
+                            Text(text)
+                                .fontWeight(.medium)
+                                .lineLimit(1)
+                                .foregroundColor(.txt)
+                            
+                            Spacer()
+                            if holder.count < 4 {
+                                Button(action: {
+                                    if holder.count < 4 {
+                                        mainViewModel.isSearchDialogShowing = true
+                                    }
+                                }, label: {
+                                    Image(systemName: "plus")
+                                        .foregroundColor(.main)
+                                })
                             }
                             
                         }
-                        Spacer()
-                    }else if count == 2 {
-                        Text(mainViewModel.locationHolder[1].addressName)
-                            .fontWeight(.medium)
-                            .lineLimit(1)
-                            .foregroundColor(.txt)
-                        
-                        Spacer()
-                        Button(action: {
-                            if count < 6 {
-                                mainViewModel.isSearchDialogShowing = true
-                            }
-                        }, label: {
-                            Image(systemName: "plus")
-                                .foregroundColor(.main)
-                        })
                     }
+                    
                 }
             }
+            .padding(12)
+            .background(RoundedRectangle(cornerRadius: 12)
+                .fill(Color(.secondarySystemBackground).opacity(0.7))
+            )
         }
-        .padding(12)
-        .background(RoundedRectangle(cornerRadius: 12)
-            .fill(Color(.secondarySystemBackground).opacity(0.7))
-        )
+
+        
         
     }
     

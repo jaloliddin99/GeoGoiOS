@@ -74,6 +74,10 @@ struct UserSelectedAddress: Identifiable{
     func toCll() -> CLLocationCoordinate2D {
         CLLocationCoordinate2D(latitude: addressLocation.latitude, longitude: addressLocation.longitude)
     }
+    
+    func toMyPoint() -> MyPoint {
+        MyPoint(latitude: addressLocation.latitude, longitude: addressLocation.longitude)
+    }
 }
 
 

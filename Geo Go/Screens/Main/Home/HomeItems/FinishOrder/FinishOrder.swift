@@ -13,9 +13,7 @@ struct DialogRateDriver: View {
     @Binding var invokeDialog: Bool
     let onActionCommited: (CommentAndIndex) -> Void
     @State private var comment: String = ""
-    var isButtonDisabled: Bool {
-        return comment.count < 4
-    }
+    @State private var rating: Int = 4
     
     var body: some View {
         VStack(spacing: 12){
@@ -61,7 +59,8 @@ struct DialogRateDriver: View {
                 .font(.system(size: 16, weight: .medium))
                 .padding(.top, 12)
             
-            StarRating(rating: .constant(5), maxRating: 5) { newRating in
+            StarRating(rating: $rating, maxRating: 5) { newRating in
+                print("the rating is \(newRating)")
             }
             .font(.title2)
             .padding(.vertical, 12)
@@ -75,8 +74,7 @@ struct DialogRateDriver: View {
             }, label: {
                 GGButton(title: "send")
             })
-            .disabled(isButtonDisabled)
-            .opacity(isButtonDisabled ? 0.5 : 1.0)
+            
         }
         .padding(.horizontal, 16)
         .padding(.bottom, 16)

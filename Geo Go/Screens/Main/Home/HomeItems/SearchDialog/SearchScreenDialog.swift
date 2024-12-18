@@ -17,7 +17,6 @@ struct SearchScreenDialog: View {
     private var isSearchingLocation: Bool {
         return whereLocName.count > 3
     }
-        
     
     var body: some View {
         VStack {
@@ -61,7 +60,6 @@ struct SearchScreenDialog: View {
             .padding(.top, 10)
         }
         .padding()
-        
         
         
         ScrollView(.vertical, showsIndicators: false) {
@@ -118,6 +116,9 @@ struct ElasticSearchResult: View {
             viewModel.locationUpdated(uAddress)
             viewModel.setStatus(value: 1)
             viewModel.isSearchDialogShowing = false
+            if viewModel.status == 1 {
+                viewModel.serviceTariffRequest()
+            }
           
         })
         
@@ -164,6 +165,9 @@ struct SearchHistory: View {
             viewModel.locationUpdated(uAddress)
             viewModel.isSearchDialogShowing = false
             viewModel.setStatus(value: 1)
+            if viewModel.status == 1 {
+                viewModel.serviceTariffRequest()
+            }
         })
         
     }
