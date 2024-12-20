@@ -220,6 +220,11 @@ func getPaymentMethod() -> String {
     return paymentMethod;
 }
 
+func makePhoneCall(_ orderInfo: OrderInfo) {
+    if let number = orderInfo.assignee?.call.numbers?.first, let url = URL(string: "tel://\(number)") {
+        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+    }
+}
 
 
 func setPaymentMethod(method: String) {

@@ -29,7 +29,6 @@ func addLine(points: [MyPoint]) {
         }
     }
     
-    // Add the last point
     let lastPoint = points.last!
     condensedLL.append(lastPoint)
     condensedArrayList.append(lastPoint)
@@ -45,29 +44,22 @@ private func childLatLng(l1: MyPoint, l2: MyPoint, distance: Int) {
         condensedArrayList.append(newPoint)
     }
 }
-
-
-func removeListTillThisElement(secondPointList: [MyPoint], longitude: Double, latitude: Double) -> Int {
-    let latLng = MyPoint(latitude: latitude, longitude: longitude)
-    let closest = closestPoint(in: secondPointList, to: latLng)
+func removeElementsTillClosest(in linkedList: LinkedList<MyPoint>, to targetPoint: MyPoint) -> Bool {
+    var currentNode = linkedList.head
+    var closestNode: LinkedListNode<MyPoint>? = nil
+    var smallestDistance: Float = Float.greatestFiniteMagnitude
     
-    return secondPointList.firstIndex(where: { $0.latitude == closest.latitude &&
-        $0.longitude == closest.longitude }) ?? -1
-}
-
-/// Finds the closest point to a given target point in the list
-private func closestPoint(in list: [MyPoint], to targetPoint: MyPoint) -> MyPoint {
-    var closest: MyPoint? = nil
-    var smallestDistance: Float32 = Float32.greatestFiniteMagnitude
-    
-    for point in list {
-        let distance = point.distanceTo(targetPoint)
+    // Find the closest node
+    while let node = currentNode {
+        let distance = node.value.distanceTo(targetPoint)
         if distance < smallestDistance {
-            closest = point
             smallestDistance = distance
-        } else {
-            return closest!
+            closestNode = node
         }
+        currentNode = node.next
     }
-    return closest!
+    
+    linkedList.removeUpTo(closestNode)
+    print("smallest distance \(smallestDistance)")
+    return smallestDistance < 100
 }

@@ -58,12 +58,20 @@ func mapToRouteCoordinates(addresses: [UserSelectedAddress]) -> [RouteCoordinate
 func getCoorWithDriverLoc(orderInfo: OrderInfo) -> [String] {
     guard let driverLocation = orderInfo.assignee?.location else { return []}
     guard let clientLocation = orderInfo.route.count > 0 ? orderInfo.route[0].point.coordinates : nil else { return []}
-    
     return [
         "\(clientLocation.lat),\(clientLocation.lon)",
         "\(driverLocation.lat),\(driverLocation.lon)"
     ]
 }
+
+func getDriverAndClientLoc(_ client: OrderInfo, _ driverLocation: MyPoint) -> [String] {
+    guard let clientLocation = client.route.count > 0 ? client.route[0].point.coordinates : nil else { return []}
+    return [
+        "\(driverLocation.latitude),\(driverLocation.longitude)",
+        "\(clientLocation.lat),\(clientLocation.lon)"
+    ]
+}
+
 
 
 func getCoorWithDriverLocation(orderInfo: OrderInfo) -> [UserSelectedAddress] {

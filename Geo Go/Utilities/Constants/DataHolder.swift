@@ -10,7 +10,10 @@ import CoreLocation
 
 class DataHolder {
     
-    
+    static var inHome = true
+    static var messageList: [MessageObject] = []
+    static var chatId: Int = 0
+
     static var serviceTariffConstant: [ServiceTariff]? = nil
     static var selectedTariff: ServiceTariff?
     static var complainOptions: Int64 = 0

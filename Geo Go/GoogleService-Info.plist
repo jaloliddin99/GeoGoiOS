@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>768620250653-hbvofv06e9vh5rpnaa36h9anht3165km.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.768620250653-hbvofv06e9vh5rpnaa36h9anht3165km</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>768620250653-qj89mi5uslhdqq5nh8q3q0gbdrqsfi69.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyD1uDSszpLpO_1nLad1rbXEZWVqbIToLiI</string>
+	<key>GCM_SENDER_ID</key>
+	<string>768620250653</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>geogo-client</string>
+	<key>PROJECT_ID</key>
+	<string>best-navoiy</string>
+	<key>STORAGE_BUCKET</key>
+	<string>best-navoiy.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:768620250653:ios:89168627c595f42ce5a8f4</string>
+	<key>DATABASE_URL</key>
+	<string>https://best-navoiy-default-rtdb.firebaseio.com</string>
+</dict>
+</plist>

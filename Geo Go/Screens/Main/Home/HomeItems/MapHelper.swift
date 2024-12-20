@@ -11,21 +11,24 @@ import Combine
 import Turf
 import CoreLocation
 
-
 func drawRoute(_ mapView: MapView, _ coordinates: [MyPoint]) {
     let sourceId = "line-source"
-    let layerId = "line-layer"
-    removeRoute(mapView: mapView, sourceId)
     
-    DispatchQueue.global(qos: .userInitiated).async {
-        let lineCoordinates = coordinates.map { CLLocationCoordinate2D(latitude: $0.latitude, longitude: $0.longitude) }
-        let lineFeature = Feature(geometry: .lineString(LineString(lineCoordinates)))
-        
+    // Convert coordinates to the required format
+    let lineCoordinates = coordinates.map { CLLocationCoordinate2D(latitude: $0.latitude, longitude: $0.longitude) }
+    let lineFeature = Feature(geometry: .lineString(LineString(lineCoordinates)))
+    
+    if mapView.mapboxMap.sourceExists(withId: sourceId) {
+        DispatchQueue.global(qos: .userInitiated).async {
+            mapView.mapboxMap.updateGeoJSONSource(withId: sourceId, geoJSON: .feature(lineFeature))
+        }
+    } else {
+        // Create the source and layer if it doesn't exist
         var lineSource = GeoJSONSource(id: sourceId)
         lineSource.data = .feature(lineFeature)
         lineSource.lineMetrics = true
         
-        var lineLayer = LineLayer(id: layerId, source: sourceId)
+        var lineLayer = LineLayer(id: "line-layer", source: sourceId)
         lineLayer.lineColor = .constant(StyleColor(.main))
         lineLayer.lineGradient = .expression(
             Exp(.interpolate) {
@@ -60,7 +63,7 @@ func drawRoute(_ mapView: MapView, _ coordinates: [MyPoint]) {
         DispatchQueue.main.async {
             do {
                 try mapView.mapboxMap.addSource(lineSource)
-                try mapView.mapboxMap.addLayer(lineLayer, layerPosition: .below("point-layer"))
+                try mapView.mapboxMap.addLayer(lineLayer, layerPosition: .below(Constants.CLIENT_ICON_LAYER_ID))
             } catch {
                 print("Error adding source or layer: \(error)")
             }
@@ -87,21 +90,6 @@ func setCameraBounds(
     }
 }
 
-func configureCamera(mapView: MapView, padding: CGFloat, _ binding: Binding<Bool>) {
-    binding.wrappedValue = true
-    let currentCamera = mapView.mapboxMap.cameraState
-    
-    let edgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: padding, right: 0)
-    
-    var cameraOptions = CameraOptions(center: currentCamera.center, zoom: currentCamera.zoom, bearing: currentCamera.bearing, pitch: currentCamera.pitch)
-    cameraOptions.padding = edgeInsets
-    
-    mapView.camera.fly(to: cameraOptions, duration: 0.4){_ in
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            binding.wrappedValue = false
-        }
-    }
-}
 
 func addViewAnnotation(coordinate: CLLocationCoordinate2D, mapView: MapView) {
     let annotationView = AnnotationView(number: String(5), text: "Min")
@@ -146,7 +134,7 @@ func updateCarMarkerLocation(_ mapView: MapView, _ point: MyPoint, _ bearing: Fl
     if let source = try? mapView.mapboxMap.source(withId: Constants.CAR_ICON_SOURCE_ID) as? GeoJSONSource {
         var newSource = source
         newSource.data = .feature(updatedFeature)
-        try mapView.mapboxMap.updateGeoJSONSource(withId: Constants.CAR_ICON_SOURCE_ID, geoJSON: .feature(updatedFeature))
+        mapView.mapboxMap.updateGeoJSONSource(withId: Constants.CAR_ICON_SOURCE_ID, geoJSON: .feature(updatedFeature))
         
     } else {
         print("Car marker source not found! Ensure the source is initialized first.")
@@ -179,12 +167,14 @@ func addCarMarkerAnnotation(mapView: MapView, point: MyPoint) {
     
     var layer = SymbolLayer(id: Constants.CAR_ICON_LAYER_ID, source: Constants.CAR_ICON_SOURCE_ID)
     layer.iconImage = .constant(.name(Constants.CAR_ICON_ID))
-    layer.iconAnchor = .constant(.bottom)
-    layer.iconSize = .constant(0.1)
+    layer.iconSize = .constant(0.08)
     
     do {
         try mapView.mapboxMap.addLayer(layer, layerPosition: .above("line-layer"))
     } catch {
+        do {
+            try mapView.mapboxMap.addLayer(layer)
+        } catch {        }
         print("Error adding car marker layer: \(error)")
     }
 }
@@ -202,26 +192,35 @@ func addDestMarkerAnnotation(mapView: MapView, destination: Point) {
     layer.iconSize = .constant(0.02)
     
     do {
-        try mapView.mapboxMap.addLayer(layer, layerPosition: .above("point-layer"))
+        try mapView.mapboxMap.addLayer(layer)
     } catch {
         print("Error adding car marker layer: \(error)")
     }
 }
 
 
-func addClientMarkerAnnotation(mapView: MapView, clientAddress: Point) {
+func addClientMarkerAnnotation(_ mapView: MapView, _ clientAddress: Point) {
+    // Remove existing marker annotation if present
     removeClientMarkerAnnotation(mapView: mapView)
-    try? mapView.mapboxMap.addImage(UIImage(named: "client_flag")!, id: Constants.CLIENT_ICON_ID)
-    var source = GeoJSONSource(id: Constants.CLIENT_ICON_SOURCE_ID)
-    source.data = .feature(Feature(geometry: clientAddress))
-    try? mapView.mapboxMap.addSource(source)
-    
-    var layer = SymbolLayer(id: Constants.CLIENT_ICON_LAYER_ID, source: Constants.CLIENT_ICON_SOURCE_ID)
-    layer.iconImage = .constant(.name(Constants.CLIENT_ICON_ID))
-    layer.iconSize = .constant(0.08)
-    
-    try? mapView.mapboxMap.addLayer(layer)
+    do {
+        // Add image for the client marker
+        try mapView.mapboxMap.addImage(UIImage(named: "client_flag3")!, id: Constants.CLIENT_ICON_ID)
+        
+        var source = GeoJSONSource(id: Constants.CLIENT_ICON_SOURCE_ID)
+        source.data = .feature(Feature(geometry: clientAddress))
+        try mapView.mapboxMap.addSource(source)
+        
+        var layer = SymbolLayer(id: Constants.CLIENT_ICON_LAYER_ID, source: Constants.CLIENT_ICON_SOURCE_ID)
+        layer.iconImage = .constant(.name(Constants.CLIENT_ICON_ID))
+        layer.iconSize = .constant(0.06)
+        layer.iconAnchor = .constant(.top)
+        try mapView.mapboxMap.addLayer(layer)
+
+    } catch {
+        print("Error adding client marker annotation: \(error)")
+    }
 }
+
 
 
 

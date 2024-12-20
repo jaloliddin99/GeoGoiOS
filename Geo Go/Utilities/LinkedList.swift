@@ -19,10 +19,10 @@ class LinkedListNode<T> {
 }
 
 class LinkedList<T> {
-    private var head: LinkedListNode<T>?
+    private(set) var head: LinkedListNode<T>?
     private var tail: LinkedListNode<T>?
+    private var count: Int = 0
     
-    // Append a value to the linked list
     func append(_ value: T) {
         let newNode = LinkedListNode(value: value)
         if let tailNode = tail {
@@ -31,20 +31,19 @@ class LinkedList<T> {
             head = newNode
         }
         tail = newNode
+        count += 1
     }
     
-    // Clear the linked list
     func clear() {
         head = nil
         tail = nil
+        count = 0
     }
     
-    // Computed property to get the first value
     var first: T? {
         return head?.value
     }
     
-    // Convert the linked list to an array (for debugging or iteration)
     func toArray() -> [T] {
         var result: [T] = []
         var currentNode = head
@@ -54,4 +53,36 @@ class LinkedList<T> {
         }
         return result
     }
+    
+    var size: Int {
+        return count
+    }
+    
+    func removeUpTo(_ targetNode: LinkedListNode<T>?) {
+        guard let targetNode = targetNode else { return }
+        
+        // Traverse the list to find the target node
+        var currentNode = head
+        var previousNode: LinkedListNode<T>? = nil
+        
+        while let node = currentNode {
+            if node === targetNode {
+                head = node.next
+                
+                // If the target node was the tail, update the tail
+                if node.next == nil {
+                    tail = previousNode
+                }
+                
+                // Adjust the count
+                count -= 1
+                break
+            }
+            
+            previousNode = currentNode
+            currentNode = node.next
+            count -= 1
+        }
+    }
 }
+

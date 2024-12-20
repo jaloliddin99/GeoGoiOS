@@ -22,9 +22,8 @@ struct CustomMapView: UIViewRepresentable {
     func makeCoordinator() -> Coordinator {
         Coordinator(self)
     }
-    
-    
-    @State var isEdgeInsetsChanging: Bool = false
+    var isEdgeInsetsChanging: Bool = false
+    var isRouteDraw: Bool = false
     
     func makeUIView(context: Context) -> MapView {
         let view = MapView(frame: .zero, mapInitOptions: MapInitOptions(cameraOptions: vp, styleURI: mapStyle))
@@ -75,9 +74,10 @@ struct CustomMapView: UIViewRepresentable {
             cancellable = viewModel.$routeCoordinates
                 .compactMap { $0 }
                 .sink { coor in
-                    
-                    if ((viewModel.status == 1 || viewModel.status == 3) && coor.count > 1) {
-                        drawRoute(mapView, coor)
+                    let cCoor = condensedLL
+                    if ((viewModel.status == 1 || viewModel.status == 3) && cCoor.size > 1) {
+                        drawRoute(mapView, cCoor.toArray())
+                        self.parent.isRouteDraw = true
                         setCameraBounds(mapView, coor)
                     }
                 }
@@ -90,8 +90,22 @@ struct CustomMapView: UIViewRepresentable {
                 .sink{ realTimeData in
                     guard let rtd = realTimeData else { return }
                     let myPoint = MyPoint(latitude: rtd.lat, longitude: rtd.lon)
-                    
-                    updateCarMarkerLocation(mapView, myPoint, rtd.bearing)
+                    if viewModel.status == 3 {
+                        if self.parent.isRouteDraw {
+                            let onRoute = removeElementsTillClosest(in: condensedLL, to: myPoint)
+                            if DataHolder.inHome {
+                                drawRoute(mapView, condensedLL.toArray())
+                                if !onRoute {
+                                    guard let orderInfo = viewModel.getOrderDetail else { return }
+                                    let coordinates = getDriverAndClientLoc(orderInfo, myPoint)
+                                    viewModel.requestToDrawRoute(list: coordinates)
+                                }
+                            }
+                        }
+                    }
+                    if DataHolder.inHome {
+                        updateCarMarkerLocation(mapView, myPoint, rtd.bearing)
+                    }
                 }
             
             locationHolderObserver = viewModel.$locationHolder
@@ -133,11 +147,12 @@ struct CustomMapView: UIViewRepresentable {
                 .sink { status in
                     let loc = viewModel.locationHolder.isEmpty ? viewModel.location : viewModel.locationHolder[0].addressLocation
                     
-                    let cSelectedPoint = Point(CLLocationCoordinate2D(latitude: loc.latitude, longitude: loc.longitude))
-
+                   
                     switch status {
                         case 0:
                             self.parent.isEdgeInsetsChanging = true
+
+                            
                             removeRoute(mapView: mapView,"line-source")
                             removeCarMarkerAnnotation(mapView: mapView)
                             removeClientMarkerAnnotation(mapView: mapView)
@@ -158,7 +173,7 @@ struct CustomMapView: UIViewRepresentable {
                             let holder = viewModel.locationHolder
                             
                             if holder.count == 1 {
-                                configureCamera(mapView: mapView, padding: 250, self.parent.$isEdgeInsetsChanging)
+                                self.configureCamera(mapView: mapView, padding: 250)
                             }else {
                                 var pointFeatures = holder.map { coordinate -> Feature in
                                     return Feature(geometry: .point(Point(coordinate.addressLocation)))
@@ -190,9 +205,14 @@ struct CustomMapView: UIViewRepresentable {
 
                         case 3:
                             removeRoute(mapView: mapView, "line-source")
-                            removeCarMarkerAnnotation(mapView: mapView)
-                            
-                            addClientMarkerAnnotation(mapView: mapView, clientAddress: cSelectedPoint)
+                            let or = viewModel.getOrderDetail
+
+                            if or != nil {
+                                let p = or!.route[0].toPoint()
+                                print("status3 case \(or != nil)  and p \(p)")
+                                addClientMarkerAnnotation(mapView, p)
+                            }
+                           
                             guard let loc = viewModel.getOrderDetail?.assignee?.location else { return }
                             let point = MyPoint(latitude: loc.lat, longitude: loc.lon)
                             addCarMarkerAnnotation(mapView: mapView, point: point)
@@ -202,7 +222,11 @@ struct CustomMapView: UIViewRepresentable {
                             guard let loc = viewModel.getOrderDetail?.assignee?.location else { return }
                             let point = MyPoint(latitude: loc.lat, longitude: loc.lon)
                             addCarMarkerAnnotation(mapView: mapView, point: point)
-                            addClientMarkerAnnotation(mapView: mapView, clientAddress: cSelectedPoint)
+                            let or = viewModel.getOrderDetail
+                            if or != nil {
+                                let p = or!.route[0].toPoint()
+                                addClientMarkerAnnotation(mapView, p)
+                            }
 
                         case 5:
                             removeClientMarkerAnnotation(mapView: mapView)
@@ -233,7 +257,23 @@ struct CustomMapView: UIViewRepresentable {
             cancellable?.cancel()
             gestureObserver?.cancel()
             locationHolderObserver?.cancel()
+            self.parent.isRouteDraw = false
         }
         
+        func configureCamera(mapView: MapView, padding: CGFloat) {
+            self.parent.isEdgeInsetsChanging = true
+            let currentCamera = mapView.mapboxMap.cameraState
+            
+            let edgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: padding, right: 0)
+            
+            var cameraOptions = CameraOptions(center: currentCamera.center, zoom: currentCamera.zoom, bearing: currentCamera.bearing, pitch: currentCamera.pitch)
+            cameraOptions.padding = edgeInsets
+            
+            mapView.camera.fly(to: cameraOptions, duration: 0.4){_ in
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                    self.parent.isEdgeInsetsChanging = false
+                }
+            }
+        }
     }
 }

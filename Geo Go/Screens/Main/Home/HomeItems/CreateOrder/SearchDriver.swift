@@ -20,12 +20,10 @@ struct SearchDriver: View {
                 .frame(width: UIScreen.main.bounds.width - 24, height: UIScreen.main.bounds.width - 24)
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
             
-            Image("client_flag")
+            Image("client_flag2")
                 .resizable()
                 .frame(width: 80, height: 80)
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
-
-           
 
             VStack {
                 displayBottomView()

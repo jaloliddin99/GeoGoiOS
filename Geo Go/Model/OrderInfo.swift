@@ -6,7 +6,7 @@
 //
 
 import Foundation
-
+import Turf
 
 struct OrderInfo: Codable {
     let state: Int
@@ -33,6 +33,10 @@ struct RouteItem: Codable {
     
     func toMyPoint() -> MyPoint {
         return MyPoint(latitude: point.coordinates.lat, longitude: point.coordinates.lon)
+    }
+    
+    func toPoint() -> Point {
+        return Point(LocationCoordinate2D(latitude: point.coordinates.lat, longitude: point.coordinates.lon))
     }
     
 }

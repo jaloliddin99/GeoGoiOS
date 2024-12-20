@@ -65,7 +65,10 @@ class NetworkService{
         }
         
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            if let _ = error {
+            if let er = error {
+                if isPrintable {
+                    print(er.localizedDescription)
+                }
                 completed(.failure(.unableToComplete))
                 return
             }

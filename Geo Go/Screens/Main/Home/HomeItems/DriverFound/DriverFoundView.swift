@@ -148,12 +148,16 @@ struct DriverFoundView: View {
     }
     
     private var callButton: some View {
-        Button(action: {
-            makePhoneCall(viewModel.getOrderDetail!)
-        }) {
+        
+        
+        NavigationLink(destination: ChatView(viewModel: viewModel)) {
             interactionButtonView(iconName: "phone", label: "call_to_driver")
         }
         .frame(maxWidth: .infinity)
+        
+        
+        
+        
     }
     
     private var detailsButton: some View {
@@ -188,11 +192,7 @@ struct DriverFoundView: View {
         }
     }
     
-    private func makePhoneCall(_ orderInfo: OrderInfo) {
-        if let number = orderInfo.assignee?.call.numbers?.first, let url = URL(string: "tel://\(number)") {
-            UIApplication.shared.open(url, options: [:], completionHandler: nil)
-        }
-    }
+    
     
     private var bottomSheet: some View {
         BottomSheetView(isOpen: $isRideDetailsPresented,

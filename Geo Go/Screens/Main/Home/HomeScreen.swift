@@ -12,13 +12,13 @@ struct HomeScreen: View {
     
     @StateObject private var viewModel = MainViewModel()
     @StateObject private var locationManager = LocationManager()
+    @State private var navigateToSecondView = false // State variable to control navigation
 
     @State private var selectedScreen: DestinationScreen? = nil
     
     var body: some View {
         NavigationStack {
             ZStack {
-                
                 mapLayer
                 if viewModel.status == 0 || viewModel.status == 1 {
                     if viewModel.locationHolder.count < 2 {
@@ -63,6 +63,10 @@ struct HomeScreen: View {
                 }
             }
             .onAppear {
+                DataHolder.inHome = true
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    navigateToSecondView = true
+                }
                 if viewModel.status == 0 {
                     locationManager.requestLocation()
                 }
