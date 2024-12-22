@@ -49,7 +49,7 @@ func removeElementsTillClosest(in linkedList: LinkedList<MyPoint>, to targetPoin
     var closestNode: LinkedListNode<MyPoint>? = nil
     var smallestDistance: Float = Float.greatestFiniteMagnitude
     
-    // Find the closest node
+ 
     while let node = currentNode {
         let distance = node.value.distanceTo(targetPoint)
         if distance < smallestDistance {

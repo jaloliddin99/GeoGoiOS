@@ -30,19 +30,22 @@ final class MainViewModel: ObservableObject{
     
     @Published var orderGoViewHeight: CGFloat = 250
     @Published var discountModel: DiscountModel?
-    var hasOrderGoViewAppeared = false
     var isSetLocations = false
     
     @Published var status: Int = DataHolder.status {
         didSet {
             DataHolder.status = status
-            if status == 0 {
-                hasOrderGoViewAppeared = false
+            if status == 1 {
+                serviceTariffRequest()
+                if locationHolder.count > 1 {
+                    requestToDrawRoute(list: mapToRouteCoordinatesLatLng( locationHolder))
+                }
             }
         }
     }
 
     func setStatus(value: Int) {
+        DataHolder.status = value
         status = value
     }
     
@@ -96,7 +99,7 @@ final class MainViewModel: ObservableObject{
                      "accept-language": DataHolder.lang
                     ],
             method: "GET",
-            headers: ["Accept-Language": "uz"],
+            headers: ["Accept-Language": DataHolder.lang],
             completed: handleAppetizersResponse as (Result<UpdateReverseModel, APError>) -> Void)
     }
     
@@ -264,12 +267,10 @@ final class MainViewModel: ObservableObject{
         let paymentMethod: [String: Any] = [
             "kind": "cash"
         ]
-        
         let body: [String: Any] = [
             "paymentMethod": paymentMethod,
             "tariff": tariffId
         ]
-
         guard let jsonData = try? JSONSerialization.data(withJSONObject: body, options: []) else {
             return
         }
@@ -431,7 +432,6 @@ final class MainViewModel: ObservableObject{
         NetworkService.shared.sendRequest(
             url: urlWithParams,
             method: "GET",
-            isPrintable: true,
             completed: handleDrawRouteRequestResponse as (Result<GraphopperNavResponse, APError>) -> Void)
     }
     
@@ -451,8 +451,6 @@ final class MainViewModel: ObservableObject{
             }
         }
     }
-    
-    
     
     
     @Published var bonusResponse: BonusResponse = BonusResponse(balance: 0, capabilities: Capabilities(type: "min-max", min: 0, max: 0))
@@ -526,9 +524,9 @@ final class MainViewModel: ObservableObject{
             switch result {
                 case .success(let response):
                     if let appetizers = response as? CreateOrderResponse {
+                        DataHolder.status = status
                         status = 2
                         self.createOrder = appetizers
-                        DataHolder.status = status
                         DataHolder.orderId = appetizers.id
                         getOrderDetails(orderId: appetizers.id)
                     }
@@ -567,8 +565,8 @@ final class MainViewModel: ObservableObject{
                 case .success(let response):
                     if let appetizers = response as? EmptyModel {
                         self.cancelOrder = appetizers
-                        status = 1
                         DataHolder.status = status
+                        status = 1
                     }
                     
                 case .failure(let error):
@@ -597,7 +595,6 @@ final class MainViewModel: ObservableObject{
                 "Date": responseDetails.data,
                 "Authentication": responseDetails.hmac,
             ],
-            isPrintable: true,
             completed: handleClientOrdersResponse as (Result<[ShortOrderInfo], APError>) -> Void)
     }
     
@@ -635,7 +632,6 @@ final class MainViewModel: ObservableObject{
                 "Date": responseDetails.data,
                 "Authentication": responseDetails.hmac,
             ],
-            isPrintable: true,
             completed: handleOrderInfoResponse as (Result<OrderInfo, APError>) -> Void)
     }
     
@@ -720,17 +716,12 @@ final class MainViewModel: ObservableObject{
             departureLocation: [DataHolder.location.latitude, DataHolder.location.longitude]
         )
         if let messageData = message.toDictionary() {
-            
-            print("sendUserOrderIdAndLocs started")
-
             socket.off("listen-order")
             socket.emit("listen-order", messageData)
             
             socket.on("listen-order") { [weak self] data, ack in
                 guard let self = self else { return }
                 if let orderInfo: SOrderInfo = parseSocketData(data: data, type: SOrderInfo.self) {
-                    print("listen-order arrived")
-
                     if statusHolder == orderInfo.orderStatus { return }
                     statusHolder = orderInfo.orderStatus
                     handleUIByOrderStatus(orderInfo.orderStatus)
@@ -738,8 +729,6 @@ final class MainViewModel: ObservableObject{
                     if orderInfo.orderStatus == 2 {
                         getOrderDetails(orderId: DataHolder.orderId)
                         listenAttachedDriverLocation()
-                    } else {
-                        socket.off("update-driver-location")
                     }
                     DispatchQueue.main.async {
                         self.sOrderInfo = orderInfo
@@ -795,6 +784,8 @@ final class MainViewModel: ObservableObject{
     // end of socket
     
     private func handleUIByOrderStatus(_ orderStatus: Int) {
+        DataHolder.status = orderStatus
+
         switch orderStatus {
             case 1:
                 setStatus(value: 2)
@@ -808,21 +799,22 @@ final class MainViewModel: ObservableObject{
                 setStatus(value: 4)
                 
             case 4:
-                let routeCoordinates = mapToRouteCoordinatesLatLng(coordinates: locationHolder)
-                requestToDrawRoute(list: routeCoordinates)
                 setStatus(value: 5)
                 
             case 5:
                 showRateDriver.toggle()
                 setStatus(value: 0)
+                socket.off("update-driver-location")
+                setupInitialListeners()
                 
             case 6:
                 setStatus(value: 0)
+                socket.off("update-driver-location")
+                setupInitialListeners()
                 
             default:
                 print("Unexpected order state: \(orderStatus)")
         }
-        DataHolder.status = orderStatus
     }
 
     
@@ -851,7 +843,7 @@ final class MainViewModel: ObservableObject{
             locationHolder.append(address)
         }
         if status == 1 && locationHolder.count >= 2 {
-            requestToDrawRoute(list: mapToRouteCoordinatesLatLng(coordinates: locationHolder))
+            requestToDrawRoute(list: mapToRouteCoordinatesLatLng( locationHolder))
         }
     }
     

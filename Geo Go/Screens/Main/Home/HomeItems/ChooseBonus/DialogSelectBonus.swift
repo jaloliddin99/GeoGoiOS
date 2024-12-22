@@ -14,7 +14,7 @@ struct DialogSelectBonus: View {
     var isButtonDisabled: Bool {
         let res = viewModel.bonusResponse
         let amount: Double = Double(inputText) ?? 0
-        if res.balance == 0{
+        if res.balance == 0 {
             return true
         }else if (amount <= res.capabilities.max && amount >= res.capabilities.min) {
             return false

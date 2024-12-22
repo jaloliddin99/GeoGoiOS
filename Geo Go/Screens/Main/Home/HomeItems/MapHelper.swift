@@ -10,20 +10,22 @@ import Combine
 @_spi(Experimental) import MapboxMaps
 import Turf
 import CoreLocation
-
 func drawRoute(_ mapView: MapView, _ coordinates: [MyPoint]) {
     let sourceId = "line-source"
     
-    // Convert coordinates to the required format
     let lineCoordinates = coordinates.map { CLLocationCoordinate2D(latitude: $0.latitude, longitude: $0.longitude) }
     let lineFeature = Feature(geometry: .lineString(LineString(lineCoordinates)))
     
     if mapView.mapboxMap.sourceExists(withId: sourceId) {
         DispatchQueue.global(qos: .userInitiated).async {
-            mapView.mapboxMap.updateGeoJSONSource(withId: sourceId, geoJSON: .feature(lineFeature))
+            do {
+                try mapView.mapboxMap.updateGeoJSONSource(withId: sourceId, geoJSON: .feature(lineFeature))
+            } catch {
+                print("Error updating GeoJSON source: \(error)")
+            }
         }
     } else {
-        // Create the source and layer if it doesn't exist
+        // Create a new source and layer if it doesn't exist
         var lineSource = GeoJSONSource(id: sourceId)
         lineSource.data = .feature(lineFeature)
         lineSource.lineMetrics = true
@@ -60,14 +62,18 @@ func drawRoute(_ mapView: MapView, _ coordinates: [MyPoint]) {
         lineLayer.lineCap = .constant(.round)
         lineLayer.lineJoin = .constant(.round)
         
+        let layer = (DataHolder.status == 1 || DataHolder.status == 5) ? Constants.DEST_ICON_LAYER_ID : Constants.CLIENT_ICON_LAYER_ID
+        
+        
         DispatchQueue.main.async {
             do {
                 try mapView.mapboxMap.addSource(lineSource)
-                try mapView.mapboxMap.addLayer(lineLayer, layerPosition: .below(Constants.CLIENT_ICON_LAYER_ID))
+                try mapView.mapboxMap.addLayer(lineLayer, layerPosition: .below(layer))
             } catch {
                 print("Error adding source or layer: \(error)")
             }
         }
+        
     }
 }
 
@@ -135,7 +141,6 @@ func updateCarMarkerLocation(_ mapView: MapView, _ point: MyPoint, _ bearing: Fl
         var newSource = source
         newSource.data = .feature(updatedFeature)
         mapView.mapboxMap.updateGeoJSONSource(withId: Constants.CAR_ICON_SOURCE_ID, geoJSON: .feature(updatedFeature))
-        
     } else {
         print("Car marker source not found! Ensure the source is initialized first.")
     }
@@ -151,8 +156,6 @@ func updateCarMarkerLocation(_ mapView: MapView, _ point: MyPoint, _ bearing: Fl
         addCarMarkerAnnotation(mapView: mapView, point: point)
         print("Failed to update car marker layer: \(error)")
     }
-    
-    
 }
 
 
@@ -170,11 +173,13 @@ func addCarMarkerAnnotation(mapView: MapView, point: MyPoint) {
     layer.iconSize = .constant(0.08)
     
     do {
-        try mapView.mapboxMap.addLayer(layer, layerPosition: .above("line-layer"))
+        print("status of dataholder \(DataHolder.status)")
+        let l = DataHolder.status == 3 ? Constants.CLIENT_ICON_LAYER_ID : Constants.DEST_ICON_LAYER_ID
+        try mapView.mapboxMap.addLayer(layer, layerPosition: .above(l))
     } catch {
-        do {
+        do{
             try mapView.mapboxMap.addLayer(layer)
-        } catch {        }
+        }catch{}
         print("Error adding car marker layer: \(error)")
     }
 }
@@ -200,10 +205,8 @@ func addDestMarkerAnnotation(mapView: MapView, destination: Point) {
 
 
 func addClientMarkerAnnotation(_ mapView: MapView, _ clientAddress: Point) {
-    // Remove existing marker annotation if present
     removeClientMarkerAnnotation(mapView: mapView)
     do {
-        // Add image for the client marker
         try mapView.mapboxMap.addImage(UIImage(named: "client_flag3")!, id: Constants.CLIENT_ICON_ID)
         
         var source = GeoJSONSource(id: Constants.CLIENT_ICON_SOURCE_ID)
@@ -253,6 +256,8 @@ func removeDestMarkerAnnotation(mapView: MapView) {
 
 
 func removeRoute(mapView: MapView, _ sourceId: String) {
+    print("Route removed")
+
     do {
         let layers = mapView.mapboxMap.allLayerIdentifiers
         for layer in layers {

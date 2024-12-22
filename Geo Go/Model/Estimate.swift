@@ -72,24 +72,27 @@ func getDriverAndClientLoc(_ client: OrderInfo, _ driverLocation: MyPoint) -> [S
     ]
 }
 
-
-
-func getCoorWithDriverLocation(orderInfo: OrderInfo) -> [UserSelectedAddress] {
-    guard let driverLocation = orderInfo.assignee?.location else { return []}
-    let location = CLLocationCoordinate2D(latitude: driverLocation.lat, longitude: driverLocation.lon)
-    guard let clientLocation = orderInfo.route.count > 0 ? orderInfo.route[0].point.coordinates : nil else { return []}
-
-    let cLocation = CLLocationCoordinate2D(latitude: clientLocation.lat, longitude: clientLocation.lon)
-    return [
-        UserSelectedAddress(addressName: "", addressLocation: cLocation),
-        UserSelectedAddress(addressName: "", addressLocation: location),
-    ]
+func getDriverAndDestination(_ client: OrderInfo, _ driverLocation: MyPoint) -> [String] {
+    guard let cDestinations = client.route.count > 1 ? client.route : nil else { return []}
+    var myArr: [String] = []
+    var isChecked: Bool = true
+    cDestinations.forEach { route in
+        if isChecked {
+            myArr.append("\(driverLocation.latitude),\(driverLocation.longitude)")
+        }else{
+            myArr.append("\(route.point.coordinates.lat),\(route.point.coordinates.lon)")
+        }
+        isChecked = false
+    }
+    
+    return myArr
 }
 
 
 
 
-func mapToRouteCoordinatesLatLng(coordinates: [UserSelectedAddress]) -> [String] {
+
+func mapToRouteCoordinatesLatLng(_ coordinates: [UserSelectedAddress]) -> [String] {
     return coordinates.map { coordinates in
         "\(coordinates.addressLocation.latitude),\(coordinates.addressLocation.longitude)"
     }

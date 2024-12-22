@@ -16,8 +16,6 @@ struct StatusDependentView: View {
                 
             case 1:
                 OrderGoView(mainViewModel: viewModel)
-                    .onAppear(perform: handleOrderGoViewAppearance)
-                
             case 2:
                 SearchDriver(viewModel: viewModel)
             case 3:
@@ -31,14 +29,5 @@ struct StatusDependentView: View {
         }
         
     }
-    
-    
-    
-    private func handleOrderGoViewAppearance() {
-        if !viewModel.hasOrderGoViewAppeared {
-            viewModel.serviceTariffRequest()
-            viewModel.requestToDrawRoute(list: mapToRouteCoordinatesLatLng(coordinates: viewModel.locationHolder))
-            viewModel.hasOrderGoViewAppeared = true
-        }
-    }
+
 }

@@ -12,7 +12,6 @@ struct Geo_GoApp: App {
     @StateObject private var languageViewModel = LanguageViewModel()
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 
-    
     var body: some Scene {
         WindowGroup {
             if UserDefaults.standard.bool(forKey: Constants.isUserLoggedIn) {

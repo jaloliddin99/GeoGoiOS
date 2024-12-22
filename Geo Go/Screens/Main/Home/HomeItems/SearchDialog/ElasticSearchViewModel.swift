@@ -27,6 +27,7 @@ final class ElasticSearchViewModel: ObservableObject{
                      "sources": "osm"
                     ],
             method: "GET",
+            isPrintable: true,
             completed: handleAppetizersResponse as (Result<GeocodingResponseModel, APError>) -> Void
         )
     }

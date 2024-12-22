@@ -1160,7 +1160,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = "Geo Go/Geo Go.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_ASSET_PATHS = "\"Geo Go/Preview Content\"";
 				DEVELOPMENT_TEAM = V7RW49DS4B;
 				ENABLE_PREVIEWS = YES;
@@ -1179,7 +1179,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.12.7;
+				MARKETING_VERSION = 1.12.8;
 				PRODUCT_BUNDLE_IDENTIFIER = "geogo-client";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1197,7 +1197,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = "Geo Go/Geo Go.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_ASSET_PATHS = "\"Geo Go/Preview Content\"";
 				DEVELOPMENT_TEAM = V7RW49DS4B;
 				ENABLE_PREVIEWS = YES;
@@ -1216,7 +1216,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.12.7;
+				MARKETING_VERSION = 1.12.8;
 				PRODUCT_BUNDLE_IDENTIFIER = "geogo-client";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
