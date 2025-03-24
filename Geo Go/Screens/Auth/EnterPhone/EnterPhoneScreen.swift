@@ -74,10 +74,10 @@ struct EnterPhoneScreen: View {
                     )
                     viewModel.submitRegistration(regRequest: registrationReq)
                 }) {
-                    GGButton(title: "get_code")
+                    GGButton(title: "get_code", isDisabled: isButtonDisabled)
                 }
                 .disabled(isButtonDisabled)
-                .opacity(isButtonDisabled ? 0.5 : 1.0)
+                
                 .navigationDestination(isPresented: Binding<Bool>(
                     get: { viewModel.postData != nil },
                     set: { _ in }

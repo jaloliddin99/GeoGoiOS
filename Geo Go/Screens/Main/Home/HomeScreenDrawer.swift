@@ -31,10 +31,10 @@ struct HomeScreenDrawer: View {
             DrawerItem(title: Text("drawer_item_payment_method"), action: {
                 navigate(to: .paymentMethod)
             })
-            Divider()
-            DrawerItem(title: Text("drawer_item_favourite_addresses"), action: {
-                navigate(to: .favouriteAddresses)
-            })
+//            Divider()
+//            DrawerItem(title: Text("drawer_item_favourite_addresses"), action: {
+//                navigate(to: .favouriteAddresses)
+//            })
             Divider()
             DrawerItem(title: Text("drawer_item_discount"), action: {
                 navigate(to: .discount)
@@ -115,5 +115,6 @@ struct DrawerItem: View {
 
 
 enum DestinationScreen: Hashable {
-    case myTrips, paymentMethod, favouriteAddresses, discount, profile, news, aboutApp
+    case myTrips, paymentMethod,
+         discount, profile, news, aboutApp
 }

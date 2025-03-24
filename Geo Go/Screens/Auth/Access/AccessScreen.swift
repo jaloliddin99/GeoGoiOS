@@ -53,9 +53,13 @@ struct AccessScreen: View {
             }
             .navigationDestination(isPresented: Binding<Bool>(
                 get: { viewModel.postData != nil },
-                set: { _ in }
+                set: { _ in
+                    viewModel.postData = nil
+}
             )){
-                AddNameScreen()
+                if viewModel.postData != nil {
+                    AddNameScreen()
+                }
             }
         }
         
@@ -94,7 +98,7 @@ struct PermissionView: View {
     }
 }
 
-
-#Preview {
-    AccessScreen()
-}
+//
+//#Preview {
+//    AccessScreen()
+//}

@@ -32,10 +32,11 @@ struct DefaultContentView: View {
         }) {
             DrawerBtn(name: "location_btn", fromAssets: true, color: .txt)
         }
+        .rotationEffect(Angle(degrees: 45))
         .padding(.trailing, 16)
         .padding(.bottom, 262)
+        
         .shadow(color: .black.opacity(0.1),radius: 16)
-
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
         .ignoresSafeArea()
     }

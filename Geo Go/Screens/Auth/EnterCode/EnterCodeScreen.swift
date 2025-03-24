@@ -3,18 +3,16 @@
 //
 //  Created by macbook pro on 27/06/24.
 //
-
 import SwiftUI
 import OTPView
 
 struct EnterCodeScreen: View {
-    
-
     let userId: Int
     let phoneNumber: String
-
+    
     @StateObject var viewModel = EnterCodeViewModel()
-    @State private var code:String=""
+    @State private var code: String = ""
+    @State private var isNavigating = false
     
     var isButtonDisabled: Bool {
         return code.count != 4
@@ -24,7 +22,7 @@ struct EnterCodeScreen: View {
         NavigationStack {
             VStack {
                 Spacer()
-                VStack{
+                VStack {
                     Text("enter_sms_code")
                         .font(.system(size: 24))
                         .fontWeight(.bold)
@@ -38,40 +36,37 @@ struct EnterCodeScreen: View {
                             doSomething: { value in
                         code = value
                     })
-                    
                 }
                 Spacer()
                 
                 Button(action: {
                     viewModel.getAppetizer(id: String(userId), code: code, phone: phoneNumber)
                 }) {
-                    GGButton(title: "send")
+                    GGButton(title: "send", isDisabled: isButtonDisabled)
                 }
                 .disabled(isButtonDisabled)
-                .opacity(isButtonDisabled ? 0.5 : 1.0)
             }
             .navigationBarTitleDisplayMode(.inline)
             .padding()
-            .alert(item: $viewModel.alertItem){ alertItem in
+            .alert(item: $viewModel.alertItem) { alertItem in
                 Alert(title: alertItem.title,
                       message: alertItem.message,
                       dismissButton: alertItem.dismissButton
                 )
             }
-            .navigationDestination(isPresented: Binding<Bool>(
-                get: { viewModel.response != nil },
-                set: { _ in }
-            )) {
-                if viewModel.response != nil {
-                    HomeScreen()
+            .navigationDestination(isPresented: $isNavigating) {
+                HomeScreen()
+            }
+            .onChange(of: viewModel.response) { newValue in
+                if newValue != nil {
+                    UserDefaults.standard.set(true, forKey: Constants.isUserLoggedIn)
+                    isNavigating = true
                 }
             }
-            .onAppear{
+            .onAppear {
                 UserDefaults.standard.setValue(phoneNumber, forKey: Constants.USER_PHONE)
-                
             }
         }
-        
     }
     
     var formattedString: String {

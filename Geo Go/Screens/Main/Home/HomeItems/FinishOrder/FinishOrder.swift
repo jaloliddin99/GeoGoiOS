@@ -79,6 +79,7 @@ struct DialogRateDriver: View {
         .padding(.horizontal, 16)
         .padding(.bottom, 16)
         .edgesIgnoringSafeArea(.bottom)
+        
 
     }
 }

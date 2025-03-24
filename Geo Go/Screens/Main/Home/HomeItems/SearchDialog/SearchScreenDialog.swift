@@ -9,16 +9,17 @@ import SwiftUI
 import CoreLocation
 
 struct SearchScreenDialog: View {
-    @ObservedObject var viewModel: MainViewModel
-    @ObservedObject var eSearchViewModel =  ElasticSearchViewModel()
-    
-    @State private var myLocationName: String = ""
-    @State private var whereLocName: String = ""
+    @State var whereLocName: String = ""
+
     private var isSearchingLocation: Bool {
         return whereLocName.count > 3
     }
+    @ObservedObject var viewModel: MainViewModel
+    @StateObject var eSearchViewModel = ElasticSearchViewModel()
+
     
     var body: some View {
+        let holder = viewModel.locationHolder
         VStack {
             DialogToolBar(showDialog: $viewModel.isSearchDialogShowing, title: "txt_where_to_go")
             
@@ -30,14 +31,17 @@ struct SearchScreenDialog: View {
                     .clipShape(Circle())
                     .shadow(radius: 4)
                 
-                Text(viewModel.currentAddress?.display_name ?? "searching_with_dot")
+
+                Text(holder.isEmpty ? "searching_with_dot" : holder[0].addressName)
                     .padding()
+                    .frame(maxWidth: .infinity, alignment: .leading)
                     .frame(maxWidth: .infinity, maxHeight: 50)
                     .background(Color(.secondarySystemBackground))
                     .cornerRadius(10)
                     .padding(.leading, 4)
             }
             .padding(.top, 10)
+            
             
             HStack {
                 Image(systemName: "location")
@@ -52,10 +56,14 @@ struct SearchScreenDialog: View {
                     .background(Color(.secondarySystemBackground))
                     .cornerRadius(10)
                     .padding(.leading, 4)
-                    .onChange(of: whereLocName) {
-                        eSearchViewModel.reverseLocation(address: whereLocName)
+                    .onChange(of: whereLocName) { oldValue, newValue in
+                        if newValue.count > 3 {
+                            print("dataRECEIVED \(newValue)")
+                            eSearchViewModel.reverseLocation(address: whereLocName)
+                        }
                     }
-                    
+                    .frame(maxWidth: .infinity, alignment: .leading)
+
             }
             .padding(.top, 10)
         }
@@ -64,11 +72,12 @@ struct SearchScreenDialog: View {
         
         ScrollView(.vertical, showsIndicators: false) {
             LazyVStack(spacing: 6) {
+                
                 if isSearchingLocation {
-                    ForEach(eSearchViewModel.reverseLocations?.features ?? [], id: \.properties.id) { reverseInfo in
+                    ForEach(eSearchViewModel.reverseLocations ?? [], id: \.lat) { reverseInfo in
                         ElasticSearchResult(searchInfo: reverseInfo, viewModel: viewModel)
                     }
-                }else{
+                } else {
                     ForEach(viewModel.addressHistoryResponse ?? [], id: \.id) { orderInfo in
                         SearchHistory(orderInfo: orderInfo, viewModel: viewModel)
                     }
@@ -80,7 +89,7 @@ struct SearchScreenDialog: View {
 }
 
 struct ElasticSearchResult: View {
-    var searchInfo: GeocodeFeature
+    var searchInfo: GeocodingResponseModel
     @ObservedObject var viewModel: MainViewModel
     
     var body: some View {
@@ -92,10 +101,10 @@ struct ElasticSearchResult: View {
                 .clipShape(Circle())
             
             VStack(alignment: .leading){
-                Text(searchInfo.properties.name)
+                Text(searchInfo.displayName)
                     .font(.system(size: 16))
                 
-                Text("\(String(searchInfo.properties.distance ?? 0)) km")
+                Text("\(String(searchInfo.distance)) \(searchInfo.unit)")
                     .opacity(0.4)
                     .font(.system(size: 12))
             }
@@ -108,9 +117,9 @@ struct ElasticSearchResult: View {
         .cornerRadius(10)
         .padding(.leading, 4)
         .onTapGesture(perform: {
-            let address = searchInfo.properties.name
-            let lat = searchInfo.geometry.coordinates[1]
-            let lon = searchInfo.geometry.coordinates[0]
+            let address = searchInfo.displayName
+            let lat = searchInfo.lat
+            let lon = searchInfo.lon
             let location = CLLocationCoordinate2D(latitude: lat, longitude: lon)
             let uAddress = UserSelectedAddress(addressName: address, addressLocation: location)
             viewModel.locationUpdated(uAddress)

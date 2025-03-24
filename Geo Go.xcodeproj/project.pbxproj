@@ -126,6 +126,7 @@
 		25BFDB832C35E62500D73993 /* ServiceTariffs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25BFDB822C35E62500D73993 /* ServiceTariffs.swift */; };
 		25BFDB872C36BFF900D73993 /* DataHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25BFDB862C36BFF900D73993 /* DataHolder.swift */; };
 		25DA46862C649A7400C2A1AB /* TariffDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25DA46852C649A7400C2A1AB /* TariffDetailsView.swift */; };
+		25F2AE8F2D843BFE00F84051 /* AppRestartManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F2AE8E2D843BFE00F84051 /* AppRestartManager.swift */; };
 		25F91C762C7CCDAD001CAAB7 /* BonusHomeItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F91C752C7CCDAD001CAAB7 /* BonusHomeItem.swift */; };
 		25F91C792C7CD5FC001CAAB7 /* DialogBonus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F91C782C7CD5FC001CAAB7 /* DialogBonus.swift */; };
 		25F91C7B2C7CDB55001CAAB7 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F91C7A2C7CDB55001CAAB7 /* Extensions.swift */; };
@@ -255,6 +256,7 @@
 		25BFDB822C35E62500D73993 /* ServiceTariffs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceTariffs.swift; sourceTree = "<group>"; };
 		25BFDB862C36BFF900D73993 /* DataHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataHolder.swift; sourceTree = "<group>"; };
 		25DA46852C649A7400C2A1AB /* TariffDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TariffDetailsView.swift; sourceTree = "<group>"; };
+		25F2AE8E2D843BFE00F84051 /* AppRestartManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRestartManager.swift; sourceTree = "<group>"; };
 		25F91C752C7CCDAD001CAAB7 /* BonusHomeItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BonusHomeItem.swift; sourceTree = "<group>"; };
 		25F91C782C7CD5FC001CAAB7 /* DialogBonus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogBonus.swift; sourceTree = "<group>"; };
 		25F91C7A2C7CDB55001CAAB7 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -373,6 +375,7 @@
 				256877712C258B190041E16A /* Geo_GoApp.swift */,
 				256877752C258B1B0041E16A /* Assets.xcassets */,
 				256877772C258B1B0041E16A /* Preview Content */,
+				25F2AE8E2D843BFE00F84051 /* AppRestartManager.swift */,
 			);
 			path = "Geo Go";
 			sourceTree = "<group>";
@@ -921,6 +924,7 @@
 				256C13892C99A6D3007FAAC9 /* AddCardScreen.swift in Sources */,
 				2565CFB52C5E74DC00FCC08A /* DriverFoundView.swift in Sources */,
 				2568778F2C25C2A80041E16A /* Alert.swift in Sources */,
+				25F2AE8F2D843BFE00F84051 /* AppRestartManager.swift in Sources */,
 				256877862C25C17C0041E16A /* AccessScreen.swift in Sources */,
 				252E5C212C3C075900C132AF /* Estimate.swift in Sources */,
 				256EAEB82C2D8B4F00FA7A5C /* HomeScreen.swift in Sources */,
@@ -1160,7 +1164,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = "Geo Go/Geo Go.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_ASSET_PATHS = "\"Geo Go/Preview Content\"";
 				DEVELOPMENT_TEAM = V7RW49DS4B;
 				ENABLE_PREVIEWS = YES;
@@ -1179,7 +1183,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.12.8;
+				MARKETING_VERSION = 1.13.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "geogo-client";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1197,7 +1201,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = "Geo Go/Geo Go.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_ASSET_PATHS = "\"Geo Go/Preview Content\"";
 				DEVELOPMENT_TEAM = V7RW49DS4B;
 				ENABLE_PREVIEWS = YES;
@@ -1216,7 +1220,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.12.8;
+				MARKETING_VERSION = 1.13.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "geogo-client";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;

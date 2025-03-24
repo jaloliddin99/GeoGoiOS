@@ -11,12 +11,12 @@
 "gps" = "GPS";
 "notifications" = "Уведомления";
 "app_must_work" = "Требуется для работы приложения";
-"next" = "Next";
-"allow" = "Allow";
+"next" = "Далее";
+"allow" = "Разрешить";
 
-"what_is_your_name" = "What is your name?";
-"enter_your_name" = "Enter your name";
-"save" = "Save";
+"what_is_your_name" = "Как вас зовут?";
+"enter_your_name" = "Введите свое имя";
+"save" = "Сохранить";
 
 "terms_prefix" = "Я принимаю условия ";
 "user_agreement" = "Пользовательского соглашения";
@@ -164,3 +164,6 @@
 "show_driver_where_i_am" = "Показать водителю, где я";
 "arrival_time" = "Подача в ~%@";
 "call_to_driver" = "Связь с водителем";
+
+"enter_sms_code" = "Введите СМС-код";
+"enter_sms_code_desc" = "Введите SMS-код, который мы отправим на ваш номер телефона %@";

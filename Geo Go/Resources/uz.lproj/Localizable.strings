@@ -169,3 +169,6 @@
 "show_driver_where_i_am" = "Haydovchiga qayerdaligimni ko'rsatish";
 "arrival_time" = "Jo'nab ketish ~%@ da";
 "call_to_driver" = "Haydovchi bilan bog'lanish";
+
+"enter_sms_code" = "SMS kodini kiriting";
+"enter_sms_code_desc" = "%@ telefon raqamingizga yuboriladigan SMS kodini kiriting";

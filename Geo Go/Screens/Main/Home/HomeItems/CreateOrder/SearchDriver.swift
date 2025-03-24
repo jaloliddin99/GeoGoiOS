@@ -87,7 +87,8 @@ struct SearchDriver: View {
         .padding(16)
         .background(.white)
         .cornerRadius(12, corners: [.topLeft, .topRight])
-        .shadow(radius: 2)
+        .shadow(color: .black.opacity(0.1),radius: 16)
+
     }
     
     private func formattedTime(_ value: Double) -> String {
@@ -118,74 +119,56 @@ struct SearchDriverAddress: View {
         .padding(.bottom, 16)
     }
 }
-
-
 struct AddressFieldStatic: View {
     @ObservedObject var mainViewModel: MainViewModel
     
     var body: some View {
+        let locations = mainViewModel.locationHolder
+        let count = locations.count
         
-        if mainViewModel.locationHolder.count == 1 {
-            HStack(alignment: .center,spacing: 8) {
+        HStack(alignment: .center, spacing: 8) {
+            if count == 1 {
                 Circle()
                     .frame(width: 8, height: 8)
                     .foregroundColor(.main)
-
                 
-                if !mainViewModel.locationHolder.isEmpty {
-                    Text(mainViewModel.locationHolder[0].addressName)
-                        .fontWeight(.medium)
-                        .lineLimit(1)
-                }
-                
-            }
-            .padding(.horizontal, 12)
-            .frame(height: 56)
-            .background(RoundedRectangle(cornerRadius: 12)
-                .fill(Color(.secondarySystemBackground).opacity(0.7))
-            )
-        }else {
-            HStack(alignment: .center,spacing: 8) {
+                Text(locations.first?.addressName ?? "Unknown")
+                    .fontWeight(.medium)
+                    .lineLimit(1)
+            } else {
                 Image("route_image")
                     .resizable()
                     .scaledToFit()
                     .frame(maxHeight: 64)
                 
                 VStack(spacing: 12) {
-                    if !mainViewModel.locationHolder.isEmpty {
-                        Text(mainViewModel.locationHolder[0].addressName)
+                    
+                    HStack {
+                        Text(locations.first?.addressName ?? "Unknown")
                             .fontWeight(.medium)
                             .lineLimit(1)
+                        Spacer()
                     }
                     
                     Divider()
                     
-                    HStack{
-                        let count = mainViewModel.locationHolder.count
-                        if count > 1 {
-                            Text(mainViewModel.locationHolder[count-1].addressName)
-                                .fontWeight(.medium)
-                                .lineLimit(1)
-                                .foregroundColor(.txt)
-                        }else  {
-                            Text("error_occurred")
-                                .fontWeight(.medium)
-                                .foregroundColor(.txt)
-                                .lineLimit(1)
-                        }
+                    HStack {
+                        Text(locations.last?.addressName ?? "Error occurred")
+                            .fontWeight(.medium)
+                            .foregroundColor(.txt)
+                            .lineLimit(1)
                         Spacer()
                     }
                 }
-                
             }
-            .padding(12)
-            .background(RoundedRectangle(cornerRadius: 12)
-                .fill(Color(.secondarySystemBackground).opacity(0.7))
-            )
+            
+            Spacer()
         }
-        
-        
+        .padding(12)
+        .frame(height: count == 1 ? 56 : nil)
+        .background(
+            RoundedRectangle(cornerRadius: 12)
+                .fill(Color(.secondarySystemBackground).opacity(0.7))
+        )
     }
 }
-
-

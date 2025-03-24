@@ -6,8 +6,12 @@
 //
 
 import SwiftUI
+
+
 struct DialogLanguage: View {
     @ObservedObject var vm: LanguageViewModel
+    @State var tempSelectedLanguage: String?
+
     let languages = ["O'zbek", "English", "Русский", "Qaraqalpaq"]
     
     var body: some View {
@@ -15,13 +19,11 @@ struct DialogLanguage: View {
             VStack(alignment: .leading, spacing: 12) {
                 
                 GGText(text: "select_language")
-
-                
                 
                 VStack(spacing: 4) {
                     ForEach(languages, id: \.self) { option in
                         HStack(alignment: .center) {
-                            RadioButton(isSelected: (vm.tempSelectedLanguage ?? vm.selectedLanguage) == option)
+                            RadioButton(isSelected: (tempSelectedLanguage ?? vm.selectedLanguage) == option)
                             Text(option)
                                 .foregroundColor(.black)
                                 .lineLimit(2)
@@ -30,7 +32,7 @@ struct DialogLanguage: View {
                         }
                         .frame(height: 40)
                         .onTapGesture {
-                            vm.tempSelectedLanguage = option
+                            tempSelectedLanguage = option
                         }
                     }
                 }
@@ -39,23 +41,14 @@ struct DialogLanguage: View {
                 Spacer()
                 
                 Button(action: {
-                    vm.saveLanguage()
+                    vm.changeLanguage(to: tempSelectedLanguage!)
                 }) {
-                    GGButton(title: "save", isDisabled: vm.tempSelectedLanguage == nil)
+                    GGButton(title: "save", isDisabled: tempSelectedLanguage == nil)
                         .frame(maxWidth: .infinity)
                 }
-                .disabled(vm.tempSelectedLanguage == nil)
+                .disabled(tempSelectedLanguage == nil)
             }
             .padding(.horizontal, 16)
         }
-    }
-}
-
-struct DialogLanguage_Previews: PreviewProvider {
-    static var previews: some View {
-        let mockViewModel = LanguageViewModel()
-        mockViewModel.tempSelectedLanguage = "O'zbek"
-        
-        return DialogLanguage(vm: mockViewModel)
     }
 }

@@ -4,26 +4,34 @@
 //
 //  Created by Jaloliddin Abdullaev on 21/06/24.
 //
+
 import SwiftUI
 import Firebase
 
 @main
 struct Geo_GoApp: App {
-    @StateObject private var languageViewModel = LanguageViewModel()
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    
+    @StateObject private var restartManager = AppRestartManager()
+    @StateObject private var languageManager = LanguageViewModel.shared
+
 
     var body: some Scene {
         WindowGroup {
             if UserDefaults.standard.bool(forKey: Constants.isUserLoggedIn) {
                 HomeScreen()
-                    .environmentObject(languageViewModel)
+                    .id(restartManager.key)
+                    .environmentObject(restartManager)
+                    .environment(\.locale, languageManager.locale)
                     .onAppear {
                         updateLanguage()
                         requestNotificationPermissions()
                     }
             } else {
                 AccessScreen()
-                    .environmentObject(languageViewModel)
+                    .id(restartManager.key)
+                    .environmentObject(restartManager)
+                    .environment(\.locale, languageManager.locale)
                     .onAppear {
                         updateLanguage()
                     }

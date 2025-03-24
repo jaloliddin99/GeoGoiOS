@@ -145,7 +145,7 @@ struct HomeScreen: View {
 
     
     
-    private func getDestinationView(for destination: DestinationScreen) -> some View{
+    private func getDestinationView(for destination: DestinationScreen) -> some View {
         @State var paymentMethod: String = getPaymentMethod()
 
         switch destination {
@@ -158,8 +158,8 @@ struct HomeScreen: View {
                 
             case .paymentMethod:
                 return AnyView(PaymentScreen(paymentMethod: $paymentMethod))
-            case .favouriteAddresses:
-                return AnyView(FavScreen())
+//            case .favouriteAddresses:
+//                return AnyView(FavScreen())
             case .discount:
                 return AnyView(DiscountScreen())
             case .profile:

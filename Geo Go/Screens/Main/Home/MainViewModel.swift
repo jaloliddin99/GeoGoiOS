@@ -27,11 +27,9 @@ final class MainViewModel: ObservableObject{
     @Published var location: CLLocationCoordinate2D = DataHolder.location
     @Published var selectedLocation: CLLocationCoordinate2D = DataHolder.location
     @Published var refocusButtonListener = false
-    
     @Published var orderGoViewHeight: CGFloat = 250
     @Published var discountModel: DiscountModel?
     var isSetLocations = false
-    
     @Published var status: Int = DataHolder.status {
         didSet {
             DataHolder.status = status
@@ -90,6 +88,7 @@ final class MainViewModel: ObservableObject{
     
     func reverseLocation(lat: Double, lon: Double) {
         isLoading = true
+        print("reverse location lang \(DataHolder.lang)")
         NetworkService.shared.sendRequest(
             url: UserDefaults().string(forKey: Constants.reverse)!+"reverse",
             params: ["format": Constants.FORMAT,
@@ -275,6 +274,7 @@ final class MainViewModel: ObservableObject{
             return
         }
         
+        
         NetworkService.shared.sendRequest(
             url: responseDetails.url,
             body: jsonData,
@@ -286,20 +286,18 @@ final class MainViewModel: ObservableObject{
                 "Authentication": responseDetails.hmac,
                 "X-Hive-GPS-Position": "\(location.latitude) \(location.longitude)",
             ],
+            isPrintable: true,
             completed: { [weak self] (result: Result<[NDriver], APError>) in
                 self?.handleNearDriversResponse(result, with: tariffId)
             }
        )
     }
-    
-    @Published var nearDrivers: [NDriver]?
-    
+        
     private func handleNearDriversResponse<T:Decodable>(_ result: Result<T,APError>, with tariffId: Int64) {
         DispatchQueue.main.async {
             switch result {
                 case .success(let response):
                     if let res = response as? [NDriver] {
-                        self.nearDrivers = res
                         var tariffs = self.tariff?.tariffs
                         if tariffs != nil {
                             changeDistance(response: res, tariffId: tariffId, list: &tariffs!, clientLocation: self.location)
@@ -364,7 +362,6 @@ final class MainViewModel: ObservableObject{
                 "Hive-Profile": Constants.HIVE_PROFILE,
                 "X-Hive-GPS-Position": "\(location.latitude) \(location.longitude)",
                 "Date": responseDetails.data,
-                
                 "Authentication": responseDetails.hmac,
             ],
             completed: handleServiceTariffRequestResponse as (Result<ServiceResponse, APError>) -> Void)
@@ -595,6 +592,7 @@ final class MainViewModel: ObservableObject{
                 "Date": responseDetails.data,
                 "Authentication": responseDetails.hmac,
             ],
+            isPrintable: true,
             completed: handleClientOrdersResponse as (Result<[ShortOrderInfo], APError>) -> Void)
     }
     
@@ -620,7 +618,7 @@ final class MainViewModel: ObservableObject{
     
     @Published var getOrderDetail: OrderInfo?
     
-    private func getOrderDetails(orderId: Int64) {
+    func getOrderDetails(orderId: Int64, _ stopLoop: Bool = false) {
         guard let responseDetails = generateResponse?.generateHmacDataForOrderId(id: Constants.GET_ORDER_DETAILS, orderId: orderId) else { return }
         
         NetworkService.shared.sendRequest(
@@ -631,25 +629,30 @@ final class MainViewModel: ObservableObject{
                 "Hive-Profile": Constants.HIVE_PROFILE,
                 "Date": responseDetails.data,
                 "Authentication": responseDetails.hmac,
-            ],
-            completed: handleOrderInfoResponse as (Result<OrderInfo, APError>) -> Void)
-    }
-    
-    private func handleOrderInfoResponse<T: Decodable>(_ result: Result<T, APError>) {
-        DispatchQueue.main.async { [self] in
-            switch result {
-                case .success(let response):
-                    if let res = response as? OrderInfo {
-                        getOrderDetail = res
-                        handleUIByOrderStatus(res.state)
-                        configureSocketListeners(orderId: DataHolder.orderId)
-                        guard let carNum: String = res.assignee?.car.regNum else { return }
-                        UserDefaults.standard.setValue(carNum, forKey: Constants.DRIVER_CAR_NUM)
-                    }
-                case .failure(_): break
+            ]
+        ) { [self] (result: Result<OrderInfo, APError>) in
+            DispatchQueue.main.async {
+                switch result {
+                    case .success(let res):
+                        self.getOrderDetail = res
+                        
+                        if !stopLoop {
+                            self.handleUIByOrderStatus(res.state)
+                            self.configureSocketListeners(orderId: DataHolder.orderId)
+                            
+                            if let carNum = res.assignee?.car.regNum {
+                                UserDefaults.standard.setValue(carNum, forKey: Constants.DRIVER_CAR_NUM)
+                            }
+                        }
+                        
+                        
+                    case .failure(_):
+                        break
+                }
             }
         }
     }
+
     
     
     //socket
@@ -674,6 +677,7 @@ final class MainViewModel: ObservableObject{
         )
         socket = socketManager.defaultSocket
         socket.on(clientEvent: .connect) { _, _ in
+            print("Socket connected")
             self.setupInitialListeners()
         }
         connect()
@@ -715,7 +719,10 @@ final class MainViewModel: ObservableObject{
             orderId: orderId,
             departureLocation: [DataHolder.location.latitude, DataHolder.location.longitude]
         )
+        
+        print("orderId \(orderId)")
         if let messageData = message.toDictionary() {
+            
             socket.off("listen-order")
             socket.emit("listen-order", messageData)
             
@@ -724,6 +731,9 @@ final class MainViewModel: ObservableObject{
                 if let orderInfo: SOrderInfo = parseSocketData(data: data, type: SOrderInfo.self) {
                     if statusHolder == orderInfo.orderStatus { return }
                     statusHolder = orderInfo.orderStatus
+                    if orderInfo.orderStatus == 5 {
+                        getOrderDetails(orderId: orderId, true)
+                    }
                     handleUIByOrderStatus(orderInfo.orderStatus)
                     
                     if orderInfo.orderStatus == 2 {
@@ -775,6 +785,7 @@ final class MainViewModel: ObservableObject{
         socket.on("update-driver-location"){ data, ack in
             if let rtd: SDriverRealTimeData = parseSocketData(data: data, type: SDriverRealTimeData.self) {
                 DispatchQueue.main.async {
+                    print("coming data \(rtd)")
                     self.sDriverRealTimeData = rtd
                 }
             }

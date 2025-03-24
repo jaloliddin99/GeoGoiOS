@@ -7,29 +7,29 @@
 
 import Foundation
 
+
+
 struct GeocodingResponseModel: Codable {
-    var features: [GeocodeFeature]
+    let lat: Double
+    let lon: Double
+    let displayName: String
+    let address: AAddress
+    let distance: Double
+    let unit: String
+    
+    enum CodingKeys: String, CodingKey {
+        case lat, lon, address, distance, unit
+        case displayName = "display_name"
+    }
 }
 
-struct GeocodeFeature: Codable {
-    var type: String
-    var geometry: Geometry
-    var properties: GeocodeProperty
-}
-
-struct Geometry: Codable {
-    var type: String
-    var coordinates: [Double]
-}
-
-struct GeocodeProperty: Codable {
-    var id: String
-    var layer: String
-    var name: String
-    var houseNumber: String?
-    var street: String?
-    var distance: Double?
-    var region: String?
-    var label: String?
-    var description: String?
+struct AAddress: Codable {
+    let road: String
+    let country: String
+    let countryCode: String
+    
+    enum CodingKeys: String, CodingKey {
+        case road, country
+        case countryCode = "country_code"
+    }
 }

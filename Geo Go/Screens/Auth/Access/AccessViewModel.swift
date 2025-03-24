@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import UIKit
+import SwiftUI
 
 
 
@@ -33,9 +35,8 @@ final class AccessViewModel: ObservableObject {
                switch result {
                case .success(let response):
                    if let appetizers = response as? GetServerLinks {
-                       self.postData = appetizers
-                       print(appetizers)
                        saveDataIntoPersistence(data: appetizers.data)
+                       self.postData = appetizers
                    }
                    
                    
@@ -66,6 +67,7 @@ final class AccessViewModel: ObservableObject {
         UserDefaults.standard.set(data.country, forKey: Constants.residence)
         UserDefaults.standard.set(data.socket, forKey: Constants.driverSocket)
         UserDefaults.standard.set(data.client_lan, forKey: Constants.clientLan)
+        LanguageViewModel.shared.changeLanguage(to: data.client_lan)
         UserDefaults.standard.set(data.client_info, forKey: Constants.clientInfo)
         UserDefaults.standard.set(data.client_news, forKey: Constants.clientNews)
         UserDefaults.standard.set(data.reverse, forKey: Constants.reverse)
@@ -79,4 +81,5 @@ final class AccessViewModel: ObservableObject {
     }
     
     
-   }
+}
+

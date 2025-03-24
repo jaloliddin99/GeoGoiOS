@@ -14,7 +14,7 @@ struct AddNameScreen: View {
     
     
     var isButtonDisabled: Bool {
-        return username.isEmpty
+        return username.count < 3
     }
     
     var body: some View {
@@ -36,10 +36,9 @@ struct AddNameScreen: View {
                 Spacer()
                 
                 NavigationLink(destination: EnterPhoneScreen(username: username)) {
-                    GGButton(title: save)
+                    GGButton(title: save, isDisabled: isButtonDisabled)
                 }
                 .disabled(isButtonDisabled)
-                .opacity(isButtonDisabled ? 0.5 : 1.0)
             }
             .navigationBarTitleDisplayMode(.inline)
             .padding()

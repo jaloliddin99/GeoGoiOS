@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct DialogComment: View {
+    
     @Binding var showCommentDialog: Bool
     @Binding var commentSend: String
 

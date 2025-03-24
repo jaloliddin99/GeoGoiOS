@@ -11,12 +11,12 @@
 "gps" = "GPS";
 "notifications" = "Xabarnomalar";
 "app_must_work" = "Ilova ishlashi uchun zarur";
-"next" = "Next";
-"allow" = "Allow";
+"next" = "Keyingi";
+"allow" = "Ruxshat Berish";
 
-"what_is_your_name" = "What is your name?";
-"enter_your_name" = "Enter your name";
-"save" = "Save";
+"what_is_your_name" = "Ismingiz nima?";
+"enter_your_name" = "Ismingizni kiriting";
+"save" = "Saqlash";
 
 "terms_prefix" = "Men paydalanw shartların qabıl etem ";
 "user_agreement" = "Paydalanwshı Kelisimi";
@@ -163,3 +163,7 @@
 "show_driver_where_i_am" = "Haydovchiga qayerdaligimni ko'rsatish";
 "arrival_time" = "Jónek ~%@";
 "call_to_driver" = "Haydovchi bilan bog'lanish";
+
+
+"enter_sms_code" = "SMS kodini kiriting";
+"enter_sms_code_desc" = "%@ telefon raqamingizga yuboriladigan SMS kodini kiriting";

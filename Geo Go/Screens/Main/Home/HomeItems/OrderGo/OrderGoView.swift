@@ -146,6 +146,7 @@ struct OrderGoView: View {
         }) {
             DrawerBtn(name: "location_btn", fromAssets: true, color: .txt)
         }
+        .rotationEffect(Angle(degrees: 45))
         .shadow(color: .black.opacity(0.1),radius: 16)
 
     }
@@ -188,7 +189,6 @@ struct AddressField: View {
                                     
                                     Spacer()
                                 }
-                                
                             }
                             Spacer()
                         }else if holder.count == 2 {
@@ -235,12 +235,7 @@ struct AddressField: View {
                 .fill(Color(.secondarySystemBackground).opacity(0.7))
             )
         }
-
-        
-        
     }
-    
-    
     
 }
 

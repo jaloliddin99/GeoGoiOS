@@ -22,7 +22,7 @@ func getCurrencySymbol() -> String {
 }
 
 func formatNumberWtCurrency(_ number: Double) -> String {
-    return String(number)
+    return String(Int(number))
 }
 
 func getCreateOrderRoute(addressList: [UserSelectedAddress], bonusInt: Double) -> CreateOrderRequest {
