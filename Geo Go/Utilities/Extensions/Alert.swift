@@ -18,50 +18,50 @@ struct AlertItem: Identifiable {
 
 struct AlertContext {
     static let invalidData = AlertItem(
-        title: Text("alert_title_server_error"),
-        message: Text("alert_message_invalid_data"),
+        title: Text("alert_title_server_error".localize()),
+        message: Text("alert_message_invalid_data".localize()),
         dismissButton: .default(Text("OK"))
     )
     
     static let invalidResponse = AlertItem(
-        title: Text("alert_title_server_error"),
-        message: Text("alert_message_invalid_response"),
+        title: Text("alert_title_server_error".localize()),
+        message: Text("alert_message_invalid_response".localize()),
         dismissButton: .default(Text("OK"))
     )
     
     static let invalidURL = AlertItem(
-        title: Text("alert_title_server_error"),
-        message: Text("alert_message_invalid_url"),
+        title: Text("alert_title_server_error".localize()),
+        message: Text("alert_message_invalid_url".localize()),
         dismissButton: .default(Text("OK"))
     )
     
     static let unableToComplete = AlertItem(
-        title: Text("alert_title_server_error"),
-        message: Text("alert_message_unable_to_complete"),
+        title: Text("alert_title_server_error".localize()),
+        message: Text("alert_message_unable_to_complete".localize()),
         dismissButton: .default(Text("OK"))
     )
     
     static let invalidForm = AlertItem(
-        title: Text("alert_title_invalid_form"),
-        message: Text("alert_message_invalid_form"),
+        title: Text("alert_title_invalid_form".localize()),
+        message: Text("alert_message_invalid_form".localize()),
         dismissButton: .default(Text("OK"))
     )
     
     static let invalidEmail = AlertItem(
-        title: Text("alert_title_invalid_email"),
-        message: Text("alert_message_invalid_email"),
+        title: Text("alert_title_invalid_email".localize()),
+        message: Text("alert_message_invalid_email".localize()),
         dismissButton: .default(Text("OK"))
     )
     
     static let userSaveSuccess = AlertItem(
-        title: Text("alert_title_profile_saved"),
-        message: Text("alert_message_profile_saved"),
+        title: Text("alert_title_profile_saved".localize()),
+        message: Text("alert_message_profile_saved".localize()),
         dismissButton: .default(Text("OK"))
     )
     
     static let invalidUserData = AlertItem(
-        title: Text("alert_title_profile_error"),
-        message: Text("alert_message_profile_error"),
+        title: Text("alert_title_profile_error".localize()),
+        message: Text("alert_message_profile_error".localize()),
         dismissButton: .default(Text("OK"))
     )
 }

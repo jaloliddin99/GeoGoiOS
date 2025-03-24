@@ -24,11 +24,11 @@ struct HomeScreenDrawer: View {
                 }
             
             Divider()
-            DrawerItem(title: Text("drawer_item_my_trips"), action: {
+            DrawerItem(title: Text("drawer_item_my_trips".localize()), action: {
                 navigate(to: .myTrips)
             })
             Divider()
-            DrawerItem(title: Text("drawer_item_payment_method"), action: {
+            DrawerItem(title: Text("drawer_item_payment_method".localize()), action: {
                 navigate(to: .paymentMethod)
             })
 //            Divider()
@@ -36,15 +36,15 @@ struct HomeScreenDrawer: View {
 //                navigate(to: .favouriteAddresses)
 //            })
             Divider()
-            DrawerItem(title: Text("drawer_item_discount"), action: {
+            DrawerItem(title: Text("drawer_item_discount".localize()), action: {
                 navigate(to: .discount)
             })
             Divider()
-            DrawerItem(title: Text("drawer_item_news"), action: {
+            DrawerItem(title: Text("drawer_item_news".localize()), action: {
                 navigate(to: .news)
             })
             Divider()
-            DrawerItem(title: Text("drawer_item_about_app"), action: {
+            DrawerItem(title: Text("drawer_item_about_app".localize()), action: {
                 navigate(to: .aboutApp)
             })
             Spacer()

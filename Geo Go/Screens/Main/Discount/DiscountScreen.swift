@@ -42,7 +42,7 @@ struct DiscountScreen: View {
 
         }
         .background(.white)
-        .navigationTitle("drawer_item_my_trips")
+        .navigationTitle("drawer_item_my_trips".localize())
         .navigationBarTitleDisplayMode(.inline)
         .padding(16)
         .alert(item: $viewModel.alertItem){ alertItem in
@@ -208,11 +208,11 @@ struct PromoCodePopup: View {
     
     var body: some View {
         VStack(spacing: 20) {
-            Text("txt_enter_promocode")
+            Text("txt_enter_promocode".localize())
                 .font(.headline)
             
             
-            TextField("promocode", text: $promoCodeText)
+            TextField("promocode".localize(), text: $promoCodeText)
                 .padding(10)
                 .background(Color(.secondarySystemBackground))
                 .cornerRadius(9)

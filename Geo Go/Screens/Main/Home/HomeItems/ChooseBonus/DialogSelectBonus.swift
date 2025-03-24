@@ -27,7 +27,7 @@ struct DialogSelectBonus: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 12){
             
-            Text("your_bonuses")
+            Text("your_bonuses".localize())
                 .font(.system(size: 20, weight: .bold))
                 .foregroundColor(.main)
                 .padding(.top, 16)
@@ -39,7 +39,7 @@ struct DialogSelectBonus: View {
             
             Spacer()
             
-            Text("bonus_desc")
+            Text("bonus_desc".localize())
                 .font(.system(size: 16, weight: .medium))
             
           
@@ -55,19 +55,19 @@ struct DialogSelectBonus: View {
                 Int(bonus.capabilities.max)
             )
             
-            Text(hint)
+            Text(hint.localize())
                 .foregroundColor(.main)
                 .font(.system(size: 20, weight: .medium))
             
             Spacer()
 
             VStack(alignment: .leading, spacing: 4){
-                Text("bonus_short_desc")
+                Text("bonus_short_desc".localize())
                     .foregroundColor(.white)
                     .font(.system(size: 16, weight: .semibold))
                 
                 HStack(alignment: .bottom){
-                    Text("enter_amount")
+                    Text("enter_amount".localize())
                         .foregroundColor(.white)
                         .font(.system(size: 16, weight: .regular))
                         .padding(.top, 24)

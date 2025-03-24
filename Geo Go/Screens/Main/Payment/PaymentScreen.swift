@@ -25,7 +25,7 @@ struct PaymentScreen: View {
     var body: some View {
         ZStack {
             VStack(alignment: .leading, spacing: 0) {
-                Text("txt_choose_default_payment")
+                Text("txt_choose_default_payment".localize())
                     .font(.system(size: 18, weight: .medium))
                     .foregroundColor(Color.txt)
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -46,7 +46,7 @@ struct PaymentScreen: View {
             .padding(16)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .navigationTitle("payment_method")
+        .navigationTitle("payment_method".localize())
         .background(Color.white)
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
@@ -77,7 +77,7 @@ struct PaymentScreen: View {
         NavigationLink(destination: AddCardScreen()) {
             HStack(spacing: 12) {
                 Image(systemName: "plus")
-                Text("add_card")
+                Text("add_card".localize())
                     .font(.custom("Roboto-Regular", size: 18))
                     .foregroundColor(Color.txt)
                 Spacer()
@@ -102,7 +102,7 @@ struct PaymentScreen: View {
             LottieEmptyStateView(fileName: "empty_list")
                 .frame(width: 120, height: 120, alignment: .center)
                 .padding()
-            Text("no_cards_found")
+            Text("no_cards_found".localize())
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .padding(.top, 20)

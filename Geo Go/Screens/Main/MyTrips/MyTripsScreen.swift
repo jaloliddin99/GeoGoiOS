@@ -109,7 +109,7 @@ struct TripCardView: View {
                 .foregroundColor(.gray)
             
             HStack {
-                Text("order_price")
+                Text("order_price".localize())
                     .fontWeight(.medium)
                 Spacer()
                 Text(formatNumberWithSpaces(trip.total ?? 0.0))
@@ -118,7 +118,7 @@ struct TripCardView: View {
             Button(action: {
                 
             }) {
-                Text("view_order")
+                Text("view_order".localize())
                     .frame(maxWidth: .infinity)
                     .padding()
                     .background(Color.gray.opacity(0.2))

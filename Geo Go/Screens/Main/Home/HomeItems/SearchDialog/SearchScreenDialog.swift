@@ -21,7 +21,7 @@ struct SearchScreenDialog: View {
     var body: some View {
         let holder = viewModel.locationHolder
         VStack {
-            DialogToolBar(showDialog: $viewModel.isSearchDialogShowing, title: "txt_where_to_go")
+            DialogToolBar(showDialog: $viewModel.isSearchDialogShowing, title: "txt_where_to_go".localize())
             
             HStack {
                 Image(systemName: "location.fill")
@@ -32,7 +32,7 @@ struct SearchScreenDialog: View {
                     .shadow(radius: 4)
                 
 
-                Text(holder.isEmpty ? "searching_with_dot" : holder[0].addressName)
+                Text(holder.isEmpty ? "searching_with_dot".localize() : holder[0].addressName)
                     .padding()
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .frame(maxWidth: .infinity, maxHeight: 50)
@@ -50,7 +50,7 @@ struct SearchScreenDialog: View {
                     .clipShape(Circle())
                     .shadow(radius: 4)
                 
-                TextField("enter_address_here", text: $whereLocName)
+                TextField("enter_address_here".localize(), text: $whereLocName)
                     .padding()
                     .frame(maxWidth: .infinity, maxHeight: 50)
                     .background(Color(.secondarySystemBackground))
@@ -58,7 +58,6 @@ struct SearchScreenDialog: View {
                     .padding(.leading, 4)
                     .onChange(of: whereLocName) { oldValue, newValue in
                         if newValue.count > 3 {
-                            print("dataRECEIVED \(newValue)")
                             eSearchViewModel.reverseLocation(address: whereLocName)
                         }
                     }

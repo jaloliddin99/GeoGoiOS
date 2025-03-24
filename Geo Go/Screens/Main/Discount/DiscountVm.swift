@@ -146,7 +146,6 @@ final class DiscountVm: ObservableObject {
                                    promocode_name: " "
                                   )
                         )
-                        print("Hello Success....")
                     }
                     
                 case .failure(let error):

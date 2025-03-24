@@ -70,7 +70,7 @@ struct MinuteTextView: View {
             Text("5")
                 .font(.system(size: 24, weight: .bold))
                 .foregroundColor(.main)
-            Text("min")
+            Text("min".localize())
                 .font(.system(size: 9, weight: .medium))
                 .foregroundColor(.main)
         }
@@ -89,7 +89,7 @@ struct AddressView: View {
     var body: some View {
         let name = markerOffset != 0 ? "searching_with_dot" :
         (viewModel.locationHolder.isEmpty ? "point_on_map" : viewModel.locationHolder[0].addressName)
-        Text(LocalizedStringKey(name))
+        Text(LocalizedStringKey(name.localize()))
             .font(.system(size: 16))
             .foregroundColor(.white)
             .lineLimit(1)

@@ -19,7 +19,7 @@ struct SearchTextView: View {
                         .padding(.leading, 12)
                     
                     
-                    Text("txt_where_to_go")
+                    Text("txt_where_to_go".localize())
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .foregroundColor(.black.opacity(0.7))
                         .cornerRadius(10)
@@ -32,7 +32,7 @@ struct SearchTextView: View {
                 }
                
                 HStack(alignment: .center, spacing: 8){
-                    Text("txt_order_with_arrow")
+                    Text("txt_order_with_arrow".localize())
                         .font(.system(size: 14, weight: .medium))
                         .padding(.leading, 8)
                         .foregroundColor(.white)

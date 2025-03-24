@@ -30,7 +30,7 @@ struct AccessScreen: View {
                     Button{
                         locationManager.requestLocation()
                     }label: {
-                        GGButton(title: LocalizedStringKey("allow"))
+                        GGButton(title: "allow")
                     }
                 }
                 

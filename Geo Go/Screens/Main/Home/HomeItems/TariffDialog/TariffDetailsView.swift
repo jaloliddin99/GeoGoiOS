@@ -17,7 +17,7 @@ struct TariffDetailsView: View {
         ScrollView(showsIndicators: false){
             VStack(spacing: 12){
                 HStack{
-                    Text(convertTariff(lang: "en", data: item))
+                    Text(convertTariff(lang: DataHolder.lang, data: item))
                         .font(.system(size: 24, weight: .bold))
                         .frame(alignment: .leading)
                     
@@ -79,10 +79,10 @@ struct TariffDetailsView: View {
                             .rotationEffect(.degrees(-90))
                         
                         VStack(spacing: 2){
-                            Text("tariff_reduced")
+                            Text("tariff_reduced".localize())
                                 .font(.system(size: 14, weight: .regular))
                                 .frame(maxWidth: .infinity, alignment: .leading)
-                            Text("tariff_increased")
+                            Text("tariff_increased".localize())
                                 .font(.system(size: 14, weight: .regular))
                                 .frame(maxWidth: .infinity, alignment: .leading)
                                 .foregroundColor(.black.opacity(0.5))
@@ -95,7 +95,7 @@ struct TariffDetailsView: View {
                 
                 
                 if let description = item.description {
-                    Text("about_tariff")
+                    Text("about_tariff".localize())
                         .font(.system(size: 24, weight: .bold))
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.top, 8)
@@ -145,13 +145,13 @@ struct TariffInfoItem: View {
 
 struct DiscountView: View {
     var body: some View {
-        Text("discount")
+        Text("discount".localize())
             .font(.system(size: 24, weight: .bold))
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.top, 8)
         
         VStack(spacing: 20){
-            Text("enter_promo_code_if_have")
+            Text("enter_promo_code_if_have".localize())
                 .font(.system(size: 20, weight: .medium))
                 .foregroundColor(.black.opacity(0.6))
                 .multilineTextAlignment(.center)
@@ -179,11 +179,13 @@ struct DiscountView: View {
     }
 }
 
-#Preview {
-    TariffInfoItem(tariffDetails: TariffDetails(titleDetails: "Inside City", descriptionDetails: "Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum"))
-        .previewLayout(.sizeThatFits)
-}
-#Preview {
-    TariffDetailsView(item: ServiceTariffSample.sampleData.tariffs![1])
-        .previewLayout(.sizeThatFits)
-}
+
+//
+//#Preview {
+//    TariffInfoItem(tariffDetails: TariffDetails(titleDetails: "Inside City", descriptionDetails: "Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum"))
+//        .previewLayout(.sizeThatFits)
+//}
+//#Preview {
+//    TariffDetailsView(item: ServiceTariffSample.sampleData.tariffs![1])
+//        .previewLayout(.sizeThatFits)
+//}

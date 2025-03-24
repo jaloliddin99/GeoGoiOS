@@ -17,9 +17,9 @@ struct DialogRateDriver: View {
     
     var body: some View {
         VStack(spacing: 12){
-            DialogToolBar(showDialog: $invokeDialog, title: "order_completed")
+            DialogToolBar(showDialog: $invokeDialog, title: "order_completed".localize())
             
-            Text("total_fare")
+            Text("total_fare".localize())
                 .font(.system(size: 24, weight: .medium))
                 .foregroundColor(.txt)
                 .padding(.top, 12)
@@ -37,7 +37,7 @@ struct DialogRateDriver: View {
                 if let usedBonuses = orderDetail.usedBonuses {
                     HStack(spacing: 12){
                         
-                        Text("payment_with_bonus")
+                        Text("payment_with_bonus".localize())
                             .font(.system(size: 16, weight: .medium))
                             .foregroundColor(.txt)
                         
@@ -55,7 +55,7 @@ struct DialogRateDriver: View {
                     .padding(.vertical, 12)
             }
             
-            Text("rate_driver")
+            Text("rate_driver".localize())
                 .font(.system(size: 16, weight: .medium))
                 .padding(.top, 12)
             
@@ -65,7 +65,7 @@ struct DialogRateDriver: View {
             .font(.title2)
             .padding(.vertical, 12)
         
-            CommentField(comment: $comment, hint: "hint_good_driver")
+            CommentField(comment: $comment, hint: "hint_good_driver".localize())
             
             Spacer()
             Button(action: {

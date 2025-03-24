@@ -9,7 +9,7 @@ import SwiftUI
 
 struct AddNameScreen: View {
     
-    let save: LocalizedStringKey = "save"
+
     @State private var username: String = ""
     
     
@@ -36,7 +36,16 @@ struct AddNameScreen: View {
                 Spacer()
                 
                 NavigationLink(destination: EnterPhoneScreen(username: username)) {
-                    GGButton(title: save, isDisabled: isButtonDisabled)
+                    
+                    Text("save".localize())
+                        .font(.system(size: 16))
+                        .fontWeight(.semibold)
+                        .frame(maxWidth: .infinity, maxHeight: 50)
+                        .foregroundColor(.white)
+                        .background(isButtonDisabled ? Color.gray.opacity(0.7) : .main)            .cornerRadius(10)
+
+                    
+                   // GGButton(title: "save", isDisabled: isButtonDisabled)
                 }
                 .disabled(isButtonDisabled)
             }

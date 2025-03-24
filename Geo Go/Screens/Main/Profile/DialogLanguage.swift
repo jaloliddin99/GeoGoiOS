@@ -7,48 +7,47 @@
 
 import SwiftUI
 
-
 struct DialogLanguage: View {
-    @ObservedObject var vm: LanguageViewModel
-    @State var tempSelectedLanguage: String?
-
+    @ObservedObject var vm: LanguageViewModel = .shared
+    @State private var tempSelectedLanguage: String?
+    
     let languages = ["O'zbek", "English", "Русский", "Qaraqalpaq"]
     
     var body: some View {
-        ZStack {
-            VStack(alignment: .leading, spacing: 12) {
-                
-                GGText(text: "select_language")
-                
-                VStack(spacing: 4) {
-                    ForEach(languages, id: \.self) { option in
-                        HStack(alignment: .center) {
-                            RadioButton(isSelected: (tempSelectedLanguage ?? vm.selectedLanguage) == option)
-                            Text(option)
-                                .foregroundColor(.black)
-                                .lineLimit(2)
-                                .padding(.leading, 12)
-                            Spacer()
-                        }
-                        .frame(height: 40)
-                        .onTapGesture {
-                            tempSelectedLanguage = option
-                        }
+        VStack(alignment: .leading, spacing: 12) {
+            Text("select_language".localize())
+            
+            VStack(spacing: 4) {
+                ForEach(languages, id: \.self) { option in
+                    HStack {
+                        RadioButton(isSelected: (tempSelectedLanguage ?? vm.selectedLanguage) == option)
+                        Text(option)
+                            .foregroundColor(.black)
+                            .padding(.leading, 12)
+                        Spacer()
+                    }
+                    .frame(height: 40)
+                    .onTapGesture {
+                        tempSelectedLanguage = option
                     }
                 }
-                .padding(.top, 20)
-                
-                Spacer()
-                
-                Button(action: {
-                    vm.changeLanguage(to: tempSelectedLanguage!)
-                }) {
-                    GGButton(title: "save", isDisabled: tempSelectedLanguage == nil)
-                        .frame(maxWidth: .infinity)
-                }
-                .disabled(tempSelectedLanguage == nil)
             }
-            .padding(.horizontal, 16)
+            
+            Button(action: {
+                if let selected = tempSelectedLanguage {
+                    vm.changeLanguage(to: selected)
+                }
+            }) {
+                Text("save".localize())
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(tempSelectedLanguage == nil ? Color.gray : Color.blue)
+                    .foregroundColor(.white)
+                    .cornerRadius(8)
+            }
+            .disabled(tempSelectedLanguage == nil)
+            .padding(.top, 20)
         }
+        .padding()
     }
 }

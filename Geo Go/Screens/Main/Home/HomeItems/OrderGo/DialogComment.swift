@@ -21,12 +21,12 @@ struct DialogComment: View {
     var body: some View {
         
         VStack(alignment: .leading){
-            Text("enter_comment")
+            Text("enter_comment".localize())
                 .font(.title)
                 .fontWeight(.bold)
                 .padding(.top, 24)
                 .padding(.bottom, 12)
-            CommentField(comment: $comment, hint: "comment_hint_be_quick")
+            CommentField(comment: $comment, hint: "comment_hint_be_quick".localize())
             Spacer()
             Button(action: {
                 commentSend = comment

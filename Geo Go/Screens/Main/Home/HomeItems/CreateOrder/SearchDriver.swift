@@ -41,7 +41,7 @@ struct SearchDriver: View {
                 .foregroundColor(.gray.opacity(0.4))
                 .cornerRadius(10)
             
-            Text("searching_car_dot")
+            Text("searching_car_dot".localize())
                 .font(.title2)
                 .fontWeight(.semibold)
                 .padding(.top, 4)
@@ -67,7 +67,7 @@ struct SearchDriver: View {
             Button(action: {
                 viewModel.showCancelOrderAlert.toggle()
             }, label: {
-                Text("cancel_order".localized.capitalizeFirstLetter())
+                Text("cancel_order".localize().localized.capitalizeFirstLetter())
                     .font(.system(size: 16))
                     .fontWeight(.semibold)
                     .frame(maxWidth: .infinity, maxHeight: 56)

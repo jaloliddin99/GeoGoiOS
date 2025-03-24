@@ -10,28 +10,16 @@ import Firebase
 
 @main
 struct Geo_GoApp: App {
-    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
-    
-    @StateObject private var restartManager = AppRestartManager()
-    @StateObject private var languageManager = LanguageViewModel.shared
-
-
     var body: some Scene {
         WindowGroup {
             if UserDefaults.standard.bool(forKey: Constants.isUserLoggedIn) {
                 HomeScreen()
-                    .id(restartManager.key)
-                    .environmentObject(restartManager)
-                    .environment(\.locale, languageManager.locale)
                     .onAppear {
-                        updateLanguage()
                         requestNotificationPermissions()
+                        updateLanguage()
                     }
             } else {
                 AccessScreen()
-                    .id(restartManager.key)
-                    .environmentObject(restartManager)
-                    .environment(\.locale, languageManager.locale)
                     .onAppear {
                         updateLanguage()
                     }

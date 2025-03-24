@@ -115,7 +115,7 @@ struct DriverFoundView: View {
                 text = NSLocalizedString("status_driver_coming", comment: "")
         }
         
-        return Text(text)
+        return Text(text.localize())
             .font(.system(size: 18, weight: .bold))
             .foregroundColor(.txt)
             .padding(0)
@@ -151,7 +151,7 @@ struct DriverFoundView: View {
         
         
         NavigationLink(destination: ChatView(viewModel: viewModel)) {
-            interactionButtonView(iconName: "phone", label: "call_to_driver")
+            interactionButtonView(iconName: "phone", label: "call_to_driver".localize())
         }
         .frame(maxWidth: .infinity)
         
@@ -164,14 +164,14 @@ struct DriverFoundView: View {
         Button(action: {
             isRideDetailsPresented.toggle()
         }) {
-            interactionButtonView(iconName: "menu", label: "details")
+            interactionButtonView(iconName: "menu", label: "details".localize())
         }
         .frame(maxWidth: .infinity)
     }
     
     private var addButton: some View {
         Button(action: {}) {
-            interactionButtonView(iconName: "plus", label: "add_second_space")
+            interactionButtonView(iconName: "plus", label: "add_second_space".localize())
         }
         .frame(maxWidth: .infinity)
     }

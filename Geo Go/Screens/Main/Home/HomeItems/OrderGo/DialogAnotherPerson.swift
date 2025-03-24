@@ -33,13 +33,13 @@ struct DialogAnotherPerson: View {
     var body: some View {
         
         VStack(alignment: .leading){
-            Text("enter_another_person")
+            Text("enter_another_person".localize())
                 .font(.title)
                 .fontWeight(.bold)
                 .padding(EdgeInsets(top: 24, leading: 12, bottom: 12, trailing: 12))
                
             
-            TextField("Toshmat", text: $name)
+            TextField("Sadullla", text: $name)
                 .padding()
                 .frame(maxWidth: .infinity, maxHeight: 56)
                 .background(Color(.secondarySystemBackground))

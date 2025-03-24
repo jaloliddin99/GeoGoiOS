@@ -15,8 +15,8 @@ struct DialogBottomCancelOrder: View {
         ZStack {
             
             VStack(alignment: .leading, spacing: 12){
-                DialogToolBar(showDialog: $mainVm.showCancelBottomDialog, title: "cancel_order")
-                Text("cancel_order_reason")
+                DialogToolBar(showDialog: $mainVm.showCancelBottomDialog, title: "cancel_order".localize())
+                Text("cancel_order_reason".localize())
                     .font(.system(size: 16, weight: .bold))
                     .foregroundColor(.black)
                 

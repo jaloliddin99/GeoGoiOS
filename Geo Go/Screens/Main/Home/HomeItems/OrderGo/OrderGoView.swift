@@ -183,7 +183,7 @@ struct AddressField: View {
                                     Image(systemName: "magnifyingglass")
                                         .foregroundColor(.black.opacity(0.7))
                                     
-                                    Text("txt_where_to_go")
+                                    Text("txt_where_to_go".localize())
                                         .fontWeight(.medium)
                                         .foregroundColor(.black.opacity(0.7))
                                     
@@ -208,7 +208,7 @@ struct AddressField: View {
                             })
                         }else{
                             let text = String(format: NSLocalizedString("picked_locations", comment: ""), holder.count-1)
-                            Text(text)
+                            Text(text.localize())
                                 .fontWeight(.medium)
                                 .lineLimit(1)
                                 .foregroundColor(.txt)
@@ -268,7 +268,7 @@ struct PaymentAndWishSection: View {
                     Image(systemName: "text.aligncenter")
                         .foregroundColor(.main)
                     
-                    Text("wishes")
+                    Text("wishes".localize())
                         .foregroundColor(.txt)
                 }
                 .sheet(isPresented: $showWishDialog) {

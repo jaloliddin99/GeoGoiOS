@@ -72,7 +72,7 @@ struct RideDetailsView: View {
                                 .resizable()
                                 .frame(width: 24, height: 24)
                             
-                            Text("contact")
+                            Text("contact".localize())
                                 .font(.footnote)
                                 .foregroundColor(.txt)
                         }
@@ -89,7 +89,7 @@ struct RideDetailsView: View {
                                 .resizable()
                                 .frame(width: 24, height: 24)
                             
-                            Text("share")
+                            Text("share".localize())
                                 .font(.footnote)
                                 .foregroundColor(.txt)
                         }
@@ -123,7 +123,7 @@ struct RideDetailsView: View {
                     }
                     Spacer()
                     Button(action: {}) {
-                        Text("edit")
+                        Text("edit".localize())
                             .font(.subheadline)
                             .foregroundColor(.txt)
                             .padding(.horizontal, 16)
@@ -140,13 +140,13 @@ struct RideDetailsView: View {
                     .padding(.leading, 56)
                 
                 HStack{
-                    Image("enable_gps")
+                    Image("enable_gps".localize())
                         .resizable()
                         .scaledToFit()
                         .padding(.vertical, 4)
                         .frame(width: 30, height: 30)
                     
-                    Toggle("show_driver_where_i_am", isOn: .constant(true))
+                    Toggle("show_driver_where_i_am".localize(), isOn: .constant(true))
                         .toggleStyle(SwitchToggleStyle(tint: .blue))
                     
                 }
@@ -164,7 +164,7 @@ struct RideDetailsView: View {
                         .padding(4)
                         .frame(width: 30, height: 30)
                     
-                    Text("cancel_order")
+                    Text("cancel_order".localize())
                         .font(.body)
                         .foregroundColor(.red)
                     Spacer()
@@ -203,7 +203,7 @@ struct RideDetailsView: View {
                 text = NSLocalizedString("status_driver_coming", comment: "")
         }
         
-        return Text(text)
+        return Text(text.localize())
             .font(.title2)
             .fontWeight(.semibold)
     }
@@ -223,7 +223,7 @@ struct RideDetailsView: View {
                             .resizable()
                             .frame(width: 30, height: 30)
                         VStack(alignment: .leading, spacing: 4) {
-                            Text(String(format: NSLocalizedString("arrival_time", comment: ""), "10:32"))
+                            Text(String(format: NSLocalizedString("arrival_time".localize(), comment: ""), "10:32"))
                                 .font(.footnote)
                                 .lineLimit(1)
                                 .foregroundColor(.gray)
@@ -252,7 +252,7 @@ struct RideDetailsView: View {
                             .frame(width: 30, height: 30)
                         
                         VStack(alignment: .leading, spacing: 4) {
-                            Text("arrival")
+                            Text("arrival".localize())
                                 .font(.system(size: 14))
                                 .lineLimit(1)
                                 .foregroundColor(.gray)
@@ -279,7 +279,7 @@ struct RideDetailsView: View {
                             .padding(4)
                             .frame(width: 30, height: 30)
                         
-                        Text("add_stops")
+                        Text("add_stops".localize())
                             .font(.body)
                             .foregroundColor(.txt)
                         
@@ -303,7 +303,7 @@ struct RideDetailsView: View {
                             .frame(width: 30, height: 30)
                         
                         VStack(alignment: .leading, spacing: 4) {
-                            Text("arrival")
+                            Text("arrival".localize())
                                 .font(.system(size: 14))
                                 .foregroundColor(.gray)
                             Text(routeItem.point.info.alias ?? "Unknown address")

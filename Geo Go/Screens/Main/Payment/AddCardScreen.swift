@@ -32,18 +32,18 @@ struct AddCardScreen: View {
     var body: some View {
         ZStack{
             VStack(alignment: .leading, spacing: 0){
-                Text("enter_card_details")
+                Text("enter_card_details".localize())
                     .font(.system(size: 18, weight: .medium))
                     .foregroundColor(Color.txt)
                     .padding(.top, 24)
                 
                 
-                Text("card_name")
+                Text("card_name".localize())
                     .font(.system(size: 16))
                     .fontWeight(.regular)
                     .padding(.top, 16)
                 
-                TextField("for_example", text: $cardName)
+                TextField("for_example".localize(), text: $cardName)
                     .padding()
                     .background(Color(.secondarySystemBackground))
                     .overlay(
@@ -57,12 +57,12 @@ struct AddCardScreen: View {
                     }
                     .padding(.top, 6)
                 
-                Text("card_number")
+                Text("card_number".localize())
                     .font(.system(size: 16))
                     .fontWeight(.regular)
                     .padding(.top, 16)
                 
-                TextField("card_number_camel", text: $cardNumber)
+                TextField("card_number_camel".localize(), text: $cardNumber)
                     .padding()
                     .background(Color(.secondarySystemBackground))
                     .overlay(
@@ -77,7 +77,7 @@ struct AddCardScreen: View {
                     }
                     .padding(.top, 6)
                 
-                Text("expire_date")
+                Text("expire_date".localize())
                     .font(.system(size: 16))
                     .fontWeight(.regular)
                     
@@ -101,7 +101,7 @@ struct AddCardScreen: View {
                     .padding(.top, 6)
                 
                 if !isCardInit {
-                    Text("enter_code")
+                    Text("enter_code".localize())
                         .font(.system(size: 16))
                         .fontWeight(.regular)
                         .padding(.top, 16)
@@ -150,7 +150,7 @@ struct AddCardScreen: View {
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .navigationTitle("add_card")
+        .navigationTitle("add_card".localize())
         .background(.white)
         .padding(16)
         .navigationBarTitleDisplayMode(.inline)

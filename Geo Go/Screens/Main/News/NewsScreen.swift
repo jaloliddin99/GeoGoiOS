@@ -39,7 +39,7 @@ struct NewsScreen: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .padding(.vertical, 16)
         .background(.white)
-        .navigationTitle("drawer_item_news")
+        .navigationTitle("drawer_item_news".localize())
         .navigationBarTitleDisplayMode(.inline)
     }
     
@@ -99,7 +99,7 @@ struct NewsItem: View {
             .background(Color.gray.opacity(0.2))
             .cornerRadius(32)
             
-            Text("txt_more")
+            Text("txt_more".localize())
                 .font(.system(size: 14))
                 .foregroundColor(Color.blue)
                 .frame(maxWidth: .infinity, alignment: .trailing)

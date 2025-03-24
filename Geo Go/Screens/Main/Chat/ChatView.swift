@@ -155,16 +155,9 @@ struct ChatInputView: View {
                 .padding(.horizontal, 12)
             
             Button(action: {
-                print("hello")
                 guard let order = viewModel.getOrderDetail else { return }
-                print("hello1 ")
-
                 guard let carNum = order.assignee?.car.regNum else { return }
-                print("hello2 ")
-
                 guard let number = UserDefaults.standard.string(forKey: Constants.USER_PHONE) else {return}
-                print("hello3 ")
-
                 chatViewModel.sendMessage(DataHolder.orderId, DataHolder.chatId, carNum, msg, number)
                 msg = ""
             }) {

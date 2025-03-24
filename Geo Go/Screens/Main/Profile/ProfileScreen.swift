@@ -26,7 +26,7 @@ struct ProfileScreen: View {
                     HStack(){
                         Image(systemName: "globe")
                         VStack(alignment: .leading){
-                            Text("txt_application_language")
+                            Text("txt_application_language".localize())
                                 .font(.system(size: 16, weight: .regular))
                                 .foregroundColor(.txt)
                             
@@ -50,7 +50,7 @@ struct ProfileScreen: View {
             }
         })
         .background(.white)
-        .navigationTitle("txt_profile")
+        .navigationTitle("txt_profile".localize())
         .navigationBarTitleDisplayMode(.inline)
         .padding(16)
         

@@ -140,7 +140,7 @@ struct CarSelectionView: View {
             
             if let minTime = item.minArriveTime, minTime != -1 {
                 let minuteText = NSLocalizedString("min", comment: "")
-                Text("\(minTime) \(minuteText)")
+                Text("\(minTime) \(minuteText.localize())")
                     .font(.system(size: 9, weight: .semibold))
                     .foregroundColor(isSelected ? .txt : .gray)
                     .padding(.horizontal, 3)
@@ -163,7 +163,7 @@ struct CarSelectionView: View {
     }
     
     private var fromText: some View {
-        Text(LocalizedStringKey("from"))
+        Text("from".localize())
             .customStyle()
     }
 
