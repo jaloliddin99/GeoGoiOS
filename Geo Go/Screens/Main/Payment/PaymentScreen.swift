@@ -137,6 +137,11 @@ struct PaymentScreen: View {
 }
 
 func hasMainCard(cards: [CardData]) -> Bool {
+    cards.forEach { data in
+        if data.isMain {
+            UserDefaults.standard.setValue(data.cardPan, forKey: Constants.SELECTED_CARD)
+        }
+    }
     return cards.contains { $0.isMain }
 }
 

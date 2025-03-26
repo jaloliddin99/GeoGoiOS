@@ -71,7 +71,6 @@ final class MainViewModel: ObservableObject{
         location = loc
         refocusButtonListener.toggle()
         reverseGeocodeIfNeeded()
-        
     }
     
     
@@ -88,7 +87,6 @@ final class MainViewModel: ObservableObject{
     
     func reverseLocation(lat: Double, lon: Double) {
         isLoading = true
-        print("reverse location lang \(DataHolder.lang)")
         NetworkService.shared.sendRequest(
             url: UserDefaults().string(forKey: Constants.reverse)!+"reverse",
             params: ["format": Constants.FORMAT,
@@ -677,7 +675,6 @@ final class MainViewModel: ObservableObject{
         )
         socket = socketManager.defaultSocket
         socket.on(clientEvent: .connect) { _, _ in
-            print("Socket connected")
             self.setupInitialListeners()
         }
         connect()
@@ -720,7 +717,6 @@ final class MainViewModel: ObservableObject{
             departureLocation: [DataHolder.location.latitude, DataHolder.location.longitude]
         )
         
-        print("orderId \(orderId)")
         if let messageData = message.toDictionary() {
             
             socket.off("listen-order")
@@ -730,9 +726,13 @@ final class MainViewModel: ObservableObject{
                 guard let self = self else { return }
                 if let orderInfo: SOrderInfo = parseSocketData(data: data, type: SOrderInfo.self) {
                     if statusHolder == orderInfo.orderStatus { return }
+                    
                     statusHolder = orderInfo.orderStatus
                     if orderInfo.orderStatus == 5 {
                         getOrderDetails(orderId: orderId, true)
+                    }
+                    if orderInfo.orderStatus == 7 {
+                        setDefaults()
                     }
                     handleUIByOrderStatus(orderInfo.orderStatus)
                     
@@ -749,7 +749,6 @@ final class MainViewModel: ObservableObject{
     }
     
     private func configureSocketListeners(orderId: Int64) {
-        print("configurations started")
         sendUserOrderIdAndLocs(orderId: orderId)
         turnOffCars()
     }
@@ -785,18 +784,15 @@ final class MainViewModel: ObservableObject{
         socket.on("update-driver-location"){ data, ack in
             if let rtd: SDriverRealTimeData = parseSocketData(data: data, type: SDriverRealTimeData.self) {
                 DispatchQueue.main.async {
-                    print("coming data \(rtd)")
                     self.sDriverRealTimeData = rtd
                 }
             }
         }
     }
 
-    // end of socket
     
     private func handleUIByOrderStatus(_ orderStatus: Int) {
         DataHolder.status = orderStatus
-
         switch orderStatus {
             case 1:
                 setStatus(value: 2)
@@ -819,13 +815,17 @@ final class MainViewModel: ObservableObject{
                 setupInitialListeners()
                 
             case 6:
-                setStatus(value: 0)
-                socket.off("update-driver-location")
-                setupInitialListeners()
+                setDefaults()
                 
             default:
                 print("Unexpected order state: \(orderStatus)")
         }
+    }
+    
+    func setDefaults(){
+        setStatus(value: 0)
+        socket.off("update-driver-location")
+        setupInitialListeners()
     }
 
     

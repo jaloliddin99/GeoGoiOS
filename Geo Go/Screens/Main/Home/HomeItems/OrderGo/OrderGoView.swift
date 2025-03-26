@@ -245,17 +245,24 @@ struct AddressField: View {
 struct PaymentAndWishSection: View {
     @Binding var showWishDialog: Bool
     @State var paymentMethod: String = getPaymentMethod()
-    
+
     var body: some View {
         VStack {
             HStack(alignment: .center) {
-                
                 NavigationLink(destination: PaymentScreen(paymentMethod: $paymentMethod)) {
-                    Image(systemName: "dollarsign.circle")
+                    
+                    let isCardMethod = getPaymentMethod() == "credit_card"
+                    Image(systemName: isCardMethod ? "creditcard.fill" : "dollarsign.circle")
                         .foregroundColor(.main)
                     
-                    Text(paymentMethod == "cash" ? "cash" : "card" )
+                    Text(!isCardMethod ? "cash" : "card" )
                         .foregroundColor(.txt)
+                    
+                    if isCardMethod {
+                        let card = UserDefaults.standard.string(forKey: Constants.SELECTED_CARD)!
+                        Text(card.suffix(4))
+                            .foregroundColor(.txt)
+                    }
                 }
                 
                 

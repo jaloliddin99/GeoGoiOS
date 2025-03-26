@@ -148,16 +148,10 @@ struct DriverFoundView: View {
     }
     
     private var callButton: some View {
-        
-        
         NavigationLink(destination: ChatView(viewModel: viewModel)) {
             interactionButtonView(iconName: "phone", label: "call_to_driver".localize())
         }
         .frame(maxWidth: .infinity)
-        
-        
-        
-        
     }
     
     private var detailsButton: some View {

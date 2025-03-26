@@ -217,6 +217,8 @@ func getUserPhone() -> String {
 
 func getPaymentMethod() -> String {
     let paymentMethod:String = UserDefaults.standard.string(forKey: Constants.PAYMENT_METHOD) ?? "cash"
+    
+    print("payment method \(paymentMethod)")
     return paymentMethod;
 }
 
@@ -228,6 +230,8 @@ func makePhoneCall(_ orderInfo: OrderInfo) {
 
 
 func setPaymentMethod(method: String) {
+    print("set payment method \(method)")
+
     UserDefaults.standard.setValue(method, forKey: Constants.PAYMENT_METHOD)
 }
 

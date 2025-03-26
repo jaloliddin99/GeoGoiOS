@@ -167,3 +167,7 @@
 
 "enter_sms_code" = "SMS kodini kiriting";
 "enter_sms_code_desc" = "%@ telefon raqamingizga yuboriladigan SMS kodini kiriting";
+
+"payment_via_card" = "Karta orqali to'lov:";
+"payment_via_cash" = "Naqd pul to'lov:";
+

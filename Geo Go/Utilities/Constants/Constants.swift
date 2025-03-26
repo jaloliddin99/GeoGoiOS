@@ -35,6 +35,7 @@ class Constants{
     static let DEFAULT_ID = 191000232578408
     
     static let PAYMENT_METHOD: String = "PAYMENT_METHOD"
+    static let SELECTED_CARD: String = "SELECTED_CARD"
     static let driverCallCenter: String = "driverCallCenter"
     static let servername: String = "servername"
     static let driverApi: String = "driverApi"

@@ -43,9 +43,6 @@ struct AddNameScreen: View {
                         .frame(maxWidth: .infinity, maxHeight: 50)
                         .foregroundColor(.white)
                         .background(isButtonDisabled ? Color.gray.opacity(0.7) : .main)            .cornerRadius(10)
-
-                    
-                   // GGButton(title: "save", isDisabled: isButtonDisabled)
                 }
                 .disabled(isButtonDisabled)
             }

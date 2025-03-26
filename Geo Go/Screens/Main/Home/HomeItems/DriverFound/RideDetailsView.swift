@@ -10,9 +10,9 @@ import SwiftUI
 struct RideDetailsView: View {
     
     @ObservedObject var viewModel: MainViewModel
+    @State var paymentMethod: String = getPaymentMethod()
 
     var body: some View {
-    
         VStack {
             
             VStack {
@@ -111,18 +111,34 @@ struct RideDetailsView: View {
             
             
             VStack(spacing: 0) {
+                
+                let isCardMethod = paymentMethod == "credit_card"
                 HStack {
-                    Image(systemName: "creditcard.fill")
+                    
+                    Image(systemName: isCardMethod ? "creditcard.fill" : "dollarsign.circle")
                     VStack(alignment: .leading){
-                        Text("Оплата картой: 10000сум")
-                            .font(.subheadline)
                         
-                        Text("Uzcard ••• 7969")
-                            .font(.system(size: 14))
-                            .foregroundColor(.gray)
+                        HStack(alignment: .bottom,spacing: 4){
+                            Text(isCardMethod ? "payment_via_card".localize() : "payment_via_cash".localize())
+                            
+                        }
+                        
+                        if isCardMethod {
+                            HStack(alignment: .bottom,spacing: 4) {
+                                Text("card")
+                                    .font(.system(size: 14))
+                                    .foregroundColor(.gray)
+                                
+                                let card = UserDefaults.standard.string(forKey: Constants.SELECTED_CARD)!
+                                Text(card.suffix(4))
+                                    .foregroundColor(.txt)
+                            }
+                        }
+                        
                     }
                     Spacer()
-                    Button(action: {}) {
+                    
+                    NavigationLink(destination: PaymentScreen(paymentMethod: $paymentMethod)) {
                         Text("edit".localize())
                             .font(.subheadline)
                             .foregroundColor(.txt)
@@ -131,6 +147,8 @@ struct RideDetailsView: View {
                             .background(.appGray)
                             .cornerRadius(20)
                     }
+                
+                  
                 }
                 .padding(.horizontal, 16)
                 .frame(height: 60)
@@ -167,12 +185,16 @@ struct RideDetailsView: View {
                     Text("cancel_order".localize())
                         .font(.body)
                         .foregroundColor(.red)
+                    
                     Spacer()
                     Image(systemName: "chevron.right")
                         .foregroundColor(.red)
                 }
                 .padding(.horizontal, 16)
                 .frame(height: 60)
+                .onTapGesture {
+                    viewModel.showCancelOrderAlert.toggle()
+                }
             }
             .background(Color.white)
             .cornerRadius(16)
