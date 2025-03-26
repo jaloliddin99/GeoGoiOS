@@ -21,6 +21,12 @@ func getCurrencySymbol() -> String {
     return UserDefaults.standard.string(forKey: Constants.sign)!.lowercased()
 }
 
+
+func getOrderPrice() -> Double {
+    return UserDefaults.standard.double(forKey: Constants.MIN_COST)
+}
+
+
 func formatNumberWtCurrency(_ number: Double) -> String {
     return String(Int(number))
 }
@@ -217,8 +223,6 @@ func getUserPhone() -> String {
 
 func getPaymentMethod() -> String {
     let paymentMethod:String = UserDefaults.standard.string(forKey: Constants.PAYMENT_METHOD) ?? "cash"
-    
-    print("payment method \(paymentMethod)")
     return paymentMethod;
 }
 
@@ -230,8 +234,6 @@ func makePhoneCall(_ orderInfo: OrderInfo) {
 
 
 func setPaymentMethod(method: String) {
-    print("set payment method \(method)")
-
     UserDefaults.standard.setValue(method, forKey: Constants.PAYMENT_METHOD)
 }
 

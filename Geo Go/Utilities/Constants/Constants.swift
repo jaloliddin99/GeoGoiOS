@@ -25,6 +25,7 @@ class Constants{
 
     static let TARIFF = "TARIFF_ORDER"
     static let TARIFF_ICON = "TARIFF_ICON"
+    static let MIN_COST = "MIN_COST"
     
     static let USER_NAME: String = "USER_NAME"
     

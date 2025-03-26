@@ -590,7 +590,6 @@ final class MainViewModel: ObservableObject{
                 "Date": responseDetails.data,
                 "Authentication": responseDetails.hmac,
             ],
-            isPrintable: true,
             completed: handleClientOrdersResponse as (Result<[ShortOrderInfo], APError>) -> Void)
     }
     
@@ -627,7 +626,8 @@ final class MainViewModel: ObservableObject{
                 "Hive-Profile": Constants.HIVE_PROFILE,
                 "Date": responseDetails.data,
                 "Authentication": responseDetails.hmac,
-            ]
+            ],
+            isPrintable: true
         ) { [self] (result: Result<OrderInfo, APError>) in
             DispatchQueue.main.async {
                 switch result {
@@ -658,6 +658,10 @@ final class MainViewModel: ObservableObject{
     @Published var sOrderInfo: SOrderInfo?
     @Published var sDriverRealTimeData: SDriverRealTimeData?
     @Published var sDriverLists: [SDriverData] = []
+    @Published var isLocationSharingEnabled = false
+    private var locationManager = LocationManager()
+    private var locationTimer: Timer?
+
     
     private var socketManager: SocketManager!
     var socket: SocketIOClient!
@@ -679,6 +683,41 @@ final class MainViewModel: ObservableObject{
         }
         connect()
     }
+    
+    func updateLocationSharing(_ isEnabled: Bool) {
+        isLocationSharingEnabled = isEnabled
+        if isEnabled {
+            locationManager.requestLocation()
+            startLocationTimer()
+        } else {
+            stopLocationTimer()
+        }
+    }
+    
+    private func startLocationTimer() {
+        stopLocationTimer()
+        locationTimer = Timer.scheduledTimer(withTimeInterval: 2, repeats: true) { _ in
+            self.sendLocationToSocket()
+        }
+    }
+    
+    private func stopLocationTimer() {
+        locationTimer?.invalidate()
+        locationTimer = nil
+    }
+    
+    private func sendLocationToSocket() {
+        guard isLocationSharingEnabled,
+              let coordinate = locationManager.location?.coordinate else { return }
+
+        let data: [String: Any] = [
+            "orderId": DataHolder.orderId,
+            "departureLocation": [coordinate.latitude, coordinate.longitude]
+        ]
+        socket.emit("listen-order", data)
+    }
+
+    
     
     func sendUserLocation(){
         let message = Message(

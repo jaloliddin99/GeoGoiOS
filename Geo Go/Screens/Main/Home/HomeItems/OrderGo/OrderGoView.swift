@@ -114,6 +114,7 @@ struct OrderGoView: View {
         }
         DataHolder.selectedTariff = tariff
         let name = convertTariff(lang: DataHolder.lang, data: tariff)
+        UserDefaults.standard.set(tariff.minCost, forKey: Constants.MIN_COST)
         UserDefaults.standard.set(name, forKey: Constants.TARIFF)
         UserDefaults.standard.set(tariff.icon, forKey: Constants.TARIFF_ICON)
     }

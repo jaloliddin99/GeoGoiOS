@@ -70,7 +70,8 @@ struct DriverFoundView: View {
     private func carDetailsView(regNum: String, carName: String) -> some View {
         VStack(spacing: 0) {
             HStack {
-                OrderStatusView()
+                let orderInfo = viewModel.getOrderDetail
+                OrderStatusView(status: viewModel.status, distance: orderInfo?.distance ?? 2.0)
                 Spacer()
                 Text(regNum)
                     .font(.system(size: 16, weight: .semibold))
@@ -94,31 +95,6 @@ struct DriverFoundView: View {
                     .frame(width: 40, height: 18)
             }
         }
-    }
-    
-    func OrderStatusView() -> some View {
-        let status = viewModel.status
-        var text: String = ""
-        let minutes: Int = Int((viewModel.getOrderDetail?.distance ?? 2.0) * 1000 / (12*60))
-        switch status {
-            case 3:
-                if minutes == 1 {
-                    text = String(format: NSLocalizedString("status_arrival_time", comment: ""), minutes)
-                } else {
-                    text = String(format: NSLocalizedString("status_arrival_time_plural", comment: ""), minutes)
-                }
-            case 4:
-                text = NSLocalizedString("status_driver_waiting", comment: "")
-            case 5:
-                text = NSLocalizedString("status_travel_started", comment: "")
-            default:
-                text = NSLocalizedString("status_driver_coming", comment: "")
-        }
-        
-        return Text(text.localize())
-            .font(.system(size: 18, weight: .bold))
-            .foregroundColor(.txt)
-            .padding(0)
     }
 
     

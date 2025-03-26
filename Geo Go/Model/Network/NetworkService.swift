@@ -79,10 +79,10 @@ class NetworkService{
                         let jsonObject = try JSONSerialization.jsonObject(with: data, options: [])
                         let prettyData = try JSONSerialization.data(withJSONObject: jsonObject, options: .prettyPrinted)
                         if let prettyString = String(data: prettyData, encoding: .utf8) {
-                            //print("Pretty JSON response:\n\(prettyString)")
+                            print("Pretty JSON response:\n\(prettyString)")
                         }
                     } catch {
-                        //print("Error pretty-printing JSON: \(error)")
+                        print("Error pretty-printing JSON: \(error)")
                     }
                 }
 
