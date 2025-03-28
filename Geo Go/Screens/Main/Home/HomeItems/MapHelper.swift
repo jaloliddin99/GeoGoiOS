@@ -89,10 +89,10 @@ func setCameraBounds(
         guard let camera = try? mapView.mapboxMap.camera(
             for: coor,
             camera: referenceCamera,
-            coordinatesPadding: UIEdgeInsets(top: 50, left: 50, bottom: 300, right: 50),
+            coordinatesPadding: UIEdgeInsets(top: 100, left: 50, bottom: 300, right: 50),
             maxZoom: nil,
             offset: nil) else { return }
-        mapView.camera.fly(to: camera, duration: 1.0)
+        mapView.camera.fly(to: camera, duration: 0.5)
     }
 }
 
@@ -173,7 +173,6 @@ func addCarMarkerAnnotation(mapView: MapView, point: MyPoint) {
     layer.iconSize = .constant(0.08)
     
     do {
-        print("status of dataholder \(DataHolder.status)")
         let l = DataHolder.status == 3 ? Constants.CLIENT_ICON_LAYER_ID : Constants.DEST_ICON_LAYER_ID
         try mapView.mapboxMap.addLayer(layer, layerPosition: .above(l))
     } catch {
@@ -256,8 +255,6 @@ func removeDestMarkerAnnotation(mapView: MapView) {
 
 
 func removeRoute(mapView: MapView, _ sourceId: String) {
-    print("Route removed")
-
     do {
         let layers = mapView.mapboxMap.allLayerIdentifiers
         for layer in layers {

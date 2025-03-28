@@ -51,7 +51,8 @@ struct DriverInfoView: View {
                     
                     RemoteRoundedImage(image: viewModel.image, radius: 28, imageName: "profile-image")
                         .onAppear {
-                            viewModel.loadImage(fromURLString: getImageUrl(orderDetails: orderInfo!))
+                            guard let oInfo = orderInfo else {return}
+                            viewModel.loadImage(fromURLString: getImageUrl(orderDetails: oInfo))
                         }
                 }
             }

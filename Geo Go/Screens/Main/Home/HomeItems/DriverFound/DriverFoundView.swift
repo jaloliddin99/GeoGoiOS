@@ -38,7 +38,8 @@ struct DriverFoundView: View {
     
     private var locationButton: some View {
         Button(action: {
-            viewModel.findUserRealPosition(loc: viewModel.location)
+            viewModel.FLAG_LOCATION_REQUESTED = true
+            viewModel.requestUserLocation()
         }) {
             DrawerBtn(name: "location_btn", fromAssets: true, color: .txt)
         }
@@ -111,7 +112,8 @@ struct DriverFoundView: View {
         VStack {
             RemoteRoundedImage(image: viewModel.image, radius: 28, imageName: "profile-image")
                 .onAppear {
-                    viewModel.loadImage(fromURLString: getImageUrl(orderDetails: viewModel.getOrderDetail!))
+                    guard let detail = viewModel.getOrderDetail else { return }
+                    viewModel.loadImage(fromURLString: getImageUrl(orderDetails: detail))
                 }
             
             if let name = viewModel.sOrderInfo?.driverFullName {

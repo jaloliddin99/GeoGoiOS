@@ -213,7 +213,7 @@ func convertISOToCustomFormat(isoDate: String) -> String {
 
 
 func getUserPhone() -> String {
-    let userPhone = UserDefaults.standard.string(forKey: Constants.USER_PHONE)!
+    let userPhone = UserDefaults.standard.string(forKey: Constants.USER_PHONE) ?? ""
     if ((userPhone.starts(with: "+"))) {
         return userPhone.replacing("+", with: "")
     }else{

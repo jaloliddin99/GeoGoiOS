@@ -10,13 +10,13 @@ import Foundation
 
 
 
-struct GetServerLinks: Codable{
+struct GetServerLinks: Codable, Hashable {
     let data: LinkData
     let error: Bool
     let message: String
 }
 
-struct LinkData: Codable {
+struct LinkData: Codable, Hashable {
     let chat_url: String
     let client_api_socket: String
     let client_body: String

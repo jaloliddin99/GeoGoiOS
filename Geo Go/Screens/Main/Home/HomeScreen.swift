@@ -11,7 +11,6 @@ import SwiftUI
 struct HomeScreen: View {
     
     @StateObject private var viewModel = MainViewModel()
-    @StateObject private var locationManager = LocationManager()
 
     @State private var selectedScreen: DestinationScreen? = nil
     
@@ -64,12 +63,9 @@ struct HomeScreen: View {
             .onAppear {
                 DataHolder.inHome = true
                 if viewModel.status == 0 {
-                    locationManager.requestLocation()
+                    viewModel.FLAG_LOCATION_REQUESTED = true
+                    viewModel.requestUserLocation()
                 }
-            }
-            .onReceive(locationManager.$location) { location in
-                guard let loc = location else { return }
-                viewModel.findUserRealPosition(loc: loc.coordinate)
             }
         }
     }
@@ -104,7 +100,7 @@ struct HomeScreen: View {
                              mapStyle: uri)
         .ignoresSafeArea()
         .onChange(of: viewModel.markerOffset) {
-            viewModel.reverseGeocodeIfNeeded()
+            viewModel.reverseGeocodeIfNeeded(lat: viewModel.selectedLocation.latitude, lon: viewModel.selectedLocation.longitude)
         }
     }
 
@@ -151,7 +147,7 @@ struct HomeScreen: View {
         switch destination {
             case .myTrips:
                 if viewModel.addressHistoryResponse != nil {
-                    return AnyView(MyTripsScreen())
+                    return AnyView(MyTripsScreen(viewModel: viewModel))
                 }else {
                     return AnyView(PaymentScreen(paymentMethod: $paymentMethod))
                 }
@@ -161,11 +157,11 @@ struct HomeScreen: View {
 //            case .favouriteAddresses:
 //                return AnyView(FavScreen())
             case .discount:
-                return AnyView(DiscountScreen())
+                return AnyView(DiscountScreen(vm: viewModel))
             case .profile:
-                return AnyView(ProfileScreen())
+                return AnyView(ProfileScreen(viewModel: viewModel))
             case .news:
-                return AnyView(NewsScreen())
+                return AnyView(NewsScreen(vm: viewModel))
             case .aboutApp:
                 return AnyView(AboutAppScreen())
         }

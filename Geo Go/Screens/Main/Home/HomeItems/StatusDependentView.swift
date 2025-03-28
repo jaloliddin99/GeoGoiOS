@@ -13,7 +13,6 @@ struct StatusDependentView: View {
         switch viewModel.status {
             case 0:
                 DefaultContentView(viewModel: viewModel)
-                
             case 1:
                 OrderGoView(mainViewModel: viewModel)
             case 2:

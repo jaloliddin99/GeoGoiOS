@@ -59,7 +59,7 @@ struct PaymentScreen: View {
     
     private var paymentMethodSelection: some View {
         HStack(alignment: .center, spacing: 0) {
-            Text("cash")
+            Text("cash".localize())
                 .foregroundColor(.txt)
             Spacer()
             RadioButton(isSelected: isCashSelected)
@@ -74,7 +74,7 @@ struct PaymentScreen: View {
     }
     
     private var addCardLink: some View {
-        NavigationLink(destination: AddCardScreen()) {
+        NavigationLink(destination: AddCardScreen(viewModel: viewModel)) {
             HStack(spacing: 12) {
                 Image(systemName: "plus")
                 Text("add_card".localize())
@@ -175,9 +175,15 @@ struct CardViewItem: View {
                 .font(.system(size: 16))
                 .foregroundColor(.white)
             
-            Text("expires, \(card.cardExpiry)")
-                .font(.system(size: 14))
-                .foregroundColor(.white)
+            HStack{
+                Text("expires".localize())
+                    .font(.system(size: 14))
+                    .foregroundColor(.white)
+                Text(card.cardExpiry)
+                    .font(.system(size: 14))
+                    .foregroundColor(.white)
+            }
+            
             
         }
         .padding()

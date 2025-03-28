@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ProfileScreen: View {
-    @StateObject var viewModel = MainViewModel()
+    @ObservedObject var viewModel: MainViewModel
     @StateObject var languageViewModel = LanguageViewModel()
 
     var body: some View {

@@ -28,7 +28,8 @@ struct DefaultContentView: View {
 
     var locationButton: some View {
         Button(action: {
-            viewModel.findUserRealPosition(loc: viewModel.location)
+            viewModel.FLAG_LOCATION_REQUESTED = true
+            viewModel.requestUserLocation()
         }) {
             DrawerBtn(name: "location_btn", fromAssets: true, color: .txt)
         }

@@ -11,7 +11,8 @@ import PhoneNumberKit
 
 struct EnterPhoneScreen: View {
     var username: String
-    
+    @State private var bUrl: String = (UserDefaults.standard.value(forKey: Constants.userUrl) as? String) ?? "https://geogo.uz"
+
     @StateObject var viewModel = EnterPhoneViewModel()
     
     @State private var phoneNumber: String = ""
@@ -123,24 +124,23 @@ struct EnterPhoneScreen: View {
         .padding()
     }
     
-    private func linkedText(_ key: String, url: String) ->  Text {
-        Text(LocalizedStringKey(key))
-            .underline()
-            .foregroundColor(.blue)
-        //            .onTapGesture {
-        //                openURL(URL(string: url)!)
-        //            }
-    }
-    
-    private var agreementText: some View {
-        Group {
-            Text(LocalizedStringKey("terms_prefix"))
-            + linkedText("user_agreement", url: "https://www.example.com/user-agreement")
-            + Text(LocalizedStringKey("terms_and"))
-            + linkedText("privacy_policy", url: "https://www.example.com/privacy-policy")
+    private func linkedText(_ key: String, url: String) -> some View {
+        NavigationLink(destination: TermsOfUseAndPPScreen(url: url)) {
+            Text(LocalizedStringKey(key))
+                .underline()
+                .foregroundColor(.blue)
         }
     }
     
+    private var agreementText: some View {
+        VStack(alignment: .leading,spacing: 2) {
+            Text(LocalizedStringKey("terms_prefix"))
+            linkedText("user_agreement", url: termsOfUse(lang: DataHolder.lang, url: bUrl))
+            Text(LocalizedStringKey("terms_and"))
+            linkedText("privacy_policy", url: privacyPolicyUrl(lang: DataHolder.lang, url: bUrl))
+        }
+    }
+
     private func openURL(_ url: URL) {
         UIApplication.shared.open(url, options: [:], completionHandler: nil)
     }

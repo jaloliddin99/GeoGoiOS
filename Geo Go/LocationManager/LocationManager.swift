@@ -69,12 +69,6 @@ final class LocationManager: NSObject, ObservableObject, CLLocationManagerDelega
             location = newLocation
             DataHolder.location = newLocation.coordinate
             locationManager.stopUpdatingLocation()
-            
-            
-            if MainViewModel().isLocationSharingEnabled {
-                MainViewModel().sendLocationToSocket()
-            }
-
         }
     }
     

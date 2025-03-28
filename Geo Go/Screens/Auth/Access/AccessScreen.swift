@@ -51,16 +51,10 @@ struct AccessScreen: View {
                       dismissButton: alertItem.dismissButton
                 )
             }
-            .navigationDestination(isPresented: Binding<Bool>(
-                get: { viewModel.postData != nil },
-                set: { _ in
-                    viewModel.postData = nil
-}
-            )){
-                if viewModel.postData != nil {
-                    AddNameScreen()
-                }
+            .navigationDestination(item: $viewModel.postData) { postData in
+                AddNameScreen()
             }
+
         }
         
         

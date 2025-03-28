@@ -9,6 +9,8 @@ import SwiftUI
 
 struct DialogSelectBonus: View {
     @ObservedObject var viewModel: MainViewModel
+    
+    
     @State private var inputText: String = ""
 
     var isButtonDisabled: Bool {
@@ -30,7 +32,7 @@ struct DialogSelectBonus: View {
             Text("your_bonuses".localize())
                 .font(.system(size: 20, weight: .bold))
                 .foregroundColor(.main)
-                .padding(.top, 16)
+                .padding(.top, 12)
             
             let bonus = viewModel.bonusResponse
             Text(formatNumberWithSpaces(bonus.balance))
@@ -70,7 +72,7 @@ struct DialogSelectBonus: View {
                     Text("enter_amount".localize())
                         .foregroundColor(.white)
                         .font(.system(size: 16, weight: .regular))
-                        .padding(.top, 24)
+                        .padding(.top, 12)
                     
                     Spacer()
                     
@@ -102,7 +104,6 @@ struct DialogSelectBonus: View {
             .cornerRadius(20)
             .shadow(radius: 12)
             
-            Spacer()
             
             CustomKeyboardView(inputText: $inputText)
                 .background(.blue)
@@ -117,7 +118,7 @@ struct DialogSelectBonus: View {
 
                 } label: {
                     GGButton(title: "no_bonus_order")
-                        .frame(maxWidth: .infinity)
+                        .frame(maxWidth: .infinity, minHeight: 50)
                 }
                 Button {
                     let createOrder =
@@ -126,12 +127,14 @@ struct DialogSelectBonus: View {
                         createOrderRequest: createOrder)
                 } label: {
                     GGButton(title: "order_with_bonus", isDisabled: isButtonDisabled)
-                        .frame(maxWidth: .infinity)
+                        .frame(maxWidth: .infinity, minHeight: 50)
                 }
                 .disabled(isButtonDisabled)
 
             }
             .frame(maxWidth: .infinity)
+            
+            Spacer()
             
         }
         .padding(.horizontal, 16)

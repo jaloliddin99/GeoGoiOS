@@ -16,7 +16,7 @@ struct AddCardScreen: View {
     @State private var cardNumber: String = ""
     @State private var expiryDate = ""
     @State private var otpCode: String = ""
-    @StateObject var viewModel = ViewModelAddCard()
+    @ObservedObject var viewModel: ViewModelAddCard
 
     @State private var isCardInit: Bool = true
     @Environment(\.dismiss) var dismiss

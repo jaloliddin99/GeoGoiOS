@@ -49,36 +49,102 @@ final class MainViewModel: ObservableObject{
     
     init() {
         MapboxOptions.accessToken = "pk.eyJ1IjoiZ2VvZ29hcHAiLCJhIjoiY2xnaHJleWNyMGRvczNkbGY2Ym41eHY3NyJ9.xI3D0Q4YyqNxCl8j1c7kZg"
-        initMain()
+        
         setupSocket()
+        initMain()
+        observeLocationUpdates()
+        startMainLocationTimer()
     }
     
     
     private var generateResponse: GenerateResponse?
     
     func initMain() {
-        let url = UserDefaults.standard.string(forKey: Constants.clientApi)!
+        let url = UserDefaults.standard.string(forKey: Constants.clientApi) ?? ""
         let userId = UserDefaults.standard.integer(forKey: Constants.userLoginId)
-        let userToken = UserDefaults.standard.string(forKey: Constants.userLoginKey)!
+        let userToken = UserDefaults.standard.string(forKey: Constants.userLoginKey) ?? ""
         
         generateResponse = GenerateResponse(userId: userId, userToken: userToken, mainUrl: url)
+        getClientOrders()
+        
         addressHistory()
         getBonusResponse(lat: DataHolder.location.latitude, lon: DataHolder.location.longitude)
-        getClientOrders()
-    }
-    
-    func findUserRealPosition(loc: CLLocationCoordinate2D) {
-        location = loc
-        refocusButtonListener.toggle()
-        reverseGeocodeIfNeeded()
     }
     
     
-    func reverseGeocodeIfNeeded() {
-        if (markerOffset == 0 && status == 0) || (markerOffset == 0 && status == 1) {
-            reverseLocation(lat: selectedLocation.latitude, lon: selectedLocation.longitude)
+    var FLAG_LOCATION_REQUESTED: Bool = false
+    
+
+    
+    private var cancellables = Set<AnyCancellable>()
+    
+    private func observeLocationUpdates() {
+        locationManager.$location
+            .compactMap { $0?.coordinate }
+            .sink { [weak self] coordinate in
+                guard let self = self else { return }
+                self.location = coordinate
+                
+                
+                checkAndSendLocationUpdate(coordinate)
+                
+                if FLAG_LOCATION_REQUESTED {
+                    self.selectedLocation = coordinate
+                    reverseGeocodeIfNeeded(lat: coordinate.latitude, lon: coordinate.longitude)
+                    refocusButtonListener.toggle()
+                    FLAG_LOCATION_REQUESTED = false
+                }
+            }
+            .store(in: &cancellables)
+    }
+    
+    func requestUserLocation() {
+        locationManager.requestLocation()
+    }
+
+    func reverseGeocodeIfNeeded(lat: Double, lon: Double) {
+        if status == 0 || status == 1 {
+            reverseLocation(lat: lat, lon: lon)
         }
     }
+    
+    
+    private var mainLocationTimer: Timer?
+    
+    private func startMainLocationTimer() {
+        stopMainLocationTimer()
+        mainLocationTimer = Timer.scheduledTimer(withTimeInterval: 10, repeats: true, block: { _ in
+            self.requestUserLocation()
+        })
+    }
+    
+    private func stopMainLocationTimer() {
+        mainLocationTimer?.invalidate()
+        mainLocationTimer = nil
+    }
+    
+    private var lastSentLocation: CLLocationCoordinate2D?
+    private let movementThreshold: CLLocationDistance = 50
+
+    private func checkAndSendLocationUpdate(_ newLocation: CLLocationCoordinate2D) {
+        
+        guard let lastLocation = lastSentLocation else {
+            reverseGeocodeIfNeeded(lat: newLocation.latitude, lon: newLocation.longitude)
+            lastSentLocation = newLocation
+            return
+        }
+        
+        let distance = lastLocation.distance(to: newLocation)
+        
+        if distance >= movementThreshold {
+            reverseGeocodeIfNeeded(lat: newLocation.latitude, lon: newLocation.longitude)
+            lastSentLocation = newLocation
+        } else {
+            print("User hasn't moved significantly. No request sent.")
+        }
+        
+    }
+
     
     
     @Published var currentAddress: UpdateReverseModel?
@@ -284,7 +350,6 @@ final class MainViewModel: ObservableObject{
                 "Authentication": responseDetails.hmac,
                 "X-Hive-GPS-Position": "\(location.latitude) \(location.longitude)",
             ],
-            isPrintable: true,
             completed: { [weak self] (result: Result<[NDriver], APError>) in
                 self?.handleNearDriversResponse(result, with: tariffId)
             }
@@ -560,8 +625,8 @@ final class MainViewModel: ObservableObject{
                 case .success(let response):
                     if let appetizers = response as? EmptyModel {
                         self.cancelOrder = appetizers
-                        DataHolder.status = status
-                        status = 1
+                        DataHolder.status = 0
+                        status = 0
                     }
                     
                 case .failure(let error):
@@ -590,6 +655,7 @@ final class MainViewModel: ObservableObject{
                 "Date": responseDetails.data,
                 "Authentication": responseDetails.hmac,
             ],
+            isPrintable: true,
             completed: handleClientOrdersResponse as (Result<[ShortOrderInfo], APError>) -> Void)
     }
     
@@ -600,7 +666,17 @@ final class MainViewModel: ObservableObject{
                     if let res = response as? [ShortOrderInfo] {
                         filterClientOrders(res: res)
                     }
-                case .failure(_): break
+                case .failure(let error):
+                    switch error {
+                        case .invalidURL:
+                            alertItem = AlertContext.invalidURL
+                        case .invalidResponse:
+                            alertItem = AlertContext.invalidResponse
+                        case .invalidData:
+                            alertItem = AlertContext.invalidData
+                        case .unableToComplete:
+                            alertItem = AlertContext.unableToComplete
+                    }
             }
         }
     }
@@ -626,8 +702,7 @@ final class MainViewModel: ObservableObject{
                 "Hive-Profile": Constants.HIVE_PROFILE,
                 "Date": responseDetails.data,
                 "Authentication": responseDetails.hmac,
-            ],
-            isPrintable: true
+            ]
         ) { [self] (result: Result<OrderInfo, APError>) in
             DispatchQueue.main.async {
                 switch result {
@@ -636,8 +711,7 @@ final class MainViewModel: ObservableObject{
                         
                         if !stopLoop {
                             self.handleUIByOrderStatus(res.state)
-                            self.configureSocketListeners(orderId: DataHolder.orderId)
-                            
+                            self.sendUserOrderIdAndLocs(orderId: DataHolder.orderId)
                             if let carNum = res.assignee?.car.regNum {
                                 UserDefaults.standard.setValue(carNum, forKey: Constants.DRIVER_CAR_NUM)
                             }
@@ -671,32 +745,41 @@ final class MainViewModel: ObservableObject{
             socketURL: URL(string: "http://185.224.219.1:3007")!,
             config: [
                 .log(false),
-                .compress,
-                .connectParams(["EIO": "2"]),
-                .forceWebsockets(true),
-                .reconnects(true)
+                .forceWebsockets(true)
             ]
         )
         socket = socketManager.defaultSocket
         socket.on(clientEvent: .connect) { _, _ in
+            print("socket connected")
             self.setupInitialListeners()
         }
         connect()
     }
     
+    private func setupInitialListeners() {
+        attachUser()
+        attachGetCars()
+        if getOrderDetail != nil {
+            sendUserOrderIdAndLocs(orderId: DataHolder.orderId)
+        }
+    }
+    
     func updateLocationSharing(_ isEnabled: Bool) {
         isLocationSharingEnabled = isEnabled
         if isEnabled {
-            locationManager.requestLocation()
+            requestUserLocation()
             startLocationTimer()
         } else {
             stopLocationTimer()
         }
     }
     
+    
+    private var timerIntervalSeconds: Double = 5
+    
     private func startLocationTimer() {
         stopLocationTimer()
-        locationTimer = Timer.scheduledTimer(withTimeInterval: 2, repeats: true) { _ in
+        locationTimer = Timer.scheduledTimer(withTimeInterval: timerIntervalSeconds, repeats: true) { _ in
             self.sendLocationToSocket()
         }
     }
@@ -706,34 +789,21 @@ final class MainViewModel: ObservableObject{
         locationTimer = nil
     }
     
-    private func sendLocationToSocket() {
+    
+    func sendLocationToSocket() {
         guard isLocationSharingEnabled,
               let coordinate = locationManager.location?.coordinate else { return }
-
+        
         let data: [String: Any] = [
             "orderId": DataHolder.orderId,
             "departureLocation": [coordinate.latitude, coordinate.longitude]
         ]
         socket.emit("listen-order", data)
     }
-
     
-    
-    func sendUserLocation(){
-        let message = Message(
-            lat: DataHolder.location.latitude,
-            long: DataHolder.location.longitude,
-            userId: getUserPhone(),
-            type: "all"
-        )
-        
-        if let messageData = message.toDictionary() {
-            socket.emit("user", messageData)
-        }
-    }
     
     func connect() {
-        guard socket.status != .connected else {
+        if socket.status == .connected {
             return
         }
         socket.connect()
@@ -747,6 +817,7 @@ final class MainViewModel: ObservableObject{
     
     deinit {
         disconnect()
+        stopMainLocationTimer()
     }
     
     private var statusHolder: Int = -1
@@ -755,30 +826,27 @@ final class MainViewModel: ObservableObject{
             orderId: orderId,
             departureLocation: [DataHolder.location.latitude, DataHolder.location.longitude]
         )
-        
         if let messageData = message.toDictionary() {
-            
             socket.off("listen-order")
+            socket.off("getCars")
             socket.emit("listen-order", messageData)
             
             socket.on("listen-order") { [weak self] data, ack in
                 guard let self = self else { return }
                 if let orderInfo: SOrderInfo = parseSocketData(data: data, type: SOrderInfo.self) {
-                    if statusHolder == orderInfo.orderStatus { return }
+                    print("listen-order received \(orderInfo) ")
                     
-                    statusHolder = orderInfo.orderStatus
                     if orderInfo.orderStatus == 5 {
                         getOrderDetails(orderId: orderId, true)
                     }
                     if orderInfo.orderStatus == 7 {
                         setDefaults()
                     }
-                    handleUIByOrderStatus(orderInfo.orderStatus)
-                    
                     if orderInfo.orderStatus == 2 {
-                        getOrderDetails(orderId: DataHolder.orderId)
                         listenAttachedDriverLocation()
                     }
+                    handleUIByOrderStatus(orderInfo.orderStatus)
+
                     DispatchQueue.main.async {
                         self.sOrderInfo = orderInfo
                     }
@@ -787,22 +855,16 @@ final class MainViewModel: ObservableObject{
         }
     }
     
-    private func configureSocketListeners(orderId: Int64) {
-        sendUserOrderIdAndLocs(orderId: orderId)
-        turnOffCars()
-    }
-    
-    private func turnOffCars(){
-        socket.off("getCars")
-    }
-    
-    private func setupInitialListeners() {
-        turnOffCars()
-        sendUserLocation()
-        attachGetCars()
+    func attachUser(){
+        let message = Message(
+            lat: DataHolder.location.latitude,
+            long: DataHolder.location.longitude,
+            userId: getUserPhone(),
+            type: "all"
+        )
         
-        if getOrderDetail != nil {
-            sendUserOrderIdAndLocs(orderId: DataHolder.orderId)
+        if let messageData = message.toDictionary() {
+            socket.emit("user", messageData)
         }
     }
     
@@ -810,6 +872,7 @@ final class MainViewModel: ObservableObject{
         if status != 0 {
             return
         }
+        socket.off("getCars")
         socket.on("getCars"){ data, ack in
             if let cars: [SDriverData] = parseSocketData(data: data, type: [SDriverData].self) {
                 DispatchQueue.main.async {
@@ -820,7 +883,9 @@ final class MainViewModel: ObservableObject{
     }
     
     func listenAttachedDriverLocation(){
+        socket.off("update-driver-location")
         socket.on("update-driver-location"){ data, ack in
+            print("update-driver-location received \(data)")
             if let rtd: SDriverRealTimeData = parseSocketData(data: data, type: SDriverRealTimeData.self) {
                 DispatchQueue.main.async {
                     self.sDriverRealTimeData = rtd
@@ -849,9 +914,7 @@ final class MainViewModel: ObservableObject{
                 
             case 5:
                 showRateDriver.toggle()
-                setStatus(value: 0)
-                socket.off("update-driver-location")
-                setupInitialListeners()
+                setDefaults()
                 
             case 6:
                 setDefaults()

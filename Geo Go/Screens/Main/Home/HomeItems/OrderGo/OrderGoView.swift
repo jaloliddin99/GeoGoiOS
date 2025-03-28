@@ -143,7 +143,8 @@ struct OrderGoView: View {
     
     var locationButton: some View {
         Button(action: {
-            mainViewModel.findUserRealPosition(loc: mainViewModel.location)
+            mainViewModel.FLAG_LOCATION_REQUESTED = true
+            mainViewModel.requestUserLocation()
         }) {
             DrawerBtn(name: "location_btn", fromAssets: true, color: .txt)
         }

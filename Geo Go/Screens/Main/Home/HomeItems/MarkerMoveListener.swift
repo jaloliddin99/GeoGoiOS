@@ -69,8 +69,7 @@ struct CustomMapView: UIViewRepresentable {
         func subscribeToRouteCoordinates(_ viewModel: MainViewModel, mapView: MapView) {
             viewModel.$routeCoordinates
                 .compactMap { $0 }
-                .sink { [weak self] coor in
-                    guard let self = self else { return }
+                .sink { coor in
                     let cCoor = condensedLL
                     if (viewModel.status == 1 || viewModel.status == 3 || viewModel.status == 5) && cCoor.size > 1 {
                         drawRoute(mapView, cCoor.toArray())
@@ -92,9 +91,8 @@ struct CustomMapView: UIViewRepresentable {
                 .store(in: &cancellables)
             
             viewModel.$locationHolder
-                .sink { [weak self] list in
-                    guard let self = self else { return }
-                    if viewModel.status == 1 {
+                .sink { list in
+                    if viewModel.status == 1 && list.count > 1 {
                         let loc = list.map { $0.toMyPoint() }
                         setCameraBounds(mapView, loc)
                     }
@@ -219,11 +217,19 @@ struct CustomMapView: UIViewRepresentable {
                     removeDestMarkerAnnotation(mapView: mapView)
                     removeCircleLayers(mapView: mapView)
                     removeRoute(mapView: mapView, "line-source")
-                    let loc = viewModel.locationHolder[0].addressLocation
-                    let options = CameraOptions(center: loc, zoom: 17)
-                    mapView.camera.fly(to: options, duration: 2.0) {_ in
-                        mapView.camera.fly(to: CameraOptions(center: loc, zoom: 14), duration: 5.0)
+                    
+                    if let coor = viewModel.getOrderDetail?.route.first?.point.coordinates {
+                        let locFromServer = CLLocationCoordinate2D(latitude: coor.lat, longitude: coor.lon)
+                        let loc = viewModel.locationHolder.first?.addressLocation ?? locFromServer
+                        
+                        let initialOptions = CameraOptions(center: loc, padding: .zero, zoom: 17)
+                        
+                        mapView.camera.fly(to: initialOptions, duration: 0.0) { _ in
+                            let finalOptions = CameraOptions(center: loc, zoom: 14)
+                            mapView.camera.fly(to: finalOptions, duration: 5.0)
+                        }
                     }
+
                     
                 case 3:
                     removeRoute(mapView: mapView, "line-source")

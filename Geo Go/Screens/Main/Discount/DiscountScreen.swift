@@ -9,7 +9,7 @@ import SwiftUI
 
 struct DiscountScreen: View {
     
-    
+    @ObservedObject var vm: MainViewModel
     @StateObject var viewModel = DiscountVm()
     @State private var selectedTab: PromoCodeTabTab = .promoCodes
    
@@ -22,7 +22,7 @@ struct DiscountScreen: View {
                 if selectedTab == .promoCodes {
                     PromoCodeScreen(viewModel: viewModel)
                 } else {
-                    DiscountInnerScreen(viewModel: viewModel)
+                    DiscountInnerScreen(viewModel: viewModel, vm: vm)
                 }
                 Spacer()
             }
@@ -63,6 +63,7 @@ struct DiscountScreen: View {
 
 struct DiscountInnerScreen: View {
     @ObservedObject var viewModel: DiscountVm
+    @ObservedObject var vm: MainViewModel
     var body: some View {
         VStack{
             
@@ -77,7 +78,7 @@ struct DiscountInnerScreen: View {
                 ScrollView(.vertical, showsIndicators: false) {
                     LazyVStack(spacing: 6) {
                         ForEach(list) { news in
-                            NewsItem(newsDate: news, isDiscount: true)
+                            NewsItem(newsDate: news, isDiscount: true, viewModel: vm)
                         }
                     }
                 }

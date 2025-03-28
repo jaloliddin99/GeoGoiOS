@@ -25,12 +25,19 @@ class NetworkService{
         isPrintable: Bool = false,
         completed: @escaping (Result<T, APError>) -> Void
     ) {
+        
+        if isPrintable {
+            print("inside of sendRequest function")
+        }
+        
         var urlComponents = URLComponents(string: url != nil ? url! : baseUrl)
         
         if let path = path {
             urlComponents?.path += "/" + path
         }
-        
+        if isPrintable {
+            print("inside of sendRequest function 2")
+        }
         if let params = params {
             var queryItems = [URLQueryItem]()
             for (key, value) in params {
@@ -38,11 +45,19 @@ class NetworkService{
             }
             urlComponents?.queryItems = queryItems
         }
-        
+        if isPrintable {
+            print("inside of sendRequest function 3")
+        }
+      
         guard let url = urlComponents?.url else {
             completed(.failure(.invalidURL))
             return
         }
+        
+        if isPrintable {
+            print("inside of sendRequest function 4")
+        }
+        
         
         
         var request = URLRequest(url: url)
@@ -52,6 +67,10 @@ class NetworkService{
             for (key, value) in headers {
                 request.setValue(value, forHTTPHeaderField: key)
             }
+        }
+        
+        if isPrintable {
+            print("inside of sendRequest function 5")
         }
         
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -66,30 +85,9 @@ class NetworkService{
         
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             if let er = error {
-                if isPrintable {
-                    print(er.localizedDescription)
-                }
                 completed(.failure(.unableToComplete))
                 return
             }
-            if isPrintable {
-                
-                if let data = data {
-                    do {
-                        let jsonObject = try JSONSerialization.jsonObject(with: data, options: [])
-                        let prettyData = try JSONSerialization.data(withJSONObject: jsonObject, options: .prettyPrinted)
-                        if let prettyString = String(data: prettyData, encoding: .utf8) {
-                            print("Pretty JSON response:\n\(prettyString)")
-                        }
-                    } catch {
-                        print("Error pretty-printing JSON: \(error)")
-                    }
-                }
-
-            }
-            
-            
-            
         
             guard let httpResponse = response as? HTTPURLResponse, (200..<300).contains(httpResponse.statusCode) else {
                 completed(.failure(.invalidResponse))

@@ -21,8 +21,6 @@ struct RideDetailsView: View {
             PaymentView(paymentMethod: .constant("credit_card"), viewModel: viewModel)
 
             Spacer()
-            
-            
         }
         .background(.appGray)
     }
@@ -115,6 +113,7 @@ private extension PaymentView {
                 .onChange(of: viewModel.isLocationSharingEnabled) { isEnabled in
                     viewModel.updateLocationSharing(isEnabled)
                 }
+            
         }
         .padding(.horizontal, 16)
         .frame(height: 60)

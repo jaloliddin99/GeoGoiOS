@@ -8,7 +8,9 @@
 import SwiftUI
 
 struct NewsScreen: View {
+
     @StateObject var viewModel = NewsViewModel()
+    @ObservedObject var vm: MainViewModel
     var body: some View {
        
         NavigationStack{
@@ -17,7 +19,7 @@ struct NewsScreen: View {
                     ScrollView(.vertical, showsIndicators: false) {
                         LazyVStack(spacing: 6) {
                             ForEach(viewModel.news ?? []) { news in
-                                NewsItem(newsDate: news)
+                                NewsItem(newsDate: news, viewModel: vm)
                             }
                         }
                         .padding(.horizontal, 16)
@@ -49,7 +51,7 @@ struct NewsScreen: View {
 struct NewsItem: View {
     let newsDate: NewsData
     var isDiscount: Bool = false
-    @StateObject var viewModel = MainViewModel()
+    @ObservedObject var viewModel: MainViewModel
     var body: some View {
         VStack(alignment: .leading) {
             

@@ -38,8 +38,6 @@ final class AccessViewModel: ObservableObject {
                        saveDataIntoPersistence(data: appetizers.data)
                        self.postData = appetizers
                    }
-                   
-                   
                case .failure(let error):
                    switch error {
                    case .invalidURL:
@@ -67,7 +65,7 @@ final class AccessViewModel: ObservableObject {
         UserDefaults.standard.set(data.country, forKey: Constants.residence)
         UserDefaults.standard.set(data.socket, forKey: Constants.driverSocket)
         UserDefaults.standard.set(data.client_lan, forKey: Constants.clientLan)
-        LanguageViewModel.shared.changeLanguageFromCode(to: data.client_lan)
+
         UserDefaults.standard.set(data.client_info, forKey: Constants.clientInfo)
         UserDefaults.standard.set(data.client_news, forKey: Constants.clientNews)
         UserDefaults.standard.set(data.reverse, forKey: Constants.reverse)
@@ -78,6 +76,7 @@ final class AccessViewModel: ObservableObject {
         UserDefaults.standard.set(data.driver_body, forKey: Constants.driverBody)
         UserDefaults.standard.set(data.route, forKey: Constants.route)
         UserDefaults.standard.set(data.search, forKey: Constants.search)
+        LanguageViewModel.shared.changeLanguageFromCode(to: data.client_lan)
     }
     
     

@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct MyTripsScreen: View {
-    @StateObject var viewModel = MainViewModel()
+    
+    @ObservedObject var viewModel: MainViewModel
     @State private var selectedTab: TripTab = .completed
     @State private var hasResponse: Bool = false
     
