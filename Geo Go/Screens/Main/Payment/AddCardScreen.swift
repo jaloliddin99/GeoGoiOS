@@ -31,120 +31,125 @@ struct AddCardScreen: View {
 
     var body: some View {
         ZStack{
-            VStack(alignment: .leading, spacing: 0){
-                Text("enter_card_details".localize())
-                    .font(.system(size: 18, weight: .medium))
-                    .foregroundColor(Color.txt)
-                    .padding(.top, 24)
-                
-                
-                Text("card_name".localize())
-                    .font(.system(size: 16))
-                    .fontWeight(.regular)
-                    .padding(.top, 16)
-                
-                TextField("for_example".localize(), text: $cardName)
-                    .padding()
-                    .background(Color(.secondarySystemBackground))
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 12)
-                            .stroke(Color.gray, lineWidth: 1)
-                    )
-                    .onChange(of: cardName) {
-                        if cardName.count > 30 {
-                            cardName = String(cardName.prefix(16))
-                        }
-                    }
-                    .padding(.top, 6)
-                
-                Text("card_number".localize())
-                    .font(.system(size: 16))
-                    .fontWeight(.regular)
-                    .padding(.top, 16)
-                
-                TextField("card_number_camel".localize(), text: $cardNumber)
-                    .padding()
-                    .background(Color(.secondarySystemBackground))
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 12)
-                            .stroke(Color.gray, lineWidth: 1)
-                    )
-                    .keyboardType(.numberPad)
-                    .onChange(of: cardNumber) {
-                        if cardNumber.count > 16 {
-                            cardNumber = String(cardNumber.prefix(16))
-                        }
-                    }
-                    .padding(.top, 6)
-                
-                Text("expire_date".localize())
-                    .font(.system(size: 16))
-                    .fontWeight(.regular)
+            ScrollView {
+                VStack(alignment: .leading, spacing: 0){
+                    Text("enter_card_details".localize())
+                        .font(.system(size: 18, weight: .medium))
+                        .foregroundColor(Color.txt)
+                        .padding(.top, 24)
                     
-                    .padding(.top, 16)
-                
-                
-                TextField("MMYY", text: $expiryDate)
-                    .padding()
-                    .background(Color(.secondarySystemBackground))
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 12)
-                            .stroke(Color.gray, lineWidth: 1)
-                    )
-                    .keyboardType(.numberPad)
-                    .onChange(of: expiryDate) {
-                        if expiryDate.count > 4 {
-                            expiryDate = String(expiryDate.prefix(4))
-                        }
-                    }
-                    .frame(maxWidth: 90)
-                    .padding(.top, 6)
-                
-                if !isCardInit {
-                    Text("enter_code".localize())
+                    
+                    Text("card_name".localize())
                         .font(.system(size: 16))
                         .fontWeight(.regular)
                         .padding(.top, 16)
                     
-                    OTPField($otpCode)
-                        .padding(.top, 6)
-                }
-                
-                Spacer()
-                
-                Button(action: {
-                    if isCardInit {
-                        let firstPart = expiryDate.prefix(2)
-                        let secondPart = expiryDate.suffix(2)
-                        
-                        let formattedString = secondPart + firstPart
-
-
-                        let body = ModelAddCard(
-                            card_number: cardNumber,
-                            expiry: String(formattedString),
-                            userId: getUserPhone()
+                    TextField("for_example".localize(), text: $cardName)
+                        .padding()
+                        .background(Color(.secondarySystemBackground))
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 12)
+                                .stroke(Color.gray, lineWidth: 1)
                         )
-                        viewModel.addCardRequest(body: body)
-                    }else{
-                        if let resBody = viewModel.addCardResponse {
-                            let body = ModelConfirmCard(
-                                otp: otpCode, 
-                                transaction_id: resBody.transaction_id!,
-                                userId: getUserPhone(),
-                                card_name: cardName,
-                                id: String(resBody.id!)
-                            )
-                            viewModel.confirmCardRequest(body: body)
+                        .onChange(of: cardName) {
+                            if cardName.count > 30 {
+                                cardName = String(cardName.prefix(16))
+                            }
                         }
+                        .padding(.top, 6)
+                    
+                    Text("card_number".localize())
+                        .font(.system(size: 16))
+                        .fontWeight(.regular)
+                        .padding(.top, 16)
+                    
+                    TextField("card_number_camel".localize(), text: $cardNumber)
+                        .padding()
+                        .background(Color(.secondarySystemBackground))
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 12)
+                                .stroke(Color.gray, lineWidth: 1)
+                        )
+                        .keyboardType(.numberPad)
+                        .onChange(of: cardNumber) {
+                            if cardNumber.count > 16 {
+                                cardNumber = String(cardNumber.prefix(16))
+                            }
+                        }
+                        .padding(.top, 6)
+                    
+                    Text("expire_date".localize())
+                        .font(.system(size: 16))
+                        .fontWeight(.regular)
+                    
+                        .padding(.top, 16)
+                    
+                    
+                    TextField("MMYY", text: $expiryDate)
+                        .padding()
+                        .background(Color(.secondarySystemBackground))
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 12)
+                                .stroke(Color.gray, lineWidth: 1)
+                        )
+                        .keyboardType(.numberPad)
+                        .onChange(of: expiryDate) {
+                            if expiryDate.count > 4 {
+                                expiryDate = String(expiryDate.prefix(4))
+                            }
+                        }
+                        .frame(maxWidth: 90)
+                        .padding(.top, 6)
+                    
+                    if !isCardInit {
+                        Text("enter_code".localize())
+                            .font(.system(size: 16))
+                            .fontWeight(.regular)
+                            .padding(.top, 16)
+                        
+                        OTPField($otpCode)
+                            .padding(.top, 6)
                     }
-                }) {
-                    GGButton(title: "send")
+                    
+                    Spacer()
+                    
+                    Button(action: {
+                        if isCardInit {
+                            let firstPart = expiryDate.prefix(2)
+                            let secondPart = expiryDate.suffix(2)
+                            
+                            let formattedString = secondPart + firstPart
+                            
+                            
+                            let body = ModelAddCard(
+                                card_number: cardNumber,
+                                expiry: String(formattedString),
+                                userId: getUserPhone()
+                            )
+                            viewModel.addCardRequest(body: body)
+                        }else{
+                            if let resBody = viewModel.addCardResponse {
+                                let body = ModelConfirmCard(
+                                    otp: otpCode,
+                                    transaction_id: resBody.transaction_id!,
+                                    userId: getUserPhone(),
+                                    card_name: cardName,
+                                    id: String(resBody.id!)
+                                )
+                                viewModel.confirmCardRequest(body: body)
+                            }
+                        }
+                    }) {
+                        GGButton(title: "send")
+                    }
+                    .frame(minHeight: 50)
+                    .disabled(isButtonDisabled)
+                    .opacity(isButtonDisabled ? 0.5 : 1.0)
+                    
                 }
-                .disabled(isButtonDisabled)
-                .opacity(isButtonDisabled ? 0.5 : 1.0)
-                
             }
+            .padding(.bottom, 20)
+            
             if viewModel.isLoading {
                 LoadingView()
             }

@@ -54,8 +54,8 @@ final class MainViewModel: ObservableObject{
         initMain()
         observeLocationUpdates()
         startMainLocationTimer()
+        serviceTariffRequest()
     }
-    
     
     private var generateResponse: GenerateResponse?
     
@@ -74,8 +74,6 @@ final class MainViewModel: ObservableObject{
     
     var FLAG_LOCATION_REQUESTED: Bool = false
     
-
-    
     private var cancellables = Set<AnyCancellable>()
     
     private func observeLocationUpdates() {
@@ -84,10 +82,7 @@ final class MainViewModel: ObservableObject{
             .sink { [weak self] coordinate in
                 guard let self = self else { return }
                 self.location = coordinate
-                
-                
                 checkAndSendLocationUpdate(coordinate)
-                
                 if FLAG_LOCATION_REQUESTED {
                     self.selectedLocation = coordinate
                     reverseGeocodeIfNeeded(lat: coordinate.latitude, lon: coordinate.longitude)
@@ -105,6 +100,7 @@ final class MainViewModel: ObservableObject{
     func reverseGeocodeIfNeeded(lat: Double, lon: Double) {
         if status == 0 || status == 1 {
             reverseLocation(lat: lat, lon: lon)
+            serviceTariffRequest()
         }
     }
     
@@ -139,12 +135,8 @@ final class MainViewModel: ObservableObject{
         if distance >= movementThreshold {
             reverseGeocodeIfNeeded(lat: newLocation.latitude, lon: newLocation.longitude)
             lastSentLocation = newLocation
-        } else {
-            print("User hasn't moved significantly. No request sent.")
         }
-        
     }
-
     
     
     @Published var currentAddress: UpdateReverseModel?
@@ -163,6 +155,7 @@ final class MainViewModel: ObservableObject{
                     ],
             method: "GET",
             headers: ["Accept-Language": DataHolder.lang],
+            isPrintable: true,
             completed: handleAppetizersResponse as (Result<UpdateReverseModel, APError>) -> Void)
     }
     
@@ -174,7 +167,6 @@ final class MainViewModel: ObservableObject{
                 case .success(let response):
                     if let appetizers = response as? UpdateReverseModel {
                         self.currentAddress = appetizers
-                        
                         
                         let house = appetizers.address.house_number
                         let road = appetizers.address.road
@@ -408,6 +400,7 @@ final class MainViewModel: ObservableObject{
     
     
     @Published var tariff: ServiceResponse?
+    @Published var serviceNotAvailable: Bool = false
     
     func serviceTariffRequest() {
         guard let responseDetails = generateResponse?.generateHmacData(id: "getAvailableService") else { return }
@@ -427,6 +420,7 @@ final class MainViewModel: ObservableObject{
                 "Date": responseDetails.data,
                 "Authentication": responseDetails.hmac,
             ],
+            isPrintable: true,
             completed: handleServiceTariffRequestResponse as (Result<ServiceResponse, APError>) -> Void)
     }
     
@@ -438,23 +432,28 @@ final class MainViewModel: ObservableObject{
                 case .success(let response):
                     if let response = response as? ServiceResponse {
                         self.tariff = response
+                        if let tariffs = response.tariffs, !tariffs.isEmpty {
+                            serviceNotAvailable = false
+                            self.discountModel = optionBonus(serviceResponse: tariff!, lang: DataHolder.lang)
+                            DataHolder.serviceTariffConstant = response.tariffs
+                            DataHolder.tariffId = response.tariffs![0].id
+                            DataHolder.selectedTariff = response.tariffs![0]
+                            DataHolder.listOptions.removeAll()
+                            DataHolder.listOptions.append(contentsOf: dataSelect(data: response.tariffs!))
+                            response.tariffs?.forEach({ tariff in
+                                let estimate = getEstimateRideRequest(
+                                    serviceTariff: tariff,
+                                    route: mapToRouteCoordinates(addresses: locationHolder))
+                                
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+                                    self.serviceEstimateRide(body: estimate)
+                                    self.getNearDrivers(tariffId: tariff.id)
+                                }
+                            })
+                        } else {
+                            serviceNotAvailable = true
+                        }
                         
-                        self.discountModel = optionBonus(serviceResponse: tariff!, lang: DataHolder.lang)
-                        DataHolder.serviceTariffConstant = response.tariffs
-                        DataHolder.tariffId = response.tariffs![0].id
-                        DataHolder.selectedTariff = response.tariffs![0]
-                        DataHolder.listOptions.removeAll()
-                        DataHolder.listOptions.append(contentsOf: dataSelect(data: response.tariffs!))
-                        response.tariffs?.forEach({ tariff in
-                            let estimate = getEstimateRideRequest(
-                                serviceTariff: tariff,
-                                route: mapToRouteCoordinates(addresses: locationHolder))
-                            
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
-                                self.serviceEstimateRide(body: estimate)
-                                self.getNearDrivers(tariffId: tariff.id)
-                            }
-                        })
                     }
                     
                 case .failure(let error):
@@ -655,7 +654,6 @@ final class MainViewModel: ObservableObject{
                 "Date": responseDetails.data,
                 "Authentication": responseDetails.hmac,
             ],
-            isPrintable: true,
             completed: handleClientOrdersResponse as (Result<[ShortOrderInfo], APError>) -> Void)
     }
     
@@ -680,6 +678,9 @@ final class MainViewModel: ObservableObject{
             }
         }
     }
+    
+    
+    
         
     private func filterClientOrders(res: [ShortOrderInfo]) {
         if let order = res.max(by: { $0.state < $1.state }) {
@@ -724,6 +725,43 @@ final class MainViewModel: ObservableObject{
             }
         }
     }
+    
+    
+    func deleteProfile() {
+        let url = "https://feed.geogo.io/api/v1/delete-account"
+
+        NetworkService.shared.sendRequest(
+            url: url,
+            method: "POST",
+            isPrintable: true,
+            completed: handleClientDeleteProfileResponse as (Result<DeleteProfile, APError>) -> Void
+        )
+    }
+    
+    @Published var isProfileDeleted: Bool?
+
+    private func handleClientDeleteProfileResponse<T: Decodable>( _ result: Result<T, APError>) {
+        DispatchQueue.main.async {
+            switch result {
+                case .success:
+                    UserDefaults.standard.setValue(false, forKey: Constants.isUserLoggedIn)
+                    self.isProfileDeleted = true
+                   
+                case .failure(let error):
+                    switch error {
+                        case .invalidURL:
+                            self.alertItem = AlertContext.invalidURL
+                        case .invalidResponse:
+                            self.alertItem = AlertContext.invalidResponse
+                        case .invalidData:
+                            self.alertItem = AlertContext.invalidData
+                        case .unableToComplete:
+                            self.alertItem = AlertContext.unableToComplete
+                    }
+            }
+        }
+    }
+
 
     
     

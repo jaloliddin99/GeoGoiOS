@@ -9,7 +9,7 @@ import Foundation
 
 import UIKit
 
-class NetworkService{
+class NetworkService {
     static let shared = NetworkService()
     
     private let cache = NSCache<NSString, UIImage>()
@@ -26,18 +26,12 @@ class NetworkService{
         completed: @escaping (Result<T, APError>) -> Void
     ) {
         
-        if isPrintable {
-            print("inside of sendRequest function")
-        }
-        
         var urlComponents = URLComponents(string: url != nil ? url! : baseUrl)
         
         if let path = path {
             urlComponents?.path += "/" + path
         }
-        if isPrintable {
-            print("inside of sendRequest function 2")
-        }
+       
         if let params = params {
             var queryItems = [URLQueryItem]()
             for (key, value) in params {
@@ -45,20 +39,11 @@ class NetworkService{
             }
             urlComponents?.queryItems = queryItems
         }
-        if isPrintable {
-            print("inside of sendRequest function 3")
-        }
-      
+       
         guard let url = urlComponents?.url else {
             completed(.failure(.invalidURL))
             return
         }
-        
-        if isPrintable {
-            print("inside of sendRequest function 4")
-        }
-        
-        
         
         var request = URLRequest(url: url)
         request.httpMethod = method
@@ -68,11 +53,7 @@ class NetworkService{
                 request.setValue(value, forHTTPHeaderField: key)
             }
         }
-        
-        if isPrintable {
-            print("inside of sendRequest function 5")
-        }
-        
+       
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 
         if let body = body {
@@ -84,15 +65,33 @@ class NetworkService{
         }
         
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            if let er = error {
+            
+//            if let error = error {
+//                print("❌ Error: \(error.localizedDescription)")
+//                return
+//            }
+//            
+//            if let httpResponse = response as? HTTPURLResponse {
+//                print("✅ Status Code: \(httpResponse.statusCode)")
+//                print("📦 Headers: \(httpResponse.allHeaderFields)")
+//            }
+//            
+//            if let data = data, let responseBody = String(data: data, encoding: .utf8) {
+//                print("📄 Response Body: \(responseBody)")
+//            }
+
+            
+            if error != nil {
                 completed(.failure(.unableToComplete))
                 return
             }
-        
+           
             guard let httpResponse = response as? HTTPURLResponse, (200..<300).contains(httpResponse.statusCode) else {
+                
                 completed(.failure(.invalidResponse))
                 return
             }
+            
             
             guard let data = data else {
                 completed(.failure(.invalidData))
@@ -109,7 +108,7 @@ class NetworkService{
                 let decodedResponse = try JSONDecoder().decode(T.self, from: data)
                 completed(.success(decodedResponse))
             } catch {
-                print("Error occurred: \(error)")
+               // print("Error occurred: \(error)")
                 completed(.failure(.invalidData))
             }
         }

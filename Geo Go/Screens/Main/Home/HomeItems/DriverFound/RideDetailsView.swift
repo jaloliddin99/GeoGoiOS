@@ -10,6 +10,8 @@ import SwiftUI
 struct RideDetailsView: View {
     
     @ObservedObject var viewModel: MainViewModel
+    @Binding var isOpen: Bool
+
     @State var paymentMethod: String = getPaymentMethod()
 
     var body: some View {
@@ -18,7 +20,7 @@ struct RideDetailsView: View {
             
             OrderRoute(routeItems: viewModel.getOrderDetail?.route ?? [])
             
-            PaymentView(paymentMethod: .constant("credit_card"), viewModel: viewModel)
+            PaymentView(paymentMethod: .constant("credit_card"), viewModel: viewModel, isOpen: $isOpen)
 
             Spacer()
         }
@@ -30,7 +32,8 @@ struct RideDetailsView: View {
 struct PaymentView: View {
     @Binding var paymentMethod: String
     @ObservedObject var viewModel: MainViewModel
-    
+    @Binding var isOpen: Bool
+
     var body: some View {
         VStack(spacing: 0) {
             paymentMethodSection
@@ -52,7 +55,8 @@ struct PaymentView: View {
     }
 }
 
-private extension PaymentView {
+extension PaymentView {
+
     var paymentMethodSection: some View {
         HStack {
             let isCardMethod = paymentMethod == "credit_card"
@@ -138,6 +142,7 @@ private extension PaymentView {
         .padding(.horizontal, 16)
         .frame(height: 60)
         .onTapGesture {
+            isOpen.toggle()
             viewModel.showCancelOrderAlert.toggle()
         }
     }

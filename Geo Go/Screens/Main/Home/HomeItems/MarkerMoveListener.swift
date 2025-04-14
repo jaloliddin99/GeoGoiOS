@@ -7,7 +7,7 @@
 
 import SwiftUI
 import Combine
-@_spi(Experimental) import MapboxMaps
+import MapboxMaps
 import Turf
 import CoreLocation
 
@@ -43,6 +43,18 @@ struct CustomMapView: UIViewRepresentable {
     }
     
     private func setupOrnaments(mapView: MapView) {
+        
+        
+        
+        let locale = Locale.current
+        let settingsService = SettingsServiceFactory.getInstance(storageType: .persistent)
+        switch settingsService.set(key: MapboxCommonSettings.language, value: "\(locale)") {
+            case .success:
+                print("Successfully set MapboxCommonSettings.language \(locale)")
+            case .failure(let error):
+                assertionFailure("Failed to set MapboxCommonSettings.language with error: \(error)")
+        }
+
         let ornamentOptions = OrnamentOptions(
             scaleBar: ScaleBarViewOptions(visibility: .hidden),
             compass: CompassViewOptions(visibility: .hidden),
@@ -50,10 +62,11 @@ struct CustomMapView: UIViewRepresentable {
             attributionButton: OrnamentConfigurations.hiddenAttributionButtonOptions
         )
         mapView.gestures.options.rotateEnabled = false
-        mapView.gestures.options.pitchEnabled = false
-        mapView.gestures.options.pinchEnabled = false
+//        mapView.gestures.options.pitchEnabled = false
+//        mapView.gestures.options.pinchEnabled = false
         mapView.ornaments.options = ornamentOptions
     }
+    
     class Coordinator: NSObject {
         var parent: CustomMapView
         
@@ -66,7 +79,11 @@ struct CustomMapView: UIViewRepresentable {
             self.parent = parent
         }
         
+        
         func subscribeToRouteCoordinates(_ viewModel: MainViewModel, mapView: MapView) {
+            
+        
+
             viewModel.$routeCoordinates
                 .compactMap { $0 }
                 .sink { coor in
@@ -80,7 +97,7 @@ struct CustomMapView: UIViewRepresentable {
             
             viewModel.$refocusButtonListener
                 .sink { isButtonClicked in
-                    mapView.camera.ease(to: CameraOptions(center: viewModel.location, zoom: 17), duration: 0.7)
+                    mapView.camera.ease(to: CameraOptions(center: viewModel.location, zoom: 17, pitch: 60), duration: 0.7)
                 }
                 .store(in: &cancellables)
             
@@ -178,7 +195,7 @@ struct CustomMapView: UIViewRepresentable {
                     removeCircleLayers(mapView: mapView)
                     mapView.viewAnnotations.removeAll()
                     
-                    var options = CameraOptions(center: loc, zoom: 17)
+                    var options = CameraOptions(center: loc, zoom: 17, pitch: 60)
                     
                     let edgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
                     options.padding = edgeInsets

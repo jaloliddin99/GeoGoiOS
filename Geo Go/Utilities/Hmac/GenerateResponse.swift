@@ -43,7 +43,8 @@ class GenerateResponse {
             MethodGenerate(type: "GET", url: "/api/client/mobile/2.1/bonuses", id: "bonuses"),
             MethodGenerate(type: "POST", url: "/api/client/mobile/1.0/registration/fcm", id: "firebase"),
             MethodGenerate(type: "POST", url: "/api/client/mobile/2.0/drivers", id: "drivers"),
-            MethodGenerate(type: "GET", url: "/api/client/mobile/1.0/payment-methods", id: "payment")
+            MethodGenerate(type: "GET", url: "/api/client/mobile/1.0/payment-methods", id: "payment"),
+            MethodGenerate(type: "POST", url: "https://teed.geogo.lo/apl/v1/delete-account", id: "delete")
         ]
     }
 

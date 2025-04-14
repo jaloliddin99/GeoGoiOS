@@ -171,3 +171,26 @@
 
 "payment_via_card" = "Оплата картой:";
 "payment_via_cash" = "Оплата наличными:";
+
+"door_to_door" = "От двери до двери";
+"turn_on_air_conditioner" = "Включите кондиционер";
+"smoking_lounge" = "Зона для курения";
+"battery_charging" = "Зарядка батареи";
+"gas_should_be_given" = "Необходимо заправить газ";
+"with_usb_charger" = "С USB-зарядкой";
+"car_with_luggage_needed" = "Нужна машина с багажом";
+"car_with_roof_luggage_needed" = "Нужна машина с багажником на крыше";
+"must_deliver_alcohol" = "Вы должны доставить алкоголь";
+"extra_person" = "Есть дополнительный пассажир";
+"log_out" = "Выйти";
+"delete_profile_account" = "Удалить профиль";
+
+
+"confirm_logout_title" = "Вы уверены, что хотите выйти?";
+"confirm_delete_title" = "Вы уверены, что хотите удалить профиль?";
+"confirm_button" = "Да";
+"cancel_button" = "Отмена";
+
+"service_not_supported" = "Сервис %@ не поддерживается";
+"try_different_address" = "Попробуйте изменить адрес";
+"enter_address" = "Ввести адрес";

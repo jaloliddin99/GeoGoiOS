@@ -109,9 +109,13 @@ struct ActionButtons: View {
     
     func openLink(_ urlString: String) {
         if let url = URL(string: urlString) {
+            print("Opening URL: \(url)")
             UIApplication.shared.open(url)
+        } else {
+            print("Invalid URL: \(urlString)")
         }
     }
+
 }
 
 struct ActionButton: View {

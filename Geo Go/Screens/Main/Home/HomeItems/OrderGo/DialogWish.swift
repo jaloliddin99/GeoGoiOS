@@ -23,7 +23,7 @@ struct DialogWish: View {
             
             
             Form{
-                Section(header: Text("wish")){
+                Section(header: Text("wish".localize())){
                     WishListItem(title: "comment", subTitle: comment, action: {
                         showCommentDialog.toggle()
                         DataHolder.globalComment = comment

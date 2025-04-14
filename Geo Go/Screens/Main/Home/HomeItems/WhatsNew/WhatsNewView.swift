@@ -77,12 +77,9 @@ struct BottomSheetView<Content: View>: View {
 
 struct BottomSheetContent: View{
     @ObservedObject var viewModel: MainViewModel
-    
     var body: some View {
-        
         VStack(spacing: 8) {
             SearchTextView(viewModel: viewModel)
-            
             if let list = viewModel.addressHistoryResponse {
                 ScrollView(.horizontal, showsIndicators: false) {
                     LazyHStack(spacing: 12) {
@@ -93,13 +90,10 @@ struct BottomSheetContent: View{
                 }
                 .frame(height: 60)
             }
-            
-            
             WhatsUpView()
             Spacer()
         }
         .padding(.horizontal, 16)
-
     }
 }
 

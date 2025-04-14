@@ -66,6 +66,8 @@ final class LocationManager: NSObject, ObservableObject, CLLocationManagerDelega
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let newLocation = locations.last else { return }
         if newLocation != location {
+            UserDefaults.standard.set(newLocation.coordinate.latitude, forKey: "lat")
+            UserDefaults.standard.set(newLocation.coordinate.longitude, forKey: "lon")
             location = newLocation
             DataHolder.location = newLocation.coordinate
             locationManager.stopUpdatingLocation()

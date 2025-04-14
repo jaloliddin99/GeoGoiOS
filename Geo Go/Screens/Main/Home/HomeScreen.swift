@@ -68,6 +68,7 @@ struct HomeScreen: View {
                 }
             }
         }
+        .navigationBarBackButtonHidden(true)
     }
     
     private func createAlert(alertItem: AlertItem) -> Alert {
@@ -91,7 +92,7 @@ struct HomeScreen: View {
     
     private var mapLayer: some View {
         let uri = StyleURI(rawValue: "mapbox://styles/geogoapp/clghsbol4005301r7dqsxfu1n")!
-        let cameraOptions = CameraOptions(center: viewModel.location, zoom: 17)
+        let cameraOptions = CameraOptions(center: viewModel.location, zoom: 17, pitch: 60)
         
         return CustomMapView(markerOffset: $viewModel.markerOffset,
                              currentCenterCoordinate: $viewModel.selectedLocation,
@@ -104,10 +105,11 @@ struct HomeScreen: View {
         }
     }
 
- 
     private var contentViews: some View {
         StatusDependentView(viewModel: viewModel)
     }
+
+
 
     
     private var drawerLayer: some View {
@@ -154,8 +156,6 @@ struct HomeScreen: View {
                 
             case .paymentMethod:
                 return AnyView(PaymentScreen(paymentMethod: $paymentMethod))
-//            case .favouriteAddresses:
-//                return AnyView(FavScreen())
             case .discount:
                 return AnyView(DiscountScreen(vm: viewModel))
             case .profile:

@@ -8,6 +8,7 @@
 import Foundation
 
 struct UpdateReverseModel:Codable {
+    let error: String?
     let address: Address
     let addresstype: String
     let boundingbox: [String]

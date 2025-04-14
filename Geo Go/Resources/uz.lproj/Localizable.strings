@@ -174,3 +174,27 @@
 "enter_sms_code_desc" = "%@ telefon raqamingizga yuboriladigan SMS kodini kiriting";
 
 "payment_via_card" = "Karta orqali to'lov:";
+
+
+"door_to_door" = "Eshikdan eshikkacha";
+"turn_on_air_conditioner" = "Konditsionerni yoqing";
+"smoking_lounge" = "Chekish joyi";
+"battery_charging" = "Batareya quvvatlash";
+"gas_should_be_given" = "Gaz quyilishi kerak";
+"with_usb_charger" = "USB quvvatlagich bilan";
+"car_with_luggage_needed" = "Bagajli mashina kerak";
+"car_with_roof_luggage_needed" = "Yuk tomi bilan mashina kerak";
+"must_deliver_alcohol" = "Siz alkogol yetkazib berishingiz kerak";
+"extra_person" = "Qoʻshimcha odam bor";
+"log_out" = "Chiqish";
+"delete_profile_account" = "Profil hisobini o‘chirish";
+
+
+"confirm_logout_title" = "Chiqmoqchimisiz?";
+"confirm_delete_title" = "Profilingizni o‘chirmoqchimisiz?";
+"confirm_button" = "Ha";
+"cancel_button" = "Bekor qilish";
+
+"service_not_supported" = "%@ xizmat tomonidan qo'llab-quvvatlanmaydi";
+"try_different_address" = "Manzilni almashtirirb ko'ring";
+"enter_address" = "Manzilni kiritish";

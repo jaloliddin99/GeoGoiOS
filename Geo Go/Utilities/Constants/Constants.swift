@@ -84,6 +84,7 @@ class Constants{
     static let POSITION = "position"
     static let ORDERS_GET = "ordersGet"
     static let FINISHED = "finished"
+    static let DELETE = "delete"
     static let PAYMENT = "payment"
     static let ESTIMATE = "estimate"
     static let paymentType = "cash"

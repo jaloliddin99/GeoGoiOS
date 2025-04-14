@@ -175,3 +175,28 @@
 
 "payment_via_card" = "Payment by card:";
 "payment_via_cash" = "Payment by cash:";
+
+
+"door_to_door" = "Door to Door";
+"turn_on_air_conditioner" = "Turn on the air conditioner";
+"smoking_lounge" = "Smoking lounge";
+"battery_charging" = "Battery charging";
+"gas_should_be_given" = "Gas should be given";
+"with_usb_charger" = "With USB charger";
+"car_with_luggage_needed" = "Car with luggage needed";
+"car_with_roof_luggage_needed" = "Car with roof luggage needed";
+"must_deliver_alcohol" = "You must deliver alcohol";
+"extra_person" = "There is an extra person";
+
+"log_out" = "Log out";
+"delete_profile_account" = "Delete Profile Account";
+
+
+"confirm_logout_title" = "Are you sure you want to log out?";
+"confirm_delete_title" = "Are you sure you want to delete your profile?";
+"confirm_button" = "Yes";
+"cancel_button" = "Cancel";
+
+"service_not_supported" = "%@ service is not supported";
+"try_different_address" = "Try changing the address";
+"enter_address" = "Enter address";

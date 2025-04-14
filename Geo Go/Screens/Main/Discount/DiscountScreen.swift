@@ -15,8 +15,6 @@ struct DiscountScreen: View {
    
     var body: some View {
         ZStack {
-            
-            
             VStack {
                 PromoCodeTabBar(selectedTab: $selectedTab)
                 if selectedTab == .promoCodes {
@@ -32,14 +30,9 @@ struct DiscountScreen: View {
             if viewModel.isLoading {
                 LoadingView()
             }
-                
-            
-
             if viewModel.isShowingPopup {
                 PromoCodePopup(viewModel: viewModel)
             }
-
-
         }
         .background(.white)
         .navigationTitle("drawer_item_my_trips".localize())
@@ -74,7 +67,7 @@ struct DiscountInnerScreen: View {
                 Spacer()
                 LottieEmptyStateView(fileName: "empty_list")
                     .frame(width: 120, height: 120)
-            }else{
+            } else {
                 ScrollView(.vertical, showsIndicators: false) {
                     LazyVStack(spacing: 6) {
                         ForEach(list) { news in
@@ -145,7 +138,7 @@ struct PromoCodeTabBar: View {
                 Button(action: {
                     selectedTab = tab
                 }) {
-                    Text(tab.rawValue)
+                    Text(tab.rawValue.localize())
                         .fontWeight(.semibold)
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, 10)

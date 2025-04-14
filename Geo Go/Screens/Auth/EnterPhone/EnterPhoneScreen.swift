@@ -39,10 +39,12 @@ struct EnterPhoneScreen: View {
                         .padding(.bottom, 10)
                     
                     
-                    iPhoneNumberField(text: $phoneNumber)
-                        .flagHidden(false)
-                        .flagSelectable(true)
+                    iPhoneNumberField("+998 99 999 99 99", text: $phoneNumber)
+                        .flagHidden(true)
+                        .flagSelectable(false)
                         .defaultRegion("UZ")
+                        .prefixHidden(false)
+                        
                         .font(UIFont(size: 24, weight: .bold, design: .rounded))
                         .onNumberChange(perform: { code in
                             if code != nil {
@@ -94,7 +96,6 @@ struct EnterPhoneScreen: View {
                 LoadingView()
             }
          
-
             
         }
         .navigationBarTitleDisplayMode(.inline)

@@ -15,46 +15,45 @@ struct HomeScreenDrawer: View {
     @ObservedObject var viewModel: MainViewModel
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
+        VStack(alignment: .leading, spacing: 12) {
             ProfileImageView(viewModel: viewModel)
                 .padding(.bottom, 12)
                 .padding(.top, 56)
-                .onTapGesture {
-                    navigate(to: .profile)
-                }
-            
+                
             Divider()
-            DrawerItem(title: Text("drawer_item_my_trips".localize()), action: {
+            DrawerItem(title: Text("txt_profile".localize()), systemImageName: "person.circle", action: {
+                navigate(to: .profile)
+            })
+            
+            DrawerItem(title: Text("drawer_item_my_trips".localize()), systemImageName: "car.fill", action: {
                 navigate(to: .myTrips)
             })
-            Divider()
-            DrawerItem(title: Text("drawer_item_payment_method".localize()), action: {
+            
+            DrawerItem(title: Text("drawer_item_payment_method".localize()), systemImageName: "creditcard.fill", action: {
                 navigate(to: .paymentMethod)
             })
-//            Divider()
-//            DrawerItem(title: Text("drawer_item_favourite_addresses"), action: {
-//                navigate(to: .favouriteAddresses)
-//            })
-            Divider()
-            DrawerItem(title: Text("drawer_item_discount".localize()), action: {
+            
+            DrawerItem(title: Text("drawer_item_discount".localize()), systemImageName: "tag.fill", action: {
                 navigate(to: .discount)
             })
-            Divider()
-            DrawerItem(title: Text("drawer_item_news".localize()), action: {
+            
+            DrawerItem(title: Text("drawer_item_news".localize()), systemImageName: "newspaper.fill", action: {
                 navigate(to: .news)
             })
-            Divider()
-            DrawerItem(title: Text("drawer_item_about_app".localize()), action: {
+            
+            DrawerItem(title: Text("drawer_item_about_app".localize()), systemImageName: "info.circle.fill", action: {
                 navigate(to: .aboutApp)
             })
+            
             Spacer()
+
 
         }
         .background(Color.white)
         .clipShape(RoundedCorners(topRight: 20, bottomRight: 20))
-        .offset(x: isOpen ? 0 : -UIScreen.main.bounds.size.width * 0.75)
+        .offset(x: isOpen ? 0 : -UIScreen.main.bounds.size.width * 0.85)
         .animation(.easeInOut, value: isOpen)
-        .frame(width: UIScreen.main.bounds.size.width * 0.75)
+        .frame(width: UIScreen.main.bounds.size.width * 0.85)
     }
     
     private func navigate(to destination: DestinationScreen) {
@@ -99,19 +98,30 @@ func ProfileImageView(viewModel: MainViewModel) -> some View{
 
 struct DrawerItem: View {
     var title: Text
+    var systemImageName: String
     var action: () -> Void
+    
     var body: some View {
         Button(action: action) {
-            title
-                .foregroundColor(.black)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.leading, 12)
+            HStack(spacing: 12) {
+                Image(systemName: systemImageName)
+                    .foregroundColor(.main)
+                    .frame(width: 24, height: 24)
+                title
+                    .foregroundColor(.black)
+            }
+            .foregroundColor(.blue)
+            .padding()
+            .frame(maxWidth: .infinity)
+            .background(Color(.systemGray6))
+            .cornerRadius(12)
         }
-        .frame(height: 56)
-        .contentShape(Rectangle())
-        .padding(0)
+        .padding(.horizontal, 12)
+       
+        
     }
 }
+
 
 
 enum DestinationScreen: Hashable {

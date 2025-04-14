@@ -16,7 +16,7 @@ struct SearchScreenDialog: View {
     }
     @ObservedObject var viewModel: MainViewModel
     @StateObject var eSearchViewModel = ElasticSearchViewModel()
-
+    
     
     var body: some View {
         let holder = viewModel.locationHolder
@@ -103,9 +103,11 @@ struct ElasticSearchResult: View {
                 Text(searchInfo.displayName)
                     .font(.system(size: 16))
                 
-                Text("\(String(searchInfo.distance)) \(searchInfo.unit)")
-                    .opacity(0.4)
-                    .font(.system(size: 12))
+                if let distance = searchInfo.distance {
+                    Text("\(String(distance)) \(searchInfo.unit!)")
+                        .opacity(0.4)
+                        .font(.system(size: 12))
+                }
             }
             Spacer()
         }

@@ -31,30 +31,20 @@ func dataSelect(data: [ServiceTariff]) -> [OptionsClass] {
 func returnTitle(title: String) -> String {
     guard let lastCharacter = title.last else { return "" }
     switch lastCharacter {
-    case "!":
-        return "Door to Door"
-    case "@":
-        return "Turn on the air conditioner"
-    case "#":
-        return "Smoking lounge"
-    case "$":
-        return "Battery charging"
-    case "%":
-        return "Gas should be given"
-    case "^":
-        return "With USB charger"
-    case "&":
-        return "Car with luggage needed"
-    case "*":
-        return "Car with roof luggage needed"
-    case "-":
-        return "You must deliver alcohol"
-    case "/":
-        return "There is an extra person"
-    default:
-        return ""
+        case "!": return NSLocalizedString("door_to_door", comment: "")
+        case "@": return NSLocalizedString("turn_on_air_conditioner", comment: "")
+        case "#": return NSLocalizedString("smoking_lounge", comment: "")
+        case "$": return NSLocalizedString("battery_charging", comment: "")
+        case "%": return NSLocalizedString("gas_should_be_given", comment: "")
+        case "^": return NSLocalizedString("with_usb_charger", comment: "")
+        case "&": return NSLocalizedString("car_with_luggage_needed", comment: "")
+        case "*": return NSLocalizedString("car_with_roof_luggage_needed", comment: "")
+        case "-": return NSLocalizedString("must_deliver_alcohol", comment: "")
+        case "/": return NSLocalizedString("extra_person", comment: "")
+        default: return ""
     }
 }
+
 
 func titleConvertor(stringItem: String, lang: String) -> [TariffDetails] {
     var list = [TariffDetails]()

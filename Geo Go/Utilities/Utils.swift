@@ -241,7 +241,7 @@ func privacyPolicyUrl(lang: String, url: String) -> String {
     switch lang {
         case "ru":
             return "\(url)/privacy-policy-ru/"
-        case "kl":
+        case "kaa":
             return "\(url)/jasirinliq-siyasati/"
         case "uz":
             return "\(url)/maxfiylik-siyosati/"
@@ -254,7 +254,7 @@ func termsOfUse(lang: String, url: String) -> String {
     switch lang {
         case "ru":
             return "\(url)/user-agreement-ru/"
-        case "kl":
+        case "kaa":
             return "\(url)/paydalaniwshi-kelisimi/"
         case "uz":
             return "\(url)/foydalanuvchi-kelishuvi/"

@@ -54,8 +54,8 @@ struct AccessScreen: View {
             .navigationDestination(item: $viewModel.postData) { postData in
                 AddNameScreen()
             }
-
         }
+        .navigationBarBackButtonHidden(true)
         
         
     }

@@ -14,8 +14,8 @@ struct GeocodingResponseModel: Codable {
     let lon: Double
     let displayName: String
     let address: AAddress
-    let distance: Double
-    let unit: String
+    let distance: Double?
+    let unit: String?
     
     enum CodingKeys: String, CodingKey {
         case lat, lon, address, distance, unit
@@ -24,12 +24,15 @@ struct GeocodingResponseModel: Codable {
 }
 
 struct AAddress: Codable {
-    let road: String
+    let road: String?
     let country: String
     let countryCode: String
+    let houseNumber: Double?
     
     enum CodingKeys: String, CodingKey {
         case road, country
         case countryCode = "country_code"
+        case houseNumber = "house_number"
+
     }
 }

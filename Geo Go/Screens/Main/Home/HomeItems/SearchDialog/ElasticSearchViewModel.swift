@@ -28,7 +28,8 @@ final class ElasticSearchViewModel: ObservableObject{
                      "lang": DataHolder.lang,
                      "sources": "osm"
                     ],
-            method: "GET"
+            method: "GET",
+            isPrintable: true
         ){ [weak self] (result: Result<[GeocodingResponseModel], APError>) in
             DispatchQueue.main.async { [self] in
                 switch result {

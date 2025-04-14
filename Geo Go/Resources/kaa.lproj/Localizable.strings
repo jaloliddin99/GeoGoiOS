@@ -171,3 +171,25 @@
 "payment_via_card" = "Karta orqali to'lov:";
 "payment_via_cash" = "Naqd pul to'lov:";
 
+"door_to_door" = "Esikten esikke";
+"turn_on_air_conditioner" = "Konditsionerdi qosıñ";
+"smoking_lounge" = "Temekilew jayı";
+"battery_charging" = "Batareya quwattaw";
+"gas_should_be_given" = "Gaz quyılıwı kerek";
+"with_usb_charger" = "USB quwattaw menen";
+"car_with_luggage_needed" = "Bagajlı maşına kerek";
+"car_with_roof_luggage_needed" = "Üst bagajlı maşına kerek";
+"must_deliver_alcohol" = "Siz alkogol jetkizip beriwiniz kerek";
+"extra_person" = "Qosımsha adam bar";
+"log_out" = "Shığıw";
+"delete_profile_account" = "Profil esabın óshiriw";
+
+
+"confirm_logout_title" = "Shığıwdı qalaysızba?";
+"confirm_delete_title" = "Profil esabıńızdı óshiriwdi qalaysızba?";
+"confirm_button" = "Iya";
+"cancel_button" = "Bekar qılıw";
+
+"service_not_supported" = "%@ xızmet tárepinen qollap-quwatlanbaydı";
+"try_different_address" = "Mánzildi ózgertip kóriń";
+"enter_address" = "Mánzildi kiriting";

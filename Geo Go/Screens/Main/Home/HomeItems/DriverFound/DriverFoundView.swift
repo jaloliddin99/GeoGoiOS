@@ -170,7 +170,7 @@ struct DriverFoundView: View {
         BottomSheetView(isOpen: $isRideDetailsPresented,
                         minHeight: 0,
                         maxHeight: UIScreen.main.bounds.height) {
-            RideDetailsView(viewModel: viewModel)
+            RideDetailsView(viewModel: viewModel, isOpen: $isRideDetailsPresented)
         }
                         .edgesIgnoringSafeArea(.bottom)
     }
