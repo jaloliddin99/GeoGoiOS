@@ -198,3 +198,14 @@
 "service_not_supported" = "%@ xizmat tomonidan qo'llab-quvvatlanmaydi";
 "try_different_address" = "Manzilni almashtirirb ko'ring";
 "enter_address" = "Manzilni kiritish";
+
+"driver_assigned_title" = "Haydovchi tayinlandi";
+"driver_assigned_body" = "Sizning haydovchingiz %@ tayinlandi. U taxminan %d daqiqada yetib keladi.";
+"driver_arrived_title" = "Haydovchi yetib keldi";
+"driver_arrived_body" = "%@ olib ketish joyingizga yetib keldi.";
+"ride_started_title" = "Sayohat boshlandi";
+"ride_started_body" = "%@ bilan sayohatingiz boshlandi. Yoqimli sayohat!";
+"ride_completed_title" = "Sayohat yakunlandi";
+"ride_completed_body" = "%@ bilan sayohat qilganingiz uchun rahmat. Yoqimli sayohat bo'ldi degan umiddamiz!";
+
+"arrive_in" = "Yetib kelish";

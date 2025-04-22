@@ -26,6 +26,7 @@ struct SDriverData: Codable {
     let driverId: String
     let lat: Double
     let long: Double
+    let bearing: Double
     let type: String
 }
 

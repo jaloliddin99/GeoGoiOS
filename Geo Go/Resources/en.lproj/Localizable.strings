@@ -200,3 +200,14 @@
 "service_not_supported" = "%@ service is not supported";
 "try_different_address" = "Try changing the address";
 "enter_address" = "Enter address";
+
+"driver_assigned_title" = "Driver Assigned";
+"driver_assigned_body" = "Your driver %@ has been assigned. They'll arrive in about %d minutes.";
+"driver_arrived_title" = "Driver Arrived";
+"driver_arrived_body" = "%@ has arrived at your pickup location.";
+"ride_started_title" = "Ride Started";
+"ride_started_body" = "Your journey with %@ has begun. Enjoy your ride!";
+"ride_completed_title" = "Ride Completed";
+"ride_completed_body" = "Thanks for riding with %@. We hope you had a pleasant journey!";
+
+"arrive_in" = "Arriving in";

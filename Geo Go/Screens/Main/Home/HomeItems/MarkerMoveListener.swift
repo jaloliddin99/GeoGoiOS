@@ -62,8 +62,7 @@ struct CustomMapView: UIViewRepresentable {
             attributionButton: OrnamentConfigurations.hiddenAttributionButtonOptions
         )
         mapView.gestures.options.rotateEnabled = false
-//        mapView.gestures.options.pitchEnabled = false
-//        mapView.gestures.options.pinchEnabled = false
+        mapView.gestures.options.pitchEnabled = false
         mapView.ornaments.options = ornamentOptions
     }
     
@@ -79,9 +78,16 @@ struct CustomMapView: UIViewRepresentable {
             self.parent = parent
         }
         
-        
         func subscribeToRouteCoordinates(_ viewModel: MainViewModel, mapView: MapView) {
-            
+            viewModel.$sDriverLists
+                .sink { driverLists in
+                    if !driverLists.isEmpty {
+                        updateCarMarkers(mapView: mapView, driverList: driverLists)
+                    } else {
+                        removeCarMarkers(mapView: mapView)
+                    }
+                }
+                .store(in: &cancellables)
         
 
             viewModel.$routeCoordinates
@@ -97,7 +103,13 @@ struct CustomMapView: UIViewRepresentable {
             
             viewModel.$refocusButtonListener
                 .sink { isButtonClicked in
-                    mapView.camera.ease(to: CameraOptions(center: viewModel.location, zoom: 17, pitch: 60), duration: 0.7)
+                    if viewModel.status != 2 && viewModel.status != 3 {
+                        mapView.camera.ease(to: CameraOptions(center: viewModel.location, zoom: 17, pitch: 0), duration: 0.7)
+                    } else {
+                        if let details = viewModel.getOrderDetail {
+                            mapView.camera.ease(to: CameraOptions(center: details.route[0].toMyPoint().toCLL(), zoom: 17, pitch: 0), duration: 0.7)
+                        }
+                    }
                 }
                 .store(in: &cancellables)
             
@@ -128,7 +140,7 @@ struct CustomMapView: UIViewRepresentable {
                 }
             }
             
-            // Mapbox observer for map idle
+           
             cameraIdleObserver = mapView.mapboxMap.onMapIdle.observe { [weak self] _ in
                 DispatchQueue.main.async {
                     guard let self = self else { return }
@@ -176,7 +188,7 @@ struct CustomMapView: UIViewRepresentable {
                 }
             }
             if DataHolder.inHome {
-                updateCarMarkerLocation(mapView, myPoint, rtd.bearing)
+                updateCarMarkerLocation(mapView, point: myPoint, bearing: rtd.bearing)
             }
         }
         
@@ -195,7 +207,7 @@ struct CustomMapView: UIViewRepresentable {
                     removeCircleLayers(mapView: mapView)
                     mapView.viewAnnotations.removeAll()
                     
-                    var options = CameraOptions(center: loc, zoom: 17, pitch: 60)
+                    var options = CameraOptions(center: loc, zoom: 17, pitch: 0)
                     
                     let edgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
                     options.padding = edgeInsets
@@ -255,10 +267,6 @@ struct CustomMapView: UIViewRepresentable {
                     let p = or.route[0].toPoint()
                     addClientMarkerAnnotation(mapView, p)
                     
-                    guard let loc = or.assignee?.location else { return }
-                    let point = MyPoint(latitude: loc.lat, longitude: loc.lon)
-                    addCarMarkerAnnotation(mapView: mapView, point: point)
-                    
                 case 4:
                     removeRoute(mapView: mapView, "line-source")
                     let or = viewModel.getOrderDetail
@@ -274,9 +282,6 @@ struct CustomMapView: UIViewRepresentable {
                         let p = route.last!.toPoint()
                         addDestMarkerAnnotation(mapView: mapView, destination: p)
                     }
-                    guard let loc = viewModel.getOrderDetail?.assignee?.location else { return }
-                    let point = MyPoint(latitude: loc.lat, longitude: loc.lon)
-                    addCarMarkerAnnotation(mapView: mapView, point: point)
                 default:
                     print("Hello World")
             }

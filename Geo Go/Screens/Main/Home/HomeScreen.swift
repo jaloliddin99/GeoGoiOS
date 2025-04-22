@@ -10,7 +10,7 @@ import SwiftUI
 
 struct HomeScreen: View {
     
-    @StateObject private var viewModel = MainViewModel()
+    @ObservedObject private var viewModel = MainViewModel.shared
 
     @State private var selectedScreen: DestinationScreen? = nil
     
@@ -108,9 +108,7 @@ struct HomeScreen: View {
     private var contentViews: some View {
         StatusDependentView(viewModel: viewModel)
     }
-
-
-
+    
     
     private var drawerLayer: some View {
         ZStack {

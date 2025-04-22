@@ -11,6 +11,8 @@ import SwiftUI
 @_spi(Experimental) import MapboxMaps
 import SocketIO
 
+import RideTrackingShared
+
 final class MainViewModel: ObservableObject{
     @Published var isDrawerOpen = false
 
@@ -51,6 +53,7 @@ final class MainViewModel: ObservableObject{
         MapboxOptions.accessToken = "pk.eyJ1IjoiZ2VvZ29hcHAiLCJhIjoiY2xnaHJleWNyMGRvczNkbGY2Ym41eHY3NyJ9.xI3D0Q4YyqNxCl8j1c7kZg"
         
         setupSocket()
+        registerForNotifications()
         initMain()
         observeLocationUpdates()
         startMainLocationTimer()
@@ -420,7 +423,6 @@ final class MainViewModel: ObservableObject{
                 "Date": responseDetails.data,
                 "Authentication": responseDetails.hmac,
             ],
-            isPrintable: true,
             completed: handleServiceTariffRequestResponse as (Result<ServiceResponse, APError>) -> Void)
     }
     
@@ -544,11 +546,7 @@ final class MainViewModel: ObservableObject{
         }
     }
     
-    
-    
-    
     @Published var createOrder: CreateOrderResponse?
-    
     
     func createOrder(lat: Double, lon: Double, createOrderRequest: CreateOrderRequest) {
         guard let responseDetails = generateResponse?.generateHmacData(id: "orders") else { return }
@@ -559,9 +557,8 @@ final class MainViewModel: ObservableObject{
         if let jsonString = String(data: requestBodyData, encoding: .utf8) {
             print("Create body: \(jsonString)")
         }
-        
         self.isLoading = true
-        isShowBonusDialog.toggle()
+        isShowBonusDialog = false
         NetworkService.shared.sendRequest(
             url: responseDetails.url,
             body: requestBodyData,
@@ -588,6 +585,8 @@ final class MainViewModel: ObservableObject{
                         self.createOrder = appetizers
                         DataHolder.orderId = appetizers.id
                         getOrderDetails(orderId: appetizers.id)
+                        
+                        
                     }
                 case .failure(_): break
             }
@@ -709,7 +708,6 @@ final class MainViewModel: ObservableObject{
                 switch result {
                     case .success(let res):
                         self.getOrderDetail = res
-                        
                         if !stopLoop {
                             self.handleUIByOrderStatus(res.state)
                             self.sendUserOrderIdAndLocs(orderId: DataHolder.orderId)
@@ -733,7 +731,6 @@ final class MainViewModel: ObservableObject{
         NetworkService.shared.sendRequest(
             url: url,
             method: "POST",
-            isPrintable: true,
             completed: handleClientDeleteProfileResponse as (Result<DeleteProfile, APError>) -> Void
         )
     }
@@ -766,37 +763,61 @@ final class MainViewModel: ObservableObject{
     
     
     //socket
-    
     @Published var sOrderInfo: SOrderInfo?
-    @Published var sDriverRealTimeData: SDriverRealTimeData?
+    @Published var sDriverRealTimeData: SDriverRealTimeData? {
+        didSet {
+            didUpdateDriverLocation()
+        }
+    }
+    
+
     @Published var sDriverLists: [SDriverData] = []
     @Published var isLocationSharingEnabled = false
     private var locationManager = LocationManager()
     private var locationTimer: Timer?
+    private var timerIntervalSeconds: Double = 5
+    
+     var currentCar: CarModel?
+     var initialDriverLocation: CLLocationCoordinate2D?
+     var clientLocation: CLLocationCoordinate2D?
+
 
     
     private var socketManager: SocketManager!
     var socket: SocketIOClient!
     
+    static let shared = MainViewModel()
+    private var backgroundTask: UIBackgroundTaskIdentifier = .invalid
+
     private func setupSocket() {
         socketManager = SocketManager(
             socketURL: URL(string: "http://185.224.219.1:3007")!,
             config: [
                 .log(false),
-                .forceWebsockets(true)
+                .forceWebsockets(true),
+                .reconnectAttempts(-1),
+                .reconnectWait(10),
+                .version(SocketIOVersion(rawValue: 2)!)
             ]
         )
         socket = socketManager.defaultSocket
         socket.on(clientEvent: .connect) { _, _ in
-            print("socket connected")
             self.setupInitialListeners()
         }
         connect()
     }
     
     private func setupInitialListeners() {
+        
+        socket.off("user")
+        socket.off("getCars")
+        socket.off("listen-order")
+        socket.off("update-driver-location")
+
+        
         attachUser()
         attachGetCars()
+
         if getOrderDetail != nil {
             sendUserOrderIdAndLocs(orderId: DataHolder.orderId)
         }
@@ -812,9 +833,6 @@ final class MainViewModel: ObservableObject{
         }
     }
     
-    
-    private var timerIntervalSeconds: Double = 5
-    
     private func startLocationTimer() {
         stopLocationTimer()
         locationTimer = Timer.scheduledTimer(withTimeInterval: timerIntervalSeconds, repeats: true) { _ in
@@ -827,7 +845,6 @@ final class MainViewModel: ObservableObject{
         locationTimer = nil
     }
     
-    
     func sendLocationToSocket() {
         guard isLocationSharingEnabled,
               let coordinate = locationManager.location?.coordinate else { return }
@@ -839,23 +856,19 @@ final class MainViewModel: ObservableObject{
         socket.emit("listen-order", data)
     }
     
-    
     func connect() {
-        if socket.status == .connected {
-            return
-        }
         socket.connect()
     }
     
     func disconnect() {
-        guard socket.status != .disconnected else { return }
         socket.disconnect()
         socket.removeAllHandlers()
     }
     
     deinit {
         disconnect()
-        stopMainLocationTimer()
+        stopLocationTimer()
+        NotificationCenter.default.removeObserver(self)
     }
     
     private var statusHolder: Int = -1
@@ -871,25 +884,107 @@ final class MainViewModel: ObservableObject{
             
             socket.on("listen-order") { [weak self] data, ack in
                 guard let self = self else { return }
+                
                 if let orderInfo: SOrderInfo = parseSocketData(data: data, type: SOrderInfo.self) {
-                    print("listen-order received \(orderInfo) ")
+                    print("listen-order received \(orderInfo)")
+                    switch orderInfo.orderStatus {
+                        case 2:
+                            sendRideStatusNotification(status: .assigned, driverName: orderInfo.driverFullName, estimatedTime: 2)
+                            getOrderDetails(orderId: orderId, true)
+                            listenAttachedDriverLocation()
+                            
+                        case 3:
+                            sendRideStatusNotification(status: .arrived, driverName: orderInfo.driverFullName)
+                            
+                        case 4:
+                            sendRideStatusNotification(status: .started, driverName: orderInfo.driverFullName)
+                            
+                        case 5:
+                            sendRideStatusNotification(status: .completed, driverName: orderInfo.driverFullName)
+                            getOrderDetails(orderId: orderId, true)
+                            
+                        case 7:
+                            setDefaults()
+                            
+                        default:
+                            break
+                    }
                     
-                    if orderInfo.orderStatus == 5 {
-                        getOrderDetails(orderId: orderId, true)
-                    }
-                    if orderInfo.orderStatus == 7 {
-                        setDefaults()
-                    }
-                    if orderInfo.orderStatus == 2 {
-                        listenAttachedDriverLocation()
-                    }
                     handleUIByOrderStatus(orderInfo.orderStatus)
-
-                    DispatchQueue.main.async {
-                        self.sOrderInfo = orderInfo
-                    }
+                    self.sOrderInfo = orderInfo
+                    
                 }
             }
+        }
+    }
+    
+    func sendRideStatusNotification(status: TaxiRideStatus, driverName: String, estimatedTime: Int? = nil) {
+        let content = UNMutableNotificationContent()
+        switch status {
+            case .assigned:
+                content.title = NSLocalizedString("driver_assigned_title", comment: "")
+                content.body = String(format: NSLocalizedString("driver_assigned_body", comment: ""),
+                                      driverName, estimatedTime ?? 0)
+                
+            case .arrived:
+                content.title = NSLocalizedString("driver_arrived_title", comment: "")
+                content.body = String(format: NSLocalizedString("driver_arrived_body", comment: ""),
+                                      driverName)
+                
+            case .started:
+                content.title = NSLocalizedString("ride_started_title", comment: "")
+                content.body = String(format: NSLocalizedString("ride_started_body", comment: ""),
+                                      driverName)
+                
+            case .completed:
+                content.title = NSLocalizedString("ride_completed_title", comment: "")
+                content.body = String(format: NSLocalizedString("ride_completed_body", comment: ""),
+                                      driverName)
+        }
+        
+        content.sound = UNNotificationSound.default
+        
+        let requestIdentifier = "\(status)-\(UUID().uuidString)"
+        let request = UNNotificationRequest(identifier: requestIdentifier, content: content, trigger: nil)
+        
+        UNUserNotificationCenter.current().add(request) { error in
+            if let error = error {
+                print("Error sending notification: \(error)")
+            }
+        }
+    }
+    
+    private func registerForNotifications() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(appDidEnterBackground),
+                                               name: UIApplication.didEnterBackgroundNotification,
+                                               object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(appWillEnterForeground),
+                                               name: UIApplication.willEnterForegroundNotification,
+                                               object: nil)
+    }
+    
+    @objc private func appDidEnterBackground() {
+        beginBackgroundTask()
+    }
+    
+    @objc private func appWillEnterForeground() {
+        endBackgroundTask()
+    }
+    
+    private func beginBackgroundTask() {
+        endBackgroundTask()
+        backgroundTask = UIApplication.shared.beginBackgroundTask { [weak self] in
+            self?.endBackgroundTask()
+        }
+    }
+    
+    private func endBackgroundTask() {
+        if backgroundTask != .invalid {
+            UIApplication.shared.endBackgroundTask(backgroundTask)
+            backgroundTask = .invalid
         }
     }
     
@@ -907,9 +1002,6 @@ final class MainViewModel: ObservableObject{
     }
     
     private func attachGetCars(){
-        if status != 0 {
-            return
-        }
         socket.off("getCars")
         socket.on("getCars"){ data, ack in
             if let cars: [SDriverData] = parseSocketData(data: data, type: [SDriverData].self) {
@@ -923,10 +1015,23 @@ final class MainViewModel: ObservableObject{
     func listenAttachedDriverLocation(){
         socket.off("update-driver-location")
         socket.on("update-driver-location"){ data, ack in
-            print("update-driver-location received \(data)")
             if let rtd: SDriverRealTimeData = parseSocketData(data: data, type: SDriverRealTimeData.self) {
                 DispatchQueue.main.async {
                     self.sDriverRealTimeData = rtd
+                    
+                    guard let car = self.getOrderDetail?.assignee?.car else { return }
+                    let sharedCar = CarModel(regNum: car.regNum, brand: car.brand, model: car.model, color: car.color)
+                    
+                    let initialLocation = CLLocationCoordinate2D(latitude: rtd.lat, longitude: rtd.lon)
+                    
+//                    let clientLoc = CLLocationCoordinate2D(latitude: clientLocation.latitude, longitude: clientLocation.longitude)
+                    
+                    self.startRideTracking(
+                        car: sharedCar,
+                        initialLocation: initialLocation,
+                        clientLocation: initialLocation
+                    )
+
                 }
             }
         }
@@ -949,9 +1054,8 @@ final class MainViewModel: ObservableObject{
                 
             case 4:
                 setStatus(value: 5)
-                
             case 5:
-                showRateDriver.toggle()
+                showRateDriver = true
                 setDefaults()
                 
             case 6:
@@ -964,8 +1068,8 @@ final class MainViewModel: ObservableObject{
     
     func setDefaults(){
         setStatus(value: 0)
+        getOrderDetail = nil
         socket.off("update-driver-location")
-        setupInitialListeners()
     }
 
     
@@ -1003,4 +1107,7 @@ final class MainViewModel: ObservableObject{
             locationHolder.removeSubrange(1..<locationHolder.count)
         }
     }
+    
+
+
 }

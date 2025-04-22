@@ -193,3 +193,13 @@
 "service_not_supported" = "%@ xızmet tárepinen qollap-quwatlanbaydı";
 "try_different_address" = "Mánzildi ózgertip kóriń";
 "enter_address" = "Mánzildi kiriting";
+
+"driver_assigned_title" = "Ayдaўшы тайынланды";
+"driver_assigned_body" = "Сизиң aйдaўшыңыз %@ тайынланды. Oл шама менен %d минутта жетип келеди.";
+"driver_arrived_title" = "Aйдaўшы жетип келди";
+"driver_arrived_body" = "%@ минип алыў орныңызға жетип келди.";
+"ride_started_title" = "Саяхат басланды";
+"ride_started_body" = "%@ менен саяxатыңыз басланды. Жақсы жол!";
+"ride_completed_title" = "Саяхат аяқланды";
+"ride_completed_body" = "%@ менен саяхатлағаныңыз ушын рахмет. Жақсы саяхат болды деген үмиттемиз!";
+"arrive_in" = "Yetib kelish";

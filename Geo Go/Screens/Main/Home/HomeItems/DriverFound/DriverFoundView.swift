@@ -19,6 +19,7 @@ struct DriverFoundView: View {
             }
             bottomSheet
         }
+        .ignoresSafeArea()
     }
     
     private var topBar: some View {
@@ -47,26 +48,23 @@ struct DriverFoundView: View {
     
     private var rideInformation: some View {
         VStack(spacing: 16) {
-            orderDetails
+            if let orderInfo = viewModel.getOrderDetail, let car = orderInfo.assignee?.car {
+                let carName = "\(car.color) \(car.brand) \(car.model)"
+                carDetailsView(regNum: car.regNum, carName: carName)
+            }
+            
             Divider()
             driverInteractionButtons
         }
         .padding(16)
+        .padding(.bottom, 20)
         .background(Color.white)
-        .cornerRadius(24)
+        .cornerRadius(24, corners: [.topLeft, .topRight])
         .shadow(color: .black.opacity(0.1), radius: 24)
-        .padding(.horizontal, 12)
         .padding(.top, 12)
-        .edgesIgnoringSafeArea(.bottom)
     }
     
-    @ViewBuilder
-    private var orderDetails: some View {
-        if let orderInfo = viewModel.getOrderDetail, let car = orderInfo.assignee?.car {
-            let carName = "\(car.color) \(car.brand) \(car.model)"
-            carDetailsView(regNum: car.regNum, carName: carName)
-        }
-    }
+    
     
     private func carDetailsView(regNum: String, carName: String) -> some View {
         VStack(spacing: 0) {
@@ -153,7 +151,7 @@ struct DriverFoundView: View {
             Image(iconName)
                 .resizable()
                 .scaledToFit()
-                .padding(12)
+                .padding(16)
                 .frame(width: 56, height: 56)
                 .background(.appGray)
                 .clipShape(Circle())
@@ -172,7 +170,6 @@ struct DriverFoundView: View {
                         maxHeight: UIScreen.main.bounds.height) {
             RideDetailsView(viewModel: viewModel, isOpen: $isRideDetailsPresented)
         }
-                        .edgesIgnoringSafeArea(.bottom)
     }
     
     

@@ -94,6 +94,7 @@
 		25A51DE42C6CE62600C2FBB0 /* AboutAppScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A51DE32C6CE62600C2FBB0 /* AboutAppScreen.swift */; };
 		25A51DE62C6E2CC100C2FBB0 /* DateOrderHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A51DE52C6E2CC100C2FBB0 /* DateOrderHistory.swift */; };
 		25AF57E82DAD0C180025E9E4 /* AppNotWorkScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25AF57E72DAD0C030025E9E4 /* AppNotWorkScreen.swift */; };
+		25AF58CF2DB3CCB30025E9E4 /* TaxiRideStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25AF58CE2DB3CCB10025E9E4 /* TaxiRideStatus.swift */; };
 		25B20C1D2C5F67A100F50017 /* DialogBottomCancelOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B20C1C2C5F67A100F50017 /* DialogBottomCancelOrder.swift */; };
 		25B20C1F2C5F6AC900F50017 /* CancelOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B20C1E2C5F6AC900F50017 /* CancelOrder.swift */; };
 		25B20C212C5F6B3600F50017 /* FeedbackViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B20C202C5F6B3600F50017 /* FeedbackViewModel.swift */; };
@@ -130,6 +131,12 @@
 		25BFDB832C35E62500D73993 /* ServiceTariffs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25BFDB822C35E62500D73993 /* ServiceTariffs.swift */; };
 		25BFDB872C36BFF900D73993 /* DataHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25BFDB862C36BFF900D73993 /* DataHolder.swift */; };
 		25DA46862C649A7400C2A1AB /* TariffDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25DA46852C649A7400C2A1AB /* TariffDetailsView.swift */; };
+		25EAD5D62DB6E16800CE91F2 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25EAD5D52DB6E16800CE91F2 /* UserNotifications.framework */; };
+		25EAD5D82DB6E16800CE91F2 /* UserNotificationsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25EAD5D72DB6E16800CE91F2 /* UserNotificationsUI.framework */; };
+		25EAD5E22DB6E16800CE91F2 /* RideTrackingNotificationExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 25EAD5D42DB6E16800CE91F2 /* RideTrackingNotificationExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		25EAD5F42DB8023000CE91F2 /* RideTrackingShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25EAD5EC2DB8023000CE91F2 /* RideTrackingShared.framework */; };
+		25EAD5F52DB8023000CE91F2 /* RideTrackingShared.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 25EAD5EC2DB8023000CE91F2 /* RideTrackingShared.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		25EAD60D2DB8142500CE91F2 /* ViewModelExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EAD60C2DB8141F00CE91F2 /* ViewModelExtension.swift */; };
 		25F91C762C7CCDAD001CAAB7 /* BonusHomeItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F91C752C7CCDAD001CAAB7 /* BonusHomeItem.swift */; };
 		25F91C792C7CD5FC001CAAB7 /* DialogBonus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F91C782C7CD5FC001CAAB7 /* DialogBonus.swift */; };
 		25F91C7B2C7CDB55001CAAB7 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F91C7A2C7CDB55001CAAB7 /* Extensions.swift */; };
@@ -139,6 +146,48 @@
 		25F9E97A2CFAAC0A00475A57 /* SocketIO in Frameworks */ = {isa = PBXBuildFile; productRef = 25F9E9792CFAAC0A00475A57 /* SocketIO */; };
 		25F9E97F2CFAAEBA00475A57 /* SocketViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F9E97E2CFAAEB600475A57 /* SocketViewModel.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		25EAD5E02DB6E16800CE91F2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 256877662C258B190041E16A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 25EAD5D32DB6E16800CE91F2;
+			remoteInfo = RideTrackingNotificationExtension;
+		};
+		25EAD5F22DB8023000CE91F2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 256877662C258B190041E16A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 25EAD5EB2DB8023000CE91F2;
+			remoteInfo = RideTrackingShared;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		25AF58302DAE6BD30025E9E4 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				25EAD5E22DB6E16800CE91F2 /* RideTrackingNotificationExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		25EAD5FA2DB8023100CE91F2 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				25EAD5F52DB8023000CE91F2 /* RideTrackingShared.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		2508EAC92C73DEB3008CCC12 /* CheckBoxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckBoxView.swift; sourceTree = "<group>"; };
@@ -227,6 +276,9 @@
 		25A51DE32C6CE62600C2FBB0 /* AboutAppScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutAppScreen.swift; sourceTree = "<group>"; };
 		25A51DE52C6E2CC100C2FBB0 /* DateOrderHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateOrderHistory.swift; sourceTree = "<group>"; };
 		25AF57E72DAD0C030025E9E4 /* AppNotWorkScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppNotWorkScreen.swift; sourceTree = "<group>"; };
+		25AF58012DAE62FF0025E9E4 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		25AF58032DAE62FF0025E9E4 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		25AF58CE2DB3CCB10025E9E4 /* TaxiRideStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaxiRideStatus.swift; sourceTree = "<group>"; };
 		25B20C1C2C5F67A100F50017 /* DialogBottomCancelOrder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogBottomCancelOrder.swift; sourceTree = "<group>"; };
 		25B20C1E2C5F6AC900F50017 /* CancelOrder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancelOrder.swift; sourceTree = "<group>"; };
 		25B20C202C5F6B3600F50017 /* FeedbackViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackViewModel.swift; sourceTree = "<group>"; };
@@ -263,6 +315,11 @@
 		25BFDB822C35E62500D73993 /* ServiceTariffs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceTariffs.swift; sourceTree = "<group>"; };
 		25BFDB862C36BFF900D73993 /* DataHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataHolder.swift; sourceTree = "<group>"; };
 		25DA46852C649A7400C2A1AB /* TariffDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TariffDetailsView.swift; sourceTree = "<group>"; };
+		25EAD5D42DB6E16800CE91F2 /* RideTrackingNotificationExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = RideTrackingNotificationExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		25EAD5D52DB6E16800CE91F2 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
+		25EAD5D72DB6E16800CE91F2 /* UserNotificationsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotificationsUI.framework; path = System/Library/Frameworks/UserNotificationsUI.framework; sourceTree = SDKROOT; };
+		25EAD5EC2DB8023000CE91F2 /* RideTrackingShared.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RideTrackingShared.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		25EAD60C2DB8141F00CE91F2 /* ViewModelExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelExtension.swift; sourceTree = "<group>"; };
 		25F91C752C7CCDAD001CAAB7 /* BonusHomeItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BonusHomeItem.swift; sourceTree = "<group>"; };
 		25F91C782C7CD5FC001CAAB7 /* DialogBonus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogBonus.swift; sourceTree = "<group>"; };
 		25F91C7A2C7CDB55001CAAB7 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -272,9 +329,29 @@
 		25F9E97E2CFAAEB600475A57 /* SocketViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		25EAD5E32DB6E16800CE91F2 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 25EAD5D32DB6E16800CE91F2 /* RideTrackingNotificationExtension */;
+		};
+		25EAD5F62DB8023000CE91F2 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			publicHeaders = (
+				RideTrackingShared.h,
+			);
+			target = 25EAD5EB2DB8023000CE91F2 /* RideTrackingShared */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		257F40162D1264AD00BB2373 /* Chat */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Chat; sourceTree = "<group>"; };
 		259358992D94558800B87393 /* SubItems */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = SubItems; sourceTree = "<group>"; };
+		25EAD5AF2DB692E500CE91F2 /* Notification */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Notification; sourceTree = "<group>"; };
+		25EAD5D92DB6E16800CE91F2 /* RideTrackingNotificationExtension */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (25EAD5E32DB6E16800CE91F2 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = RideTrackingNotificationExtension; sourceTree = "<group>"; };
+		25EAD5ED2DB8023000CE91F2 /* RideTrackingShared */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (25EAD5F62DB8023000CE91F2 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = RideTrackingShared; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -284,6 +361,7 @@
 			files = (
 				257F40242D13797100BB2373 /* FirebaseMessaging in Frameworks */,
 				257F40202D13797100BB2373 /* FirebaseAnalytics in Frameworks */,
+				25EAD5F42DB8023000CE91F2 /* RideTrackingShared.framework in Frameworks */,
 				256F36EF2CFCE78C00CE3E8A /* Shimmer in Frameworks */,
 				256EAECB2C2F1CE400FA7A5C /* OTPView in Frameworks */,
 				256EAEBB2C2D9A8100FA7A5C /* MapboxMaps in Frameworks */,
@@ -291,6 +369,22 @@
 				257F40222D13797100BB2373 /* FirebaseCrashlytics in Frameworks */,
 				25F9E97A2CFAAC0A00475A57 /* SocketIO in Frameworks */,
 				25BFDB602C33EB9700D73993 /* Lottie in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		25EAD5D12DB6E16800CE91F2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				25EAD5D82DB6E16800CE91F2 /* UserNotificationsUI.framework in Frameworks */,
+				25EAD5D62DB6E16800CE91F2 /* UserNotifications.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		25EAD5E92DB8023000CE91F2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -352,8 +446,11 @@
 		256877652C258B190041E16A = {
 			isa = PBXGroup;
 			children = (
+				25EAD5ED2DB8023000CE91F2 /* RideTrackingShared */,
 				25BFDB6C2C347B6100D73993 /* GeoGo-Bridging-Header.h */,
 				256877702C258B190041E16A /* Geo Go */,
+				25EAD5D92DB6E16800CE91F2 /* RideTrackingNotificationExtension */,
+				25AF58002DAE62FF0025E9E4 /* Frameworks */,
 				2568776F2C258B190041E16A /* Products */,
 			);
 			sourceTree = "<group>";
@@ -362,6 +459,8 @@
 			isa = PBXGroup;
 			children = (
 				2568776E2C258B190041E16A /* Geo Go.app */,
+				25EAD5D42DB6E16800CE91F2 /* RideTrackingNotificationExtension.appex */,
+				25EAD5EC2DB8023000CE91F2 /* RideTrackingShared.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -461,6 +560,7 @@
 		256877832C25C14D0041E16A /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				25EAD5AF2DB692E500CE91F2 /* Notification */,
 				257F40162D1264AD00BB2373 /* Chat */,
 				259DEA092CC2F72F00B1AB41 /* Profile */,
 				25A51DE22C6CE61800C2FBB0 /* AboutApp */,
@@ -546,6 +646,7 @@
 		256877A02C25D1230041E16A /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				25AF58CE2DB3CCB10025E9E4 /* TaxiRideStatus.swift */,
 				252BACDB2CFBC611004EBC64 /* NearDrivers.swift */,
 				256877A12C25D1300041E16A /* Network */,
 				256877A42C25D16F0041E16A /* GetServerLinks.swift */,
@@ -605,6 +706,7 @@
 		256EAEB62C2D8B3700FA7A5C /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				25EAD60C2DB8141F00CE91F2 /* ViewModelExtension.swift */,
 				256EAEBE2C2EADD100FA7A5C /* HomeItems */,
 				256EAEB72C2D8B4F00FA7A5C /* HomeScreen.swift */,
 				256EAED22C309CB500FA7A5C /* MainViewModel.swift */,
@@ -718,6 +820,17 @@
 			path = AboutApp;
 			sourceTree = "<group>";
 		};
+		25AF58002DAE62FF0025E9E4 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				25AF58012DAE62FF0025E9E4 /* WidgetKit.framework */,
+				25AF58032DAE62FF0025E9E4 /* SwiftUI.framework */,
+				25EAD5D52DB6E16800CE91F2 /* UserNotifications.framework */,
+				25EAD5D72DB6E16800CE91F2 /* UserNotificationsUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		25B20C242C6328B400F50017 /* Images */ = {
 			isa = PBXGroup;
 			children = (
@@ -817,6 +930,16 @@
 		};
 /* End PBXGroup section */
 
+/* Begin PBXHeadersBuildPhase section */
+		25EAD5E72DB8023000CE91F2 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
 /* Begin PBXNativeTarget section */
 		2568776D2C258B190041E16A /* Geo Go */ = {
 			isa = PBXNativeTarget;
@@ -825,14 +948,19 @@
 				2568776A2C258B190041E16A /* Sources */,
 				2568776B2C258B190041E16A /* Frameworks */,
 				2568776C2C258B190041E16A /* Resources */,
+				25AF58302DAE6BD30025E9E4 /* Embed Foundation Extensions */,
+				25EAD5FA2DB8023100CE91F2 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				25EAD5E12DB6E16800CE91F2 /* PBXTargetDependency */,
+				25EAD5F32DB8023000CE91F2 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				257F40162D1264AD00BB2373 /* Chat */,
 				259358992D94558800B87393 /* SubItems */,
+				25EAD5AF2DB692E500CE91F2 /* Notification */,
 			);
 			name = "Geo Go";
 			packageProductDependencies = (
@@ -850,6 +978,51 @@
 			productReference = 2568776E2C258B190041E16A /* Geo Go.app */;
 			productType = "com.apple.product-type.application";
 		};
+		25EAD5D32DB6E16800CE91F2 /* RideTrackingNotificationExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 25EAD5E42DB6E16800CE91F2 /* Build configuration list for PBXNativeTarget "RideTrackingNotificationExtension" */;
+			buildPhases = (
+				25EAD5D02DB6E16800CE91F2 /* Sources */,
+				25EAD5D12DB6E16800CE91F2 /* Frameworks */,
+				25EAD5D22DB6E16800CE91F2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				25EAD5D92DB6E16800CE91F2 /* RideTrackingNotificationExtension */,
+			);
+			name = RideTrackingNotificationExtension;
+			packageProductDependencies = (
+			);
+			productName = RideTrackingNotificationExtension;
+			productReference = 25EAD5D42DB6E16800CE91F2 /* RideTrackingNotificationExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		25EAD5EB2DB8023000CE91F2 /* RideTrackingShared */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 25EAD5F72DB8023100CE91F2 /* Build configuration list for PBXNativeTarget "RideTrackingShared" */;
+			buildPhases = (
+				25EAD5E72DB8023000CE91F2 /* Headers */,
+				25EAD5E82DB8023000CE91F2 /* Sources */,
+				25EAD5E92DB8023000CE91F2 /* Frameworks */,
+				25EAD5EA2DB8023000CE91F2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				25EAD5ED2DB8023000CE91F2 /* RideTrackingShared */,
+			);
+			name = RideTrackingShared;
+			packageProductDependencies = (
+			);
+			productName = RideTrackingShared;
+			productReference = 25EAD5EC2DB8023000CE91F2 /* RideTrackingShared.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -857,11 +1030,17 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1530;
+				LastSwiftUpdateCheck = 1610;
 				LastUpgradeCheck = 1530;
 				TargetAttributes = {
 					2568776D2C258B190041E16A = {
 						CreatedOnToolsVersion = 15.3;
+					};
+					25EAD5D32DB6E16800CE91F2 = {
+						CreatedOnToolsVersion = 16.1;
+					};
+					25EAD5EB2DB8023000CE91F2 = {
+						CreatedOnToolsVersion = 16.1;
 					};
 				};
 			};
@@ -891,6 +1070,8 @@
 			projectRoot = "";
 			targets = (
 				2568776D2C258B190041E16A /* Geo Go */,
+				25EAD5D32DB6E16800CE91F2 /* RideTrackingNotificationExtension */,
+				25EAD5EB2DB8023000CE91F2 /* RideTrackingShared */,
 			);
 		};
 /* End PBXProject section */
@@ -910,6 +1091,20 @@
 				257F402A2D1384D200BB2373 /* GoogleService-Info.plist in Resources */,
 				25BFDB622C33ED0C00D73993 /* marker_location.json in Resources */,
 				256877762C258B1B0041E16A /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		25EAD5D22DB6E16800CE91F2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		25EAD5EA2DB8023000CE91F2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -974,6 +1169,7 @@
 				25BFDB7A2C357BC800D73993 /* ElasticSearchViewModel.swift in Sources */,
 				2565CFAE2C5BA85F00FCC08A /* SearchDriver.swift in Sources */,
 				25A51DD82C6CE57700C2FBB0 /* DiscountScreen.swift in Sources */,
+				25AF58CF2DB3CCB30025E9E4 /* TaxiRideStatus.swift in Sources */,
 				2565CF972C44CC9F00FCC08A /* Utils.swift in Sources */,
 				2568778C2C25C25A0041E16A /* LocationManager.swift in Sources */,
 				2565CF9A2C45055D00FCC08A /* Routing.swift in Sources */,
@@ -990,6 +1186,7 @@
 				256877992C25C63C0041E16A /* LoadingView.swift in Sources */,
 				25BFDB642C3404BC00D73993 /* MarkerMoveListener.swift in Sources */,
 				2508EACA2C73DEB3008CCC12 /* CheckBoxView.swift in Sources */,
+				25EAD60D2DB8142500CE91F2 /* ViewModelExtension.swift in Sources */,
 				25DA46862C649A7400C2A1AB /* TariffDetailsView.swift in Sources */,
 				25BFDB5B2C33E61700D73993 /* RoundedCorners.swift in Sources */,
 				256877722C258B190041E16A /* Geo_GoApp.swift in Sources */,
@@ -1035,7 +1232,34 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		25EAD5D02DB6E16800CE91F2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		25EAD5E82DB8023000CE91F2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		25EAD5E12DB6E16800CE91F2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 25EAD5D32DB6E16800CE91F2 /* RideTrackingNotificationExtension */;
+			targetProxy = 25EAD5E02DB6E16800CE91F2 /* PBXContainerItemProxy */;
+		};
+		25EAD5F32DB8023000CE91F2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 25EAD5EB2DB8023000CE91F2 /* RideTrackingShared */;
+			targetProxy = 25EAD5F22DB8023000CE91F2 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		256877912C25C4E80041E16A /* Localizable.strings */ = {
@@ -1179,7 +1403,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = "Geo Go/Geo Go.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 13;
+				CURRENT_PROJECT_VERSION = 14;
 				DEVELOPMENT_ASSET_PATHS = "\"Geo Go/Preview Content\"";
 				DEVELOPMENT_TEAM = V7RW49DS4B;
 				ENABLE_PREVIEWS = YES;
@@ -1192,13 +1416,14 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleLightContent;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.13.5;
+				MARKETING_VERSION = 1.13.6;
 				PRODUCT_BUNDLE_IDENTIFIER = "geogo-client";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1216,7 +1441,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = "Geo Go/Geo Go.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 13;
+				CURRENT_PROJECT_VERSION = 14;
 				DEVELOPMENT_ASSET_PATHS = "\"Geo Go/Preview Content\"";
 				DEVELOPMENT_TEAM = V7RW49DS4B;
 				ENABLE_PREVIEWS = YES;
@@ -1229,19 +1454,144 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleLightContent;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.13.5;
+				MARKETING_VERSION = 1.13.6;
 				PRODUCT_BUNDLE_IDENTIFIER = "geogo-client";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				"SWIFT_OBJC_BRIDGING_HEADER[arch=*]" = "$(SRCROOT)/GeoGo-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		25EAD5E52DB6E16800CE91F2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = V7RW49DS4B;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = RideTrackingNotificationExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = RideTrackingNotificationExtension;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "geogo-client.RideTrackingNotificationExtension";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		25EAD5E62DB6E16800CE91F2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = V7RW49DS4B;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = RideTrackingNotificationExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = RideTrackingNotificationExtension;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "geogo-client.RideTrackingNotificationExtension";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		25EAD5F82DB8023100CE91F2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = V7RW49DS4B;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
+				PRODUCT_BUNDLE_IDENTIFIER = "geogo-client.RideTrackingShared";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		25EAD5F92DB8023100CE91F2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = V7RW49DS4B;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
+				PRODUCT_BUNDLE_IDENTIFIER = "geogo-client.RideTrackingShared";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
 			};
 			name = Release;
 		};
@@ -1262,6 +1612,24 @@
 			buildConfigurations = (
 				2568777D2C258B1B0041E16A /* Debug */,
 				2568777E2C258B1B0041E16A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		25EAD5E42DB6E16800CE91F2 /* Build configuration list for PBXNativeTarget "RideTrackingNotificationExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				25EAD5E52DB6E16800CE91F2 /* Debug */,
+				25EAD5E62DB6E16800CE91F2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		25EAD5F72DB8023100CE91F2 /* Build configuration list for PBXNativeTarget "RideTrackingShared" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				25EAD5F82DB8023100CE91F2 /* Debug */,
+				25EAD5F92DB8023100CE91F2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

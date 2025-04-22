@@ -16,9 +16,8 @@ struct AppNotWorkScreen: View {
         ZStack{
             DrawerAndBonusButton(viewModel: viewModel)
                 .offset(y: viewModel.markerOffset != 0 ? -200 : 0)
-                .animation(.easeInOut(duration: 0.2), value: viewModel.markerOffset)
+                .animation(.spring(response: 0.4, dampingFraction: 0.6, blendDuration: 0), value: viewModel.markerOffset)
 
-           
             VStack{
                 Spacer()
                 LocationButton(viewModel: viewModel, paddingBottom: 12)

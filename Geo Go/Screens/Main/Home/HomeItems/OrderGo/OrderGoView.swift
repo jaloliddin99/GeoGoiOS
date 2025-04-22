@@ -85,7 +85,15 @@ struct OrderGoView: View {
     // MARK: - Order Button
     private var orderButton: some View {
         Button(action: {
-            mainViewModel.isShowBonusDialog.toggle()
+            if mainViewModel.bonusResponse.balance <= 0 {
+                let addresses = mainViewModel.locationHolder
+                let lat = addresses[0].addressLocation.latitude
+                let lon = addresses[0].addressLocation.longitude
+                let createOrder = getCreateOrderRoute(addressList: addresses,bonusInt: 0)
+                mainViewModel.createOrder(lat: lat,lon: lon, createOrderRequest: createOrder)
+            } else {
+                mainViewModel.isShowBonusDialog.toggle()
+            }
         }) {
             GGButton(title: isButtonDisabled ? "no_available_car" : "order",
                      isDisabled: isButtonDisabled)
@@ -138,7 +146,6 @@ struct OrderGoView: View {
         let name = convertTariff(lang: DataHolder.lang, data: selectedItem!)
         UserDefaults.standard.set(name, forKey: Constants.TARIFF)
         UserDefaults.standard.set(selectedItem!.icon, forKey: Constants.TARIFF_ICON)
-        
     }
     
     var locationButton: some View {

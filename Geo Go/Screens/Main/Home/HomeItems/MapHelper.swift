@@ -10,73 +10,73 @@ import Combine
 @_spi(Experimental) import MapboxMaps
 import Turf
 import CoreLocation
+
+
 func drawRoute(_ mapView: MapView, _ coordinates: [MyPoint]) {
     let sourceId = "line-source"
-    
     let lineCoordinates = coordinates.map { CLLocationCoordinate2D(latitude: $0.latitude, longitude: $0.longitude) }
     let lineFeature = Feature(geometry: .lineString(LineString(lineCoordinates)))
-    
     if mapView.mapboxMap.sourceExists(withId: sourceId) {
-        DispatchQueue.global(qos: .userInitiated).async {
-            do {
-                try mapView.mapboxMap.updateGeoJSONSource(withId: sourceId, geoJSON: .feature(lineFeature))
-            } catch {
-                print("Error updating GeoJSON source: \(error)")
+        do {
+            if let _ = try? mapView.mapboxMap.source(withId: sourceId) as? GeoJSONSource {
+                mapView.mapboxMap.updateGeoJSONSource(withId: sourceId, geoJSON: .feature(lineFeature))
+            } else {
+                try? mapView.mapboxMap.removeLayer(withId: "line-layer")
+                try? mapView.mapboxMap.removeSource(withId: sourceId)
+                createNewRouteSource(mapView, sourceId, lineFeature)
             }
         }
     } else {
-        // Create a new source and layer if it doesn't exist
-        var lineSource = GeoJSONSource(id: sourceId)
-        lineSource.data = .feature(lineFeature)
-        lineSource.lineMetrics = true
-        
-        var lineLayer = LineLayer(id: "line-layer", source: sourceId)
-        lineLayer.lineColor = .constant(StyleColor(.main))
-        lineLayer.lineGradient = .expression(
-            Exp(.interpolate) {
-                Exp(.linear)
-                Exp(.lineProgress)
-                0.5
-                UIColor.main
-                0.6
-                UIColor.green
-                0.7
-                UIColor.yellow
-                1
-                UIColor.main
-            }
-        )
-        
-        let lowZoomWidth = 6
-        let highZoomWidth = 6
-        lineLayer.lineWidth = .expression(
-            Exp(.interpolate) {
-                Exp(.linear)
-                Exp(.zoom)
-                14
-                lowZoomWidth
-                18
-                highZoomWidth
-            }
-        )
-        lineLayer.lineCap = .constant(.round)
-        lineLayer.lineJoin = .constant(.round)
-        
-        let layer = (DataHolder.status == 1 || DataHolder.status == 5) ? Constants.DEST_ICON_LAYER_ID : Constants.CLIENT_ICON_LAYER_ID
-        
-        
-        DispatchQueue.main.async {
-            do {
-                try mapView.mapboxMap.addSource(lineSource)
-                try mapView.mapboxMap.addLayer(lineLayer, layerPosition: .below(layer))
-            } catch {
-                print("Error adding source or layer: \(error)")
-            }
-        }
-        
+        createNewRouteSource(mapView, sourceId, lineFeature)
     }
 }
 
+private func createNewRouteSource(_ mapView: MapView, _ sourceId: String, _ lineFeature: Feature) {
+    var lineSource = GeoJSONSource(id: sourceId)
+    lineSource.data = .feature(lineFeature)
+    lineSource.lineMetrics = true
+    
+    var lineLayer = LineLayer(id: "line-layer", source: sourceId)
+    lineLayer.lineColor = .constant(StyleColor(.main))
+    lineLayer.lineGradient = .expression(
+        Exp(.interpolate) {
+            Exp(.linear)
+            Exp(.lineProgress)
+            0.5
+            UIColor.main
+            0.6
+            UIColor.green
+            0.7
+            UIColor.yellow
+            1
+            UIColor.main
+        }
+    )
+    
+    let lowZoomWidth = 6
+    let highZoomWidth = 6
+    lineLayer.lineWidth = .expression(
+        Exp(.interpolate) {
+            Exp(.linear)
+            Exp(.zoom)
+            14
+            lowZoomWidth
+            18
+            highZoomWidth
+        }
+    )
+    lineLayer.lineCap = .constant(.round)
+    lineLayer.lineJoin = .constant(.round)
+    
+    let layer = (DataHolder.status == 1 || DataHolder.status == 5) ? Constants.DEST_ICON_LAYER_ID : Constants.CLIENT_ICON_LAYER_ID
+    
+    do {
+        try mapView.mapboxMap.addSource(lineSource)
+        try mapView.mapboxMap.addLayer(lineLayer, layerPosition: .below(layer))
+    } catch {
+        print("Error adding source or layer: \(error)")
+    }
+}
 func setCameraBounds(
     _ mapView: MapView,
     _ coordinates: [MyPoint]
@@ -133,55 +133,126 @@ func addCircleLayers(mapView: MapView, userLocations: [Feature]){
     try! mapView.mapboxMap.addLayer(pointLayer, layerPosition: nil)
 }
 
-func updateCarMarkerLocation(_ mapView: MapView, _ point: MyPoint, _ bearing: Float64) {
-    let updatedPoint = Point(CLLocationCoordinate2D(latitude: point.latitude, longitude: point.longitude))
-    let updatedFeature = Feature(geometry: updatedPoint)
+
+func updateCarMarkerLocation(_ mapView: MapView, point: MyPoint, bearing: Float64) {
+    let coordinate = CLLocationCoordinate2D(latitude: point.latitude, longitude: point.longitude)
+    var updatedFeature = Feature(geometry: .point(Point(coordinate)))
     
-    if let source = try? mapView.mapboxMap.source(withId: Constants.CAR_ICON_SOURCE_ID) as? GeoJSONSource {
-        var newSource = source
-        newSource.data = .feature(updatedFeature)
-        mapView.mapboxMap.updateGeoJSONSource(withId: Constants.CAR_ICON_SOURCE_ID, geoJSON: .feature(updatedFeature))
-    } else {
-        print("Car marker source not found! Ensure the source is initialized first.")
-    }
+    updatedFeature.properties = [
+        "bearing": .number(bearing)
+    ]
     
-    do {
-        try mapView.mapboxMap.updateLayer(
-            withId: Constants.CAR_ICON_LAYER_ID,
-            type: SymbolLayer.self
-        ) { (layer: inout SymbolLayer) in
-            layer.iconRotate = .constant(bearing)
+    if mapView.mapboxMap.sourceExists(withId: Constants.CAR_ICON_SOURCE_ID) {
+        do {
+            let source = try mapView.mapboxMap.source(withId: Constants.CAR_ICON_SOURCE_ID) as? GeoJSONSource
+            if source != nil {
+                mapView.mapboxMap.updateGeoJSONSource(
+                    withId: Constants.CAR_ICON_SOURCE_ID,
+                    geoJSON: .feature(updatedFeature)
+                )
+            } else {
+                addCarMarkerAnnotation(mapView: mapView, point: point, bearing: bearing)
+            }
+        } catch {
+            addCarMarkerAnnotation(mapView: mapView, point: point, bearing: bearing)
         }
-    } catch {
-        addCarMarkerAnnotation(mapView: mapView, point: point)
-        print("Failed to update car marker layer: \(error)")
+    } else {
+        addCarMarkerAnnotation(mapView: mapView, point: point, bearing: bearing)
     }
 }
 
-
-func addCarMarkerAnnotation(mapView: MapView, point: MyPoint) {
+private func addCarMarkerAnnotation(mapView: MapView, point: MyPoint, bearing: Float64 = 0.0) {
     removeCarMarkerAnnotation(mapView: mapView)
-    try? mapView.mapboxMap.addImage(UIImage(named: "car_from_above")!, id: Constants.CAR_ICON_ID)
-    var source = GeoJSONSource(id: Constants.CAR_ICON_SOURCE_ID)
-    let point = Point(CLLocationCoordinate2D(latitude: point.latitude, longitude: point.longitude))
-    source.data = .feature(Feature(geometry: point))
-    try? mapView.mapboxMap.addSource(source)
     
+    if let carImage = UIImage(named: "car_from_above") {
+        do {
+            try mapView.mapboxMap.addImage(carImage, id: Constants.CAR_ICON_ID)
+        } catch {}
+    } else {
+        return
+    }
+    
+    let coordinate = CLLocationCoordinate2D(latitude: point.latitude, longitude: point.longitude)
+    var feature = Feature(geometry: .point(Point(coordinate)))
+    feature.properties = [
+        "bearing": .number(bearing)
+    ]
+    
+    var source = GeoJSONSource(id: Constants.CAR_ICON_SOURCE_ID)
+    source.data = .feature(feature)
+    
+    do {
+        try mapView.mapboxMap.addSource(source)
+    } catch {
+        return
+    }
+    
+
+    var layer = SymbolLayer(id: Constants.CAR_ICON_LAYER_ID, source: Constants.CAR_ICON_SOURCE_ID)
+    layer.iconImage = .constant(.name(Constants.CAR_ICON_ID))
+    layer.iconSize = .constant(0.08)
+    layer.iconAllowOverlap = .constant(true)
+    layer.iconIgnorePlacement = .constant(true)
+    layer.iconRotationAlignment = .constant(.map)
+    layer.iconRotate = .expression(Exp(.get) { "bearing" })
+    
+    do {
+        let layerPosition: LayerPosition = {
+            if DataHolder.status == 3 {
+                return .above(Constants.CLIENT_ICON_LAYER_ID)
+            } else {
+                return .above(Constants.DEST_ICON_LAYER_ID)
+            }
+        }()
+        try mapView.mapboxMap.addLayer(layer, layerPosition: layerPosition)
+    } catch {
+        do {
+            try mapView.mapboxMap.addLayer(layer)
+        } catch {
+            print("Error adding car marker layer: \(error)")
+        }
+    }
+}
+
+func updateCarMarkers(mapView: MapView, driverList: [SDriverData]) {
+    removeCarMarkers(mapView: mapView)
+    
+    if let image = UIImage(named: "car_from_above") {
+        try? mapView.mapboxMap.addImage(image, id: Constants.CAR_ICON_ID)
+    }
+    
+    // Build GeoJSON features for all drivers
+    let features: [Feature] = driverList.map { driver in
+        var feature = Feature(geometry: .point(Point(CLLocationCoordinate2D(latitude: driver.lat, longitude: driver.long))))
+        feature.properties = [
+            "driverId": .string(driver.driverId),
+            "bearing": .number(driver.bearing),
+            "type": .string(driver.type)
+        ]
+        return feature
+    }
+    
+    var source = GeoJSONSource(id: Constants.CAR_ICON_SOURCE_ID)
+    source.data = .featureCollection(FeatureCollection(features: features))
+    
+    try? mapView.mapboxMap.addSource(source)
     
     var layer = SymbolLayer(id: Constants.CAR_ICON_LAYER_ID, source: Constants.CAR_ICON_SOURCE_ID)
     layer.iconImage = .constant(.name(Constants.CAR_ICON_ID))
     layer.iconSize = .constant(0.08)
+    layer.iconAllowOverlap = .constant(true)
+    layer.iconIgnorePlacement = .constant(true)
+    layer.iconRotationAlignment = .constant(.map)
+    layer.iconRotate = .expression(Exp(.get) { "bearing" })
     
-    do {
-        let l = DataHolder.status == 3 ? Constants.CLIENT_ICON_LAYER_ID : Constants.DEST_ICON_LAYER_ID
-        try mapView.mapboxMap.addLayer(layer, layerPosition: .above(l))
-    } catch {
-        do{
-            try mapView.mapboxMap.addLayer(layer)
-        }catch{}
-        print("Error adding car marker layer: \(error)")
-    }
+    try? mapView.mapboxMap.addLayer(layer)
 }
+
+func removeCarMarkers(mapView: MapView) {
+    try? mapView.mapboxMap.removeLayer(withId: Constants.CAR_ICON_LAYER_ID)
+    try? mapView.mapboxMap.removeSource(withId: Constants.CAR_ICON_SOURCE_ID)
+}
+
 
 
 func addDestMarkerAnnotation(mapView: MapView, destination: Point) {
@@ -219,39 +290,33 @@ func addClientMarkerAnnotation(_ mapView: MapView, _ clientAddress: Point) {
         try mapView.mapboxMap.addLayer(layer)
 
     } catch {
-        print("Error adding client marker annotation: \(error)")
+        
     }
 }
 
 
 
-
-func removeClientMarkerAnnotation(mapView: MapView) {
-    if let _ = try? mapView.mapboxMap.layer(withId: Constants.CLIENT_ICON_LAYER_ID) {
-        try? mapView.mapboxMap.removeLayer(withId: Constants.CLIENT_ICON_LAYER_ID)
-    }
-    if let _ = try? mapView.mapboxMap.source(withId: Constants.CLIENT_ICON_SOURCE_ID) {
-        try? mapView.mapboxMap.removeSource(withId: Constants.CLIENT_ICON_SOURCE_ID)
-    }
-}
 
 func removeCarMarkerAnnotation(mapView: MapView) {
-    if let _ = try? mapView.mapboxMap.layer(withId: Constants.CAR_ICON_LAYER_ID) {
-        try? mapView.mapboxMap.removeLayer(withId: Constants.CAR_ICON_LAYER_ID)
+    // Check if the layer exists before trying to remove it
+    if (try? mapView.mapboxMap.layer(withId: Constants.CAR_ICON_LAYER_ID)) != nil {
+        do {
+            try mapView.mapboxMap.removeLayer(withId: Constants.CAR_ICON_LAYER_ID)
+        } catch {
+            print("Error removing car marker layer: \(error)")
+        }
     }
-    if let _ = try? mapView.mapboxMap.source(withId: Constants.CAR_ICON_SOURCE_ID) {
-        try? mapView.mapboxMap.removeSource(withId: Constants.CAR_ICON_SOURCE_ID)
+    
+    // Check if the source exists before trying to remove it
+    if (try? mapView.mapboxMap.source(withId: Constants.CAR_ICON_SOURCE_ID)) != nil {
+        do {
+            try mapView.mapboxMap.removeSource(withId: Constants.CAR_ICON_SOURCE_ID)
+        } catch {
+            print("Error removing car marker source: \(error)")
+        }
     }
 }
 
-func removeDestMarkerAnnotation(mapView: MapView) {
-    if let _ = try? mapView.mapboxMap.layer(withId: Constants.DEST_ICON_LAYER_ID) {
-        try? mapView.mapboxMap.removeLayer(withId: Constants.DEST_ICON_LAYER_ID)
-    }
-    if let _ = try? mapView.mapboxMap.source(withId: Constants.DEST_ICON_SOURCE_ID) {
-        try? mapView.mapboxMap.removeSource(withId: Constants.DEST_ICON_SOURCE_ID)
-    }
-}
 
 
 func removeRoute(mapView: MapView, _ sourceId: String) {
@@ -268,6 +333,46 @@ func removeRoute(mapView: MapView, _ sourceId: String) {
         }
     } catch {
         print("Failed to remove source/layer from map: \(error)")
+    }
+}
+
+func removeDestMarkerAnnotation(mapView: MapView) {
+    // Check if the layer exists before trying to remove it
+    if (try? mapView.mapboxMap.layer(withId: Constants.DEST_ICON_LAYER_ID)) != nil {
+        do {
+            try mapView.mapboxMap.removeLayer(withId: Constants.DEST_ICON_LAYER_ID)
+        } catch {
+            print("Error removing destination marker layer: \(error)")
+        }
+    }
+    
+    // Check if the source exists before trying to remove it
+    if (try? mapView.mapboxMap.source(withId: Constants.DEST_ICON_SOURCE_ID)) != nil {
+        do {
+            try mapView.mapboxMap.removeSource(withId: Constants.DEST_ICON_SOURCE_ID)
+        } catch {
+            print("Error removing destination marker source: \(error)")
+        }
+    }
+}
+
+func removeClientMarkerAnnotation(mapView: MapView) {
+    // Check if the layer exists before trying to remove it
+    if (try? mapView.mapboxMap.layer(withId: Constants.CLIENT_ICON_LAYER_ID)) != nil {
+        do {
+            try mapView.mapboxMap.removeLayer(withId: Constants.CLIENT_ICON_LAYER_ID)
+        } catch {
+            print("Error removing client marker layer: \(error)")
+        }
+    }
+    
+    // Check if the source exists before trying to remove it
+    if (try? mapView.mapboxMap.source(withId: Constants.CLIENT_ICON_SOURCE_ID)) != nil {
+        do {
+            try mapView.mapboxMap.removeSource(withId: Constants.CLIENT_ICON_SOURCE_ID)
+        } catch {
+            print("Error removing client marker source: \(error)")
+        }
     }
 }
 

@@ -194,3 +194,15 @@
 "service_not_supported" = "Сервис %@ не поддерживается";
 "try_different_address" = "Попробуйте изменить адрес";
 "enter_address" = "Ввести адрес";
+"details" = "Детали";
+
+"driver_assigned_title" = "Водитель назначен";
+"driver_assigned_body" = "Ваш водитель %@ назначен. Он прибудет примерно через %d минут.";
+"driver_arrived_title" = "Водитель прибыл";
+"driver_arrived_body" = "%@ прибыл к месту вашей посадки.";
+"ride_started_title" = "Поездка началась";
+"ride_started_body" = "Ваша поездка с %@ началась. Приятного пути!";
+"ride_completed_title" = "Поездка завершена";
+"ride_completed_body" = "Спасибо за поездку с %@. Надеемся, вам понравилось путешествие!";
+
+"arrive_in" = "Ехать";
