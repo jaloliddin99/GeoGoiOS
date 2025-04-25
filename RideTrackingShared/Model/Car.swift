@@ -5,6 +5,9 @@
 //  Created by Jaloliddin Abdullaev on 22/04/25.
 //
 
+import Foundation
+import SwiftUI
+
 public struct CarModel {
     public let regNum: String
     public let brand: String

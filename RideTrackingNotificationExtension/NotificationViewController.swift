@@ -15,17 +15,19 @@ class NotificationViewController: UIViewController, UNNotificationContentExtensi
     
     private var hostingController: UIHostingController<AnyView>?
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Set up your UI
+        print("NotificationViewController: viewDidLoad called")
         view.backgroundColor = .clear
     }
     
     func didReceive(_ notification: UNNotification) {
         let content = notification.request.content
         let userInfo = content.userInfo
-        
-        // Extract data from notification payload
+        print("NotificationViewController: didReceive called")
+        print("UserInfo: \(notification.request.content.userInfo)")
+      
         guard let carRegNum = userInfo["carRegNum"] as? String,
               let carBrand = userInfo["carBrand"] as? String,
               let carModel = userInfo["carModel"] as? String,
@@ -38,17 +40,16 @@ class NotificationViewController: UIViewController, UNNotificationContentExtensi
               let driverLon = userInfo["driverLon"] as? Double else {
             return
         }
+        print("Hello world these are the comment \(carRegNum)")
+
         
-        // Create objects using shared models
         let car = CarModel(regNum: carRegNum, brand: carBrand, model: carModel, color: carColor)
         let initialLocation = CLLocationCoordinate2D(latitude: initialLat, longitude: initialLon)
         let clientLocation = CLLocationCoordinate2D(latitude: clientLat, longitude: clientLon)
         let driverLocation = DriverLocation(lat: driverLat, lon: driverLon)
         
-        // Create view model
         let viewModel = NotificationViewModel(driverLocation: driverLocation)
         
-        // Create notification view
         let notificationView =
         RideTrackingNotificationView(
             car: car,
@@ -57,7 +58,6 @@ class NotificationViewController: UIViewController, UNNotificationContentExtensi
             viewModel: viewModel
         )
         
-        // Set up hosting controller
         if hostingController == nil {
             hostingController = UIHostingController(rootView: AnyView(notificationView))
             addChild(hostingController!)
@@ -74,7 +74,6 @@ class NotificationViewController: UIViewController, UNNotificationContentExtensi
             hostingController!.rootView = AnyView(notificationView)
         }
         
-        // Adjust the preferred content size
         preferredContentSize = CGSize(width: view.bounds.width, height: 150)
     }
 }

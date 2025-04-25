@@ -11,6 +11,10 @@ import Firebase
 
 @main
 struct Geo_GoApp: App {
+    
+    @UIApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
+
+    
     var body: some Scene {
         WindowGroup {
             if UserDefaults.standard.bool(forKey: Constants.isUserLoggedIn) {

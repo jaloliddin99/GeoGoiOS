@@ -9,15 +9,14 @@ import Firebase
 import FirebaseMessaging
 import UserNotifications
 import UIKit
-import UserNotifications
 import FirebaseCore
-import FirebaseMessaging
 import BackgroundTasks
 
 class AppDelegate: NSObject, UIApplicationDelegate, MessagingDelegate, UNUserNotificationCenterDelegate {
     
+    var backgroundTaskID: UIBackgroundTaskIdentifier = .invalid
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Firebase setup
         FirebaseApp.configure()
         FirebaseConfiguration.shared.setLoggerLevel(.min)
         Messaging.messaging().delegate = self
@@ -29,16 +28,19 @@ class AppDelegate: NSObject, UIApplicationDelegate, MessagingDelegate, UNUserNot
         
         registerBackgroundTasks()
         
+        setupNotificationCategories()
+        
         return true
     }
     
-    // Manually handle APNs token registration
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         Messaging.messaging().apnsToken = deviceToken
+        print("APNs token registered.")
     }
     
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
         guard let token = fcmToken else { return }
+        print("FCM registration token: \(token)")
         UserDefaults.standard.set(token, forKey: "fcmToken")
     }
     
@@ -48,7 +50,6 @@ class AppDelegate: NSObject, UIApplicationDelegate, MessagingDelegate, UNUserNot
         completionHandler([.banner, .sound, .badge])
     }
     
-    // MARK: - Background Task Management
     func registerBackgroundTasks() {
         BGTaskScheduler.shared.register(forTaskWithIdentifier: "com.yourapp.socketrefresh", using: nil) { task in
             self.handleSocketRefresh(task: task as! BGAppRefreshTask)
@@ -59,10 +60,11 @@ class AppDelegate: NSObject, UIApplicationDelegate, MessagingDelegate, UNUserNot
     
     func scheduleSocketRefresh() {
         let request = BGAppRefreshTaskRequest(identifier: "com.yourapp.socketrefresh")
-        request.earliestBeginDate = Date(timeIntervalSinceNow: 15 * 60) // 15 minutes
+        request.earliestBeginDate = Date(timeIntervalSinceNow: 15 * 60)
         
         do {
             try BGTaskScheduler.shared.submit(request)
+            print("Scheduled socket refresh.")
         } catch {
             print("Could not schedule socket refresh: \(error)")
         }
@@ -70,17 +72,36 @@ class AppDelegate: NSObject, UIApplicationDelegate, MessagingDelegate, UNUserNot
     
     func handleSocketRefresh(task: BGAppRefreshTask) {
         MainViewModel.shared.connect()
+        
         scheduleSocketRefresh()
+        
         task.setTaskCompleted(success: true)
     }
     
     func applicationDidEnterBackground(_ application: UIApplication) {
-        let backgroundTask = application.beginBackgroundTask {
-            // End the task if time expires
+        backgroundTaskID = application.beginBackgroundTask(withName: "KeepAlive") {
+            application.endBackgroundTask(self.backgroundTaskID)
+            self.backgroundTaskID = .invalid
         }
         
-        if backgroundTask == .invalid {
-            print("Failed to start background task")
+        if backgroundTaskID == .invalid {
+            print("Failed to start background task.")
+        } else {
+            print("Background task started.")
         }
     }
+    
+    // MARK: - Optional: Notification Categories
+    func setupNotificationCategories() {
+        let rideTrackingCategory = UNNotificationCategory(
+            identifier: "rideTracking",
+            actions: [],
+            intentIdentifiers: [],
+            options: [.customDismissAction]
+        )
+        
+        UNUserNotificationCenter.current().setNotificationCategories([rideTrackingCategory])
+    }
+    
+    
 }

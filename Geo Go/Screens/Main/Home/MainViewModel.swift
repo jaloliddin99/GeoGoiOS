@@ -13,9 +13,9 @@ import SocketIO
 
 import RideTrackingShared
 
-final class MainViewModel: ObservableObject{
+final class MainViewModel: ObservableObject {
+    
     @Published var isDrawerOpen = false
-
     @Published var markerOffset: CGFloat = 0
     @Published var isSearchDialogShowing = false
     @Published var isShowBonusDialog = false
@@ -1023,8 +1023,6 @@ final class MainViewModel: ObservableObject{
                     let sharedCar = CarModel(regNum: car.regNum, brand: car.brand, model: car.model, color: car.color)
                     
                     let initialLocation = CLLocationCoordinate2D(latitude: rtd.lat, longitude: rtd.lon)
-                    
-//                    let clientLoc = CLLocationCoordinate2D(latitude: clientLocation.latitude, longitude: clientLocation.longitude)
                     
                     self.startRideTracking(
                         car: sharedCar,
