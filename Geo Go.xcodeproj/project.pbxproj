@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2508EACA2C73DEB3008CCC12 /* CheckBoxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2508EAC92C73DEB3008CCC12 /* CheckBoxView.swift */; };
+		251914D22DBE63360011DD5A /* VmExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 251914D12DBE632E0011DD5A /* VmExtension.swift */; };
 		252BACDC2CFBC616004EBC64 /* NearDrivers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252BACDB2CFBC611004EBC64 /* NearDrivers.swift */; };
 		252C75B92CE931F800779995 /* loader_circles.json in Resources */ = {isa = PBXBuildFile; fileRef = 252C75B82CE931F700779995 /* loader_circles.json */; };
 		252E5C212C3C075900C132AF /* Estimate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252E5C202C3C075900C132AF /* Estimate.swift */; };
@@ -107,7 +108,17 @@
 		25B20C322C63978F00F50017 /* DialogToolBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B20C312C63978F00F50017 /* DialogToolBar.swift */; };
 		25B56A852CEA6B59001B58EC /* CustomKeyboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B56A842CEA6B59001B58EC /* CustomKeyboardView.swift */; };
 		25B7E08D2D00FF8F00ED47DA /* RideDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B7E08C2D00FF8900ED47DA /* RideDetailsView.swift */; };
-		25B90D622DB9889C00D73EFE /* RideTrackingShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25EAD5EC2DB8023000CE91F2 /* RideTrackingShared.framework */; };
+		25B90DD12DBBF14700D73EFE /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25AF58012DAE62FF0025E9E4 /* WidgetKit.framework */; };
+		25B90DD22DBBF14700D73EFE /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25AF58032DAE62FF0025E9E4 /* SwiftUI.framework */; };
+		25B90DE32DBBF14800D73EFE /* DriverLiveActivityWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 25B90DD02DBBF14700D73EFE /* DriverLiveActivityWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		25B90DEB2DBC0CF900D73EFE /* RideTrackingShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25EAD5EC2DB8023000CE91F2 /* RideTrackingShared.framework */; };
+		25B90DEC2DBC0CF900D73EFE /* RideTrackingShared.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 25EAD5EC2DB8023000CE91F2 /* RideTrackingShared.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		25B90DFC2DBC333900D73EFE /* server_links.json in Resources */ = {isa = PBXBuildFile; fileRef = 25B90DFB2DBC333900D73EFE /* server_links.json */; };
+		25B90E282DBCEADB00D73EFE /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25AF58012DAE62FF0025E9E4 /* WidgetKit.framework */; };
+		25B90E292DBCEADB00D73EFE /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25AF58032DAE62FF0025E9E4 /* SwiftUI.framework */; };
+		25B90E3A2DBCEADD00D73EFE /* OrderFinishLiveActivityExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 25B90E272DBCEADB00D73EFE /* OrderFinishLiveActivityExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		25B90E3F2DBCEB0D00D73EFE /* RideTrackingShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25EAD5EC2DB8023000CE91F2 /* RideTrackingShared.framework */; };
+		25B90E402DBCEB0D00D73EFE /* RideTrackingShared.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 25EAD5EC2DB8023000CE91F2 /* RideTrackingShared.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		25BC2C562C76093B00484F69 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25BC2C552C76093B00484F69 /* WebView.swift */; };
 		25BC2C582C76099600484F69 /* TermsOfUseAndPPScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25BC2C572C76099600484F69 /* TermsOfUseAndPPScreen.swift */; };
 		25BC2C5A2C761E8A00484F69 /* NewsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25BC2C592C761E8A00484F69 /* NewsModel.swift */; };
@@ -132,12 +143,8 @@
 		25BFDB832C35E62500D73993 /* ServiceTariffs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25BFDB822C35E62500D73993 /* ServiceTariffs.swift */; };
 		25BFDB872C36BFF900D73993 /* DataHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25BFDB862C36BFF900D73993 /* DataHolder.swift */; };
 		25DA46862C649A7400C2A1AB /* TariffDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25DA46852C649A7400C2A1AB /* TariffDetailsView.swift */; };
-		25EAD5D62DB6E16800CE91F2 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25EAD5D52DB6E16800CE91F2 /* UserNotifications.framework */; };
-		25EAD5D82DB6E16800CE91F2 /* UserNotificationsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25EAD5D72DB6E16800CE91F2 /* UserNotificationsUI.framework */; };
-		25EAD5E22DB6E16800CE91F2 /* RideTrackingNotificationExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 25EAD5D42DB6E16800CE91F2 /* RideTrackingNotificationExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		25EAD5F42DB8023000CE91F2 /* RideTrackingShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25EAD5EC2DB8023000CE91F2 /* RideTrackingShared.framework */; };
 		25EAD5F52DB8023000CE91F2 /* RideTrackingShared.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 25EAD5EC2DB8023000CE91F2 /* RideTrackingShared.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		25EAD60D2DB8142500CE91F2 /* ViewModelExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EAD60C2DB8141F00CE91F2 /* ViewModelExtension.swift */; };
 		25F91C762C7CCDAD001CAAB7 /* BonusHomeItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F91C752C7CCDAD001CAAB7 /* BonusHomeItem.swift */; };
 		25F91C792C7CD5FC001CAAB7 /* DialogBonus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F91C782C7CD5FC001CAAB7 /* DialogBonus.swift */; };
 		25F91C7B2C7CDB55001CAAB7 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F91C7A2C7CDB55001CAAB7 /* Extensions.swift */; };
@@ -149,12 +156,33 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		25EAD5E02DB6E16800CE91F2 /* PBXContainerItemProxy */ = {
+		25B90DE12DBBF14800D73EFE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 256877662C258B190041E16A /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 25EAD5D32DB6E16800CE91F2;
-			remoteInfo = RideTrackingNotificationExtension;
+			remoteGlobalIDString = 25B90DCF2DBBF14700D73EFE;
+			remoteInfo = DriverLiveActivityWidgetExtension;
+		};
+		25B90DED2DBC0CF900D73EFE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 256877662C258B190041E16A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 25EAD5EB2DB8023000CE91F2;
+			remoteInfo = RideTrackingShared;
+		};
+		25B90E382DBCEADD00D73EFE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 256877662C258B190041E16A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 25B90E262DBCEADB00D73EFE;
+			remoteInfo = OrderFinishLiveActivityExtension;
+		};
+		25B90E412DBCEB0D00D73EFE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 256877662C258B190041E16A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 25EAD5EB2DB8023000CE91F2;
+			remoteInfo = RideTrackingShared;
 		};
 		25EAD5F22DB8023000CE91F2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -172,9 +200,32 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				25EAD5E22DB6E16800CE91F2 /* RideTrackingNotificationExtension.appex in Embed Foundation Extensions */,
+				25B90DE32DBBF14800D73EFE /* DriverLiveActivityWidgetExtension.appex in Embed Foundation Extensions */,
+				25B90E3A2DBCEADD00D73EFE /* OrderFinishLiveActivityExtension.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		25B90DEF2DBC0CF900D73EFE /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				25B90DEC2DBC0CF900D73EFE /* RideTrackingShared.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		25B90E432DBCEB0D00D73EFE /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				25B90E402DBCEB0D00D73EFE /* RideTrackingShared.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		25EAD5FA2DB8023100CE91F2 /* Embed Frameworks */ = {
@@ -192,6 +243,8 @@
 
 /* Begin PBXFileReference section */
 		2508EAC92C73DEB3008CCC12 /* CheckBoxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckBoxView.swift; sourceTree = "<group>"; };
+		251914D12DBE632E0011DD5A /* VmExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VmExtension.swift; sourceTree = "<group>"; };
+		251914D82DBE7DC40011DD5A /* Geo Go.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Geo Go.entitlements"; sourceTree = "<group>"; };
 		252BACDB2CFBC611004EBC64 /* NearDrivers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearDrivers.swift; sourceTree = "<group>"; };
 		252C75B82CE931F700779995 /* loader_circles.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = loader_circles.json; sourceTree = "<group>"; };
 		252E5C202C3C075900C132AF /* Estimate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Estimate.swift; sourceTree = "<group>"; };
@@ -252,7 +305,6 @@
 		256EAED92C309F9900FA7A5C /* HomeScreenDrawer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreenDrawer.swift; sourceTree = "<group>"; };
 		256EAEDB2C30A2C500FA7A5C /* DrawerBtn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawerBtn.swift; sourceTree = "<group>"; };
 		256F370D2CFFA66900CE3E8A /* MapColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapColors.swift; sourceTree = "<group>"; };
-		257F400E2D11026700BB2373 /* Geo Go.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Geo Go.entitlements"; sourceTree = "<group>"; };
 		257F400F2D1174AA00BB2373 /* LineProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineProcessor.swift; sourceTree = "<group>"; };
 		257F40112D11755200BB2373 /* LinkedList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkedList.swift; sourceTree = "<group>"; };
 		257F40132D11E63700BB2373 /* MapHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapHelper.swift; sourceTree = "<group>"; };
@@ -292,6 +344,9 @@
 		25B20C312C63978F00F50017 /* DialogToolBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogToolBar.swift; sourceTree = "<group>"; };
 		25B56A842CEA6B59001B58EC /* CustomKeyboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomKeyboardView.swift; sourceTree = "<group>"; };
 		25B7E08C2D00FF8900ED47DA /* RideDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RideDetailsView.swift; sourceTree = "<group>"; };
+		25B90DD02DBBF14700D73EFE /* DriverLiveActivityWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = DriverLiveActivityWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		25B90DFB2DBC333900D73EFE /* server_links.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = server_links.json; sourceTree = "<group>"; };
+		25B90E272DBCEADB00D73EFE /* OrderFinishLiveActivityExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = OrderFinishLiveActivityExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		25BC2C552C76093B00484F69 /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		25BC2C572C76099600484F69 /* TermsOfUseAndPPScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsOfUseAndPPScreen.swift; sourceTree = "<group>"; };
 		25BC2C592C761E8A00484F69 /* NewsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsModel.swift; sourceTree = "<group>"; };
@@ -316,11 +371,9 @@
 		25BFDB822C35E62500D73993 /* ServiceTariffs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceTariffs.swift; sourceTree = "<group>"; };
 		25BFDB862C36BFF900D73993 /* DataHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataHolder.swift; sourceTree = "<group>"; };
 		25DA46852C649A7400C2A1AB /* TariffDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TariffDetailsView.swift; sourceTree = "<group>"; };
-		25EAD5D42DB6E16800CE91F2 /* RideTrackingNotificationExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = RideTrackingNotificationExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		25EAD5D52DB6E16800CE91F2 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		25EAD5D72DB6E16800CE91F2 /* UserNotificationsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotificationsUI.framework; path = System/Library/Frameworks/UserNotificationsUI.framework; sourceTree = SDKROOT; };
 		25EAD5EC2DB8023000CE91F2 /* RideTrackingShared.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RideTrackingShared.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		25EAD60C2DB8141F00CE91F2 /* ViewModelExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelExtension.swift; sourceTree = "<group>"; };
 		25F91C752C7CCDAD001CAAB7 /* BonusHomeItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BonusHomeItem.swift; sourceTree = "<group>"; };
 		25F91C782C7CD5FC001CAAB7 /* DialogBonus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogBonus.swift; sourceTree = "<group>"; };
 		25F91C7A2C7CDB55001CAAB7 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -331,12 +384,19 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		25EAD5E32DB6E16800CE91F2 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+		25B90DE42DBBF14800D73EFE /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
 			);
-			target = 25EAD5D32DB6E16800CE91F2 /* RideTrackingNotificationExtension */;
+			target = 25B90DCF2DBBF14700D73EFE /* DriverLiveActivityWidgetExtension */;
+		};
+		25B90E3B2DBCEADD00D73EFE /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 25B90E262DBCEADB00D73EFE /* OrderFinishLiveActivityExtension */;
 		};
 		25EAD5F62DB8023000CE91F2 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
@@ -350,8 +410,9 @@
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		257F40162D1264AD00BB2373 /* Chat */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Chat; sourceTree = "<group>"; };
 		259358992D94558800B87393 /* SubItems */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = SubItems; sourceTree = "<group>"; };
-		25EAD5AF2DB692E500CE91F2 /* Notification */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Notification; sourceTree = "<group>"; };
-		25EAD5D92DB6E16800CE91F2 /* RideTrackingNotificationExtension */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (25EAD5E32DB6E16800CE91F2 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = RideTrackingNotificationExtension; sourceTree = "<group>"; };
+		25B90DD32DBBF14700D73EFE /* DriverLiveActivityWidget */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (25B90DE42DBBF14800D73EFE /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = DriverLiveActivityWidget; sourceTree = "<group>"; };
+		25B90DF02DBC289B00D73EFE /* Manager */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Manager; sourceTree = "<group>"; };
+		25B90E2A2DBCEADB00D73EFE /* OrderFinishLiveActivity */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (25B90E3B2DBCEADD00D73EFE /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = OrderFinishLiveActivity; sourceTree = "<group>"; };
 		25EAD5ED2DB8023000CE91F2 /* RideTrackingShared */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (25EAD5F62DB8023000CE91F2 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = RideTrackingShared; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
@@ -373,13 +434,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		25EAD5D12DB6E16800CE91F2 /* Frameworks */ = {
+		25B90DCD2DBBF14700D73EFE /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				25B90D622DB9889C00D73EFE /* RideTrackingShared.framework in Frameworks */,
-				25EAD5D82DB6E16800CE91F2 /* UserNotificationsUI.framework in Frameworks */,
-				25EAD5D62DB6E16800CE91F2 /* UserNotifications.framework in Frameworks */,
+				25B90DD22DBBF14700D73EFE /* SwiftUI.framework in Frameworks */,
+				25B90DD12DBBF14700D73EFE /* WidgetKit.framework in Frameworks */,
+				25B90DEB2DBC0CF900D73EFE /* RideTrackingShared.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		25B90E242DBCEADB00D73EFE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				25B90E292DBCEADB00D73EFE /* SwiftUI.framework in Frameworks */,
+				25B90E282DBCEADB00D73EFE /* WidgetKit.framework in Frameworks */,
+				25B90E3F2DBCEB0D00D73EFE /* RideTrackingShared.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -448,10 +519,11 @@
 		256877652C258B190041E16A = {
 			isa = PBXGroup;
 			children = (
-				25EAD5ED2DB8023000CE91F2 /* RideTrackingShared */,
 				25BFDB6C2C347B6100D73993 /* GeoGo-Bridging-Header.h */,
+				25EAD5ED2DB8023000CE91F2 /* RideTrackingShared */,
 				256877702C258B190041E16A /* Geo Go */,
-				25EAD5D92DB6E16800CE91F2 /* RideTrackingNotificationExtension */,
+				25B90DD32DBBF14700D73EFE /* DriverLiveActivityWidget */,
+				25B90E2A2DBCEADB00D73EFE /* OrderFinishLiveActivity */,
 				25AF58002DAE62FF0025E9E4 /* Frameworks */,
 				2568776F2C258B190041E16A /* Products */,
 			);
@@ -461,8 +533,9 @@
 			isa = PBXGroup;
 			children = (
 				2568776E2C258B190041E16A /* Geo Go.app */,
-				25EAD5D42DB6E16800CE91F2 /* RideTrackingNotificationExtension.appex */,
 				25EAD5EC2DB8023000CE91F2 /* RideTrackingShared.framework */,
+				25B90DD02DBBF14700D73EFE /* DriverLiveActivityWidgetExtension.appex */,
+				25B90E272DBCEADB00D73EFE /* OrderFinishLiveActivityExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -470,10 +543,10 @@
 		256877702C258B190041E16A /* Geo Go */ = {
 			isa = PBXGroup;
 			children = (
-				25EAD5AF2DB692E500CE91F2 /* Notification */,
+				251914D82DBE7DC40011DD5A /* Geo Go.entitlements */,
+				25B90DE82DBBFB2300D73EFE /* LiveActivity */,
 				257F402B2D138AA900BB2373 /* AppDelegate.swift */,
 				257F40292D1384D200BB2373 /* GoogleService-Info.plist */,
-				257F400E2D11026700BB2373 /* Geo Go.entitlements */,
 				25F9E97B2CFAAD1100475A57 /* Socket */,
 				256877812C25C1300041E16A /* Utilities */,
 				256877B52C2D6DC60041E16A /* Geo-Go-Info.plist */,
@@ -606,6 +679,7 @@
 		256877902C25C3500041E16A /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				25B90DFB2DBC333900D73EFE /* server_links.json */,
 				25966BD32CE543A40036D4DF /* search_car.json */,
 				252C75B82CE931F700779995 /* loader_circles.json */,
 				25F91C802C807EA3001CAAB7 /* empty_list.json */,
@@ -708,7 +782,7 @@
 		256EAEB62C2D8B3700FA7A5C /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				25EAD60C2DB8141F00CE91F2 /* ViewModelExtension.swift */,
+				251914D12DBE632E0011DD5A /* VmExtension.swift */,
 				256EAEBE2C2EADD100FA7A5C /* HomeItems */,
 				256EAEB72C2D8B4F00FA7A5C /* HomeScreen.swift */,
 				256EAED22C309CB500FA7A5C /* MainViewModel.swift */,
@@ -857,6 +931,14 @@
 			path = Text;
 			sourceTree = "<group>";
 		};
+		25B90DE82DBBFB2300D73EFE /* LiveActivity */ = {
+			isa = PBXGroup;
+			children = (
+				25B90DF02DBC289B00D73EFE /* Manager */,
+			);
+			path = LiveActivity;
+			sourceTree = "<group>";
+		};
 		25BFDB592C33E60700D73993 /* RoundedCorner */ = {
 			isa = PBXGroup;
 			children = (
@@ -956,13 +1038,14 @@
 			buildRules = (
 			);
 			dependencies = (
-				25EAD5E12DB6E16800CE91F2 /* PBXTargetDependency */,
 				25EAD5F32DB8023000CE91F2 /* PBXTargetDependency */,
+				25B90DE22DBBF14800D73EFE /* PBXTargetDependency */,
+				25B90E392DBCEADD00D73EFE /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				257F40162D1264AD00BB2373 /* Chat */,
 				259358992D94558800B87393 /* SubItems */,
-				25EAD5AF2DB692E500CE91F2 /* Notification */,
+				25B90DF02DBC289B00D73EFE /* Manager */,
 			);
 			name = "Geo Go";
 			packageProductDependencies = (
@@ -980,26 +1063,52 @@
 			productReference = 2568776E2C258B190041E16A /* Geo Go.app */;
 			productType = "com.apple.product-type.application";
 		};
-		25EAD5D32DB6E16800CE91F2 /* RideTrackingNotificationExtension */ = {
+		25B90DCF2DBBF14700D73EFE /* DriverLiveActivityWidgetExtension */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 25EAD5E42DB6E16800CE91F2 /* Build configuration list for PBXNativeTarget "RideTrackingNotificationExtension" */;
+			buildConfigurationList = 25B90DE52DBBF14800D73EFE /* Build configuration list for PBXNativeTarget "DriverLiveActivityWidgetExtension" */;
 			buildPhases = (
-				25EAD5D02DB6E16800CE91F2 /* Sources */,
-				25EAD5D12DB6E16800CE91F2 /* Frameworks */,
-				25EAD5D22DB6E16800CE91F2 /* Resources */,
+				25B90DCC2DBBF14700D73EFE /* Sources */,
+				25B90DCD2DBBF14700D73EFE /* Frameworks */,
+				25B90DCE2DBBF14700D73EFE /* Resources */,
+				25B90DEF2DBC0CF900D73EFE /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				25B90DEE2DBC0CF900D73EFE /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				25EAD5D92DB6E16800CE91F2 /* RideTrackingNotificationExtension */,
+				25B90DD32DBBF14700D73EFE /* DriverLiveActivityWidget */,
 			);
-			name = RideTrackingNotificationExtension;
+			name = DriverLiveActivityWidgetExtension;
 			packageProductDependencies = (
 			);
-			productName = RideTrackingNotificationExtension;
-			productReference = 25EAD5D42DB6E16800CE91F2 /* RideTrackingNotificationExtension.appex */;
+			productName = DriverLiveActivityWidgetExtension;
+			productReference = 25B90DD02DBBF14700D73EFE /* DriverLiveActivityWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		25B90E262DBCEADB00D73EFE /* OrderFinishLiveActivityExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 25B90E3C2DBCEADD00D73EFE /* Build configuration list for PBXNativeTarget "OrderFinishLiveActivityExtension" */;
+			buildPhases = (
+				25B90E232DBCEADB00D73EFE /* Sources */,
+				25B90E242DBCEADB00D73EFE /* Frameworks */,
+				25B90E252DBCEADB00D73EFE /* Resources */,
+				25B90E432DBCEB0D00D73EFE /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				25B90E422DBCEB0D00D73EFE /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				25B90E2A2DBCEADB00D73EFE /* OrderFinishLiveActivity */,
+			);
+			name = OrderFinishLiveActivityExtension;
+			packageProductDependencies = (
+			);
+			productName = OrderFinishLiveActivityExtension;
+			productReference = 25B90E272DBCEADB00D73EFE /* OrderFinishLiveActivityExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
 		25EAD5EB2DB8023000CE91F2 /* RideTrackingShared */ = {
@@ -1038,7 +1147,10 @@
 					2568776D2C258B190041E16A = {
 						CreatedOnToolsVersion = 15.3;
 					};
-					25EAD5D32DB6E16800CE91F2 = {
+					25B90DCF2DBBF14700D73EFE = {
+						CreatedOnToolsVersion = 16.1;
+					};
+					25B90E262DBCEADB00D73EFE = {
 						CreatedOnToolsVersion = 16.1;
 					};
 					25EAD5EB2DB8023000CE91F2 = {
@@ -1072,8 +1184,9 @@
 			projectRoot = "";
 			targets = (
 				2568776D2C258B190041E16A /* Geo Go */,
-				25EAD5D32DB6E16800CE91F2 /* RideTrackingNotificationExtension */,
 				25EAD5EB2DB8023000CE91F2 /* RideTrackingShared */,
+				25B90DCF2DBBF14700D73EFE /* DriverLiveActivityWidgetExtension */,
+				25B90E262DBCEADB00D73EFE /* OrderFinishLiveActivityExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -1091,12 +1204,20 @@
 				25F91C812C807EA3001CAAB7 /* empty_list.json in Resources */,
 				256877932C25C4E80041E16A /* Localizable.strings in Resources */,
 				257F402A2D1384D200BB2373 /* GoogleService-Info.plist in Resources */,
+				25B90DFC2DBC333900D73EFE /* server_links.json in Resources */,
 				25BFDB622C33ED0C00D73993 /* marker_location.json in Resources */,
 				256877762C258B1B0041E16A /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		25EAD5D22DB6E16800CE91F2 /* Resources */ = {
+		25B90DCE2DBBF14700D73EFE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		25B90E252DBCEADB00D73EFE /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1121,6 +1242,7 @@
 				2565CFA02C4678CD00FCC08A /* MapBoxExt.swift in Sources */,
 				252E5C272C3C7F8700C132AF /* CustomBottomSheet.swift in Sources */,
 				25B20C212C5F6B3600F50017 /* FeedbackViewModel.swift in Sources */,
+				251914D22DBE63360011DD5A /* VmExtension.swift in Sources */,
 				25BFDB752C354E7F00D73993 /* SearchScreenDialog.swift in Sources */,
 				256877A32C25D1470041E16A /* NetworkService.swift in Sources */,
 				256EAED32C309CB500FA7A5C /* MainViewModel.swift in Sources */,
@@ -1188,7 +1310,6 @@
 				256877992C25C63C0041E16A /* LoadingView.swift in Sources */,
 				25BFDB642C3404BC00D73993 /* MarkerMoveListener.swift in Sources */,
 				2508EACA2C73DEB3008CCC12 /* CheckBoxView.swift in Sources */,
-				25EAD60D2DB8142500CE91F2 /* ViewModelExtension.swift in Sources */,
 				25DA46862C649A7400C2A1AB /* TariffDetailsView.swift in Sources */,
 				25BFDB5B2C33E61700D73993 /* RoundedCorners.swift in Sources */,
 				256877722C258B190041E16A /* Geo_GoApp.swift in Sources */,
@@ -1234,7 +1355,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		25EAD5D02DB6E16800CE91F2 /* Sources */ = {
+		25B90DCC2DBBF14700D73EFE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		25B90E232DBCEADB00D73EFE /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1251,10 +1379,25 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		25EAD5E12DB6E16800CE91F2 /* PBXTargetDependency */ = {
+		25B90DE22DBBF14800D73EFE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 25EAD5D32DB6E16800CE91F2 /* RideTrackingNotificationExtension */;
-			targetProxy = 25EAD5E02DB6E16800CE91F2 /* PBXContainerItemProxy */;
+			target = 25B90DCF2DBBF14700D73EFE /* DriverLiveActivityWidgetExtension */;
+			targetProxy = 25B90DE12DBBF14800D73EFE /* PBXContainerItemProxy */;
+		};
+		25B90DEE2DBC0CF900D73EFE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 25EAD5EB2DB8023000CE91F2 /* RideTrackingShared */;
+			targetProxy = 25B90DED2DBC0CF900D73EFE /* PBXContainerItemProxy */;
+		};
+		25B90E392DBCEADD00D73EFE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 25B90E262DBCEADB00D73EFE /* OrderFinishLiveActivityExtension */;
+			targetProxy = 25B90E382DBCEADD00D73EFE /* PBXContainerItemProxy */;
+		};
+		25B90E422DBCEB0D00D73EFE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 25EAD5EB2DB8023000CE91F2 /* RideTrackingShared */;
+			targetProxy = 25B90E412DBCEB0D00D73EFE /* PBXContainerItemProxy */;
 		};
 		25EAD5F32DB8023000CE91F2 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1415,9 +1558,11 @@
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.travel";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "We need your location to track the ride in the background";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We need your location to track the ride";
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
+				INFOPLIST_KEY_NSSupportsLiveActivitiesFrequentUpdates = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleLightContent;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -1428,6 +1573,7 @@
 				MARKETING_VERSION = 1.13.7;
 				PRODUCT_BUNDLE_IDENTIFIER = "geogo-client";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				"SWIFT_OBJC_BRIDGING_HEADER[arch=*]" = "$(SRCROOT)/GeoGo-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
@@ -1453,9 +1599,11 @@
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.travel";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "We need your location to track the ride in the background";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We need your location to track the ride";
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
+				INFOPLIST_KEY_NSSupportsLiveActivitiesFrequentUpdates = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleLightContent;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -1466,6 +1614,7 @@
 				MARKETING_VERSION = 1.13.7;
 				PRODUCT_BUNDLE_IDENTIFIER = "geogo-client";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				"SWIFT_OBJC_BRIDGING_HEADER[arch=*]" = "$(SRCROOT)/GeoGo-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
@@ -1473,16 +1622,18 @@
 			};
 			name = Release;
 		};
-		25EAD5E52DB6E16800CE91F2 /* Debug */ = {
+		25B90DE62DBBF14800D73EFE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = RideTrackingNotificationExtension/RideTrackingNotificationExtension.entitlements;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = "Geo Go/Geo Go.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = V7RW49DS4B;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = RideTrackingNotificationExtension/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = RideTrackingNotificationExtension;
+				INFOPLIST_FILE = DriverLiveActivityWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = DriverLiveActivityWidget;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1491,7 +1642,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "geogo-client.RideTrackingNotificationExtension";
+				PRODUCT_BUNDLE_IDENTIFIER = "geogo-client.DriverLiveActivityWidget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1500,16 +1651,18 @@
 			};
 			name = Debug;
 		};
-		25EAD5E62DB6E16800CE91F2 /* Release */ = {
+		25B90DE72DBBF14800D73EFE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = RideTrackingNotificationExtension/RideTrackingNotificationExtension.entitlements;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = "Geo Go/Geo Go.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = V7RW49DS4B;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = RideTrackingNotificationExtension/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = RideTrackingNotificationExtension;
+				INFOPLIST_FILE = DriverLiveActivityWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = DriverLiveActivityWidget;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1518,8 +1671,65 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "geogo-client.RideTrackingNotificationExtension";
+				PRODUCT_BUNDLE_IDENTIFIER = "geogo-client.DriverLiveActivityWidget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		25B90E3D2DBCEADD00D73EFE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = "Geo Go/Geo Go.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = V7RW49DS4B;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = OrderFinishLiveActivity/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = OrderFinishLiveActivity;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "geogo-client.OrderFinishLiveActivity";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		25B90E3E2DBCEADD00D73EFE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = "Geo Go/Geo Go.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = V7RW49DS4B;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = OrderFinishLiveActivity/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = OrderFinishLiveActivity;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "geogo-client.OrderFinishLiveActivity";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1532,6 +1742,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CODE_SIGN_ENTITLEMENTS = "Geo Go/Geo Go.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -1568,6 +1779,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CODE_SIGN_ENTITLEMENTS = "Geo Go/Geo Go.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -1622,11 +1834,20 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		25EAD5E42DB6E16800CE91F2 /* Build configuration list for PBXNativeTarget "RideTrackingNotificationExtension" */ = {
+		25B90DE52DBBF14800D73EFE /* Build configuration list for PBXNativeTarget "DriverLiveActivityWidgetExtension" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				25EAD5E52DB6E16800CE91F2 /* Debug */,
-				25EAD5E62DB6E16800CE91F2 /* Release */,
+				25B90DE62DBBF14800D73EFE /* Debug */,
+				25B90DE72DBBF14800D73EFE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		25B90E3C2DBCEADD00D73EFE /* Build configuration list for PBXNativeTarget "OrderFinishLiveActivityExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				25B90E3D2DBCEADD00D73EFE /* Debug */,
+				25B90E3E2DBCEADD00D73EFE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

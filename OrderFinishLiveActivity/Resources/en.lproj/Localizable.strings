@@ -1,0 +1,17 @@
+/* 
+  Localizable.strings
+  Geo Go
+
+  Created by Jaloliddin Abdullaev on 21/06/24.
+  
+*/
+
+
+"min" = "min";
+"arrive_in" = "Arriving in";
+"you_arrived" = "You arrived:";
+
+"total_fare" = "Total Fare";
+"rate_driver" = "Rate Driver";
+"hint_good_driver" = "Good Driver";
+

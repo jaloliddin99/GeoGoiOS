@@ -10,7 +10,7 @@ import Combine
 import SwiftUI
 @_spi(Experimental) import MapboxMaps
 import SocketIO
-
+import ActivityKit
 import RideTrackingShared
 
 final class MainViewModel: ObservableObject {
@@ -53,7 +53,6 @@ final class MainViewModel: ObservableObject {
         MapboxOptions.accessToken = "pk.eyJ1IjoiZ2VvZ29hcHAiLCJhIjoiY2xnaHJleWNyMGRvczNkbGY2Ym41eHY3NyJ9.xI3D0Q4YyqNxCl8j1c7kZg"
         
         setupSocket()
-        registerForNotifications()
         initMain()
         observeLocationUpdates()
         startMainLocationTimer()
@@ -419,7 +418,7 @@ final class MainViewModel: ObservableObject {
             headers: [
                 "Accept-Language": DataHolder.lang,
                 "Hive-Profile": Constants.HIVE_PROFILE,
-                "X-Hive-GPS-Position": "\(location.latitude) \(location.longitude)",
+                "X-Hive-GPS-Position": "41.32119804431981 69.26189708056668",
                 "Date": responseDetails.data,
                 "Authentication": responseDetails.hmac,
             ],
@@ -690,6 +689,7 @@ final class MainViewModel: ObservableObject {
 
     
     @Published var getOrderDetail: OrderInfo?
+    var carNumber: String?=nil
     
     func getOrderDetails(orderId: Int64, _ stopLoop: Bool = false) {
         guard let responseDetails = generateResponse?.generateHmacDataForOrderId(id: Constants.GET_ORDER_DETAILS, orderId: orderId) else { return }
@@ -708,6 +708,35 @@ final class MainViewModel: ObservableObject {
                 switch result {
                     case .success(let res):
                         self.getOrderDetail = res
+                        let num = res.assignee?.car.regNum
+                        if num != nil {
+                            self.carNumber = num
+                        }
+                        if res.state == 2 {
+                            guard let car = res.assignee?.car else { return }
+                             let c = res.route[0].toMyPoint()
+                            
+                            Task {
+                                let initLat = self.initialLocation?.latitude ?? self.location.latitude
+                                let initLon = self.initialLocation?.longitude ?? self.location.longitude
+                                
+                                await ActivityManager.shared.startActivity(
+                                    initialLat: initLat, initialLon: initLon,
+                                    clientLat: c.latitude, clientLon: c.longitude,
+                                    regNum: car.regNum, brand: car.brand, model: car.model, color: car.color, speed: 12.0
+                                )
+                            }
+                        }
+                        if res.state == 5 {
+                            let condition = res.usedBonuses != nil
+                            ? res.cost.amount - res.usedBonuses!
+                            : res.cost.amount
+                            Task {
+                                let amount = formatNumberWithSpaces(condition)
+                                await ActivityManager.shared.startFinishOrderActivity(orderAmount: amount, bonusAmount: "2000 uzs", regNum: self.carNumber ?? ""
+                                )
+                            }
+                        }
                         if !stopLoop {
                             self.handleUIByOrderStatus(res.state)
                             self.sendUserOrderIdAndLocs(orderId: DataHolder.orderId)
@@ -758,26 +787,16 @@ final class MainViewModel: ObservableObject {
             }
         }
     }
-
-
     
-    
-    //socket
     @Published var sOrderInfo: SOrderInfo?
-    @Published var sDriverRealTimeData: SDriverRealTimeData? {
-        didSet {
-            didUpdateDriverLocation()
-        }
-    }
+    @Published var sDriverRealTimeData: SDriverRealTimeData?
     
-
     @Published var sDriverLists: [SDriverData] = []
     @Published var isLocationSharingEnabled = false
     private var locationManager = LocationManager()
     private var locationTimer: Timer?
     private var timerIntervalSeconds: Double = 5
     
-     var currentCar: CarModel?
      var initialDriverLocation: CLLocationCoordinate2D?
      var clientLocation: CLLocationCoordinate2D?
 
@@ -871,7 +890,8 @@ final class MainViewModel: ObservableObject {
         NotificationCenter.default.removeObserver(self)
     }
     
-    private var statusHolder: Int = -1
+    var initialLocation: CLLocationCoordinate2D? = nil
+    
     func sendUserOrderIdAndLocs(orderId: Int64){
         let message = ModelSend(
             orderId: orderId,
@@ -889,18 +909,28 @@ final class MainViewModel: ObservableObject {
                     print("listen-order received \(orderInfo)")
                     switch orderInfo.orderStatus {
                         case 2:
-                            sendRideStatusNotification(status: .assigned, driverName: orderInfo.driverFullName, estimatedTime: 2)
+                            sendRideStatusNotification(status: .assigned, driverName: orderInfo.carNumber, estimatedTime: 2)
                             getOrderDetails(orderId: orderId, true)
                             listenAttachedDriverLocation()
                             
-                        case 3:
-                            sendRideStatusNotification(status: .arrived, driverName: orderInfo.driverFullName)
+                            print("listen-order getOrderDetail \(getOrderDetail)")
+                        
                             
+                            if initialLocation == nil {
+                                initialLocation = location
+                            }
+                            
+                            
+                        case 3:
+                            sendRideStatusNotification(status: .arrived, driverName: orderInfo.carNumber)
+                            Task {
+                                await ActivityManager.shared.endActivity()
+                            }
                         case 4:
-                            sendRideStatusNotification(status: .started, driverName: orderInfo.driverFullName)
+                            sendRideStatusNotification(status: .started, driverName: orderInfo.carNumber)
                             
                         case 5:
-                            sendRideStatusNotification(status: .completed, driverName: orderInfo.driverFullName)
+                            sendRideStatusNotification(status: .completed, driverName: orderInfo.carNumber)
                             getOrderDetails(orderId: orderId, true)
                             
                         case 7:
@@ -918,76 +948,7 @@ final class MainViewModel: ObservableObject {
         }
     }
     
-    func sendRideStatusNotification(status: TaxiRideStatus, driverName: String, estimatedTime: Int? = nil) {
-        let content = UNMutableNotificationContent()
-        switch status {
-            case .assigned:
-                content.title = NSLocalizedString("driver_assigned_title", comment: "")
-                content.body = String(format: NSLocalizedString("driver_assigned_body", comment: ""),
-                                      driverName, estimatedTime ?? 0)
-                
-            case .arrived:
-                content.title = NSLocalizedString("driver_arrived_title", comment: "")
-                content.body = String(format: NSLocalizedString("driver_arrived_body", comment: ""),
-                                      driverName)
-                
-            case .started:
-                content.title = NSLocalizedString("ride_started_title", comment: "")
-                content.body = String(format: NSLocalizedString("ride_started_body", comment: ""),
-                                      driverName)
-                
-            case .completed:
-                content.title = NSLocalizedString("ride_completed_title", comment: "")
-                content.body = String(format: NSLocalizedString("ride_completed_body", comment: ""),
-                                      driverName)
-        }
-        
-        content.sound = UNNotificationSound.default
-        
-        let requestIdentifier = "\(status)-\(UUID().uuidString)"
-        let request = UNNotificationRequest(identifier: requestIdentifier, content: content, trigger: nil)
-        
-        UNUserNotificationCenter.current().add(request) { error in
-            if let error = error {
-                print("Error sending notification: \(error)")
-            }
-        }
-    }
-    
-    private func registerForNotifications() {
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(appDidEnterBackground),
-                                               name: UIApplication.didEnterBackgroundNotification,
-                                               object: nil)
-        
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(appWillEnterForeground),
-                                               name: UIApplication.willEnterForegroundNotification,
-                                               object: nil)
-    }
-    
-    @objc private func appDidEnterBackground() {
-        beginBackgroundTask()
-    }
-    
-    @objc private func appWillEnterForeground() {
-        endBackgroundTask()
-    }
-    
-    private func beginBackgroundTask() {
-        endBackgroundTask()
-        backgroundTask = UIApplication.shared.beginBackgroundTask { [weak self] in
-            self?.endBackgroundTask()
-        }
-    }
-    
-    private func endBackgroundTask() {
-        if backgroundTask != .invalid {
-            UIApplication.shared.endBackgroundTask(backgroundTask)
-            backgroundTask = .invalid
-        }
-    }
-    
+ 
     func attachUser(){
         let message = Message(
             lat: DataHolder.location.latitude,
@@ -1019,17 +980,10 @@ final class MainViewModel: ObservableObject {
                 DispatchQueue.main.async {
                     self.sDriverRealTimeData = rtd
                     
-                    guard let car = self.getOrderDetail?.assignee?.car else { return }
-                    let sharedCar = CarModel(regNum: car.regNum, brand: car.brand, model: car.model, color: car.color)
+                    Task {
+                        await ActivityManager.shared.updateDriverLocation(to: rtd.lat, lon: rtd.lon, speed: rtd.speed)
+                    }
                     
-                    let initialLocation = CLLocationCoordinate2D(latitude: rtd.lat, longitude: rtd.lon)
-                    
-                    self.startRideTracking(
-                        car: sharedCar,
-                        initialLocation: initialLocation,
-                        clientLocation: initialLocation
-                    )
-
                 }
             }
         }

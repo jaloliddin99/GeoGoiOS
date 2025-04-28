@@ -1,0 +1,17 @@
+/* 
+  Localizable.strings
+  Geo Go
+
+  Created by Jaloliddin Abdullaev on 21/06/24.
+  
+*/
+
+
+"min" = "мин";
+"arrive_in" = "Ехать";
+"you_arrived" = "Вы приехали:";
+
+
+"total_fare" = "Общая стоимость";
+"rate_driver" = "Оцените водителя";
+"hint_good_driver" = "Хороший водитель";

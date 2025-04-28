@@ -1,0 +1,16 @@
+/* 
+  Localizable.strings
+  Geo Go
+
+  Created by Jaloliddin Abdullaev on 21/06/24.
+  
+*/
+
+
+"min" = "mín";
+"arrive_in" = "Yetib kelish";
+"you_arrived" = "Siz yetib keldingiz:";
+
+"total_fare" = "Jámiy nárx";
+"rate_driver" = "Júrikshige baǵa beriw";
+"hint_good_driver" = "Jaqsı júrikshi";

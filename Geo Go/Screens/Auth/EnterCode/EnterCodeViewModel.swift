@@ -21,6 +21,7 @@ final class EnterCodeViewModel: ObservableObject{
             UserDefaults.standard.set(Constants.DEFAULT_ID, forKey: Constants.userLoginId)
             UserDefaults.standard.set(Constants.DEFAULT_KEY, forKey: Constants.userLoginKey)
             UserDefaults.standard.set(true, forKey: Constants.isUserLoggedIn)
+            
             self.response = ConfirmMessageResponse(
                 id: Int64(Constants.DEFAULT_ID),
                 key: Constants.DEFAULT_KEY

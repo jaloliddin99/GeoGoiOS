@@ -34,7 +34,6 @@ final class EnterPhoneViewModel : ObservableObject{
             case .success(let response):
                 if let appetizers = response as? RegisterUserResponse {
                     self.postData = appetizers
-                    print("Hello worlddawjkanwdkj")
                 }
             case .failure(let error):
                 switch error {

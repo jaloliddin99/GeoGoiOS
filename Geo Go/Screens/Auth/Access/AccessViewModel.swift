@@ -22,10 +22,17 @@ final class AccessViewModel: ObservableObject {
     
     func getAppetizer(lat: Double, lon: Double) {
            isLoading = true
-           NetworkService.shared.sendRequest(
-            path: "\(lat)/\(lon)",
-            isPrintable: true,
-            completed: handleAppetizersResponse as (Result<GetServerLinks, APError>) -> Void)
+        
+        if let testLinks = loadServerLinksFromFile() {
+            saveDataIntoPersistence(data: testLinks.data)
+            postData = testLinks
+            print("✅ Loaded test data: \(testLinks)")
+        }
+
+//           NetworkService.shared.sendRequest(
+//            path: "\(lat)/\(lon)",
+//            isPrintable: true,
+//            completed: handleAppetizersResponse as (Result<GetServerLinks, APError>) -> Void)
        }
        
        private func handleAppetizersResponse<T: Decodable>(_ result: Result<T, APError>) {
@@ -79,6 +86,23 @@ final class AccessViewModel: ObservableObject {
         LanguageViewModel.shared.changeLanguageFromCode(to: data.client_lan)
     }
     
+    func loadServerLinksFromFile() -> GetServerLinks? {
+        guard let url = Bundle.main.url(forResource: "server_links", withExtension: "json") else {
+            print("📛 Could not find file")
+            return nil
+        }
+        
+        do {
+            let data = try Data(contentsOf: url)
+            let decoder = JSONDecoder()
+            let result = try decoder.decode(GetServerLinks.self, from: data)
+            return result
+        } catch {
+            print("📛 Failed to decode JSON: \(error)")
+            return nil
+        }
+    }
+
     
 }
 

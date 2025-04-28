@@ -1,0 +1,126 @@
+//
+//  Constants.swift
+//  Geo Go
+//
+//  Created by Jaloliddin Abdullaev on 21/06/24.
+//
+
+import Foundation
+
+class Constants{
+    
+    static let CAR_ICON_ID_1 = "car_icon"
+    static let CAR_ICON_SOURCE_ID_1 = "car_icon_source"
+    static let CAR_ICON_LAYER_ID_1 = "car_icon_layer"
+
+    
+    static let DRIVER_CAR_NUM = "DRIVER_CAR_NUM"
+    static let CAR_ICON_ID = "CAR_ICON_ID"
+    static let CAR_ICON_SOURCE_ID = "CAR_ICON_SOURCE_ID"
+    static let CAR_ICON_LAYER_ID = "CAR_ICON_LAYER_ID"
+    
+    static let DEST_ICON_ID = "DEST_ICON_ID"
+    static let DEST_ICON_SOURCE_ID = "DEST_ICON_SOURCE_ID"
+    static let DEST_ICON_LAYER_ID = "DEST_ICON_LAYER_ID"
+    
+    static let CLIENT_ICON_ID = "CLIENT_ICON_ID"
+    static let CLIENT_ICON_SOURCE_ID = "CLIENT_ICON_SOURCE_ID"
+    static let CLIENT_ICON_LAYER_ID = "CLIENT_ICON_LAYER_ID"
+
+    static let TARIFF = "TARIFF_ORDER"
+    static let TARIFF_ICON = "TARIFF_ICON"
+    static let MIN_COST = "MIN_COST"
+    
+    static let USER_NAME: String = "USER_NAME"
+    
+    static let USER_PHONE: String = "USER_PHONE"
+    static let DEFAULT_PHONE_NUMBER = "+998994522399"
+    static let DEFAULT_CODE = "0000"
+    static let DEFAULT_KEY = "EU0vfc7seuqoJOeu1xc3Ebh4THg56eOhQeTLS0UOII8="
+    static let DEFAULT_ID = 191000232578408
+    
+    static let PAYMENT_METHOD: String = "PAYMENT_METHOD"
+    static let SELECTED_CARD: String = "SELECTED_CARD"
+    static let driverCallCenter: String = "driverCallCenter"
+    static let servername: String = "servername"
+    static let driverApi: String = "driverApi"
+    static let clientApi: String = "clientApi"
+    static let baseUrl: String = "baseUrl"
+    static let deptId: String = "deptId"
+    static let driverMask: String = "driverMask"
+    static let sign: String = "sign"
+    static let naviUrl: String = "naviUrl"
+    static let residence: String = "residence"
+    static let gpxUrl: String = "gpxUrl"
+    static let driverSocket: String = "driverSocket"
+    static let clientLan: String = "clientLan"
+    static let clientInfo: String = "clientInfo"
+    static let clientNews: String = "clientNews"
+    static let reverse: String = "reverse"
+    static let userUrl: String = "userUrl"
+    static let chatUrl: String = "chatUrl"
+    static let clientApiSocket: String = "clientApiSocket"
+    static let clientBody: String = "clientBody"
+    static let driverBody: String = "driverBody"
+    static let route: String = "route"
+    static let search: String = "search"
+    
+    
+    static let owner: String = "key_owner"
+    static let secret: String = "key_secret"
+    static let identity: String = "key_identity"
+    
+    static let HIVE_PROFILE: String = "17db57a7034701b697c8845c7f508d89"
+    static let CONFIRMATION_TYPE: String = "sms"
+    
+    static let isUserLoggedIn: String =  "isUserLoggedIn"
+    static let userLoginKey: String = "userLoginKey"
+    static let userLoginId: String = "userLoginId"
+    
+    static let FORMAT: String = "jsonv2"
+    
+    static let FIX_ORDER = "fix_order"
+    static let FEEDBACK = "feedback"
+    static let ACTIVATIONS = "activations"
+    static let FIREBASE = "firebase"
+    static let GET_ORDER_DETAILS = "getOrderDetails"
+    static let HISTORY = "history"
+    static let POSITION = "position"
+    static let ORDERS_GET = "ordersGet"
+    static let FINISHED = "finished"
+    static let DELETE = "delete"
+    static let PAYMENT = "payment"
+    static let ESTIMATE = "estimate"
+    static let paymentType = "cash"
+
+    static let SEND_RATING_URL = "http://157.230.124.56:8000/api/v1/ratings"
+    static let SEND_COMPLAINS = "http://157.230.124.56:8000/api/v1/complains"
+    
+    
+    static let GEOCODE_TOKEN = "ge-8f137223ed5b405d"
+    static let ATMOS_BASE_URL = "https://payment.uz.taxi/api/v1/atmos/"
+
+    
+    static var CAR_TYPE_3 = "carType_3"
+    static var CAR_PEREGON = "carType_4"
+    static var CAR_DELIVERY = "carType_10"
+    static let NAVI2_URL = "https://navi2.uz.taxi/api/v1"
+
+    
+    static let NAVI_BASE_URL = "https://route2.uz.taxi/route?key=9db0a28e-4851-433f-86c7-94b8a695fb18"
+    
+    static let PAYMENT_TYPE_CASH = "cash"
+    static let PAYMENT_TYPE_CARD = "credit_card"
+    
+    static let BLUE_ICON_ID = "blue"
+    static let SOURCE_ID = "source_id"
+    static let LAYER_ID = "layer_id"
+    static let TERRAIN_URL_TILE_RESOURCE = "mapbox://mapbox.mapbox-terrain-dem-v1"
+    static let MARKER_ID_PREFIX = "view_annotation_"
+    static let SELECTED_ADD_COEF_PX: CGFloat = 50
+    
+    static let geoJSONDataSourceIdentifier = "geoJSON-data-source"
+    static let cardOptionID = 191000154796099
+
+    
+}

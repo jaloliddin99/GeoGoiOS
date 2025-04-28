@@ -36,6 +36,7 @@ struct SOrderInfo: Codable {
     let driverFullName: String
     let driverRating: Double
     let orderStatus: Int
+    let carNumber: String
 }
 
 struct SDriverRealTimeData: Codable {

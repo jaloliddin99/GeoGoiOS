@@ -84,6 +84,25 @@ struct OrderGoView: View {
     
     // MARK: - Order Button
     private var orderButton: some View {
+//        Button(action: {
+//            if mainViewModel.bonusResponse.balance <= 0 {
+//                let addresses = mainViewModel.locationHolder
+//                let lat = addresses[0].addressLocation.latitude
+//                let lon = addresses[0].addressLocation.longitude
+//                let createOrder = getCreateOrderRoute(addressList: addresses,bonusInt: 0)
+//                mainViewModel.createOrder(lat: lat,lon: lon, createOrderRequest: createOrder)
+//            } else {
+//                mainViewModel.isShowBonusDialog.toggle()
+//            }
+//        }) {
+//            GGButton(title: isButtonDisabled ? "no_available_car" : "order",
+//                     isDisabled: isButtonDisabled)
+//        }
+//        .disabled(isButtonDisabled)
+//        .padding(.horizontal, 12)
+//        .padding(.bottom, 32)
+//        .opacity(isButtonDisabled ? 0.5 : 1.0)
+        
         Button(action: {
             if mainViewModel.bonusResponse.balance <= 0 {
                 let addresses = mainViewModel.locationHolder
@@ -95,13 +114,10 @@ struct OrderGoView: View {
                 mainViewModel.isShowBonusDialog.toggle()
             }
         }) {
-            GGButton(title: isButtonDisabled ? "no_available_car" : "order",
-                     isDisabled: isButtonDisabled)
+            GGButton(title: "order")
         }
-        .disabled(isButtonDisabled)
         .padding(.horizontal, 12)
         .padding(.bottom, 32)
-        .opacity(isButtonDisabled ? 0.5 : 1.0)
     }
     
     // MARK: - Helper Functions
