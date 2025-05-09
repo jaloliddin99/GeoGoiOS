@@ -42,10 +42,10 @@ public struct RideEndSubmitView: View {
                     VStack(alignment: .leading, spacing: 2) {
                         
                         Text("you_arrived".localize())
-                            .font(.system(size: 22, weight: .semibold))
+                            .font(.system(size: 18, weight: .semibold))
                         
                         Text(context.state.orderAmount)
-                            .font(.system(size: 22, weight: .semibold))
+                            .font(.system(size: 18, weight: .semibold))
                     }
                 }
                 

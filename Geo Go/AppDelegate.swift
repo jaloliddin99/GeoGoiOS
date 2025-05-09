@@ -26,10 +26,6 @@ class AppDelegate: NSObject, UIApplicationDelegate, MessagingDelegate, UNUserNot
         _ = MainViewModel.shared
         
         registerBackgroundTasks()
-        
-        let info = ActivityAuthorizationInfo()
-        print("🟢 Live Activities Enabled: \(info.areActivitiesEnabled)")
-
         return true
     }
     
@@ -49,7 +45,6 @@ class AppDelegate: NSObject, UIApplicationDelegate, MessagingDelegate, UNUserNot
         completionHandler([.banner, .sound, .badge])
     }
     
-    // MARK: - Background Task Management
     func registerBackgroundTasks() {
         BGTaskScheduler.shared.register(forTaskWithIdentifier: "com.yourapp.socketrefresh", using: nil) { task in
             self.handleSocketRefresh(task: task as! BGAppRefreshTask)

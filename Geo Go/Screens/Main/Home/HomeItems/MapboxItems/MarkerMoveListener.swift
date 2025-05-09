@@ -29,6 +29,7 @@ struct CustomMapView: UIViewRepresentable {
         setupOrnaments(mapView: view)
         
         LogConfiguration.setLoggingLevelForUpTo(.none)
+        context.coordinator.setupMapView(view)
         context.coordinator.subscribeToRouteCoordinates(viewModel, mapView: view)
         
         return view
@@ -38,8 +39,9 @@ struct CustomMapView: UIViewRepresentable {
         
     }
     
+   
     func dismantleUIView(_ uiView: MapView, coordinator: Coordinator) {
-       // coordinator.cancellable?.cancel()
+        coordinator.cleanup()
     }
     
     private func setupOrnaments(mapView: MapView) {
@@ -68,7 +70,8 @@ struct CustomMapView: UIViewRepresentable {
     
     class Coordinator: NSObject {
         var parent: CustomMapView
-        
+        private var carAnimationManager: CarAnimationManager?
+
         private var cancellables = Set<AnyCancellable>()
         
         private var cameraChangedObserver: Cancelable?
@@ -78,14 +81,16 @@ struct CustomMapView: UIViewRepresentable {
             self.parent = parent
         }
         
+        func setupMapView(_ mapView: MapView) {
+            carAnimationManager = CarAnimationManager(mapView: mapView)
+        }
+       
+        
+        
         func subscribeToRouteCoordinates(_ viewModel: MainViewModel, mapView: MapView) {
             viewModel.$sDriverLists
-                .sink { driverLists in
-                    if !driverLists.isEmpty {
-                        updateCarMarkers(mapView: mapView, driverList: driverLists)
-                    } else {
-                        removeCarMarkers(mapView: mapView)
-                    }
+                .sink { [weak self] driverLists in
+                    self?.carAnimationManager?.updateCarMarkers(driverList: driverLists)
                 }
                 .store(in: &cancellables)
         
@@ -104,10 +109,10 @@ struct CustomMapView: UIViewRepresentable {
             viewModel.$refocusButtonListener
                 .sink { isButtonClicked in
                     if viewModel.status != 2 && viewModel.status != 3 {
-                        mapView.camera.ease(to: CameraOptions(center: viewModel.location, zoom: 17, pitch: 0), duration: 0.7)
+                        mapView.camera.ease(to: CameraOptions(center: viewModel.location, zoom: 15, pitch: 0), duration: 0.7)
                     } else {
                         if let details = viewModel.getOrderDetail {
-                            mapView.camera.ease(to: CameraOptions(center: details.route[0].toMyPoint().toCLL(), zoom: 17, pitch: 0), duration: 0.7)
+                            mapView.camera.ease(to: CameraOptions(center: details.route[0].toMyPoint().toCLL(), zoom: 15, pitch: 0), duration: 0.7)
                         }
                     }
                 }
@@ -155,7 +160,6 @@ struct CustomMapView: UIViewRepresentable {
                 }
             }
             
-            // Combine subscription to status
             viewModel.$status
                 .sink { [weak self] status in
                     self?.statusHandler(status, viewModel, mapView)
@@ -207,7 +211,7 @@ struct CustomMapView: UIViewRepresentable {
                     removeCircleLayers(mapView: mapView)
                     mapView.viewAnnotations.removeAll()
                     
-                    var options = CameraOptions(center: loc, zoom: 17, pitch: 0)
+                    var options = CameraOptions(center: loc, zoom: 15, pitch: 0)
                     
                     let edgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
                     options.padding = edgeInsets
@@ -247,11 +251,12 @@ struct CustomMapView: UIViewRepresentable {
                     removeCircleLayers(mapView: mapView)
                     removeRoute(mapView: mapView, "line-source")
                     
+                    
                     if let coor = viewModel.getOrderDetail?.route.first?.point.coordinates {
                         let locFromServer = CLLocationCoordinate2D(latitude: coor.lat, longitude: coor.lon)
                         let loc = viewModel.locationHolder.first?.addressLocation ?? locFromServer
                         
-                        let initialOptions = CameraOptions(center: loc, padding: .zero, zoom: 17)
+                        let initialOptions = CameraOptions(center: loc, padding: .zero, zoom: 15)
                         
                         mapView.camera.fly(to: initialOptions, duration: 0.0) { _ in
                             let finalOptions = CameraOptions(center: loc, zoom: 14)
@@ -259,8 +264,10 @@ struct CustomMapView: UIViewRepresentable {
                         }
                     }
 
-                    
                 case 3:
+                    self.carAnimationManager?.removeCarIconsFromMap()
+                    removeCarMarkers(mapView: mapView)
+                    
                     removeRoute(mapView: mapView, "line-source")
                     guard let or = viewModel.getOrderDetail else { return }
                     
@@ -308,6 +315,13 @@ struct CustomMapView: UIViewRepresentable {
             cameraIdleObserver?.cancel()
         }
         
+        func cleanup() {
+            cancellables.forEach { $0.cancel() }
+            cancellables.removeAll()
+            cameraChangedObserver = nil
+            cameraIdleObserver = nil
+            carAnimationManager = nil
+        }
         
     }
 }

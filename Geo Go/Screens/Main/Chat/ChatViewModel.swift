@@ -25,13 +25,13 @@ final class ChatViewModel: ObservableObject{
     
     private func setupSocket() {
         socketManager = SocketManager(
-            socketURL: URL(string: "http://185.224.219.1:3007")!,
+            socketURL: URL(string: "https://feed.geogo.io")!,
             config: [
                 .log(false),
-                .compress,
-                .connectParams(["EIO": "2"]),
                 .forceWebsockets(true),
-                .reconnects(true)
+                .reconnectAttempts(-1),
+                .reconnectWait(10),
+                .version(SocketIOVersion(rawValue: 2)!)
             ]
         )
         socket = socketManager.defaultSocket

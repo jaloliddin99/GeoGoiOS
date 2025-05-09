@@ -211,3 +211,5 @@
 "ride_completed_body" = "Thanks for riding with %@. We hope you had a pleasant journey!";
 
 "arrive_in" = "Arriving in";
+
+"type_massage_here" = "Type a message..";

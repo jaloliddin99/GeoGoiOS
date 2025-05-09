@@ -22,12 +22,20 @@ func parseSocketData<T: Decodable>(data: [Any], type: T.Type) -> T? {
 }
 
 
-struct SDriverData: Codable {
+struct SDriverData: Codable, Equatable {
     let driverId: String
     let lat: Double
     let long: Double
     let bearing: Double
     let type: String
+    
+    static func == (lhs: SDriverData, rhs: SDriverData) -> Bool {
+        return lhs.driverId == rhs.driverId &&
+        lhs.lat == rhs.lat &&
+        lhs.long == rhs.long &&
+        lhs.bearing == rhs.bearing &&
+        lhs.type == rhs.type
+    }
 }
 
 struct SOrderInfo: Codable {

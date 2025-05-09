@@ -157,7 +157,6 @@ final class MainViewModel: ObservableObject {
                     ],
             method: "GET",
             headers: ["Accept-Language": DataHolder.lang],
-            isPrintable: true,
             completed: handleAppetizersResponse as (Result<UpdateReverseModel, APError>) -> Void)
     }
     
@@ -772,6 +771,11 @@ final class MainViewModel: ObservableObject {
                 case .success:
                     UserDefaults.standard.setValue(false, forKey: Constants.isUserLoggedIn)
                     self.isProfileDeleted = true
+                    
+                    if let appDomain = Bundle.main.bundleIdentifier {
+                        UserDefaults.standard.removePersistentDomain(forName: appDomain)
+                        UserDefaults.standard.synchronize()
+                    }
                    
                 case .failure(let error):
                     switch error {
@@ -837,7 +841,7 @@ final class MainViewModel: ObservableObject {
         attachUser()
         attachGetCars()
 
-        if getOrderDetail != nil {
+        if getOrderDetail != nil && !isOrderCompleted {
             sendUserOrderIdAndLocs(orderId: DataHolder.orderId)
         }
     }
@@ -891,6 +895,7 @@ final class MainViewModel: ObservableObject {
     }
     
     var initialLocation: CLLocationCoordinate2D? = nil
+    var isOrderCompleted: Bool = false
     
     func sendUserOrderIdAndLocs(orderId: Int64){
         let message = ModelSend(
@@ -906,15 +911,13 @@ final class MainViewModel: ObservableObject {
                 guard let self = self else { return }
                 
                 if let orderInfo: SOrderInfo = parseSocketData(data: data, type: SOrderInfo.self) {
-                    print("listen-order received \(orderInfo)")
                     switch orderInfo.orderStatus {
                         case 2:
                             sendRideStatusNotification(status: .assigned, driverName: orderInfo.carNumber, estimatedTime: 2)
                             getOrderDetails(orderId: orderId, true)
                             listenAttachedDriverLocation()
-                            
-                            print("listen-order getOrderDetail \(getOrderDetail)")
-                        
+                            isOrderCompleted = false
+                                                
                             
                             if initialLocation == nil {
                                 initialLocation = location
@@ -926,12 +929,14 @@ final class MainViewModel: ObservableObject {
                             Task {
                                 await ActivityManager.shared.endActivity()
                             }
+                            isOrderCompleted = false
                         case 4:
                             sendRideStatusNotification(status: .started, driverName: orderInfo.carNumber)
-                            
+                            isOrderCompleted = false
                         case 5:
                             sendRideStatusNotification(status: .completed, driverName: orderInfo.carNumber)
                             getOrderDetails(orderId: orderId, true)
+                            isOrderCompleted = true
                             
                         case 7:
                             setDefaults()
@@ -968,6 +973,7 @@ final class MainViewModel: ObservableObject {
             if let cars: [SDriverData] = parseSocketData(data: data, type: [SDriverData].self) {
                 DispatchQueue.main.async {
                     self.sDriverLists = cars
+                    print("car list size \(cars.count)")
                 }
             }
         }

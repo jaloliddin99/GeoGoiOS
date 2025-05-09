@@ -18,7 +18,8 @@ struct ChatView: View {
     var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
-                NavigationHeaderView(presentationMode: presentationMode)
+                NavigationHeaderView(presentationMode: presentationMode,
+                                     viewModel: viewModel)
                 ChatMessagesView(messages: chatViewModel.messageObserver, viewModel: viewModel)
                 ChatInputView(chatViewModel: chatViewModel, viewModel: viewModel)
             }
@@ -147,7 +148,7 @@ struct ChatInputView: View {
     
     var body: some View {
         HStack {
-            TextField("Type a message..", text: $msg)
+            TextField("type_massage_here".localize(), text: $msg)
                 .padding()
                 .frame(maxWidth: .infinity, maxHeight: 56)
                 .background(Color.appGray)
@@ -175,7 +176,8 @@ struct ChatInputView: View {
 /// Navigation Header Section
 struct NavigationHeaderView: View {
     let presentationMode: Binding<PresentationMode>
-    
+    @ObservedObject var viewModel: MainViewModel
+
     var body: some View {
         HStack {
             Button(action: {
@@ -184,15 +186,19 @@ struct NavigationHeaderView: View {
                 Image(systemName: "chevron.left")
                     .foregroundColor(.blue)
             }
+            let phone = viewModel.getOrderDetail?.assignee?.call.numbers?.first ?? ""
+            
             Image("profile-image")
                 .resizable()
                 .scaledToFill()
                 .frame(width: 40, height: 40)
                 .clipShape(Circle())
             VStack(alignment: .leading) {
-                Text("Sadulla aka")
+                Text(viewModel.sOrderInfo?.driverFullName ?? "")
                     .font(.headline)
-                Text("+998 90 966 42 00")
+               
+
+                Text(phone)
                     .font(.subheadline)
                     .foregroundColor(.gray)
             }

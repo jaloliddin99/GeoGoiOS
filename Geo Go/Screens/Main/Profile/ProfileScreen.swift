@@ -115,6 +115,10 @@ struct ProfileScreen: View {
             
             Button("confirm_button".localize(), role: .destructive) {
                 UserDefaults.standard.setValue(false, forKey: Constants.isUserLoggedIn)
+                if let appDomain = Bundle.main.bundleIdentifier {
+                    UserDefaults.standard.removePersistentDomain(forName: appDomain)
+                    UserDefaults.standard.synchronize()
+                }
                 navigateToAccessScreen.toggle()
                 
             }
