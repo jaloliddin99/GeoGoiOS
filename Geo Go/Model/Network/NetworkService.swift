@@ -66,19 +66,19 @@ class NetworkService {
         
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             
-//            if let error = error {
-//                print("❌ Error: \(error.localizedDescription)")
-//                return
-//            }
-//            
-//            if let httpResponse = response as? HTTPURLResponse {
-//                print("✅ Status Code: \(httpResponse.statusCode)")
-//                print("📦 Headers: \(httpResponse.allHeaderFields)")
-//            }
-//            
-//            if let data = data, let responseBody = String(data: data, encoding: .utf8) {
-//                print("📄 Response Body: \(responseBody)")
-//            }
+            if let error = error {
+                print("❌ Error: \(error.localizedDescription)")
+                return
+            }
+            
+            if let httpResponse = response as? HTTPURLResponse {
+                print("✅ Status Code: \(httpResponse.statusCode)")
+                print("📦 Headers: \(httpResponse.allHeaderFields)")
+            }
+            
+            if let data = data, let responseBody = String(data: data, encoding: .utf8) {
+                print("📄 Response Body: \(responseBody)")
+            }
 
             
             if error != nil {

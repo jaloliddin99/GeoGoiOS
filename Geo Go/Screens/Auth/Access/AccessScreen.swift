@@ -19,7 +19,7 @@ struct AccessScreen: View {
     let gps: LocalizedStringKey = "gps"
     
     var body: some View {
-        NavigationStack{
+        NavigationStack {
             ZStack{
                 VStack {
                     PermissionView(

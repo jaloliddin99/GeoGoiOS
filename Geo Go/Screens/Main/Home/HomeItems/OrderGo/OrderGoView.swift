@@ -26,7 +26,9 @@ struct OrderGoView: View {
             topBar
             mainContent()
         }
-        .onReceive(mainViewModel.$tariff) { updateSelectedItem(from: $0) }
+        .onReceive(mainViewModel.$tariff) {
+            updateSelectedItem(from: $0)
+        }
         .ignoresSafeArea()
     }
     

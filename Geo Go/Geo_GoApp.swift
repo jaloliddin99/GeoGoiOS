@@ -13,11 +13,11 @@ import Firebase
 struct Geo_GoApp: App {
     
     @UIApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
-
+    @AppStorage(Constants.isUserLoggedIn) var isUserLoggedIn: Bool = false
     
     var body: some Scene {
         WindowGroup {
-            if UserDefaults.standard.bool(forKey: Constants.isUserLoggedIn) {
+            if isUserLoggedIn {
                 HomeScreen()
                     .onAppear {
                         requestNotificationPermissions()
@@ -42,5 +42,4 @@ struct Geo_GoApp: App {
             }
         }
     }
-
 }

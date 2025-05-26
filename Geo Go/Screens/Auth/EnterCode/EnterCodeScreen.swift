@@ -23,7 +23,7 @@ struct EnterCodeScreen: View {
             VStack {
                 Spacer()
                 VStack {
-                    Text("enter_sms_code")
+                    Text("enter_sms_code".localize())
                         .font(.system(size: 24))
                         .fontWeight(.bold)
                         .padding(.bottom, 8)

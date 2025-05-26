@@ -130,7 +130,7 @@
 "completed" = "Завершено";
 "cancelled" = "Отменено";
 
-"picked_locations" = "выбранные места %d";
+"picked_locations" = "Выбрано мест: %d";
 "enter_address_here" = "Введите пункт назначения здесь";
 "hint_format" = "%@ %d, %@ %d UZS";
 "payment_with_bonus" = "Оплачено бонусом:";
@@ -180,7 +180,7 @@
 "with_usb_charger" = "С USB-зарядкой";
 "car_with_luggage_needed" = "Нужна машина с багажом";
 "car_with_roof_luggage_needed" = "Нужна машина с багажником на крыше";
-"must_deliver_alcohol" = "Вы должны доставить алкоголь";
+"must_deliver_alcohol" = "Доставка алкоголя";
 "extra_person" = "Есть дополнительный пассажир";
 "log_out" = "Выйти";
 "delete_profile_account" = "Удалить профиль";

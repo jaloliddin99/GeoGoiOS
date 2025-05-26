@@ -92,7 +92,7 @@ struct ProfileScreen: View {
             }
         }
         .sheet(isPresented: $languageViewModel.showLanguageSheet, content: {
-            BottomSheet{
+            BottomSheet {
                 DialogLanguage(vm: languageViewModel)
             }
         })

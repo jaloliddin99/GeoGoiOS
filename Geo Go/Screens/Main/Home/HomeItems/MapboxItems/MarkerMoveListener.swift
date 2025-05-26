@@ -46,8 +46,6 @@ struct CustomMapView: UIViewRepresentable {
     
     private func setupOrnaments(mapView: MapView) {
         
-        
-        
         let locale = Locale.current
         let settingsService = SettingsServiceFactory.getInstance(storageType: .persistent)
         switch settingsService.set(key: MapboxCommonSettings.language, value: "\(locale)") {

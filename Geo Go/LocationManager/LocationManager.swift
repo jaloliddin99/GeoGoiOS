@@ -40,6 +40,9 @@ final class LocationManager: NSObject, ObservableObject, CLLocationManagerDelega
     private var locationManager = CLLocationManager()
     private var isPermissionRequested = false
     
+    private let constantLatitude: CLLocationDegrees = 41.31928184188881
+    private let constantLongitude: CLLocationDegrees = 69.2594939976967
+    
     override init() {
         super.init()
         locationManager.delegate = self
@@ -47,6 +50,13 @@ final class LocationManager: NSObject, ObservableObject, CLLocationManagerDelega
     }
     
     func requestLocation() {
+        let currentPhoneNumber = UserDefaults.standard.string(forKey: Constants.USER_PHONE) ?? ""
+        
+        if currentPhoneNumber == Constants.DEFAULT_PHONE_NUMBER {
+            setConstantLocation()
+            return
+        }
+        
         let status = locationManager.authorizationStatus
         if status == .authorizedWhenInUse || status == .authorizedAlways {
             locationManager.startUpdatingLocation()
@@ -56,7 +66,24 @@ final class LocationManager: NSObject, ObservableObject, CLLocationManagerDelega
         }
     }
     
+    private func setConstantLocation() {
+        let constantLocation = CLLocation(latitude: constantLatitude, longitude: constantLongitude)
+        
+        UserDefaults.standard.set(constantLatitude, forKey: "lat")
+        UserDefaults.standard.set(constantLongitude, forKey: "lon")
+        
+        location = constantLocation
+        DataHolder.location = constantLocation.coordinate
+        
+        print("Using constant location for phone number: \(Constants.DEFAULT_PHONE_NUMBER)")
+    }
+    
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        let currentPhoneNumber = UserDefaults.standard.string(forKey: Constants.USER_PHONE) ?? ""
+        if currentPhoneNumber == Constants.DEFAULT_PHONE_NUMBER {
+            return
+        }
+        
         if isPermissionRequested && (status == .authorizedWhenInUse || status == .authorizedAlways) {
             isPermissionRequested = false
             locationManager.startUpdatingLocation()
@@ -64,10 +91,16 @@ final class LocationManager: NSObject, ObservableObject, CLLocationManagerDelega
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let currentPhoneNumber = UserDefaults.standard.string(forKey: Constants.USER_PHONE) ?? ""
+        if currentPhoneNumber == Constants.DEFAULT_PHONE_NUMBER {
+            return
+        }
+        
         guard let newLocation = locations.last else { return }
         if newLocation != location {
             UserDefaults.standard.set(newLocation.coordinate.latitude, forKey: "lat")
             UserDefaults.standard.set(newLocation.coordinate.longitude, forKey: "lon")
+            
             location = newLocation
             DataHolder.location = newLocation.coordinate
             locationManager.stopUpdatingLocation()
@@ -78,4 +111,3 @@ final class LocationManager: NSObject, ObservableObject, CLLocationManagerDelega
         print("Location manager failed with error: \(error.localizedDescription)")
     }
 }
-

@@ -148,7 +148,7 @@ final class MainViewModel: ObservableObject {
     func reverseLocation(lat: Double, lon: Double) {
         isLoading = true
         NetworkService.shared.sendRequest(
-            url: UserDefaults().string(forKey: Constants.reverse)!+"reverse",
+            url: UserDefaults.standard.string(forKey: Constants.reverse) ?? "" + "reverse",
             params: ["format": Constants.FORMAT,
                      "lat": String(lat),
                      "lon": String(lon),
@@ -294,12 +294,17 @@ final class MainViewModel: ObservableObject {
     @Published var estimateResponse: EstimateResponse?
     
     func serviceEstimateRide(body: EstimateRideRequest) {
+        
+
         guard let responseDetails = generateResponse?.generateHmacData(id: Constants.ESTIMATE) else { return }
         
         guard let requestBodyData = try? JSONEncoder().encode(body) else {
             print("Failed to encode request body")
             return
         }
+        
+        print("response.tariffs getEstimateRideRequest")
+
         NetworkService.shared.sendRequest(
             url: responseDetails.url,
             body: requestBodyData,
@@ -310,6 +315,7 @@ final class MainViewModel: ObservableObject {
                 "Date": responseDetails.data,
                 "Authentication": responseDetails.hmac,
             ],
+            isPrintable: true,
             completed: { [weak self] (result: Result<EstimateResponse, APError>) in
                 self?.handleserviceEstimateRideRequestResponse(result, with: body)
             }
@@ -375,12 +381,16 @@ final class MainViewModel: ObservableObject {
             switch result {
                 case .success(let response):
                     if let response = response as? EstimateResponse {
+                        print("response.tariffs getEstimateRideRequest success")
+
                         self.estimateResponse = response
                         var tariffs = tariff?.tariffs
                         if tariffs != nil {
                             estimateResponse?.cost.type = String(body.tariff)
                             changeCost(res: estimateResponse!, list: &tariffs!)
                             tariff?.tariffs = tariffs
+                            print("response.tariffs getEstimateRideRequest success updated")
+
                         }
                     }
                     
@@ -410,6 +420,10 @@ final class MainViewModel: ObservableObject {
             print("Failed to encode request body")
             return
         }
+        
+        
+        let lat = location.latitude
+        let lon = location.longitude
         NetworkService.shared.sendRequest(
             url: responseDetails.url,
             body: requestBodyData,
@@ -417,7 +431,7 @@ final class MainViewModel: ObservableObject {
             headers: [
                 "Accept-Language": DataHolder.lang,
                 "Hive-Profile": Constants.HIVE_PROFILE,
-                "X-Hive-GPS-Position": "41.32119804431981 69.26189708056668",
+                "X-Hive-GPS-Position": "\(lat) \(lon)",
                 "Date": responseDetails.data,
                 "Authentication": responseDetails.hmac,
             ],
@@ -441,6 +455,7 @@ final class MainViewModel: ObservableObject {
                             DataHolder.listOptions.removeAll()
                             DataHolder.listOptions.append(contentsOf: dataSelect(data: response.tariffs!))
                             response.tariffs?.forEach({ tariff in
+                                
                                 let estimate = getEstimateRideRequest(
                                     serviceTariff: tariff,
                                     route: mapToRouteCoordinates(addresses: locationHolder))

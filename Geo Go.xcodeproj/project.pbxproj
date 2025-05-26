@@ -117,6 +117,7 @@
 		25B90E292DBCEADB00D73EFE /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25AF58032DAE62FF0025E9E4 /* SwiftUI.framework */; };
 		25B90E3A2DBCEADD00D73EFE /* OrderFinishLiveActivityExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 25B90E272DBCEADB00D73EFE /* OrderFinishLiveActivityExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		25B90E3F2DBCEB0D00D73EFE /* RideTrackingShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25EAD5EC2DB8023000CE91F2 /* RideTrackingShared.framework */; };
+		25BBD4BE2DD4BB40002EACC2 /* CarAnimationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25BBD4BD2DD4BB3E002EACC2 /* CarAnimationManager.swift */; };
 		25BC2C562C76093B00484F69 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25BC2C552C76093B00484F69 /* WebView.swift */; };
 		25BC2C582C76099600484F69 /* TermsOfUseAndPPScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25BC2C572C76099600484F69 /* TermsOfUseAndPPScreen.swift */; };
 		25BC2C5A2C761E8A00484F69 /* NewsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25BC2C592C761E8A00484F69 /* NewsModel.swift */; };
@@ -341,6 +342,7 @@
 		25B90DD02DBBF14700D73EFE /* DriverLiveActivityWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = DriverLiveActivityWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		25B90DFB2DBC333900D73EFE /* server_links.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = server_links.json; sourceTree = "<group>"; };
 		25B90E272DBCEADB00D73EFE /* OrderFinishLiveActivityExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = OrderFinishLiveActivityExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		25BBD4BD2DD4BB3E002EACC2 /* CarAnimationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarAnimationManager.swift; sourceTree = "<group>"; };
 		25BC2C552C76093B00484F69 /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		25BC2C572C76099600484F69 /* TermsOfUseAndPPScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsOfUseAndPPScreen.swift; sourceTree = "<group>"; };
 		25BC2C592C761E8A00484F69 /* NewsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsModel.swift; sourceTree = "<group>"; };
@@ -597,6 +599,7 @@
 		256877812C25C1300041E16A /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				25BBD4BD2DD4BB3E002EACC2 /* CarAnimationManager.swift */,
 				257F40112D11755200BB2373 /* LinkedList.swift */,
 				257F400F2D1174AA00BB2373 /* LineProcessor.swift */,
 				256F370D2CFFA66900CE3E8A /* MapColors.swift */,
@@ -1337,6 +1340,7 @@
 				2565CFB22C5DDFC400FCC08A /* OrderInfo.swift in Sources */,
 				25B20C322C63978F00F50017 /* DialogToolBar.swift in Sources */,
 				25BFDB6E2C347E7500D73993 /* Hmac.swift in Sources */,
+				25BBD4BE2DD4BB40002EACC2 /* CarAnimationManager.swift in Sources */,
 				25AF57E82DAD0C180025E9E4 /* AppNotWorkScreen.swift in Sources */,
 				2565CFA92C5B5CE900FCC08A /* CreateOrder.swift in Sources */,
 				2568779F2C25CA150041E16A /* Constants.swift in Sources */,
@@ -1539,7 +1543,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = "Geo Go/Geo Go.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 17;
+				CURRENT_PROJECT_VERSION = 18;
 				DEVELOPMENT_ASSET_PATHS = "\"Geo Go/Preview Content\"";
 				DEVELOPMENT_TEAM = V7RW49DS4B;
 				ENABLE_PREVIEWS = YES;
@@ -1561,7 +1565,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.13.9;
+				MARKETING_VERSION = 1.14.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "geogo-client";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = NO;
@@ -1580,7 +1584,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = "Geo Go/Geo Go.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 17;
+				CURRENT_PROJECT_VERSION = 18;
 				DEVELOPMENT_ASSET_PATHS = "\"Geo Go/Preview Content\"";
 				DEVELOPMENT_TEAM = V7RW49DS4B;
 				ENABLE_PREVIEWS = YES;
@@ -1602,7 +1606,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.13.9;
+				MARKETING_VERSION = 1.14.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "geogo-client";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = NO;
